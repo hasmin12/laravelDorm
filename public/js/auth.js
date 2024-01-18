@@ -10,7 +10,7 @@ $(document).ready(function() {
             type: 'POST',
             contentType: false,
             processData: false,
-            url: 'http://localhost:8000/signin',
+            url: '/signin',
             data: formData,
             headers: {
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
