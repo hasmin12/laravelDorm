@@ -39,14 +39,13 @@ class AdminController extends Controller
                     });
                 }
 
-                if ($residentType) {
+                if ($residentType && $residentType !== 'all') {
                     $query->whereHas('resident', function ($q) use ($residentType) {
                         $q->where('type', $residentType);
                     });
                 }
 
                 $beds = $query->get();
-                \Log::info($beds);
         
                 return response()->json(['beds' => $beds]);
             } else {
