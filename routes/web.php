@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Route;
         return view('dorm.login');
     })->name('login');
     // Route::post('signin', 'AuthController@signin');
-    Route::post('signin', 'AuthController@signin')->middleware('cors');
+    Route::post('signin', 'AuthController@signin');
 
     Route::post('signout', 'AuthController@signout');
 
