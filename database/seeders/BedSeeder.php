@@ -21,39 +21,39 @@ class BedSeeder extends Seeder
                 'name' => 'A',
                 'room_id' => $index,
             ]);
-            $room = $bed1->Dormitoryroom;
-            $room->slot = $room->slot + 1;
-            $room->totalBeds = $room->totalBeds + 1;
+            // $room = $bed1->Dormitoryroom;
+            // $room->slot = $room->slot + 1;
+            // $room->totalBeds = $room->totalBeds + 1;
 
-            // $room->occupied = $room->occupied + 1;
-            $room->save();
+            // // $room->occupied = $room->occupied + 1;
+            // $room->save();
 
             $bed2 = Dormitorybed::create([
                 'name' => 'B',
                 'room_id' => $index,
             ]);
-            $room = $bed2->Dormitoryroom;
-            $room->slot = $room->slot + 1;
-            $room->totalBeds = $room->totalBeds + 1;
-            $room->save();
+            // $room = $bed2->Dormitoryroom;
+            // $room->slot = $room->slot + 1;
+            // $room->totalBeds = $room->totalBeds + 1;
+            // $room->save();
 
             $bed3 = Dormitorybed::create([
                 'name' => 'C',
                 'room_id' => $index,
             ]);
-            $room = $bed3->Dormitoryroom;
-            $room->slot = $room->slot + 1;
-            $room->totalBeds = $room->totalBeds + 1;
-            $room->save();
+            // $room = $bed3->Dormitoryroom;
+            // $room->slot = $room->slot + 1;
+            // $room->totalBeds = $room->totalBeds + 1;
+            // $room->save();
 
             $bed4 = Dormitorybed::create([
                 'name' => 'D',
                 'room_id' => $index,
             ]);
-            $room = $bed4->Dormitoryroom;
-            $room->slot = $room->slot + 1;
-            $room->totalBeds = $room->totalBeds + 1;
-            $room->save();
+            // $room = $bed4->Dormitoryroom;
+            // $room->slot = $room->slot + 1;
+            // $room->totalBeds = $room->totalBeds + 1;
+            // $room->save();
         }
 
         foreach (range(1, 8) as $index) {
@@ -62,37 +62,37 @@ class BedSeeder extends Seeder
                 'name' => 'A',
                 'room_id' => $index,
             ]);
-            $room = $bed1->Hostelroom;
-            $room->slot = $room->slot + 1;
-            $room->totalBeds = $room->totalBeds + 1;
-            $room->save();
+            // $room = $bed1->Hostelroom;
+            // $room->slot = $room->slot + 1;
+            // $room->totalBeds = $room->totalBeds + 1;
+            // $room->save();
 
             $bed2 = Hostelbed::create([
                 'name' => 'B',
                 'room_id' => $index,
             ]);
-            $room = $bed2->Hostelroom;
-            $room->slot = $room->slot + 1;
-            $room->totalBeds = $room->totalBeds + 1;
-            $room->save();
+            // $room = $bed2->Hostelroom;
+            // $room->slot = $room->slot + 1;
+            // $room->totalBeds = $room->totalBeds + 1;
+            // $room->save();
 
             $bed3 = Hostelbed::create([
                 'name' => 'C',
                 'room_id' => $index,
             ]);
-            $room = $bed3->Hostelroom;
-            $room->slot = $room->slot + 1;
-            $room->totalBeds = $room->totalBeds + 1;
-            $room->save();
+            // $room = $bed3->Hostelroom;
+            // $room->slot = $room->slot + 1;
+            // $room->totalBeds = $room->totalBeds + 1;
+            // $room->save();
 
             $bed4 = Hostelbed::create([
                 'name' => 'D',
                 'room_id' => $index,
             ]);
-            $room = $bed4->Hostelroom;
-            $room->slot = $room->slot + 1;
-            $room->totalBeds = $room->totalBeds + 1;
-            $room->save();
+            // $room = $bed4->Hostelroom;
+            // $room->slot = $room->slot + 1;
+            // $room->totalBeds = $room->totalBeds + 1;
+            // $room->save();
         }
     }
 }

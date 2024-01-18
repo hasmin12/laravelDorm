@@ -23,12 +23,16 @@ class RoomSeeder extends Seeder
                 'name' => $room,
                 'type' => $faker->randomElement($array = array ('Student', 'Faculty', 'Staff')),
                 'category' => $faker->randomElement($array = array ('Male', 'Female')),
+                'slot' => 4,
+                'totalBeds' => 4,
             ]);
 
             $roomDorm  = Dormitoryroom::create([
                 'name' => $room,
                 'type' => $faker->randomElement($array = array ('Student', 'Faculty', 'Staff')),
                 'category' => $faker->randomElement($array = array ('Male', 'Female')),
+                'slot' => 4,
+                'totalBeds' => 4,
             ]);  
         }
     }
