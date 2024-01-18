@@ -18,7 +18,7 @@ return new class extends Migration
             $table->date('laundrydate');
             $table->text('laundrytime');
             $table->text('branch');
-            $table->text('status')->default("Scheduled");
+            $table->string('status')->default("Scheduled");
             $table->softDeletes();
             $table->timestamps();
         });

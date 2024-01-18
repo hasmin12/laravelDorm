@@ -20,7 +20,7 @@ return new class extends Migration
             $table->text('findersName');
             $table->text('claimedBy')->nullable();
             $table->date('claimedDate')->nullable();
-            $table->text('status')->default('Unclaimed');
+            $table->string('status')->default('Unclaimed');
             $table->text('img_path');
 
             $table->softDeletes();

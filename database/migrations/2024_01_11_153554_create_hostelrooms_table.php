@@ -21,7 +21,7 @@ return new class extends Migration
             $table->text('type');
             $table->text('category');
 
-            $table->text('status')->default('Active');
+            $table->string('status')->default('Active');
             $table->softDeletes();
             $table->timestamps();
         });

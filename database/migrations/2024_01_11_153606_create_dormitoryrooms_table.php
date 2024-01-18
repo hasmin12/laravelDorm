@@ -18,7 +18,7 @@ return new class extends Migration
             $table->integer('totalBeds')->default(0);
             $table->text('type');
             $table->text('category');
-            $table->text('status')->default('Active');
+            $table->string('status')->default('Active');
             $table->softDeletes();
             $table->timestamps();
         });

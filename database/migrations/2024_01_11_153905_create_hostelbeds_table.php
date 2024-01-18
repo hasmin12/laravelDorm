@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreign('room_id')->references('id')->on('hostelrooms')->onDelete('cascade');
             $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->text('status')->default('vacant');
+            $table->string('status')->default('Vacant');
             $table->softDeletes();
 
             $table->timestamps();
