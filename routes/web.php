@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-Route::group(['middleware' => ['web', 'cors']], function () {
+// Route::group(['middleware' => ['web', 'cors']], function () {
     Route::get('/', function () {
         return view('welcome');
     });
@@ -21,7 +21,7 @@ Route::group(['middleware' => ['web', 'cors']], function () {
         return view('dorm.login');
     })->name('login');
     // Route::post('signin', 'AuthController@signin');
-    Route::post('signin', 'AuthController@signin');
+    Route::post('signin', 'AuthController@signin')->middleware('cors');
 
     Route::post('signout', 'AuthController@signout');
 
@@ -105,4 +105,4 @@ Route::group(['middleware' => ['web', 'cors']], function () {
         });
     });
 
-});
+// });
