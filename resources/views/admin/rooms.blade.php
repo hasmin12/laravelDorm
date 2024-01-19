@@ -21,16 +21,16 @@
             </form> --}}
             {{-- <br> --}}
             <div class="btn-group" role="group">
-                <input type="radio" class="btn-check" name="roomRadiobtn" id="btnradio1" autocomplete="off" checked value="">
+                <input type="radio" class="btn-check" name="roomRadiobtn" id="roomRadiobtn1" autocomplete="off" checked value="">
                 <label class="btn btn-outline-primary" for="btnradio1">All</label>
 
-                <input type="radio" class="btn-check" name="roomRadiobtn" id="btnradio2" autocomplete="off" value="Student">
+                <input type="radio" class="btn-check" name="roomRadiobtn" id="roomRadiobtn2" autocomplete="off" value="Student">
                 <label class="btn btn-outline-primary" for="btnradio2">Students</label>
 
-                <input type="radio" class="btn-check" name="roomRadiobtn" id="btnradio3" autocomplete="off" value="Faculty">
+                <input type="radio" class="btn-check" name="roomRadiobtn" id="roomRadiobtn3" autocomplete="off" value="Faculty">
                 <label class="btn btn-outline-primary" for="btnradio3">Faculties</label>
 
-                <input type="radio" class="btn-check" name="roomRadiobtn" id="btnradio4" autocomplete="off" value="Staff">
+                <input type="radio" class="btn-check" name="roomRadiobtn" id="roomRadiobtn4" autocomplete="off" value="Staff">
                 <label class="btn btn-outline-primary" for="btnradio4">Staffs</label>
 
             </div>

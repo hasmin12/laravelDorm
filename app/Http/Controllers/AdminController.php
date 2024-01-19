@@ -39,14 +39,14 @@ class AdminController extends Controller
                     });
                 }
 
-                if ($residentType && $residentType !== 'all') {
+                if ($residentType && $residentType !== 'All') {
                     $query->whereHas('resident', function ($q) use ($residentType) {
                         $q->where('type', $residentType);
                     });
-                }
-
+                }                
+                $query->whereNotNull('user_id');
                 $beds = $query->get();
-        
+
                 return response()->json(['beds' => $beds]);
             } else {
                 return response()->json(['error' => 'Unauthorized'], 401);
@@ -145,6 +145,83 @@ class AdminController extends Controller
         $announcements = Announcement::with('user')->where('branch', $branch)->get();
 
         return response()->json(['announcements' => $announcements]);
+    }
+
+    public function getAnnouncement($id)
+    {
+        try {
+            $announcement = Announcement::findOrFail($id);
+            return response()->json(['announcement' => $announcement]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Announcement not found'], 404);
+        }
+    }
+
+    public function createAnnouncement(Request $request)
+    {
+        try {
+            $user = Auth::user(); 
+            $title = $request->input('title');
+            $content = $request->input('content');
+            $announcement = Announcement::create([
+                'user_id' => $user->id,
+                'title' => $title,
+                'content' => $content,
+                'branch' => $user->branch,
+            ]);
+
+            return response()->json(['announcement' => $announcement], 201);
+        } catch (\Exception $e) {
+            \Log::error('Error creating announcement: ' . $e->getMessage());
+            return response()->json(['error' => 'Internal Server Error'], 500);
+        }
+    }
+
+    public function updateAnnouncement(Request $request, $id)
+    {
+        try {
+            if (Auth::check()) {
+                $announcement = Announcement::find($id);
+                if (!$announcement) {
+                    return response()->json(['error' => 'Announcement not found'], 404);
+                }
+
+                $announcement->update([
+                    'title' => $request->input('title'),
+                    'content' => $request->input('content'),
+                ]);
+
+                return response()->json(['success' => true, 'message' => 'Announcement updated successfully']);
+            } else {
+                return response()->json(['error' => 'Unauthorized'], 401);
+            }
+        } catch (\Exception $e) {
+            \Log::error('Error in updateAnnouncement: ' . $e->getMessage());
+            return response()->json(['error' => 'Internal Server Error'], 500);
+        }
+    }
+
+    public function deleteAnnouncement($id)
+    {
+        try {
+            if (Auth::check()) {
+                // Find the announcement by ID
+                $announcement = Announcement::find($id);
+
+                if (!$announcement) {
+                    return response()->json(['error' => 'Announcement not found'], 404);
+                }
+
+                $announcement->delete();
+
+                return response()->json(['success' => true, 'message' => 'Announcement deleted successfully']);
+            } else {
+                return response()->json(['error' => 'Unauthorized'], 401);
+            }
+        } catch (\Exception $e) {
+            \Log::error('Error in deleteAnnouncement: ' . $e->getMessage());
+            return response()->json(['error' => 'Internal Server Error'], 500);
+        }
     }
 
     public function getLostitems()

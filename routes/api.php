@@ -27,8 +27,14 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::get('/notifyResidents', 'AdminController@notifyResidents');
     Route::get('/getBeds/{id}', 'AdminController@getBeds');
 
-    Route::get('/getAnnouncements', 'AuthController@getAnnouncements');
+    
     Route::get('/getLaundry', 'AuthController@getLaundry');
+
+    Route::get('/getAnnouncements', 'AuthController@getAnnouncements');
+    Route::get('/getAnnouncement/{id}', 'AdminController@getAnnouncement');
+    Route::post('/announcement', 'AdminController@createAnnouncement');
+    Route::post('updateAnnouncement/{id}', 'AdminController@updateAnnouncement');
+    Route::delete('deleteAnnouncement/{id}', 'AdminController@deleteAnnouncement');
     // Route::get('/resident/getLaundry', 'ResidentController@getLaundry');
     // Route::get('/resident/getAnnouncements', 'ResidentController@getAnnouncements');
 

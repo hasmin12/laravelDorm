@@ -10,7 +10,8 @@ document.addEventListener('DOMContentLoaded', function () {
         const searchQuery = searchInput.value;
 
         // Retrieve the token from localStorage
-        
+        console.log("Resident Type:", residentType);
+        console.log("Search Query:", searchQuery);
 
         fetch(`/api/getResidents?resident_type=${residentType}&search_query=${searchQuery}`, {
             method: 'GET',
@@ -24,21 +25,25 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(response => response.json())
         .then(data => {
             // Clear the existing table rows
+            console.log("Fetched Data:", data);
             residentTableBody.innerHTML = '';
 
             // Add new rows based on the fetched data
             data.beds.forEach(bed => {
                 const row = `
-                    <tr id="userRow-${bed.resident.id}"> <!-- Add an ID attribute with user ID -->
-                        <!-- Populate your resident data here -->
+                    
                         <td>${bed.resident.Tuptnum}</td>
                         <td>${bed.resident.name}</td>
                         <td>${bed.resident.type}</td>
                         <td>${bed.resident.sex}</td>
                         <td>${bed.resident.contacts}</td>
                         <td>${bed.room.name}: ${bed.name}</td>
-                        <td>${bed.resident.action}</td>
-                    </tr>
+                        <td>
+                            <button class="btn btn-sm btn-success" onclick="checkRoom(${bed.resident.id})">Check</button>
+                            <button class="btn btn-sm btn-warning" onclick="updateRoom(${bed.resident.id})">Update</button>
+                            <button class="btn btn-sm btn-danger" onclick="deleteRoom(${bed.resident.id})">Delete</button>
+                        </td>
+           
                 `;
                 residentTableBody.innerHTML += row;
             });

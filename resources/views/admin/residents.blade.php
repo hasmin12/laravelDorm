@@ -21,7 +21,7 @@
             </form>
             <br>
             <div class="btn-group" role="group">
-                <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked value="">
+                <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked value="All">
                 <label class="btn btn-outline-primary" for="btnradio1">All</label>
 
                 <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off" value="Student">
