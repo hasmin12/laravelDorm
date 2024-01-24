@@ -8,33 +8,46 @@ use Auth;
 use Log;
 use App\Models\Laundryschedule;
 use App\Models\Announcement;
+use Socialite;
 class AuthController extends Controller
 {
     public function signin(Request $request)
     {
-        $credentials = $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
-    
-        if (Auth::attempt($credentials)) {
-            $user = Auth::user(); // Retrieve the authenticated user
-            // Add some logging here to confirm the user is successfully logged in.
-            \Log::info('User successfully logged in:', ['user' => $user]);
-            
-            $token = $user->createToken('remember_token')->plainTextToken;
-            return response()->json([
-                'success' => true,
-                'token' => $token,
-                'Type' => 'Bearer',
-                'user' => $user,
+        try {
+            $credentials = $request->validate([
+                'email' => 'required|email',
+                'password' => 'required',
             ]);
+
+            if (Auth::attempt($credentials)) {
+                $user = Auth::user(); 
+                \Log::info('User successfully logged in:', ['user' => $user]);
+
+                $token = $user->createToken('remember_token')->plainTextToken;
+                return response()->json([
+                    'success' => true,
+                    'token' => $token,
+                    'Type' => 'Bearer',
+                    'user' => $user,
+                ]);
+            }
+
+            // Log an error if authentication fails
+            \Log::error('Authentication failed: Wrong credentials');
+
+            return response([
+                'message' => 'Wrong credentials'
+            ]);
+        } catch (\Exception $e) {
+            // Log any other exceptions that may occur
+            \Log::error('Error during login: ' . $e->getMessage());
+
+            return response([
+                'message' => 'An error occurred during login.'
+            ], 500);
         }
-    
-        return response([
-            'message' => 'Wrong credentials'
-        ]);
     }
+
 
     public function signout()
     {

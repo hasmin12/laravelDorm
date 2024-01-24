@@ -24,32 +24,7 @@
                 <!-- Display existing lost items here using JavaScript -->
             </div>
 
-            <!-- Modal for creating a new lost item -->
-            <div class="modal fade" id="createLostItemModal" tabindex="-1" aria-labelledby="createLostItemModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="createLostItemModalLabel">Create New Lost Item</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <!-- Add your form fields for creating a new lost item here -->
-                            <form id="createLostItemForm">
-                                <!-- Example: Name -->
-                                <div class="mb-3">
-                                    <label for="itemName" class="form-label">Name</label>
-                                    <input type="text" class="form-control" id="itemName" name="name" required>
-                                </div>
-
-                                <!-- Add other form fields as needed -->
-
-                                <button type="submit" class="btn btn-primary">Create Lost Item</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+           
 
         <div class="modal fade" id="itemDetailsModal" tabindex="-1" aria-labelledby="itemDetailsModalLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -84,3 +59,5 @@
     <!-- Back to Top -->
     <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
 </div>
+<script src="{{ asset('js/resident/lostandfound.js') }}"></script>
+@endsection

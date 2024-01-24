@@ -28,7 +28,8 @@ class UserSeeder extends Seeder
             'address' => $faker->address(),
             'sex' => $faker->randomElement($array = array ('Male', 'Female')), // 'b'
             'birthdate' => $faker-> dateTimeBetween($startDate = '-30 years', $endDate = '-20 years', $timezone = null),
-            'type' => 'Admin'
+            'type' => 'Admin',
+            'roomdetails' => 'RoomBed'
         ]);
 
         User::create([
@@ -42,9 +43,76 @@ class UserSeeder extends Seeder
             'address' => $faker->address(),
             'sex' => $faker->randomElement($array = array ('Male', 'Female')), // 'b'
             'birthdate' => $faker-> dateTimeBetween($startDate = '-30 years', $endDate = '-20 years', $timezone = null),
-            'type' => 'Admin'
+            'type' => 'Admin',
+            'roomdetails' => 'Room'
         ]);
 
+        // foreach (range(1, 5) as $index) {
+        //     $first_name = $faker->firstName();
+        //     $last_name = $faker->lastName();
+        //     $cusname = $first_name . ' ' . $last_name;
+
+        //     $user = User::create([
+        //         'name' => $cusname,
+        //         'email' => $faker->email(),
+        //         'password' => bcrypt("password"),
+        //         'role' => 'Resident',
+        //         'branch' => 'Hostel',
+        //         'Tuptnum' => $tupt_temp . "" . $tupt_num,
+        //         'address' => $faker->address(),
+        //         'sex' => $faker->randomElement($array = array ('Male', 'Female')), // 'b'
+        //         'birthdate' => $faker-> dateTimeBetween($startDate = '-30 years', $endDate = '-20 years', $timezone = null),
+        //         'contacts' => $faker->phoneNumber(),
+        //         'type' => 'Student'
+        //     ]);
+        
+        // }
+
+        foreach (range(1, 5) as $index) {
+            $first_name = $faker->firstName();
+            $last_name = $faker->lastName();
+            $cusname = $first_name . ' ' . $last_name;
+
+            $user = User::create([
+                'name' => $cusname,
+                'email' => $faker->email(),
+                'password' => bcrypt("password"),
+                'role' => 'Resident',
+                'branch' => 'Dormitory',
+                'Tuptnum' => $tupt_temp . "" . $tupt_num,
+                'address' => $faker->address(),
+                'sex' => $faker->randomElement($array = array ('Male', 'Female')), // 'b'
+                'birthdate' => $faker-> dateTimeBetween($startDate = '-30 years', $endDate = '-20 years', $timezone = null),
+                'contacts' => $faker->phoneNumber(),
+                'type' => 'Student',
+                'roomdetails' => 'RoomBed'
+                
+            ]);
+        
+        }
+        foreach (range(1, 5) as $index) {
+            $first_name = $faker->firstName();
+            $last_name = $faker->lastName();
+            $cusname = $first_name . ' ' . $last_name;
+
+            $user = User::create([
+                'name' => $cusname,
+                'email' => $faker->email(),
+                'password' => bcrypt("password"),
+                'role' => 'Resident',
+                'branch' => 'Dormitory',
+                'Tuptnum' => $tupt_temp . "" . $tupt_num,
+                'address' => $faker->address(),
+                'sex' => $faker->randomElement($array = array ('Male', 'Female')), // 'b'
+                'birthdate' => $faker-> dateTimeBetween($startDate = '-30 years', $endDate = '-20 years', $timezone = null),
+                'contacts' => $faker->phoneNumber(),
+                'type' => "Faculty",
+                'roomdetails' => 'RoomBed'
+
+            ]);
+        
+        }
+
         foreach (range(1, 5) as $index) {
             $first_name = $faker->firstName();
             $last_name = $faker->lastName();
@@ -61,7 +129,9 @@ class UserSeeder extends Seeder
                 'sex' => $faker->randomElement($array = array ('Male', 'Female')), // 'b'
                 'birthdate' => $faker-> dateTimeBetween($startDate = '-30 years', $endDate = '-20 years', $timezone = null),
                 'contacts' => $faker->phoneNumber(),
-                'type' => 'Student'
+                'type' => "Faculty",
+                'roomdetails' => 'Room'
+
             ]);
         
         }
@@ -82,69 +152,9 @@ class UserSeeder extends Seeder
                 'sex' => $faker->randomElement($array = array ('Male', 'Female')), // 'b'
                 'birthdate' => $faker-> dateTimeBetween($startDate = '-30 years', $endDate = '-20 years', $timezone = null),
                 'contacts' => $faker->phoneNumber(),
-                'type' => 'Student'
-            ]);
-        
-        }
-        foreach (range(1, 5) as $index) {
-            $first_name = $faker->firstName();
-            $last_name = $faker->lastName();
-            $cusname = $first_name . ' ' . $last_name;
+                'type' => "Staff",
+                'roomdetails' => 'RoomBed'
 
-            $user = User::create([
-                'name' => $cusname,
-                'email' => $faker->email(),
-                'password' => bcrypt("password"),
-                'role' => 'Resident',
-                'branch' => 'Dormitory',
-                'Tuptnum' => $tupt_temp . "" . $tupt_num,
-                'address' => $faker->address(),
-                'sex' => $faker->randomElement($array = array ('Male', 'Female')), // 'b'
-                'birthdate' => $faker-> dateTimeBetween($startDate = '-30 years', $endDate = '-20 years', $timezone = null),
-                'contacts' => $faker->phoneNumber(),
-                'type' => "Faculty"
-            ]);
-        
-        }
-
-        foreach (range(1, 5) as $index) {
-            $first_name = $faker->firstName();
-            $last_name = $faker->lastName();
-            $cusname = $first_name . ' ' . $last_name;
-
-            $user = User::create([
-                'name' => $cusname,
-                'email' => $faker->email(),
-                'password' => bcrypt("password"),
-                'role' => 'Resident',
-                'branch' => 'Hostel',
-                'Tuptnum' => $tupt_temp . "" . $tupt_num,
-                'address' => $faker->address(),
-                'sex' => $faker->randomElement($array = array ('Male', 'Female')), // 'b'
-                'birthdate' => $faker-> dateTimeBetween($startDate = '-30 years', $endDate = '-20 years', $timezone = null),
-                'contacts' => $faker->phoneNumber(),
-                'type' => "Faculty"
-            ]);
-        
-        }
-
-        foreach (range(1, 5) as $index) {
-            $first_name = $faker->firstName();
-            $last_name = $faker->lastName();
-            $cusname = $first_name . ' ' . $last_name;
-
-            $user = User::create([
-                'name' => $cusname,
-                'email' => $faker->email(),
-                'password' => bcrypt("password"),
-                'role' => 'Resident',
-                'branch' => 'Dormitory',
-                'Tuptnum' => $tupt_temp . "" . $tupt_num,
-                'address' => $faker->address(),
-                'sex' => $faker->randomElement($array = array ('Male', 'Female')), // 'b'
-                'birthdate' => $faker-> dateTimeBetween($startDate = '-30 years', $endDate = '-20 years', $timezone = null),
-                'contacts' => $faker->phoneNumber(),
-                'type' => "Staff"
             ]);
 
             
@@ -167,7 +177,9 @@ class UserSeeder extends Seeder
                 'sex' => $faker->randomElement($array = array ('Male', 'Female')), // 'b'
                 'birthdate' => $faker-> dateTimeBetween($startDate = '-30 years', $endDate = '-20 years', $timezone = null),
                 'contacts' => $faker->phoneNumber(),
-                'type' => "Staff"
+                'type' => "Staff",
+                'roomdetails' => 'Room'
+
             ]);
         
         }

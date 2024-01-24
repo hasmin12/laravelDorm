@@ -19,6 +19,8 @@ $(document).ready(function() {
             success: function (response) {
                 if (response.success) {
                     localStorage.setItem('token', response.token);
+                    localStorage.setItem('user', response.user);
+
                     // localStorage.setItem('authname', response.user.name);
 
                     // fetchNotifications();
@@ -29,7 +31,11 @@ $(document).ready(function() {
                     if (response.user.role === 'Resident') {
                         window.location.href = '/resident/announcements';
                     } else if (response.user.role === 'Admin') {
-                        window.location.href = '/admin/dashboard';
+                        if(response.user.branch === 'Dormitory'){
+                            window.location.href = '/admin/dorm/dashboard';
+                        }else{
+                            window.location.href = '/admin/hostel/dashboard';
+                        }
                     
                     }
                 } else {
@@ -68,6 +74,8 @@ $(document).ready(function() {
             success: function (data) {
               
                 localStorage.removeItem("token");
+                localStorage.removeItem("user");
+
                 Swal.fire({
                     icon: 'success',
                     text: 'Logout Successful.',

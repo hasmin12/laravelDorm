@@ -17,69 +17,146 @@ use Illuminate\Support\Facades\Route;
         return view('welcome');
     });
 
+    Route::get('/hostelrooms', function () {
+        return view('guest.reservation');
+    });
+
     Route::get('/login', function () {
-        return view('dorm.login');
+        return view('guest.login');
     })->name('login');
+
+    Route::get('/register', function () {
+        return view('guest.register');
+    })->name('register');
     // Route::post('signin', 'AuthController@signin');
     Route::post('signin', 'AuthController@signin');
 
     Route::post('signout', 'AuthController@signout');
 
+    Route::get('/csrf-token', function() {
+        return response()->json(['csrf_token' => csrf_token()]);
+    });
+    // Route::get('/register', function () {
+    //     return view('dorm.register');
+    // });
 
-    Route::get('/register', function () {
-        return view('dorm.register');
+    Route::get('/visitor', function () {
+        return view('guest.visitor');
     });
 
-    Route::group(['middleware' => ['role:Admin']], function () {
-        Route::prefix('admin')->group(function () {
+Route::middleware(['adminbranch:Dormitory'])->group(function () {
 
-            Route::get('/dashboard', function () {
-                return view('admin.dashboard');
-            });
+    Route::prefix('admin/dorm')->group(function () {
 
-            Route::get('/residents', function () {
-                return view('admin.residents');
-            });
-            
-            //incomplete
-            Route::get('/rooms', function () {
-                return view('admin.rooms');
-            });
-
-            //incomplete
-            Route::get('/announcements', function () {
-                return view('admin.announcements');
-            });
-
-            //incomplete
-            Route::get('/transactions', function () {
-                return view('admin.announcements');
-            });
-
-            //incomplete
-            Route::get('/violations', function () {
-                return view('admin.announcements');
-            });
-
-            //incomplete
-            Route::get('/laundry', function () {
-                return view('admin.laundry');
-            });
-
-            Route::get('/lostandfound', function () {
-                return view('admin.lostandfound');
-            });
-
-            Route::get('/user/profile/{id}', function () {
-                return view('admin.residentprofile');
-            });
-
-            Route::get('/beds', function () {
-                return view('admin.beds');
-            });
+        Route::get('/dashboard', function () {
+            return view('admin.dorm.dashboard');
         });
 
+        Route::get('/residents', function () {
+            return view('admin.dorm.residents');
+        });
+
+        Route::get('/newresident', function () {
+            return view('admin.dorm.newresident');
+        });
+        
+        //incomplete
+        Route::get('/rooms', function () {
+            return view('admin.dorm.rooms');
+        });
+
+        //incomplete
+        Route::get('/announcements', function () {
+            return view('admin.dorm.announcements');
+        });
+
+        //incomplete
+        Route::get('/transactions', function () {
+            return view('admin.dorm.transactions');
+        });
+
+        //incomplete
+        Route::get('/violations', function () {
+            return view('admin.dorm.violations');
+        });
+
+        //incomplete
+        Route::get('/laundry', function () {
+            return view('admin.dorm.laundry');
+        });
+
+        Route::get('/lostandfound', function () {
+            return view('admin.dorm.lostandfound');
+        });
+
+        Route::get('/user/profile/{id}', function () {
+            return view('admin.dorm.residentprofile');
+        });
+
+        Route::get('/beds', function () {
+            return view('admin.dorm.beds');
+        });
+
+        Route::get('/maintenance', function () {
+            return view('admin.dorm.maintenance');
+        });
     });
+});
+    
+Route::middleware(['adminbranch:Hostel'])->group(function () {
+    Route::prefix('admin/hostel')->group(function () {
+
+        Route::get('/dashboard', function () {
+            return view('admin.hostel.dashboard');
+        });
+
+        Route::get('/residents', function () {
+            return view('admin.hostel.residents');
+        });
+
+        Route::get('/newresident', function () {
+            return view('admin.hostel.newresident');
+        });
+        
+        //incomplete
+        Route::get('/rooms', function () {
+            return view('admin.hostel.rooms');
+        });
+
+        //incomplete
+        Route::get('/announcements', function () {
+            return view('admin.hostel.announcements');
+        });
+
+        //incomplete
+        Route::get('/transactions', function () {
+            return view('admin.hostel.transactions');
+        });
+
+        //incomplete
+        Route::get('/violations', function () {
+            return view('admin.hostel.violations');
+        });
+
+        //incomplete
+        Route::get('/laundry', function () {
+            return view('admin.hostel.laundry');
+        });
+
+        Route::get('/lostandfound', function () {
+            return view('admin.hostel.lostandfound');
+        });
+
+        Route::get('/user/profile/{id}', function () {
+            return view('admin.hostel.residentprofile');
+        });
+
+        Route::get('/beds', function () {
+            return view('admin.hostel.beds');
+        });
+    });
+});
+
 
     Route::group(['middleware' => ['role:Resident']], function () {
         Route::prefix('resident')->group(function () {
@@ -97,6 +174,10 @@ use Illuminate\Support\Facades\Route;
 
             Route::get('/lostandfound', function () {
                 return view('resident.lostandfound');
+            });
+
+            Route::get('/maintenance', function () {
+                return view('resident.maintenance');
             });
 
             Route::get('/billingandpayment', function () {

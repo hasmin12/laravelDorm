@@ -9,28 +9,28 @@
 </div>
 <!-- Spinner End -->
 
-@include('layouts.sidebar.admin')
+@include('layouts.sidebar.dorm.admin')
 
 <!-- Content Start -->
 <div class="content">
     @include('layouts.navbar')
         <div class="bg-light rounded p-4">
             <h3 class="mb-4">Rooms</h3>
-            {{-- <form class="d-none d-md-flex ms-4">
+            <form class="d-none d-md-flex ms-4">
                 <input class="form-control border-0" type="search" placeholder="Search" id="searchInput">
-            </form> --}}
-            {{-- <br> --}}
+            </form>
+            <br>
             <div class="btn-group" role="group">
-                <input type="radio" class="btn-check" name="roomRadiobtn" id="roomRadiobtn1" autocomplete="off" checked value="">
+                <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked value="">
                 <label class="btn btn-outline-primary" for="btnradio1">All</label>
 
-                <input type="radio" class="btn-check" name="roomRadiobtn" id="roomRadiobtn2" autocomplete="off" value="Student">
+                <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off" value="Student">
                 <label class="btn btn-outline-primary" for="btnradio2">Students</label>
 
-                <input type="radio" class="btn-check" name="roomRadiobtn" id="roomRadiobtn3" autocomplete="off" value="Faculty">
+                <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off" value="Faculty">
                 <label class="btn btn-outline-primary" for="btnradio3">Faculties</label>
 
-                <input type="radio" class="btn-check" name="roomRadiobtn" id="roomRadiobtn4" autocomplete="off" value="Staff">
+                <input type="radio" class="btn-check" name="btnradio" id="btnradio4" autocomplete="off" value="Staff">
                 <label class="btn btn-outline-primary" for="btnradio4">Staffs</label>
 
             </div>
@@ -44,8 +44,6 @@
                     <thead>
                         <tr class="text-dark">
                             <th scope="col">Name</th>
-                            <th scope="col">Type</th>
-                            <th scope="col">Category</th>
                             <th scope="col">Slot</th>
                             <th scope="col">Available</th>
                             <th scope="col">Status</th>

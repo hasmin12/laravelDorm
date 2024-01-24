@@ -8,7 +8,7 @@
         </div>
     </div>
     <!-- Spinner End -->
-    @include('layouts.sidebar.admin')
+    @include('layouts.sidebar.hostel.admin')
     <!-- Content Start -->
     <div class="content">
         @include('layouts.navbar')

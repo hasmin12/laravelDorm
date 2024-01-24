@@ -26,6 +26,8 @@ class BedSeeder extends Seeder
                 'name' => 'A',
                 'room_id' => $index,
                 'user_id' => $dormitory_users[$index - 1]->id,
+                'status' => "Occupied",
+
             ]);
 
             $bed2 = Dormitorybed::create([
@@ -39,33 +41,6 @@ class BedSeeder extends Seeder
             ]);
 
             $bed4 = Dormitorybed::create([
-                'name' => 'D',
-                'room_id' => $index,
-            ]);
-        }
-
-        foreach (range(1, 8) as $index) {
-            
-            $bed1 = Hostelbed::create([
-                'name' => 'A',
-                'room_id' => $index,
-                'user_id' => $hostel_users[$index - 1]->id,
-            ]);
-        
-
-            $bed2 = Hostelbed::create([
-                'name' => 'B',
-                'room_id' => $index,
-            ]);
-         
-
-            $bed3 = Hostelbed::create([
-                'name' => 'C',
-                'room_id' => $index,
-            ]);
-         
-
-            $bed4 = Hostelbed::create([
                 'name' => 'D',
                 'room_id' => $index,
             ]);

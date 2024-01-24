@@ -9,7 +9,7 @@
 </div>
 <!-- Spinner End -->
 
-@include('layouts.sidebar.admin')
+@include('layouts.sidebar.dorm.admin')
 
 <!-- Content Start -->
 <div class="content">
@@ -43,6 +43,20 @@
                                 <label for="announcementContent" class="form-label">Content</label>
                                 <textarea class="form-control" id="announcementContent" rows="4" required></textarea>
                             </div>
+                            <div class="mb-3">
+                                <label for="receiver" class="form-label">Announce To</label>
+                                <select class="form-select" id="receiver" required>
+                                    <option value="" selected hidden></option>
+                                    <option value="Residents">Residents</option>
+                                    <option value="Public">Public</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="img_path" class="form-label">Image</label>
+                                <input type="file" class="form-control" id="img_path" name="img_path" required>
+                            </div>
+
                             <!-- Add other necessary form fields -->
         
                             <button type="submit" class="btn btn-primary">Create Announcement</button>
@@ -72,6 +86,15 @@
                                 <label for="updateContentInput" class="form-label">Content</label>
                                 <textarea class="form-control" id="updateContentInput" rows="4" required></textarea>
                             </div>
+
+                            <div class="mb-3">
+                                <label for="updateReceiver" class="form-label">Announce To</label>
+                                <select class="form-select" id="updateReceiver" required>
+                                    <option value="" selected hidden></option>
+                                    <option value="Residents">Residents</option>
+                                    <option value="Public">Public</option>
+                                </select>
+                            </div>
                             <!-- Add other necessary form fields -->
         
                             <button type="submit" class="btn btn-primary">Update Announcement</button>
@@ -91,4 +114,6 @@
 <!-- Back to Top -->
 <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
 </div>
+
+<script src="{{ asset('js/announcement.js') }}"></script>
 @endsection

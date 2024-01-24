@@ -20,7 +20,7 @@
             {{-- <a href="/profile" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Profile</a> --}}
             <a href="/resident/announcements" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Announcements</a>
             <a href="/resident/billingandpayment" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Billing</a>
-            <a href="/resident/laundry" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Maintenance</a>
+            <a href="/resident/maintenance" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Maintenance</a>
             <a href="/resident/laundry" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Laundry</a>
             <a href="/resident/lostandfound" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Lost and Found</a>
 

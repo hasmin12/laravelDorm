@@ -15,6 +15,7 @@ class Lostitem extends Model
         'dateLost',
         'locationLost',
         'findersName',
+        'branch',
         'img_path',
         'claimedBy',
         'claimedDate',

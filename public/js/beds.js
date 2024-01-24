@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     const bedTableBody = document.querySelector('#bedsTableBody');
 
-    function updateBeds(roomId) {
+    function fetchBeds() {
         // Use roomId in the fetch request or other logic
         const token = localStorage.getItem('token');
         const getRoomId = localStorage.getItem('room_id');
@@ -44,10 +44,10 @@ document.addEventListener('DOMContentLoaded', function () {
     
 
     // Initial residents update
-    updateBeds();
+    fetchBeds();
 });
 
 function goBack() {
-    location.href = "/admin/rooms";
+    location.href = "/admin/dorm/rooms";
 
 }

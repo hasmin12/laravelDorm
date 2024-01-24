@@ -19,21 +19,27 @@ return new class extends Migration
             $table->string('password');
             $table->text('role')->nullable();
             $table->text('branch')->nullable();
+            $table->text('img_path')->nullable();
             $table->rememberToken();
-            $table->text('Tuptnum')->nullable();
             $table->text('address');
             $table->text('sex');
             $table->date('birthdate');
             $table->text('contacts');
-            
-            $table->text('cor')->nullable();
-            $table->text('schoolID')->nullable();
-            $table->text('vaccineCard')->nullable();
+
+            $table->text('Tuptnum')->nullable();
             $table->text('contract')->nullable();
+            $table->text('cor')->nullable();
+            $table->text('validId')->nullable();
+            $table->text('vaccineCard')->nullable();
+            
             $table->text('type')->nullable();
             $table->date('lastpaidDate')->nullable();
             $table->boolean('is_paid')->default(0);
             $table->boolean('is_scheduled')->default(0);
+            $table->integer('laptop')->default(0);
+            $table->integer('electricfan')->default(0);
+            $table->text('roomdetails')->nullable();
+
             $table->softDeletes();
             $table->timestamps();
         });

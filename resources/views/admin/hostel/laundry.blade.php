@@ -9,14 +9,20 @@
 </div>
 <!-- Spinner End -->
 
-@include('layouts.sidebar.admin')
+@include('layouts.sidebar.hostel.admin')
 
 <!-- Content Start -->
 <div class="content">
     @include('layouts.navbar')
     {{-- Calendar --}}
-    <br>
-    <div id="calendar"></div>
+    <div class="h-100 bg-light rounded p-4">
+        <div class="d-flex align-items-center justify-content-between mb-2">
+            <h3 class="mb-0">Calendar</h3>
+        </div>
+        
+        <div id="calendar"></div>
+    
+    </div>
     
 
     @include('layouts.footer')
@@ -28,4 +34,7 @@
 <!-- Back to Top -->
 <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
 </div>
+
+
+<script src="{{ asset('js/laundry.js') }}"></script>
 @endsection

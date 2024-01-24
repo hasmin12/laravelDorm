@@ -17,6 +17,16 @@ class Announcement extends Model
         'postedBy' => 'required',
     ];
 
+    protected $fillable = [
+        'title',
+        'content',
+        'user_id',
+        'img_path',
+        'receiver',
+        'branch'
+    ];
+
+
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');

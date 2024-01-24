@@ -40,12 +40,16 @@
                         </div>
                         <button type="submit" class="btn btn-primary py-3 w-100 mb-4">Sign In</button>
                     </form>
-                    <p class="text-center mb-0">Don't have an Account? <a href="">Sign Up</a></p>
+                    {{-- <a href="{{ url('/login/google') }}" class="btn btn-google py-3 w-100">
+                        <i class="fab fa-google me-2"></i> Sign In with Google
+                    </a> --}}
+                    <p class="text-center mb-0">Don't have an Account? <a href="/register">Sign Up</a></p>
                 </div>
             </div>
         </div>
     </div>
     <!-- Sign In End -->
 </div>
+<script src="{{ asset('js/auth.js') }}"></script>
 @endsection
 

@@ -7,29 +7,33 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const titleInput = document.getElementById('announcementTitle');
         const contentInput = document.getElementById('announcementContent');
+        const receiverInput = document.getElementById('receiver');
+        const imageInput = $('#img_path')[0].files[0];
+
 
         const title = titleInput.value;
         const content = contentInput.value;
+        const receiver = receiverInput.value;
 
-        const formData = {
-            title: title,
-            content: content,
-        };
+
+        const formData = new FormData();
+        formData.append('title', title);
+        formData.append('content', content);
+        formData.append('receiver', receiver);
+        formData.append('img_path', imageInput);
 
         const token = localStorage.getItem('token');
 
-        fetch('/api/announcement', {
-            method: 'POST',
+        $.ajax({
+            url: '/api/announcement',
+            type: 'POST',
             headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                'Authorization': `Bearer ${token}`,
+                'Authorization': 'Bearer ' + token,
             },
-            credentials: 'include',
-            body: JSON.stringify(formData),
-        })
-        .then(response => response.json())
-        .then(data => {
+            data: formData,
+            processData: false,  
+            contentType: false,
+            success: function (data) {
             console.log('Announcement created successfully:', data);
 
             $('#createAnnouncementModal').modal('hide');
@@ -44,18 +48,18 @@ document.addEventListener('DOMContentLoaded', function () {
                 title: 'Announcement Created',
                 text: 'Your announcement has been successfully created.',
             });
-        })
-        .catch(error => {
-            console.error('Error creating announcement:', error);
+        },
+        error: function (error) {
+            console.error('Error creating lost item:', error);
 
             Swal.fire({
                 icon: 'error',
                 title: 'Error',
-                text: 'An error occurred while creating the announcement. Please try again.',
+                text: 'An error occurred while creating the lost item. Please try again.',
             });
-        });
+        }
     });
-
+});
     const announcementsContainer = document.getElementById('announcements-container');
     announcementsContainer.addEventListener('click', function (event) {
         const target = event.target;
@@ -68,6 +72,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
+
 
 const updateAnnouncementForm = document.getElementById('updateAnnouncementForm');
 updateAnnouncementForm.addEventListener('submit', function (event) {
@@ -226,6 +231,7 @@ function fetchAnnouncements() {
     })
     .then(response => response.json())
     .then(data => {
+        console.log('Announcements data:', data); 
         const announcementsContainer = document.getElementById('announcements-container');
         announcementsContainer.innerHTML = '';
 
@@ -241,10 +247,11 @@ function fetchAnnouncements() {
                         <div class="d-flex w-100 justify-content-between">
 
                             <h6>${announcement.title}</h6>
-                            <div>
+                           <div class="btn-group">
+                          
                             <button class="btn btn-primary update-btn" data-announcement-id="${announcement.id}">Update</button>
                             <button class="btn btn-danger delete-btn" data-announcement-id="${announcement.id}">Delete</button>
-                        
+
                             </div>
                         </div>
                        

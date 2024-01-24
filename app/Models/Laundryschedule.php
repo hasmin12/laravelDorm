@@ -13,12 +13,18 @@ class Laundryschedule extends Model
 
     public static $rules = [
         'user_id' => 'required',
-        // 'method' => 'required',
+      
         'laundrydate' => 'required',
-        // 'minitial' => 'required',
+      
         'laundrytime' => 'required',
-        'status' => 'required',
-       
+    
+    ];
+    protected $fillable = [
+        'user_id' ,
+        'laundrydate',
+        'laundrytime',
+        'branch',
+
     ];
 
     public function user()

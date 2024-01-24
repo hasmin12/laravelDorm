@@ -25,4 +25,9 @@ class Hostelroom extends Model
     {
         return $this->hasMany(Hostelbed::class);
     }
+
+    public function images()
+    {
+        return $this->hasMany(Hostelimage::class, 'room_id');
+    }
 }

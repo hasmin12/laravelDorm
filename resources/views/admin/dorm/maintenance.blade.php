@@ -9,31 +9,37 @@
 </div>
 <!-- Spinner End -->
 
-@include('layouts.sidebar.admin')
+@include('layouts.sidebar.dorm.admin')
 
 <!-- Content Start -->
 <div class="content">
     @include('layouts.navbar')
         <div class="bg-light rounded p-4">
-            <h3 class="mb-4">Beds</h3>
+            <div class="d-flex align-items-center justify-content-between mb-2">
+                <h3 class="mb-0">Repairs</h3>
+                {{-- <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createRoomModal">Create Room</button> --}}
+            </div>
         </div>
+    
     <!-- Recent Sales Start -->
     <div class="container-fluid pt-4 px-4">
-        
         <div class="bg-light text-center rounded p-4">
-        <button type="button" class="btn btn-lg btn-lg-square btn-primary m-2" onclick="goBack()"><i class="fa fa-arrow-left"></i></button>
-
             <div class="table-responsive">
                 <table class="table text-start align-middle table-bordered table-hover mb-0">
                     <thead>
                         <tr class="text-dark">
-                            <th scope="col">Name</th>
+                            <th scope="col">Room</th>
+                            <th scope="col">Request Date</th>
+                            <th scope="col">Item</th>
+                           
+                            <th scope="col">Technician</th>
                             <th scope="col">Resident</th>
+                         
+                            <th scope="col">Image</th>
                             <th scope="col">Status</th>
-                            <th scope="col">Action</th>
                         </tr>
                     </thead>
-                    <tbody id="bedsTableBody">
+                    <tbody id="repairsTableBody">
                         
                     </tbody>
                 </table>
@@ -42,7 +48,7 @@
     </div>
     <!-- Recent Sales End -->
 
-
+  
     
 
     @include('layouts.footer')
@@ -54,4 +60,6 @@
 <!-- Back to Top -->
 <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
 </div>
+
+<script src="{{ asset('js/admin/repair.js') }}"></script>
 @endsection

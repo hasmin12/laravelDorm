@@ -87,3 +87,4 @@
     </div>
 </nav>
 <!-- Navbar End -->
+<script src="{{ asset('js/auth.js') }}"></script>

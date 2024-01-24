@@ -9,10 +9,6 @@ document.addEventListener('DOMContentLoaded', function () {
         const residentType = document.querySelector('input[name="btnradio"]:checked').value;
         const searchQuery = searchInput.value;
 
-        // Retrieve the token from localStorage
-        console.log("Resident Type:", residentType);
-        console.log("Search Query:", searchQuery);
-
         fetch(`/api/getResidents?resident_type=${residentType}&search_query=${searchQuery}`, {
             method: 'GET',
             headers: {
@@ -25,11 +21,12 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(response => response.json())
         .then(data => {
             // Clear the existing table rows
-            console.log("Fetched Data:", data);
+            
             residentTableBody.innerHTML = '';
 
             // Add new rows based on the fetched data
             data.beds.forEach(bed => {
+                
                 const row = `
                     
                         <td>${bed.resident.Tuptnum}</td>
@@ -100,4 +97,102 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Initial residents update
     updateResidents();
+
+    function fetchRooms(sex, type) {
+        // Replace the URL with your actual API endpoint for fetching rooms
+        const apiUrl = `/api/getRooms?sex=${sex}&room_type=${type}`;
+
+        // Assuming you're using Fetch API
+        fetch(apiUrl, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            },
+            credentials: 'include',
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Populate room dropdown
+                const roomDropdown = document.getElementById('roomDropdown');
+                roomDropdown.innerHTML = '<option value="" disabled selected></option>';
+                data.rooms.forEach(room => {
+                    const option = document.createElement('option');
+                    option.value = room.id;
+                    option.textContent = room.name;
+                    roomDropdown.appendChild(option);
+                });
+
+                // Clear and disable bed dropdown
+                const bedDropdown = document.getElementById('bedDropdown');
+                bedDropdown.innerHTML = '<option value="" disabled selected></option>';
+                bedDropdown.disabled = true;
+            })
+            .catch(error => console.error('Error fetching rooms:', error));
+    }
+
+    // Fetch beds based on the selected room
+    function fetchBeds(roomId) {
+        // Replace the URL with your actual API endpoint for fetching beds
+        const apiUrl = `/api/getBeds?room_id=${roomId}`;
+
+        // Assuming you're using Fetch API
+        fetch(apiUrl, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            },
+            credentials: 'include',
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Populate bed dropdown
+                const bedDropdown = document.getElementById('bedDropdown');
+                bedDropdown.innerHTML = '<option value="" disabled selected></option>';
+                data.beds.forEach(bed => {
+                    if (bed.resident_name === null) {
+                        const option = document.createElement('option');
+                        option.value = bed.id;
+                        option.textContent = "Bed " + bed.name;
+                        bedDropdown.appendChild(option);
+                    }
+                });
+
+                // Enable bed dropdown
+                bedDropdown.disabled = false;
+            })
+            .catch(error => console.error('Error fetching beds:', error));
+    }
+
+    // Event listener for changes in sex dropdown
+    document.getElementById('residentSex').addEventListener('change', function () {
+        const sex = this.value;
+        const type = document.getElementById('residentType').value;
+
+        fetchRooms(sex, type);
+    });
+
+    // Event listener for changes in type dropdown
+    document.getElementById('residentType').addEventListener('change', function () {
+        const sex = document.getElementById('residentSex').value;
+        const type = this.value;
+        fetchRooms(sex, type);
+    });
+
+    // Event listener for changes in room dropdown
+    document.getElementById('roomDropdown').addEventListener('change', function () {
+        const roomId = this.value;
+
+        // Fetch beds based on the selected room
+        fetchBeds(roomId);
+    });
 });
+
+document.getElementById('addResidentButton').addEventListener('click', function() {
+    window.location.href = '/admin/newresident';
+});
+
+
