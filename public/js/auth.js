@@ -61,7 +61,7 @@ $(document).ready(function() {
         e.preventDefault();
 
         $.ajax({
-            type: "POST",
+            type: "GET",
             url: "/signout",
             data: null,
             contentType: false,

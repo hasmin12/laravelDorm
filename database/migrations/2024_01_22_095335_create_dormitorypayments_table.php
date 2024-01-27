@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreign('room_id')->references('id')->on('dormitoryrooms')->onDelete('cascade');
             $table->integer('laptop')->default(0);
             $table->integer('electricfan')->default(0);
-            $table->decimal('totalAmount', 5,2);
+            $table->float('totalAmount');
 
             $table->date('payment_date');
             $table->timestamps();

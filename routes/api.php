@@ -27,7 +27,14 @@ Route::post('/createReservation', 'GuestController@createReservation');
 Route::post('/createRegistration', 'GuestController@createRegistration');
 
 Route::group(['middleware' => ['auth:sanctum']], function(){
+    Route::get('/getDashboardData', 'AdminController@getDashboardData');
+
+
     Route::get('/getResidents', 'AdminController@getResidents');
+    Route::get('/getRegisteredusers', 'AdminController@getRegisteredusers');
+    Route::post('/addRegistereduser', 'AdminController@addRegistereduser');
+
+    
     
     Route::get('/notifyResidents', 'AdminController@notifyResidents');
     Route::get('/getBeds/{id}', 'AdminController@getBeds');

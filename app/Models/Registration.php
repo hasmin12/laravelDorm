@@ -12,6 +12,8 @@ class Registration extends Model
         'Tuptnum',
         'name',
         'email',
+        'type',
+
         'password',
         'sex',
         'birthdate',

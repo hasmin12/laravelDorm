@@ -21,7 +21,19 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'is_scheduled',
+        'branch',
+        'role',
+        'Tuptnum',
+        'sex',
+        'address',
+        'birthdate',
+        'contacts',
+        'cor',
+        'validId',
+        'vaccineCard',
+        'contract',
+        'type',
+        'roomdetails', 
     ];
 
     /**

@@ -99,6 +99,11 @@
                                     <p id="downPaymentInfo" class="card-text"></p>
                                 </div>
                             </div>
+
+                            <div class="mb-3">
+                                <label for="payments" class="form-label">Payment</label>
+                                <input type="file" class="form-control" id="payments" name="payments" required>
+                            </div>
                     
 
                         </div>

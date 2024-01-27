@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreign('room_id')->references('id')->on('hostelrooms')->onDelete('cascade');
             $table->unsignedBigInteger('reservation_id');
             $table->foreign('reservation_id')->references('id')->on('reservations')->onDelete('cascade');
-            $table->decimal('totalAmount', 5,2);
+            $table->float('totalAmount');
             $table->date('payment_date');
             $table->timestamps();
         });

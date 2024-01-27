@@ -39,7 +39,11 @@ class GuestController extends Controller
     {
         try {
             $ldate = date('Y-m-d H:i:s');
-        
+            
+            $fileName1 = time() . $request->file('payments')->getClientOriginalName();
+            $path1 = $request->file('payments')->storeAs('payments', $fileName1, 'public');
+            $payments = '/storage/' . $path1;
+
             $fileName = time() . $request->file('img_path')->getClientOriginalName();
             $path = $request->file('img_path')->storeAs('reserve', $fileName, 'public');
             $img_path = '/storage/' . $path;
@@ -60,6 +64,7 @@ class GuestController extends Controller
                 'checkout_date' => $request->input('checkout_date'),
                 'downPayment' => $request->input('downPayment'),
                 'totalPayment' => $request->input('totalPayment'),
+                'payments' => $payments,
                 'reservation_date' => $ldate,
             ]);
 
@@ -100,6 +105,7 @@ class GuestController extends Controller
             'name' => $request->input('name'),
             'email' => $request->input('email'),
             'password' => $request->input('password'),
+            'type' => $request->input('type'),
             'sex' => $request->input('sex'),
             'birthdate' => $request->input('birthdate'),
             'address' => $request->input('address'),

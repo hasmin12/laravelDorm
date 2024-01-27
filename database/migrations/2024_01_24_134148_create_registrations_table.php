@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->string('role')->default("Resident");
+            $table->text('type');
+
             $table->string('branch')->default("Dormitory");
             $table->text('img_path')->nullable();
             $table->rememberToken();

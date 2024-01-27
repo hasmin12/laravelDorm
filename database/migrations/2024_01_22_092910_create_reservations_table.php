@@ -32,6 +32,7 @@ return new class extends Migration
             $table->text('sex');
             $table->date('birthdate');
             $table->text('contacts');
+            $table->text('payments');
 
             $table->string('status')->default('Pending');
             $table->timestamps();

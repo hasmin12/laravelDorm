@@ -31,7 +31,7 @@ use Illuminate\Support\Facades\Route;
     // Route::post('signin', 'AuthController@signin');
     Route::post('signin', 'AuthController@signin');
 
-    Route::post('signout', 'AuthController@signout');
+    Route::get('signout', 'AuthController@signout');
 
     Route::get('/csrf-token', function() {
         return response()->json(['csrf_token' => csrf_token()]);
@@ -56,8 +56,8 @@ Route::middleware(['adminbranch:Dormitory'])->group(function () {
             return view('admin.dorm.residents');
         });
 
-        Route::get('/newresident', function () {
-            return view('admin.dorm.newresident');
+        Route::get('/registereduser', function () {
+            return view('admin.dorm.registered');
         });
         
         //incomplete

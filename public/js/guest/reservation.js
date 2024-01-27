@@ -189,6 +189,7 @@ createReservationForm.addEventListener('submit', function (event) {
     const checkout_date = document.getElementById('checkoutDate').value;
     const downPayment = parseFloat(document.getElementById('downPaymentInfo').textContent.replace('50% Downpayment: ₱', '').replace(',', ''));
     const totalPayment = parseFloat(document.getElementById('paymentInfo').textContent.replace('Total Payment: ₱', '').replace(',', ''));
+    const payments = document.getElementById('payments').files[0];
 
 
     const formData = new FormData();
@@ -206,6 +207,8 @@ createReservationForm.addEventListener('submit', function (event) {
     formData.append('downPayment', downPayment);
     formData.append('checkout_date', checkout_date);
     formData.append('totalPayment', totalPayment);
+    formData.append('payments', payments);
+
 
 
     fetch('/api/createReservation', {

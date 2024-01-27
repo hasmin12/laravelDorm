@@ -27,6 +27,8 @@ class Reservation extends Model
         'birthdate',
         'contacts',
         'status',
+        'payments',
+
     ];
 
 }

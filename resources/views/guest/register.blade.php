@@ -63,14 +63,33 @@
                                 </div>
                             </div>
 
+                            <div class="form-group row mb-2">
+                                <label for="type" class="col-md-4 col-form-label text-md-right">{{ __('Type') }}</label>
+                                <div class="col-md-6">
+                                    <select id="type" class="form-control @error('type') is-invalid @enderror" name="type" required>
+                                        <option value="" selected hidden></option>
+                                        <option value="Student">Student</option>
+                                        <option value="Faculty">Faculty</option>
+                                        <option value="Staff">Staff</option>
+
+                                    </select>
+                                    @error('type')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+
+
                             <!-- Sex -->
                             <div class="form-group row mb-2">
                                 <label for="sex" class="col-md-4 col-form-label text-md-right">{{ __('Sex') }}</label>
                                 <div class="col-md-6">
                                     <select id="sex" class="form-control @error('sex') is-invalid @enderror" name="sex" required>
                                         <option value="" selected hidden></option>
-                                        <option value="male">Male</option>
-                                        <option value="female">Female</option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
                                     </select>
                                     @error('sex')
                                         <span class="invalid-feedback" role="alert">
@@ -150,7 +169,7 @@
 
                             <!-- Valid ID -->
                             <div class="form-group row mb-2">
-                                <label for="validId" class="col-md-4 col-form-label text-md-right">{{ __('Valid ID') }}</label>
+                                <label for="validId" class="col-md-4 col-form-label text-md-right">{{ __('Student ID') }}</label>
                                 <div class="col-md-6">
                                     <input id="validId" type="file" class="form-control-file @error('validId') is-invalid @enderror" name="validId" required>
                                     @error('validId')
