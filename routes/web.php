@@ -17,6 +17,10 @@ use Illuminate\Support\Facades\Route;
         return view('welcome');
     });
 
+    Route::get('/dorm/home', function () {
+        return view('dorm.home');
+    });
+
     Route::get('/hostelrooms', function () {
         return view('guest.reservation');
     });
