@@ -14,7 +14,7 @@ use App\Models\Announcement;
 use App\Models\Lostitem;
 use App\Models\Repair;
 use App\Models\Registration;
-
+use App\Models\Violation;
 
 use App\Mail\NotifyMail;
 use Illuminate\Support\Facades\Mail;
@@ -796,5 +796,44 @@ class AdminController extends Controller
             return response()->json(['error' => 'Repairs not found'], 404);
         }
     }
+
+    public function getViolations()
+    {
+        $branch = Auth::user()->branch;
+        $violations = Violation::with('user')->where('branch', $branch)->get();
+        return response()->json(['violations' => $violations]);
+    }
+    
+    
+
+    public function getViolation($id)
+    {
+        try {
+            $violation = Violation::findOrFail($id);
+            return response()->json(['violation' => $violation]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Violation not found'], 404);
+        }
+    }
+
+    public function createViolation(Request $request)
+    {
+        try {
+            $user = Auth::user();
+            $violation = Violation::create([
+                'violationName' => $request->input('violationName'),
+                'user_id' => $user->id,
+                'penalty' => $request->input('penalty'),
+                'violationDate' => $request->input('violationDate'),
+                'violationType' => $request->input('violationType'),
+                'status' => $request->input('status'),
+            ]);
+            return response()->json(['violation' => $violation], 201);
+        } catch (\Exception $e) {
+            \Log::error('Error creating violation: ' . $e->getMessage());
+            return response()->json(['error' => 'Internal Server Error'], 500);
+        }
+    }
+
 
 }

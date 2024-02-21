@@ -1,6 +1,6 @@
 /********** Template CSS **********/
 :root {
-    --primary: #009CFF;
+    --primary: #dc3545;
     --light: #F3F6F9;
     --dark: #191C24;
 }
@@ -152,6 +152,12 @@
 .sidebar .navbar .navbar-nav .nav-link:hover i,
 .sidebar .navbar .navbar-nav .nav-link.active i {
     background: var(--light);
+}
+
+.full-width-container {
+    width: 100%;
+    margin: 0;
+    padding: 0;
 }
 
 .sidebar .navbar .dropdown-toggle::after {

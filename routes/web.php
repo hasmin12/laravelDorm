@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+// use App\Models\Resident; 
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -59,6 +59,11 @@ Route::middleware(['adminbranch:Dormitory'])->group(function () {
         Route::get('/residents', function () {
             return view('admin.dorm.residents');
         });
+
+        // Route::get('/residents', function () {
+        //     $resident = Resident::all(); // Replace 'Resident' with your actual model name
+        //     return view('admin.dorm.residents', compact('resident'));
+        // });
 
         Route::get('/registereduser', function () {
             return view('admin.dorm.registered');

@@ -1,19 +1,19 @@
 document.addEventListener('DOMContentLoaded', function () {
     const searchInput = document.querySelector('#searchInput');
-    const residentTypeButtons = document.querySelectorAll('input[name="btnradio"]');
-    const residentTableBody = document.querySelector('#residentTableBody');
+    const violationTypeButtons = document.querySelectorAll('input[name="btnradio"]');
+    const violationTableBody = document.querySelector('#violationTableBody');
     const sendEmailButton = document.querySelector('#sendEmailButton');
-    const residentTilesContainer = document.querySelector('#residentTilesContainer');
+    const violationTilesContainer = document.querySelector('#violationTilesContainer');
     const token = localStorage.getItem('token');
 
     // Set the initial view to 'tiles'
     let currentView = 'tiles';
 
-    function fetchResidents(viewType = 'tiles') {
-        const residentType = document.querySelector('input[name="btnradio"]:checked').value;
+    function fetchViolations(viewType = 'tiles') {
+        const violationType = document.querySelector('input[name="btnradio"]:checked').value;
         const searchQuery = searchInput.value;
 
-        fetch(`/api/getResidents?resident_type=${residentType}&search_query=${searchQuery}`, {
+        fetch(`/api/getViolations?violation_type=${violationType}&search_query=${searchQuery}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -25,26 +25,26 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(response => response.json())
         .then(data => {
             // Clear the existing table rows and tiles
-            residentTableBody.innerHTML = '';
-            residentTilesContainer.innerHTML = '';
+            violationTableBody.innerHTML = '';
+            violationTilesContainer.innerHTML = '';
 
             // Create a single row to contain all the cards
             const cardRow = document.createElement('div');
             cardRow.classList.add('row');
 
-            data.residents.forEach(resident => {
+            data.violations.forEach(violation => {
                 // Card HTML structure
                     const card = `
                         <div class="col-md-4 mb-3"> <!-- Added mb-3 class for margin-bottom -->
                             <div class="card" style="width: 18rem;">
                                 <img class="card-img-top" src="..." alt="Card image cap">
                                 <div class="card-body text-center">
-                                    <h5 class="card-title">${resident.name}</h5>
-                                    <button class="btn btn-sm btn-success" onclick="showResidentDetails(${resident.id})" data-bs-toggle="modal" data-bs-target="#residentDetailsModal">
+                                    <h5 class="card-title">${violation.name}</h5>
+                                    <button class="btn btn-sm btn-success" onclick="showViolationDetails(${violation.id})" data-bs-toggle="modal" data-bs-target="#violationDetailsModal">
                                         Check
                                     </button>
-                                    <button class="btn btn-sm btn-warning" onclick="updateRoom(${resident.id})">Update</button>
-                                    <button class="btn btn-sm btn-danger" onclick="deleteRoom(${resident.id})">Delete</button>
+                                    <button class="btn btn-sm btn-warning" onclick="updateRoom(${violation.id})">Update</button>
+                                    <button class="btn btn-sm btn-danger" onclick="deleteRoom(${violation.id})">Delete</button>
                                 </div>
                             </div>
                         </div>
@@ -56,31 +56,31 @@ document.addEventListener('DOMContentLoaded', function () {
                 // Table row HTML structure
                 const tableRow = `
                     <tr>
-                        <td>${resident.Tuptnum}</td>
-                        <td>${resident.name}</td>
-                        <td>${resident.type}</td>
-                        <td>${resident.sex}</td>
-                        <td>${resident.contacts}</td>
-                        <td>${resident.roomdetails}</td>
+                    <td>${violation.violationName}</td>
+                    <td>${violation.user_id}</td>
+                    <td>${violation.penalty}</td>
+                    <td>${violation.violationDate}</td>
+                    <td>${violation.violationType}</td>
+                    <td>${violation.status}</td>
                         <td>
-                        <button class="btn btn-sm btn-success" onclick="showResidentDetails(${JSON.stringify(resident)})" data-bs-toggle="modal" data-bs-target="#residentDetailsModal">
+                        <button class="btn btn-sm btn-success" onclick="showViolationDetails(${JSON.stringify(violation)})" data-bs-toggle="modal" data-bs-target="#violationDetailsModal">
                             Check
                         </button>
 
-                            <button class="btn btn-sm btn-warning" onclick="updateRoom(${resident.id})">Update</button>
-                            <button class="btn btn-sm btn-danger" onclick="deleteRoom(${resident.id})">Delete</button>
+                            <button class="btn btn-sm btn-warning" onclick="updateRoom(${violation.id})">Update</button>
+                            <button class="btn btn-sm btn-danger" onclick="deleteRoom(${violation.id})">Delete</button>
                         </td>
                     </tr>
                 `;
 
                 // Append each table row
-                residentTableBody.insertAdjacentHTML('beforeend', tableRow);
+                violationTableBody.insertAdjacentHTML('beforeend', tableRow);
             });
 
             // Insert the row containing all cards into the container
-            residentTilesContainer.appendChild(cardRow);
+            violationTilesContainer.appendChild(cardRow);
         })
-        .catch(error => console.error('Error fetching residents:', error))
+        .catch(error => console.error('Error fetching violations:', error))
         .finally(() => {
             // Hide spinner or loading indicator
             document.getElementById('spinner').classList.remove('show');
@@ -91,20 +91,20 @@ document.addEventListener('DOMContentLoaded', function () {
         // Implement your logic to send emails here
         // You can fetch selected residents, their email addresses, etc., and send emails
         // This is a placeholder function, customize it based on your requirements
-        alert('Emails will be sent to selected residents.');
+        alert('Emails will be sent to selected violator.');
     }
 
     // Event listeners
-    searchInput.addEventListener('input', () => fetchResidents(currentView));
-    residentTypeButtons.forEach(button => button.addEventListener('change', () => fetchResidents(currentView)));
+    searchInput.addEventListener('input', () => fetchViolations(currentView));
+    violationTypeButtons.forEach(button => button.addEventListener('change', () => fetchViolations(currentView)));
     sendEmailButton.addEventListener('click', sendEmail);
 
     // Fetch residents with the initial view type
-    fetchResidents(currentView);
+    fetchViolations(currentView);
 });
 
 
-document.getElementById('addResidentButton').addEventListener('click', function() {
-    window.location.href = '/admin/newresident';
+document.getElementById('addViolationButton').addEventListener('click', function() {
+    window.location.href = '/admin/newviolation';
 });
 

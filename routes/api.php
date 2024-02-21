@@ -70,6 +70,11 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::get('/getRepairs', 'ResidentController@getRepairs');
     Route::get('/admin/getRepairs', 'AdminController@getRepairs');
 
+    Route::get('/api/getViolations', 'AdminController@getViolations');
+    Route::post('/api/addViolationuser', 'AdminController@addViolationuser');
+    Route::get('/notifyViolations', 'AdminController@notifyResidents');
+
+
 
    
 
