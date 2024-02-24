@@ -85,6 +85,15 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::post('/createRepair', 'ResidentController@createRepair');
     Route::get('/getRepairs', 'ResidentController@getRepairs');
     Route::get('/admin/getRepairs', 'AdminController@getRepairs');
+
+    Route::get('/api/getViolations', 'AdminController@getViolations');
+    Route::post('/api/addViolationuser', 'AdminController@addViolationuser');
+    Route::get('/notifyViolations', 'AdminController@notifyResidents');
+
+
+
+   
+
     Route::post('/acceptRepair', 'TechnicianController@acceptRepair');
     Route::post('/resident/acceptRepair', 'ResidentController@acceptRepair');
     Route::get('/getRepairStatus', 'TechnicianController@getRepairStatus');
