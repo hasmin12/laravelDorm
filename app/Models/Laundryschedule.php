@@ -24,7 +24,7 @@ class Laundryschedule extends Model
         'laundrydate',
         'laundrytime',
         'branch',
-
+        'status'
     ];
 
     public function user()

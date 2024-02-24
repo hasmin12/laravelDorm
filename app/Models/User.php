@@ -34,6 +34,8 @@ class User extends Authenticatable
         'contract',
         'type',
         'roomdetails', 
+        'is_scheduled',
+        'status'
     ];
 
     /**

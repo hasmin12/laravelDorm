@@ -16,11 +16,22 @@ class Hostelroom extends Model
         'name' => 'required',
         'details' => 'required',
         'price' => 'required',
-        // 'minitial' => 'required',
+        
         'totalBed' => 'required',
         'availableBed' => 'required',
     ];
 
+    protected $fillable = [
+        'name',
+        'description',
+        'floorNum',
+        'type',
+        'pax',
+        'price',
+        'status',
+        'img_path',
+        'user_id',
+    ];
     public function beds()
     {
         return $this->hasMany(Hostelbed::class);

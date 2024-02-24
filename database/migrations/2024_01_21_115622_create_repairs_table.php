@@ -21,16 +21,16 @@ return new class extends Migration
             $table->text('technicianName')->nullable();
             $table->text('residentName');
 
-            // $table->unsignedBigInteger('technician_id')->nullable();
-            // $table->foreign('technician_id')->references('id')->on('technicians')->onDelete('cascade');
-            // $table->unsignedBigInteger('user_id');
-            // $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-
-            $table->date('completion_date')->nullable();
-            $table->decimal('cost',6,2)->nullable();
+            $table->unsignedBigInteger('technician_id')->nullable();
+            $table->foreign('technician_id')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedBigInteger('completionPercentage')->default(0);
+            $table->unsignedBigInteger('completionDays')->nullable();
+            $table->date('completed_date')->nullable();
+            $table->float('cost')->nullable();
             $table->text('img_path')->nullable();
-            $table->string('status')->default("Pending");
-
+            $table->string('status')->nullable();
             $table->timestamps();
           
 

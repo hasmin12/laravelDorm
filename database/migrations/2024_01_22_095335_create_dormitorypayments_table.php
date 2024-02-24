@@ -15,13 +15,16 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->unsignedBigInteger('room_id');
-            $table->foreign('room_id')->references('id')->on('dormitoryrooms')->onDelete('cascade');
-            $table->integer('laptop')->default(0);
-            $table->integer('electricfan')->default(0);
-            $table->float('totalAmount');
+            $table->text('roomdetails')->nullable();
+            $table->integer('laptop')->nullable();
+            $table->integer('electricfan')->nullable();
+            $table->float('totalAmount')->nullable();
+            $table->text('receipt')->nullable();
+            $table->text('img_path')->nullable();
+            $table->text('payment_month');
+            $table->date('paidDate')->nullable();
+            $table->string('status')->default("Pending");
 
-            $table->date('payment_date');
             $table->timestamps();
         });
     }

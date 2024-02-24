@@ -31,6 +31,8 @@ return new class extends Migration
             $table->text('cor');
             $table->text('validId');
             $table->text('vaccineCard');
+            $table->integer('laptop')->default(0);
+            $table->integer('electricfan')->default(0);
             $table->string('status')->default("Pending");
 
             $table->timestamps();

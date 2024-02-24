@@ -48,7 +48,7 @@
                 <table class="table text-start align-middle table-bordered table-hover mb-0">
                     <thead>
                         <tr class="text-dark">
-                            {{-- <th scope="col"><input class="form-check-input" type="checkbox"></th> --}}
+                    
                             <th scope="col">TUPT Number</th>
                             <th scope="col">Name</th>
                             <th scope="col">Type</th>

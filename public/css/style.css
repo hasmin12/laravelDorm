@@ -14,6 +14,14 @@
     z-index: 99;
 }
 
+.bg-lightgreen {
+    background-color: lightgreen;
+}
+
+.bg-lightred {
+    background-color: lightcoral;
+}
+
 
 /*** Spinner ***/
 #spinner {

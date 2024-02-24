@@ -14,9 +14,18 @@ use App\Models\Announcement;
 use App\Models\Lostitem;
 use App\Models\Repair;
 use App\Models\Registration;
+use App\Models\Dormitorypayment;
+use App\Models\Hostelpayment;
+use App\Models\Notification;
+use App\Models\Complaint;
+use App\Models\Violation;
+
+
 
 
 use App\Mail\NotifyMail;
+use App\Mail\Confirmationmail;
+
 use Illuminate\Support\Facades\Mail;
 
 use Auth; 
@@ -30,67 +39,84 @@ class AdminController extends Controller
     //
 
     public function getDashboardData(Request $request)
-    {
-        try {
-            $branch = $request->input('branch'); 
-            if($branch === "Dormitory"){
-                $totalResidents = User::where('branch', $branch)->where('role',"Resident")->count();
-                $totalRooms = Dormitoryroom::count();
-                $totalBeds = Dormitorybed::count();
-                $lostItems = Lostitem::where('branch', $branch)->count();
-                $paidResidents = User::where('branch', $branch)->where('role',"Resident")->where('is_paid',1)->count();
-                $unpaidResidents = User::where('branch', $branch)->where('role',"Resident")->where('is_paid',0)->count();
-                $monthIncome =  Dormitorypayment::getThisMonthsIncome(); 
-                $totalIncome = Dormitorypayment::getTotalIncome();
-            }else{
-                $totalResidents = User::where('branch', $branch)->where('role',"Resident")->count();
-                $totalRooms = Hostelroom::count();
-                $totalBeds = Hostelbed::count();
-                $lostItems = Lostitem::where('branch', $branch)->count();
-                $paidResidents = User::where('branch', $branch)->where('role',"Resident")->where('is_paid',1)->count();
-                $unpaidResidents = User::where('branch', $branch)->where('role',"Resident")->where('is_paid',0)->count();
-                $monthIncome =  Hostelpayment::getThisMonthsIncome(); 
-                $totalIncome = Hostelpayment::getTotalIncome();
-            }
-           
+{
+    try {
+        $branch = $request->input('branch');
 
-            // Return the dashboard data as a response
-            return response()->json([
-                'totalResidents' => $totalResidents,
-                'totalRooms' => $totalRooms,
-                'totalBeds' => $totalBeds,
-                'lostItems' => $lostItems,
-                'paidResidents' => $paidResidents,
-                'unpaidResidents' => $unpaidResidents,
-                'monthIncome' => $monthIncome,
-                'totalIncome' => $totalIncome,
-            ], 200);
-        } catch (\Exception $e) {
-            // Handle exceptions
-            return response()->json(['message' => 'Internal server error'], 500);
+        // Initialize variables
+        $totalResidents = 0;
+        $totalRooms = 0;
+        $totalBeds = 0;
+        $lostItems = 0;
+        $paidResidents = 0;
+        $unpaidResidents = 0;
+        $monthIncome = 0;
+        $totalIncome = 0;
+
+        if ($branch === "Dormitory") {
+            $totalResidents = User::where('branch', $branch)->where('role', 'Resident')->count();
+            $lostItems = Lostitem::where('branch', $branch)->count();
+            $paidResidents = User::where('branch', $branch)->where('role', 'Resident')->where('is_paid', 1)->count();
+            $unpaidResidents = User::where('branch', $branch)->where('role', 'Resident')->where('is_paid', 0)->count();
+            $totalRooms = Dormitoryroom::count();
+            $totalBeds = Dormitorybed::count();
+            $monthIncome = Dormitorypayment::getThisMonthsIncome();
+            $totalIncome = Dormitorypayment::getTotalIncome();
+        } elseif ($branch === "Hostel") {
+            $totalResidents = User::where('branch', $branch)->where('role', 'Resident')->count();
+            $lostItems = Lostitem::where('branch', $branch)->count();
+            $paidResidents = User::where('branch', $branch)->where('role', 'Resident')->where('is_paid', 1)->count();
+            $unpaidResidents = User::where('branch', $branch)->where('role', 'Resident')->where('is_paid', 0)->count();
+            $totalRooms = Hostelroom::count();
+            $totalBeds = Hostelbed::count();
+            $monthIncome = Hostelpayment::getThisMonthsIncome();
+            $totalIncome = Hostelpayment::getTotalIncome();
+        } else {
+            // Counting for both Dormitory and Hostel
+            $totalResidents = User::whereIn('branch', ['Dormitory', 'Hostel'])->where('role', 'Resident')->count();
+            $lostItems = Lostitem::whereIn('branch', ['Dormitory', 'Hostel'])->count();
+            $paidResidents = User::whereIn('branch', ['Dormitory', 'Hostel'])->where('role', 'Resident')->where('is_paid', 1)->count();
+            $unpaidResidents = User::whereIn('branch', ['Dormitory', 'Hostel'])->where('role', 'Resident')->where('is_paid', 0)->count();
+            $totalRooms = Dormitoryroom::count() + Hostelroom::count();
+            $totalBeds = Dormitorybed::count() + Hostelbed::count();
+            $monthIncome = Dormitorypayment::getThisMonthsIncome() + Hostelpayment::getThisMonthsIncome();
+            $totalIncome = Dormitorypayment::getTotalIncome() + Hostelpayment::getTotalIncome();
         }
+
+        // Return the dashboard data as a response
+        return response()->json([
+            'totalResidents' => $totalResidents,
+            'totalRooms' => $totalRooms,
+            'totalBeds' => $totalBeds,
+            'lostItems' => $lostItems,
+            'paidResidents' => $paidResidents,
+            'unpaidResidents' => $unpaidResidents,
+            'monthIncome' => $monthIncome,
+            'totalIncome' => $totalIncome,
+        ], 200);
+    } catch (\Exception $e) {
+        // Handle exceptions
+        return response()->json(['message' => 'Internal server error'], 500);
     }
+}
+
 
     public function getResidents(Request $request)
     {
         try {
             if (Auth::check()) {
+                $branch = $request->input('branch');
                 $searchQuery = $request->input('search_query');
                 $residentType = $request->input('resident_type');
-                
-                if (Auth::user()->branch === "Dormitory") {
-                    $query = User::where('branch', "Dormitory")->where('role',"Resident");
-
-                    
-
-                    if ($residentType && $residentType !== 'All') {
-                        $query->where('type', $residentType);
-                    }
-   
-                } else {
-                    $query = User::where('branch', "Hostel")->where('role',"Resident"); 
+                if ($branch && $branch !== '') {
+                    $query = User::where('branch', $branch)->where('role',"Resident");
+                }else{
+                    $query = User::where('role',"Resident");
                 }
 
+                if ($residentType && $residentType !== 'All') {
+                    $query->where('type', $residentType);
+                }
                 if ($searchQuery) {
                     $query->where('name', 'LIKE', '%' . $searchQuery . '%');
                 }
@@ -192,17 +218,18 @@ class AdminController extends Controller
     {
         try {
             if (Auth::check()) {
+                $branch = $request->input('branch');
                 $searchQuery = $request->input('search_query');
-                $registereduserType = $request->input('registereduser_type');
-                
-                
-                $query = Registration::query();
-
-                if ($registereduserType && $registereduserType !== 'All') {
-                    $query->where('type', $registereduserType);
+                $residentType = $request->input('resident_type');
+                if ($branch && $branch !== '') {
+                    $query = Registration::where('branch', $branch)->where('role',"Resident");
+                }else{
+                    $query = Registration::where('role',"Resident");
                 }
-            
 
+                if ($residentType && $residentType !== 'All') {
+                    $query->where('type', $residentType);
+                }
                 if ($searchQuery) {
                     $query->where('name', 'LIKE', '%' . $searchQuery . '%');
                 }
@@ -258,6 +285,37 @@ class AdminController extends Controller
 
     }
 
+    public function archiveResident($id)
+    {
+        try {
+            if (Auth::check()) {
+                $user = User::find($id);
+
+                $user->delete();
+
+                return response()->json(['success' => true, 'message' => 'User deleted successfully']);
+            } else {
+                return response()->json(['error' => 'Unauthorized'], 401);
+            }
+        } catch (\Exception $e) {
+            \Log::error('Error in archiveResident: ' . $e->getMessage());
+            return response()->json(['error' => 'Internal Server Error'], 500);
+        }
+    }
+
+    public function getPaymentHistory(Request $request)
+    {
+        try {
+            $residentId = $request->input('residentId');
+            $paymentHistory = Dormitorypayment::where('user_id', $residentId)->get();
+
+            return response()->json(['payment_history' => $paymentHistory], 200);
+        } catch (\Exception $e) {
+            // Handle errors, return error response
+            return response()->json(['message' => 'Failed to fetch payment history', 'error' => $e->getMessage()], 500);
+        }
+    }
+
 
     
 
@@ -275,7 +333,7 @@ class AdminController extends Controller
                 $user = $schedule->user;
                 $events[] = [
                     'title' => $user->Tuptnum,
-                    'start' => $schedule->laundrydate,
+                    // 'start' => $schedule->laundrydate,
                     'laundrydate' => $schedule->laundrydate,
                     'laundrytime' => $schedule->laundrytime, 
                 ];
@@ -757,23 +815,43 @@ class AdminController extends Controller
     public function notifyResidents()
     {
         try {
-            $is_paid = 0;
-            // Get the list of residents (you need to replace this with your logic to fetch residents)
-            $residents = Auth::user()->branch === "Dormitory" ? Dormitorybed::with(['resident', 'room']) : Hostelbed::with(['resident', 'room']);
-            $residents->whereHas('resident', function ($q) use ($is_paid) {
-                $q->where('is_paid', $is_paid);
-            });
-    
-            // Define the month for the payment reminder
-            $currentMonth = now()->format('F');
-            $residents = $residents->get();
-            // Send payment reminders to all residents
+            $residents = User::where('is_paid',0)->where('branch',"Dormitory")->where('role',"Resident")->get();
+            $currentMonth = now()->format('F Y');
+        
+           
             foreach ($residents as $resident) {
-                Mail::to($resident->resident->email)->send(new NotifyMail($currentMonth));
+                // Mail::to($resident->email)->send(new NotifyMail($currentMonth));
+                $totalAmount = 1000;
+                if($resident->laptop===1){
+                    $totalAmount = $totalAmount + 150;
+                }
+
+                if($resident->electricfan===1){
+                    $totalAmount = $totalAmount + 150;
+                }
+                
+                $dormitoryPayment = Dormitorypayment::create([
+                    'user_id' => $resident->id,
+                    'roomdetails' => $resident->roomdetails,
+                    'laptop' => $resident->laptop,
+                    'electricfan' => $resident->electricfan,
+                    'totalAmount' => $totalAmount,
+                    'payment_month' => $currentMonth
+                ]);
+
+                $notifs = Notification::create([
+                    'sender_id' => Auth::user()->id,
+                    'receiver_id' => $resident->id,
+                    'notification_type' => "Monthly Payment",
+                    'message' => "Hello $resident->name,
+                    This is a friendly reminder to pay your monthly fees for $currentMonth.
+                    Please ensure your payment is submitted by the end of the month.
+                    Thank you for your cooperation."
+                ]);
             }
     
             Log::info('Emails sent successfully'); // Log informational message
-    
+            
             return response()->json(['success' => 'Emails Sent Successful'], 200);
         } catch (\Exception $e) {
             Log::error('Error sending emails: ' . $e->getMessage()); // Log error message
@@ -797,4 +875,110 @@ class AdminController extends Controller
         }
     }
 
+    public function getComplaints()
+    {
+        try {
+            if(Auth::user()->branch === "Dormitory"){
+                $complaints = Complaint::where('branch',"Dormitory")->get(); 
+            }else{
+                $complaints = Complaint::where('branch',"Hostel")->get(); 
+            }
+                   
+            return response()->json(['complaints' => $complaints]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Complaints not found'], 404);
+        }
+    }
+
+    public function getViolations()
+    {
+        // $branch = Auth::user()->branch;
+
+        $violations = Violation::all();
+
+        return response()->json(['violations' => $violations]);
+    }
+
+    public function createViolation(Request $request)
+    {
+        try {
+            $ldate = date('Y-m-d H:i:s');
+            $user = User::find($request->input('user_id'));
+            $violation = Violation::create([
+                'user_id' => $user->id,
+                'residentName' => $user->name,
+                'violationName' => $request->input('violationName'),
+                'violationDate' => $ldate,
+                'violationType' => $request->input('violationType'),
+                'penalty' => $request->input('penalty'),
+                'status' => 'Active',
+
+            ]);
+            return response()->json(['violation' => $violation],200);
+
+           
+        } catch (\Exception $e) {
+            \Log::error('Error creating Violation: ' . $e->getMessage());
+            return response()->json(['error' => 'Internal Server Error'], 500);
+        }
+    }
+
+    public function approveApplicant($id)
+    {
+        try {
+            $ldate = date('Y-m-d H:i:s');
+            $user = Registration::find($id);
+            $currentMonth = now()->format('F Y');
+            $totalAmount = 2000;
+            $laptopIncluded = $user->laptop === 1;
+            $electricFanIncluded = $user->electricfan === 1;
+    
+            if ($laptopIncluded) {
+                $totalAmount += 300;
+            }
+    
+            if ($electricFanIncluded) {
+                $totalAmount += 300;
+            }
+            $newUser = User::create([
+                'name' => $user->name,
+                'email' => $user->email,
+                'password' => bcrypt($user->password),
+                'branch' => $user->branch,
+                'role' => $user->role,
+                'Tuptnum' => $user->Tuptnum,
+                'sex' => $user->sex,
+                'address' => $user->address,
+                'birthdate' => $user->birthdate,
+                'contacts' => $user->contacts,
+                'cor' => $user->cor,
+                'schoolID' => $user->schoolID,
+                'vaccineCard' => $user->vaccineCard,
+                'contract' => $user->contract,
+                'type' => $user->type,
+                'status' => 'Applicant',
+            ]);
+    
+            Mail::to($newUser->email)->send(new ConfirmationMail(
+                $newUser->name,
+                $currentMonth,
+                $totalAmount,
+                $laptopIncluded,
+                $electricFanIncluded
+            ));
+
+            $dormitoryPayment = Dormitorypayment::create([
+                'user_id' => $newUser->id,
+                // 'roomdetails' => $user->roomdetails,
+                'laptop' => $user->laptop,
+                'electricfan' => $user->electricfan,
+                'totalAmount' => $totalAmount,
+                'payment_month' => $currentMonth
+            ]);
+        } catch (\Exception $e) {
+            \Log::error('Error sending confirmation email: ' . $e->getMessage());
+            return response()->json(['error' => 'Internal Server Error'], 500);
+        }
+    }
+    
 }

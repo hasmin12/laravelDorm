@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Dormitorypayment extends Model
 {
@@ -11,17 +12,21 @@ class Dormitorypayment extends Model
 
     protected $fillable = [
         'user_id',
-        'room_id',
+        'roomdetails',
         'laptop',
         'electricfan',
         'totalAmount',
-        'payment_date',
+        'payment_month',
+        'receipt',
+        'img_path',
+        'paidDate',
+        'status'
     ];
 
     public static function getThisMonthsIncome()
     {
-        return self::whereMonth('payment_date', Carbon::now()->month)
-            ->whereYear('payment_date', Carbon::now()->year)
+        return self::whereMonth('paidDate', Carbon::now()->month)
+            ->whereYear('paidDate', Carbon::now()->year)
             ->sum('totalAmount');
     }
 

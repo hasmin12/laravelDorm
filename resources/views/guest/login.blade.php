@@ -9,7 +9,6 @@
     </div>
     <!-- Spinner End --> --}}
 
-
     <!-- Sign In Start -->
     {{-- <div class="container-fluid"> --}} 
         <section class="hero-section">

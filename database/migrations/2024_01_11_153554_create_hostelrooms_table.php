@@ -15,9 +15,10 @@ return new class extends Migration
             $table->id();
             $table->text('name');
             $table->text('description');
+            $table->unsignedBigInteger('floorNum')->nullable();
             $table->text('type');
             $table->text('pax');
-            $table->decimal('price',8,2);
+            $table->float('price');
             $table->string('status')->default('Vacant');
             $table->string('img_path')->default('/storage/hostel/hostelroom.png');
             $table->unsignedBigInteger('user_id')->nullable();

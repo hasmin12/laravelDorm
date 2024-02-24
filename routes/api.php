@@ -22,22 +22,36 @@ Route::get('/getHostelrooms', 'GuestController@getHostelrooms');
 Route::get('/visitor/getResidents', 'GuestController@getResidents');
 Route::post('/visitor', 'GuestController@addVisitor');
 
+Route::post('/registerDorm', 'GuestController@addVisitor');
+
+
 
 Route::post('/createReservation', 'GuestController@createReservation');
 Route::post('/createRegistration', 'GuestController@createRegistration');
 
 Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::get('/getDashboardData', 'AdminController@getDashboardData');
-
-
     Route::get('/getResidents', 'AdminController@getResidents');
     Route::get('/getRegisteredusers', 'AdminController@getRegisteredusers');
     Route::post('/addRegistereduser', 'AdminController@addRegistereduser');
+    Route::delete('archiveResident/{id}', 'AdminController@archiveResident');
+    Route::get('getPaymentHistory', 'AdminController@getPaymentHistory');
+    Route::get('myPaymentHistory', 'ResidentController@myPaymentHistory');
+    Route::post('createPayment', 'ResidentController@createPayment');
+    Route::get('/generatePdf', 'ChartController@generatePdf');
+    Route::get('/approveApplicant/{id}', 'AdminController@approveApplicant');
+
+
+    Route::post('createLaundrySchedule', 'ResidentController@createLaundrySchedule');
+
 
     
     
     Route::get('/notifyResidents', 'AdminController@notifyResidents');
     Route::get('/getBeds/{id}', 'AdminController@getBeds');
+    Route::get('/getViolations', 'AdminController@getViolations');
+    Route::post('/createViolation', 'AdminController@createViolation');
+
 
     
 
@@ -65,14 +79,33 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
 
     // Route::get('/resident/getLaundry', 'ResidentController@getLaundry');
     // Route::get('/resident/getAnnouncements', 'ResidentController@getAnnouncements');
+    Route::post('/updateEquipment', 'ResidentController@updateEquipment');
+
 
     Route::post('/createRepair', 'ResidentController@createRepair');
     Route::get('/getRepairs', 'ResidentController@getRepairs');
     Route::get('/admin/getRepairs', 'AdminController@getRepairs');
+    Route::post('/acceptRepair', 'TechnicianController@acceptRepair');
+    Route::post('/resident/acceptRepair', 'ResidentController@acceptRepair');
+    Route::get('/getRepairStatus', 'TechnicianController@getRepairStatus');
+    
+    Route::post('/addRepairStatus', 'TechnicianController@addRepairStatus');
 
+    Route::get('/getNotifications', 'AuthController@getNotifications');
 
+    
+    Route::post('/createComplaint', 'ResidentController@createComplaint');
+    Route::post('/sendLogs', 'ResidentController@sendLogs');
+    Route::post('/updateLogs', 'ResidentController@updateLogs');
+    Route::get('/myLogs', 'ResidentController@myLogs');
    
+    Route::get('/getComplaints', 'AdminController@getComplaints');
 
+
+
+//charts
+Route::get('/residentChart', 'ChartController@residentChart');
+Route::get('/residentTypeChart', 'ChartController@residentTypeChart');
 
     
 });

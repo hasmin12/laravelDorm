@@ -15,7 +15,11 @@ class UserSeeder extends Seeder
     {
         $faker = Faker::create();
         $tupt_temp = 'TUPT-20-';
+        $Admintupt_num = $faker->numberBetween($min = 1000, $max = 9000);
+        $ResidentTuptnum = $faker->numberBetween($min = 1000, $max = 9000);
+        $TechnicianTuptnum = $faker->numberBetween($min = 1000, $max = 9000);
         $tupt_num = $faker->numberBetween($min = 1000, $max = 9000);
+
        
         User::create([
             'name' => 'Dormitory Admin',
@@ -23,12 +27,27 @@ class UserSeeder extends Seeder
             'password' => bcrypt("password"),
             'role' => 'Admin',
             'branch' => 'Dormitory',
-            'Tuptnum' => $tupt_temp . "" . $tupt_num,
+            'Tuptnum' => $tupt_temp . "" . $Admintupt_num,
             'contacts' => $faker->phoneNumber(),
             'address' => $faker->address(),
             'sex' => $faker->randomElement($array = array ('Male', 'Female')), // 'b'
             'birthdate' => $faker-> dateTimeBetween($startDate = '-30 years', $endDate = '-20 years', $timezone = null),
             'type' => 'Admin',
+            'roomdetails' => 'RoomBed'
+        ]);
+        
+        User::create([
+            'name' => 'Dormitory Resident',
+            'email' => 'dormitory@resident.com',
+            'password' => bcrypt("password"),
+            'role' => 'Resident',
+            'branch' => 'Dormitory',
+            'Tuptnum' => $tupt_temp . "" . $ResidentTuptnum,
+            'contacts' => $faker->phoneNumber(),
+            'address' => $faker->address(),
+            'sex' => $faker->randomElement($array = array ('Male', 'Female')), // 'b'
+            'birthdate' => $faker-> dateTimeBetween($startDate = '-30 years', $endDate = '-20 years', $timezone = null),
+            'type' => 'Student',
             'roomdetails' => 'RoomBed'
         ]);
 
@@ -45,6 +64,21 @@ class UserSeeder extends Seeder
             'birthdate' => $faker-> dateTimeBetween($startDate = '-30 years', $endDate = '-20 years', $timezone = null),
             'type' => 'Admin',
             'roomdetails' => 'Room'
+        ]);
+
+        User::create([
+            'name' => 'Maintenance User',
+            'email' => 'dormitory@technician.com',
+            'password' => bcrypt("password"),
+            'role' => 'Technician',
+            'branch' => 'Dormitory',
+            'Tuptnum' => $tupt_temp . "" . $TechnicianTuptnum,
+            'contacts' => $faker->phoneNumber(),
+            'address' => $faker->address(),
+            'sex' => $faker->randomElement($array = array ('Male', 'Female')), // 'b'
+            'birthdate' => $faker-> dateTimeBetween($startDate = '-30 years', $endDate = '-20 years', $timezone = null),
+            'type' => 'Technician',
+            'roomdetails' => 'RoomBed'
         ]);
 
         // foreach (range(1, 5) as $index) {
@@ -72,6 +106,7 @@ class UserSeeder extends Seeder
             $first_name = $faker->firstName();
             $last_name = $faker->lastName();
             $cusname = $first_name . ' ' . $last_name;
+            $tupt_num = $faker->numberBetween($min = 1000, $max = 9000);
 
             $user = User::create([
                 'name' => $cusname,
@@ -94,6 +129,7 @@ class UserSeeder extends Seeder
             $first_name = $faker->firstName();
             $last_name = $faker->lastName();
             $cusname = $first_name . ' ' . $last_name;
+            $tupt_num = $faker->numberBetween($min = 1000, $max = 9000);
 
             $user = User::create([
                 'name' => $cusname,
@@ -117,6 +153,7 @@ class UserSeeder extends Seeder
             $first_name = $faker->firstName();
             $last_name = $faker->lastName();
             $cusname = $first_name . ' ' . $last_name;
+            $tupt_num = $faker->numberBetween($min = 1000, $max = 9000);
 
             $user = User::create([
                 'name' => $cusname,
@@ -140,6 +177,7 @@ class UserSeeder extends Seeder
             $first_name = $faker->firstName();
             $last_name = $faker->lastName();
             $cusname = $first_name . ' ' . $last_name;
+            $tupt_num = $faker->numberBetween($min = 1000, $max = 9000);
 
             $user = User::create([
                 'name' => $cusname,
@@ -165,6 +203,7 @@ class UserSeeder extends Seeder
             $first_name = $faker->firstName();
             $last_name = $faker->lastName();
             $cusname = $first_name . ' ' . $last_name;
+            $tupt_num = $faker->numberBetween($min = 1000, $max = 9000);
 
             $user = User::create([
                 'name' => $cusname,

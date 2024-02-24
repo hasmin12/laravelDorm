@@ -83,9 +83,9 @@ class GuestController extends Controller
     public function createRegistration(Request $request)
     {
         
-        $fileName1 = time() . $request->file('contract')->getClientOriginalName();
-        $path1 = $request->file('contract')->storeAs('contract', $fileName1, 'public');
-        $contractPath = '/storage/' . $path1;
+        // $fileName1 = time() . $request->file('contract')->getClientOriginalName();
+        // $path1 = $request->file('contract')->storeAs('contract', $fileName1, 'public');
+        // $contractPath = '/storage/' . $path1;
 
         $fileName2 = time() . $request->file('cor')->getClientOriginalName();
         $path2 = $request->file('cor')->storeAs('cor', $fileName2, 'public');
@@ -102,7 +102,7 @@ class GuestController extends Controller
         $user = Registration::create([
            
             'Tuptnum' => $request->input('Tuptnum'),
-            'name' => $request->input('name'),
+            'name' => $request->input('fname')." ".$request->input('lname') ,
             'email' => $request->input('email'),
             'password' => $request->input('password'),
             'type' => $request->input('type'),
@@ -110,7 +110,7 @@ class GuestController extends Controller
             'birthdate' => $request->input('birthdate'),
             'address' => $request->input('address'),
             'contacts' => $request->input('contacts'),
-            'contract' => $contractPath,
+            'type' => $request->input('type'),
             'cor' => $corPath,
             'validId' => $validIdPath,
             'vaccineCard' => $vaccineCardPath,

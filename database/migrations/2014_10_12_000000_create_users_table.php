@@ -39,6 +39,7 @@ return new class extends Migration
             $table->integer('laptop')->default(0);
             $table->integer('electricfan')->default(0);
             $table->text('roomdetails')->nullable();
+            $table->text('status')->nullable();
 
             $table->softDeletes();
             $table->timestamps();

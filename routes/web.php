@@ -25,6 +25,10 @@ use Illuminate\Support\Facades\Route;
         return view('guest.reservation');
     });
 
+    Route::get('/dormlogs', function () {
+        return view('guest.dormlogs');
+    });
+
     Route::get('/login', function () {
         return view('guest.login');
     })->name('login');
@@ -186,6 +190,10 @@ Route::middleware(['adminbranch:Hostel'])->group(function () {
 
             Route::get('/billingandpayment', function () {
                 return view('resident.billing');
+            });
+
+            Route::get('/payments', function () {
+                return view('resident.payments');
             });
         });
     });

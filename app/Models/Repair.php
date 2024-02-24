@@ -16,10 +16,14 @@ class Repair extends Model
         'branch',
         'technicianName',
         'residentName',
-        'completion_date',
+        'completionDays',
         'cost',
         'img_path',
         'status',
+        'user_id',
+        'technician_id',
+        'completionPercentage',
+        'completed_date'
     ];
 
     /**

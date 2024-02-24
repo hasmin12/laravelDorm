@@ -8,6 +8,8 @@ use Auth;
 use Log;
 use App\Models\Laundryschedule;
 use App\Models\Announcement;
+use App\Models\Notification;
+
 use Socialite;
 class AuthController extends Controller
 {
@@ -77,16 +79,22 @@ class AuthController extends Controller
         $events = [];
 
         foreach ($schedules as $schedule) {
-            // Customize the event data based on your Schedule model fields
             $user = $schedule->user;
             $events[] = [
                 'title' => $user->Tuptnum,
-                'start' => $schedule->laundrydate, // Assuming your Schedule model has a 'scheduled_date' field
-                // Add other relevant fields as needed
+                'start' => $schedule->laundrydate, 
+                'laundrydate' => $schedule->laundrydate, 
+                'laundrytime' => $schedule->laundrytime, 
             ];
         }
-
         return response()->json($events);
+    }
+
+    public function getNotifications(){
+        
+        $notifications = Notification::where('receiver_id', Auth::user()->id)->get();
+        return response()->json(['notifications' => $notifications]);
+
     }
     
 }

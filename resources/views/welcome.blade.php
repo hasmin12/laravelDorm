@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-    @vite('resources/css/app.css')
     <title>Welcome to DormExtend</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
@@ -21,7 +20,8 @@
         <div class="jumbotron text-center" style="background-color: maroon; color: white;">
             <h1>Welcome to DormExtend</h1>
             <p class="lead">Manage your school's accommodations with ease.</p>
-        </div>        
+        </div> 
+        <input type="checkbox" value="synthwave" class="toggle theme-controller"/>       
         <div class="row">
             <div class="col-md-6 d-flex align-items-center justify-content-center">
                 
