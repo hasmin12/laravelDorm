@@ -1,8 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\GoogleSocialiteController;
 // use App\Models\Resident; 
-/*
+/*  
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
@@ -13,6 +14,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 // Route::group(['middleware' => ['web', 'cors']], function () {
+
+    Route::get('auth/google', [GoogleSocialiteController::class, 'redirectToGoogle']);
+    Route::get('callback/google', [GoogleSocialiteController::class, 'handleCallback']);
+    
     Route::get('/', function () {
         return view('welcome');
     });

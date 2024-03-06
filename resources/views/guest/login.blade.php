@@ -1,4 +1,5 @@
 @extends('layouts.base')
+
 @section('content')
 <div class="full-width-container">
     {{-- <!-- Spinner Start -->
@@ -41,6 +42,10 @@
                                 <a href="">Forgot Password</a>
                             </div>
                             <button type="submit" class="btn btn-primary py-3 w-100 mb-4">Sign In</button>
+
+                            <a href="{{ url('auth/google') }}" style="margin-top: 0px !important;background: green;color: #ffffff;padding: 5px;border-radius:7px;" class="ml-2">
+                                <strong>Google Login</strong>
+                              </a> 
                         </form>
                     </div>
                 </div>
