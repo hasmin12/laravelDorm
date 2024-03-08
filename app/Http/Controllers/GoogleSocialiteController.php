@@ -37,7 +37,7 @@ class GoogleSocialiteController extends Controller
      
                 Auth::login($finduser);
     
-                return redirect('/dashboard');
+                return redirect('/resident/announcements');
      
             }else{
                 $newUser = User::create([
@@ -45,12 +45,15 @@ class GoogleSocialiteController extends Controller
                     'email' => $user->email,
                     'social_id'=> $user->id,
                     'social_type'=> 'google',
+                    'branch'=> 'Dormitory',
+                    'type'=> 'Student',
+                    'role'=> 'Resident',
                     'password' => encrypt('my-google')
                 ]);
     
                 Auth::login($newUser);
      
-                return redirect('/');
+                return redirect('/resident/announcements');
             }
     
         } catch (Exception $e) {
