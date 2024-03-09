@@ -12,13 +12,14 @@ use App\Models\Dormitorybed;
 use App\Models\Hostelbed;
 use App\Models\Announcement;
 use App\Models\Lostitem;
-use App\Models\Repair;
+use App\Models\Maintenance;
 use App\Models\Registration;
 use App\Models\Dormitorypayment;
 use App\Models\Hostelpayment;
 use App\Models\Notification;
 use App\Models\Complaint;
 use App\Models\Violation;
+use App\Models\Residentlog;
 
 
 
@@ -885,10 +886,9 @@ class AdminController extends Controller
                     'sender_id' => Auth::user()->id,
                     'receiver_id' => $resident->id,
                     'notification_type' => "Monthly Payment",
+                    'target_id' => $dormitoryPayment->id,
                     'message' => "Hello $resident->name,
-                    This is a friendly reminder to pay your monthly fees for $currentMonth.
-                    Please ensure your payment is submitted by the end of the month.
-                    Thank you for your cooperation."
+                    This is a friendly reminder to pay your monthly fees for $currentMonth.Please ensure your payment is submitted by the end of the month.Thank you for your cooperation."
                 ]);
             }
     
@@ -902,18 +902,18 @@ class AdminController extends Controller
         }
     }
 
-    public function getRepairs()
+    public function getMaintenances()
     {
         try {
             if(Auth::user()->branch === "Dormitory"){
-                $repairs = Repair::where('branch',"Dormitory")->get(); 
+                $maintenances = Maintenance::where('branch',"Dormitory")->get(); 
             }else{
-                $repairs = Repair::where('branch',"Hostel")->get(); 
+                $maintenances = Maintenance::where('branch',"Hostel")->get(); 
             }
-                Log::info($repairs);     
-            return response()->json(['repairs' => $repairs]);
+                Log::info($maintenances);     
+            return response()->json(['maintenances' => $maintenances]);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Repairs not found'], 404);
+            return response()->json(['error' => 'Maintenances not found'], 404);
         }
     }
 
@@ -1022,5 +1022,37 @@ class AdminController extends Controller
             return response()->json(['error' => 'Internal Server Error'], 500);
         }
     }
+
+    public function assignResident(Request $request){
+        $bedId = $request->input('bedId');
+        $residentId = $request->input('residentId');
+
+        $bed = Dormitorybed::find($bedId);
+        $bed->update([
+            'user_id' => $residentId,
+            'status'  => "Occupied"
+        ]);
+
+        $room = Dormitoryroom::find($bed->room_id);
+        
+        $room->update([
+            'slot' => $room->slot - 1,
+        ]);
+        
+        $user = User::find($residentId);
+        $user->update([
+            'roomdetails' => "Room ".$bed->room_id."-".$bed->name ,
+            'status'  => "Active"
+        ]);
+        return response()->json(['bed' => $bed],200);         
+    }
+
+    public function getLogs()
+    {
+        $logs = Residentlog::all();
+        return response()->json( $logs);
+    }
+
+    
     
 }

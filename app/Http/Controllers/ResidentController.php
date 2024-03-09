@@ -5,32 +5,36 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Auth;
-use App\Models\Repair;
+use App\Models\Maintenance;
 use App\Models\Dormitorypayment;
 use App\Models\Hostelpayment;
 use App\Models\Laundryschedule;
 use App\Models\Complaint;
 use App\Models\Residentlog;
 use App\Models\User;
+use App\Models\Approvemaintenance;
+use App\Models\Reservation;
+
 
 use Log;
 class ResidentController extends Controller
 {
     //
-    public function getRepairs()
+    public function getMaintenances()
     {
         $user = Auth::user();
         if($user->role === "Resident"){
-            $repairs = Repair::where('user_id', $user->id)->get();
+            $maintenances = Maintenance::where('user_id', $user->id)->get();
         }elseif($user->role === "Technician"){
-            $repairs = Repair::where('technician_id', $user->id)->orWhereNull('technician_id')->get();
+            $maintenances = Maintenance::where('itemName', $user->specialization)->get();
         }else{
-            $repairs = Repair::all();
+            $maintenances = Maintenance::all();
         }
-        return response()->json($repairs, 200);
+        Log::info($maintenances);
+        return response()->json($maintenances, 200);
     }
 
-    public function createRepair(Request $request)
+    public function createMaintenance(Request $request)
     {
         try {
             $ldate = date('Y-m-d H:i:s');
@@ -39,7 +43,7 @@ class ResidentController extends Controller
             $itemName = $request->input('itemName');
             $description = $request->input('description');
 
-            $repair = Repair::create([
+            $maintenance = Maintenance::create([
                 'itemName' => $itemName,
                 'description' => $description,
                 'room_number' => $user->roomdetails,
@@ -52,17 +56,22 @@ class ResidentController extends Controller
             $imgpath = $request->file('img_path');
             if ($imgpath && $imgpath !== '') {
                 $fileName = time() . $request->file('img_path')->getClientOriginalName();
-                $path = $request->file('img_path')->storeAs('repair', $fileName, 'public');
+                $path = $request->file('img_path')->storeAs('maintenance', $fileName, 'public');
                 $img_path = '/storage/' . $path;
 
-                $repair->update([
+                $maintenance->update([
                     'img_path' => $img_path,
                 ]);
             }
 
-            return response()->json(['repair' => $repair], 201);
+            $approve = Approvemaintenance::create([
+                'maintenance_id' => $maintenance->id,
+                'user_id' => $user->id,
+            ]);
+
+            return response()->json(['maintenance' => $maintenance], 201);
         } catch (\Exception $e) {
-            \Log::error('Error creating repair: ' . $e->getMessage());
+            \Log::error('Error creating maintenance: ' . $e->getMessage());
             return response()->json(['error' => 'Internal Server Error'], 500);
         }
     }
@@ -196,6 +205,7 @@ class ResidentController extends Controller
             
 
             $purpose = $request->input('purpose');
+            $return = $request->input('expectedReturn');
             $id = $request->input('id');
             if($purpose){
                 $fileName = time() . $request->file('gatePass')->getClientOriginalName();
@@ -203,9 +213,12 @@ class ResidentController extends Controller
             $img_path = '/storage/' . $path;
                 $residentlog = Residentlog::create([
                     'user_id' =>  Auth::user()->id,
+                    'name' =>  'Leave',
                     'gatepass' =>  $img_path,
-                    'purpose' =>  $request->input('purpose'),
-                    'leave_date' => $ldate
+                    'purpose' =>  $purpose,
+                    'leave_date' => $ldate,
+                    'expectedReturn' => $return,
+                    'dateLog' => $ldate,
                 ]);
 
             }else{
@@ -242,7 +255,7 @@ class ResidentController extends Controller
     public function myLogs()
     {
         try {
-            $myLogs = Residentlog::where('user_id', Auth::user()->id)->whereNull('return_date')->get();
+            $myLogs = Residentlog::where('user_id', Auth::user()->id)->get();
             Log::info($myLogs);
             return response()->json($myLogs, 200);
         } catch (\Exception $e) {
@@ -251,21 +264,21 @@ class ResidentController extends Controller
     }
 
 
-    public function acceptRepair(Request $request)
+    public function acceptMaintenance(Request $request)
     {
         try {
             $ldate = date('Y-m-d H:i:s');
             $user = Auth::user(); 
-            $id = $request->input('repair_id');
-            $repair = Repair::find($id);
+            $id = $request->input('maintenance_id');
+            $maintenance = Maintenance::find($id);
             
-            $repair->update([
+            $maintenance->update([
                 'status' => "IN PROGRESS",
             ]);
 
-            return response()->json(['repair' => $repair], 201);
+            return response()->json(['maintenance' => $maintenance], 201);
         } catch (\Exception $e) {
-            \Log::error('Error creating repair: ' . $e->getMessage());
+            \Log::error('Error creating maintenance: ' . $e->getMessage());
             return response()->json(['error' => 'Internal Server Error'], 500);
         }
     }
@@ -293,7 +306,71 @@ class ResidentController extends Controller
         }
     }
 
+    public function passContract(Request $request){
+        $contract = $request->input('contract');
+        $residentId = $request->input('residentId');
 
+        $user = User::find($residentId);
+        $user->update([
+            'contract'  => $contract
+        ]);
+        return response()->json(['user' => $user],200);         
+    }
+
+    public function approveMaintenance($id) {
+        $user = Auth::user();
+
+        $approve = Approvemaintenance::create([
+            'maintenance_id' => $id,
+            'user_id' => $user->id,
+        ]);
+
+        return response()->json($approve,200);         
+
+    }
+
+    public function myReservations()
+    {
+        try {
+            $myReservations = Reservation::with('room')->where('user_id', Auth::user()->id)->get();
+            return response()->json($myReservations);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Failed to fetch logs', 'error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function cancelReservation($id)
+    {
+        try {
+            $reservation = Reservation::find($id);
+            $reservation->update([
+                'status'  => 'Cancelled'
+            ]);
+            return response()->json($reservation);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Failed to cancelled reservation', 'error' => $e->getMessage()], 500);
+        }
+    }
+
+
+    public function sendSleep()
+    {
+        $ldate = date('Y-m-d H:i:s');
+        try {
+           
+            $residentlog = Residentlog::create([
+                'user_id' =>  Auth::user()->id,
+                'name' =>  'Sleep',
+                'dateLog' => $ldate,
+            ]);
+
+            return response()->json(['residentlog' => $residentlog], 200);
+            
+        } catch (\Exception $e) {
+            \Log::error('Error creating Logs: ' . $e->getMessage());
+            return response()->json(['error' => 'Internal Server Error'], 500);
+        }
+    }
 
 
 

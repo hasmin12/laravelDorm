@@ -14,6 +14,7 @@ class Notification extends Model
         'receiver_id',
         'sender_id',
         'notification_type',
+        'target_id',
         'message',
         'status',
     ];

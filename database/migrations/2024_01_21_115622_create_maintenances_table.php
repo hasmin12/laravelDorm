@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('repairs', function (Blueprint $table) {
+        Schema::create('maintenances', function (Blueprint $table) {
             $table->id();
             $table->text('room_number');
             $table->date('request_date');
@@ -30,7 +30,7 @@ return new class extends Migration
             $table->date('completed_date')->nullable();
             $table->float('cost')->nullable();
             $table->text('img_path')->nullable();
-            $table->string('status')->nullable();
+            $table->string('status')->default('PENDING');
             $table->timestamps();
           
 
@@ -42,6 +42,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('repairs');
+        Schema::dropIfExists('maintenances');
     }
 };

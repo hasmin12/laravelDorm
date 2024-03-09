@@ -11,21 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('residentlogs', function (Blueprint $table) {
+        Schema::create('approvemaintenances', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('maintenance_id');
+            $table->foreign('maintenance_id')->references('id')->on('maintenances')->onDelete('cascade');
             $table->unsignedBigInteger('user_id');
-            $table->text('name')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->dateTime('leave_date')->nullable();
-            $table->date('expectedReturn')->nullable();
-            $table->dateTime('return_date')->nullable();
-            $table->text('purpose')->nullable();
-            $table->text('gatepass')->nullable();
-            $table->string('status')->default("Active");
-            $table->date('dateLog')->nullable();
-            
             $table->timestamps();
-    
         });
     }
 
@@ -34,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('residentlogs');
+        Schema::dropIfExists('approvemaintenance');
     }
 };

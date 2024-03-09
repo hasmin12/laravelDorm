@@ -51,24 +51,24 @@ class UserSeeder extends Seeder
             'roomdetails' => 'RoomBed'
         ]);
 
-        User::create([
-            'name' => 'Hostel Admin',
-            'email' => 'hostel@admin.com',
-            'password' => bcrypt("password"),
-            'role' => 'Admin',
-            'branch' => 'Hostel',
-            'Tuptnum' => $tupt_temp . "" . $tupt_num,
-            'contacts' => $faker->phoneNumber(),
-            'address' => $faker->address(),
-            'sex' => $faker->randomElement($array = array ('Male', 'Female')), // 'b'
-            'birthdate' => $faker-> dateTimeBetween($startDate = '-30 years', $endDate = '-20 years', $timezone = null),
-            'type' => 'Admin',
-            'roomdetails' => 'Room'
-        ]);
+        // User::create([
+        //     'name' => 'Hostel Admin',
+        //     'email' => 'hostel@admin.com',
+        //     'password' => bcrypt("password"),
+        //     'role' => 'Admin',
+        //     'branch' => 'Hostel',
+        //     'Tuptnum' => $tupt_temp . "" . $tupt_num,
+        //     'contacts' => $faker->phoneNumber(),
+        //     'address' => $faker->address(),
+        //     'sex' => $faker->randomElement($array = array ('Male', 'Female')), // 'b'
+        //     'birthdate' => $faker-> dateTimeBetween($startDate = '-30 years', $endDate = '-20 years', $timezone = null),
+        //     'type' => 'Admin',
+        //     'roomdetails' => 'Room'
+        // ]);
 
         User::create([
-            'name' => 'Maintenance User',
-            'email' => 'dormitory@technician.com',
+            'name' => 'Maintenance User1',
+            'email' => 'dormitory@technician1.com',
             'password' => bcrypt("password"),
             'role' => 'Technician',
             'branch' => 'Dormitory',
@@ -78,9 +78,25 @@ class UserSeeder extends Seeder
             'sex' => $faker->randomElement($array = array ('Male', 'Female')), // 'b'
             'birthdate' => $faker-> dateTimeBetween($startDate = '-30 years', $endDate = '-20 years', $timezone = null),
             'type' => 'Technician',
+            'specialization' => 'General Repairs',
             'roomdetails' => 'RoomBed'
         ]);
 
+        User::create([
+            'name' => 'Maintenance User2',
+            'email' => 'dormitory@technician2.com',
+            'password' => bcrypt("password"),
+            'role' => 'Technician',
+            'branch' => 'Dormitory',
+            'Tuptnum' => $tupt_temp . "" . $TechnicianTuptnum,
+            'contacts' => $faker->phoneNumber(),
+            'address' => $faker->address(),
+            'sex' => $faker->randomElement($array = array ('Male', 'Female')), // 'b'
+            'birthdate' => $faker-> dateTimeBetween($startDate = '-30 years', $endDate = '-20 years', $timezone = null),
+            'type' => 'Technician',
+            'specialization' => 'Appliance Repair',
+            'roomdetails' => 'RoomBed'
+        ]);
         // foreach (range(1, 5) as $index) {
         //     $first_name = $faker->firstName();
         //     $last_name = $faker->lastName();

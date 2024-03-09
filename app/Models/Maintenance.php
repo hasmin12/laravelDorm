@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Repair extends Model
+class Maintenance extends Model
 {
     use HasFactory;
     protected $fillable = [
@@ -27,7 +27,7 @@ class Repair extends Model
     ];
 
     /**
-     * Get the technician associated with the repair.
+     * Get the technician associated with the maintenance.
      */
     public function technician()
     {
@@ -35,7 +35,7 @@ class Repair extends Model
     }
 
     /**
-     * Get the user associated with the repair.
+     * Get the user associated with the maintenance.
      */
     public function user()
     {

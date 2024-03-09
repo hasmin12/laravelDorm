@@ -9,6 +9,8 @@ use Log;
 use App\Models\Laundryschedule;
 use App\Models\Announcement;
 use App\Models\Notification;
+use App\Models\Maintenancelist;
+
 
 use Socialite;
 class AuthController extends Controller
@@ -63,7 +65,7 @@ class AuthController extends Controller
     {
         $branch = Auth::user()->branch;
 
-        $announcements = Announcement::with('user')->where('branch', $branch)->get();
+        $announcements = Announcement::with('comments')->where('branch', $branch)->get();
 
         return response()->json(['announcements' => $announcements]);
     }
@@ -95,6 +97,11 @@ class AuthController extends Controller
         $notifications = Notification::where('receiver_id', Auth::user()->id)->get();
         return response()->json(['notifications' => $notifications]);
 
+    }
+
+    public function getMaintenanceList(){
+        $maintenancelist = Maintenancelist::all();
+        return response()->json($maintenancelist);
     }
     
 }

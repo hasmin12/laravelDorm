@@ -9,6 +9,7 @@ class Reservation extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'user_id',
         'room_id',
         'reservation_date',
         'checkin_date',
@@ -27,8 +28,14 @@ class Reservation extends Model
         'birthdate',
         'contacts',
         'status',
-        'payments',
-
+        'downreceipt',
+        'receipt',
+        'roomName'
     ];
+
+    public function room()
+    {
+        return $this->belongsTo(Hostelroom::class, 'room_id');
+    }
 
 }

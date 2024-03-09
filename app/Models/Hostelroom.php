@@ -16,7 +16,6 @@ class Hostelroom extends Model
         'name' => 'required',
         'details' => 'required',
         'price' => 'required',
-        
         'totalBed' => 'required',
         'availableBed' => 'required',
     ];
@@ -40,5 +39,10 @@ class Hostelroom extends Model
     public function images()
     {
         return $this->hasMany(Hostelimage::class, 'room_id');
+    }
+
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class, 'room_id');
     }
 }

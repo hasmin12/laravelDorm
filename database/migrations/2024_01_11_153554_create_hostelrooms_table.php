@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('img_path')->default('/storage/hostel/hostelroom.png');
             $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedBigInteger('rating')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

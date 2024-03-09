@@ -28,6 +28,10 @@ Route::post('/registerDorm', 'GuestController@addVisitor');
 
 Route::post('/createReservation', 'GuestController@createReservation');
 Route::post('/createRegistration', 'GuestController@createRegistration');
+Route::get('/getReservations', 'GuestController@getReservations');
+Route::post('/getHostelrooms', 'GuestController@getHostelrooms');
+
+Route::get('/getReviews/{id}', 'GuestController@getReviews');
 
 Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::get('/getDashboardData', 'AdminController@getDashboardData');
@@ -42,6 +46,8 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::post('createPayment', 'ResidentController@createPayment');
     Route::get('/generatePdf', 'ChartController@generatePdf');
     Route::get('/approveApplicant/{id}', 'AdminController@approveApplicant');
+    Route::post('/assignResident', 'AdminController@assignResident');
+    Route::post('/passContract', 'ResidentController@passContract');
 
 
     Route::post('createLaundrySchedule', 'ResidentController@createLaundrySchedule');
@@ -84,23 +90,21 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::post('/updateEquipment', 'ResidentController@updateEquipment');
 
 
-    Route::post('/createRepair', 'ResidentController@createRepair');
-    Route::get('/getRepairs', 'ResidentController@getRepairs');
-    Route::get('/admin/getRepairs', 'AdminController@getRepairs');
+    Route::post('/createMaintenance', 'ResidentController@createMaintenance');
+    Route::get('/getMaintenances', 'ResidentController@getMaintenances');
+    Route::get('/admin/getMaintenances', 'AdminController@getMaintenances');
+    Route::post('/approveMaintenance/{id}', 'ResidentController@approveMaintenance');
 
     Route::get('/api/getViolations', 'AdminController@getViolations');
     Route::post('/api/addViolationuser', 'AdminController@addViolationuser');
     Route::get('/notifyViolations', 'AdminController@notifyResidents');
 
 
-
-   
-
-    Route::post('/acceptRepair', 'TechnicianController@acceptRepair');
-    Route::post('/resident/acceptRepair', 'ResidentController@acceptRepair');
-    Route::get('/getRepairStatus', 'TechnicianController@getRepairStatus');
+    Route::post('/acceptMaintenance', 'TechnicianController@acceptMaintenance');
+    Route::post('/resident/acceptMaintenance', 'ResidentController@acceptMaintenance');
+    Route::get('/getMaintenanceStatus', 'TechnicianController@getMaintenanceStatus');
     
-    Route::post('/addRepairStatus', 'TechnicianController@addRepairStatus');
+    Route::post('/addMaintenanceStatus', 'TechnicianController@addMaintenanceStatus');
 
     Route::get('/getNotifications', 'AuthController@getNotifications');
 
@@ -109,8 +113,15 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::post('/sendLogs', 'ResidentController@sendLogs');
     Route::post('/updateLogs', 'ResidentController@updateLogs');
     Route::get('/myLogs', 'ResidentController@myLogs');
+    Route::get('/myReservations', 'ResidentController@myReservations');
+    Route::get('/cancelReservation/{id}', 'ResidentController@cancelReservation');
+
+    Route::get('/sendSleep', 'ResidentController@sendSleep');
+
+    Route::get('/getLogs', 'AdminController@getLogs');
    
     Route::get('/getComplaints', 'AdminController@getComplaints');
+    Route::get('/getMaintenanceList', 'AuthController@getMaintenanceList');
 
 
 

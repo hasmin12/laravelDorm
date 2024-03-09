@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('maintenancechanges', function (Blueprint $table) {
+        Schema::create('maintenancelists', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('maintenance_id');
-            $table->foreign('maintenance_id')->references('id')->on('maintenances')->onDelete('cascade');
-            $table->text('description');
-            $table->unsignedBigInteger('changePercentage')->default(0);
+            $table->text('name');
+            $table->text('description')->nullable();
+
             $table->timestamps();
         });
     }
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('maintenancechanges');
+        Schema::dropIfExists('maintenancelists');
     }
 };

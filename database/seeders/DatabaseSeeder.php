@@ -7,6 +7,8 @@ use Illuminate\Database\Seeder;
 use Database\Seeders\RoomSeeder;
 use Database\Seeders\BedSeeder;
 use Database\Seeders\UserSeeder;
+use Database\Seeders\MaintenanceSeeder;
+
 
 class DatabaseSeeder extends Seeder
 {
@@ -24,5 +26,7 @@ class DatabaseSeeder extends Seeder
         $this->call(UserSeeder::class);
         $this->call(RoomSeeder::class);
         $this->call(BedSeeder::class);
+        $this->call(MaintenanceSeeder::class);
+
     }
 }

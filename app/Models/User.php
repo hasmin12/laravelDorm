@@ -37,7 +37,8 @@ class User extends Authenticatable
         'type',
         'roomdetails', 
         'is_scheduled',
-        'status'
+        'status',
+        'specialization'
     ];
 
     /**
