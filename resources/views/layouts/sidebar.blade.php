@@ -27,11 +27,10 @@
             <a href="/residents" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Residents</a>
             <a href="/rooms" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Rooms</a>
             <a href="/announcements" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Announcements</a>
-            <a href="/transactions" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Transactions</a>
+            <a href="/transactions" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Payments</a>
             <a href="/violations" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Violations</a>
             <a href="/laundry" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Laundry</a>
             <a href="/lostandfound" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Lost and Found</a>
-
             
         </div>
     </nav>

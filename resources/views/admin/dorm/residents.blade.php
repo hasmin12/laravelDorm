@@ -52,8 +52,31 @@
     </div>
 </div>
 
+<!-- Modal Start -->
+<div class="modal fade" id="residentDetailsModal" tabindex="-1" aria-labelledby="residentDetailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="residentDetailsModalLabel">Resident Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="residentDetailsModalBody">
+                <!-- Resident details will be dynamically added here -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-sm btn-warning" onclick="updateRoom(${resident.id})">Update</button>
+                            <button class="btn btn-sm btn-danger" onclick="deleteRoom(${resident.id})">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
         <!-- Table View Start -->
-        <div class="container-fluid pt-4 px-4" id="residentTableView">
+        <div class="container-fluid pt-10 px-10" id="residentTableView">
             <div class="bg-light text-center rounded p-4">
                 <div class="table-responsive">
                     <table class="table text-start align-middle table-bordered table-hover mb-0" class="table table-dark">
@@ -105,6 +128,37 @@
     <!-- Back to Top -->
     <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
 </div>
+<!-- Modal Structure -->
+<div class="modal fade" id="updateResidentModal" tabindex="-1" role="dialog" aria-labelledby="updateResidentModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="updateResidentModalLabel">Update Resident</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="updateResidentForm">
+                    <div class="mb-3">
+                        <label for="updateName" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="updateName" name="name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="updateType" class="form-label">Type </label>
+                        <input type="text" class="form-control" id="updateType" name="type">
+                    </div>
+                    <div class="mb-3">
+                        <label for="updateSex" class="form-label">Sex</label>
+                        <input type="text" class="form-control" id="updateSex" name="sex">
+                    </div>
+                    <!-- Add other input fields for resident details -->
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </form>
+            </div>            
+        </div>
+    </div>
+</div>
+
+
 <script src="{{ asset('js/admin/dorm/resident.js') }}"></script>
 <!-- ... (your existing HTML code) ... -->
 
@@ -141,6 +195,9 @@
         });
     });
 </script>
+
+
+
 
 
 @endsection

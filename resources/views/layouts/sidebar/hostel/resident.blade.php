@@ -4,7 +4,7 @@
         <a href="index.html" class="navbar-brand mx-4 mb-3">
 
             <h3 class="text-primary">
-                <img class="rounded-circle" src="/img/tuplogo.png"  style="width: 40px; height: 40px;" class="logo me-2">
+                <img class="rounded-circle" src="/img/dxtlogo.png"  style="width: 40px; height: 40px;" class="logo me-2">
                 DormXtend
               </h3>
         </a>

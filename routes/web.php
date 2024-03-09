@@ -182,6 +182,10 @@ Route::middleware(['adminbranch:Hostel'])->group(function () {
                 return view('resident.profile');
             });
 
+            Route::get('/home', function () {
+                return view('resident.home');
+            });
+
             Route::get('/announcements', function () {
                 return view('resident.announcements');
             });

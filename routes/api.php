@@ -32,8 +32,10 @@ Route::post('/createRegistration', 'GuestController@createRegistration');
 Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::get('/getDashboardData', 'AdminController@getDashboardData');
     Route::get('/getResidents', 'AdminController@getResidents');
+    Route::get('/getResident/{id}', 'AdminController@getResident');
     Route::get('/getRegisteredusers', 'AdminController@getRegisteredusers');
     Route::post('/addRegistereduser', 'AdminController@addRegistereduser');
+    Route::post('/updateResident/{id}', 'AdminController@updateResident');
     Route::delete('archiveResident/{id}', 'AdminController@archiveResident');
     Route::get('getPaymentHistory', 'AdminController@getPaymentHistory');
     Route::get('myPaymentHistory', 'ResidentController@myPaymentHistory');

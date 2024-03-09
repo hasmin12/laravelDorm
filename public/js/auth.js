@@ -29,7 +29,7 @@ $(document).ready(function() {
                         text: 'Login Successful.',
                     });
                     if (response.user.role === 'Resident') {
-                        window.location.href = '/resident/payments';
+                        window.location.href = '/resident/home';
                     } else if (response.user.role === 'Admin') {
                         if(response.user.branch === 'Dormitory'){
                             window.location.href = '/admin/dorm/dashboard';

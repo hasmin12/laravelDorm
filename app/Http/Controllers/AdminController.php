@@ -137,11 +137,12 @@ class AdminController extends Controller
     {
         try {
             $resident = User::findOrFail($id);           
-            return response()->json(['room' => $room]);
+            return response()->json(['resident' => $resident]);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Announcement not found'], 404);
+            return response()->json(['error' => 'Resident not found'], 404);
         }
     }
+
 
     public function createResident(Request $request)
     {
@@ -213,6 +214,47 @@ class AdminController extends Controller
             return response()->json(['error' => 'Internal Server Error'], 500);
         }
     }
+
+    public function updateResident(Request $request, $id)
+{
+    try {
+        // Check if the user is authenticated
+        // if (Auth::check()) {
+        //     // Check if the authenticated user's role is "Resident"
+        //     if (Auth::user()->role === "Admin") {
+                // Find the resident in the User table
+                $resident = User::find($id);
+                Log::info($resident);
+                // Check if the resident exists
+                if (!$resident) {
+                    return response()->json(['error' => 'Resident not found'], 404);
+                }
+                
+                // Update the resident details
+                $resident->update([
+                    'name' => $request->input('name'),
+                    'type' => $request->input('type'),
+                    'sex' => $request->input('sex'),
+                    // Add more fields to update as needed
+                ]);
+
+                // Return success response
+                return response()->json(['success' => true, 'message' => 'Resident updated successfully', 'resident'=> $resident]);
+        //     } else {
+        // //         // Return unauthorized access response
+        // //         return response()->json(['error' => 'Unauthorized'], 401);
+        // //     }
+        // // } else {
+        // //     // Return unauthorized access response
+        // //     return response()->json(['error' => 'Unauthorized'], 401);
+        // // }
+    } catch (\Exception $e) {
+        // Log and return error response
+        \Log::error('Error in update Resident: ' . $e->getMessage());
+        return response()->json(['error' => 'Internal Server Error'], 500);
+    }
+}
+
 
     public function getRegisteredusers(Request $request)
     {
