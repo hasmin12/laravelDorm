@@ -861,7 +861,7 @@ ul, ol {
 -----------------------*/
 
 .footer-section {
-	background: #222736;
+	background: #730000;
 }
 .footer-section .footer-text {
 	padding: 80px 0 30px;
@@ -876,7 +876,7 @@ ul, ol {
 	display: inline-block;
 }
 .footer-section .footer-text .ft-about p {
-	color: #aaaab3;
+	color: #ffffff;
 	margin-bottom: 20px;
 }
 .footer-section .footer-text .ft-about .fa-social a {
@@ -968,11 +968,11 @@ ul, ol {
 }
 .footer-section .copyright-option ul li a {
 	font-size: 16px;
-	color: #aaaab3;
+	color: #f6f6f6;
 }
 .footer-section .copyright-option .co-text {
 	font-size: 16px;
-	color: #707079;
+	color: #ffffff;
 	text-align: right;
 }
 /* --------------------------------- Other Pages Styles ----------------------------------- */

@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>DORMXTEND</title>
+    <title>WEBUILD -  Construction Company Website Template Free</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="Free HTML Templates" name="keywords">
     <meta content="Free HTML Templates" name="description">
@@ -71,7 +71,7 @@
     <div class="container-fluid sticky-top bg-dark bg-light-radial shadow-sm px-5 pe-lg-0">
         <nav class="navbar navbar-expand-lg bg-dark bg-light-radial navbar-dark py-3 py-lg-0">
             <a href="index.html" class="navbar-brand">
-                <h1 class="m-0 display-4 text-uppercase text-white">DORMXTEND</h1>
+                <h1 class="m-0 display-4 text-uppercase text-white"><i class="bi bi-building text-primary me-2"></i>WEBUILD</h1>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                 <span class="navbar-toggler-icon"></span>
@@ -105,22 +105,22 @@
         <div id="header-carousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img class="w-100" src="img/land.jpg" alt="Image">
+                    <img class="w-100" src="css1/img/carousel-1.jpg" alt="Image">
                     <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                         <div class="p-3" style="max-width: 900px;">
                             <i class="fa fa-home fa-4x text-primary mb-4 d-none d-sm-block"></i>
-                            <h1 class="display-2 text-uppercase text-white mb-md-4">HOSTEL</h1>
-                            <a href="" class="btn btn-primary py-md-3 px-md-5 mt-2">Apply</a>
+                            <h1 class="display-2 text-uppercase text-white mb-md-4">Build Your Dream House With Us</h1>
+                            <a href="" class="btn btn-primary py-md-3 px-md-5 mt-2">Get A Quote</a>
                         </div>
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <img class="w-100" src="img/tup1.jpg" alt="Image">
+                    <img class="w-100" src="css1/img/carousel-2.jpg" alt="Image">
                     <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                         <div class="p-3" style="max-width: 900px;">
-                            <i class="fa fa-building fa-4x text-primary mb-4 d-none d-sm-block"></i>
-                            <h1 class="display-2 text-uppercase text-white mb-md-4">DORMITORY</h1>
-                            <a href="" class="btn btn-primary py-md-3 px-md-5 mt-2">Book a Room</a>
+                            <i class="fa fa-tools fa-4x text-primary mb-4 d-none d-sm-block"></i>
+                            <h1 class="display-2 text-uppercase text-white mb-md-4">We Are Trusted For Your Project</h1>
+                            <a href="" class="btn btn-primary py-md-3 px-md-5 mt-2">Contact Us</a>
                         </div>
                     </div>
                 </div>
