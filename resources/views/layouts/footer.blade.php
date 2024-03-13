@@ -1,15 +1,4 @@
-{{-- <div class="full-width-container pt-6 px-6">
-    <div class="bg-white p-4 text-dark">
-        <div class="row">
-            <div class="col-12 col-sm-6 mb-3 mb-sm-0 text-center text-sm-start">
-                <img src="/img/dxtname.png" style="width: 250px; height: 150px;">     
-            </div>
-            <div class="col-12 col-sm-6 text-center text-sm-end">
-                <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
-            </div>
-        </div>
-    </div>
-</div> --}}
+
 <footer class="footer-section">
     <div class="container">
         <div class="footer-text">

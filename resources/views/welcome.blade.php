@@ -92,7 +92,16 @@
                         </div>
                     </div>
                     <a href="contact.html" class="nav-item nav-link">Contact</a>
-                    <a href="" class="nav-item nav-link bg-primary text-white px-5 ms-3 d-none d-lg-block">Get A Quote <i class="bi bi-arrow-right"></i></a>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
+                        <div class="dropdown-menu m-0">
+                            <a href="project.html" class="dropdown-item">Our Project</a>
+                            <a href="team.html" class="dropdown-item">The Team</a>
+                            <a href="testimonial.html" class="dropdown-item">Testimonial</a>
+                            <a href="blog.html" class="dropdown-item">Blog Grid</a>
+                            <a href="detail.html" class="dropdown-item">Blog Detail</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </nav>
@@ -110,7 +119,7 @@
                         <div class="p-3" style="max-width: 900px;">
                             <i class="fa fa-home fa-4x text-primary mb-4 d-none d-sm-block"></i>
                             <h1 class="display-2 text-uppercase text-white mb-md-4">HOSTEL</h1>
-                            <a href="" class="btn btn-primary py-md-3 px-md-5 mt-2">Apply</a>
+                            <a href="{{ route('login') }}" class="btn btn-primary py-md-3 px-md-5 mt-2">Apply</a>
                         </div>
                     </div>
                 </div>
@@ -120,7 +129,7 @@
                         <div class="p-3" style="max-width: 900px;">
                             <i class="fa fa-building fa-4x text-primary mb-4 d-none d-sm-block"></i>
                             <h1 class="display-2 text-uppercase text-white mb-md-4">DORMITORY</h1>
-                            <a href="" class="btn btn-primary py-md-3 px-md-5 mt-2">Book a Room</a>
+                            <a href="{{ route('login') }}" class="btn btn-primary py-md-3 px-md-5 mt-2">Book a Room</a>
                         </div>
                     </div>
                 </div>

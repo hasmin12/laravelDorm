@@ -4,8 +4,7 @@
         <a href="index.html" class="navbar-brand mx-4 mb-3">
 
             <h3 class="text-primary">
-                <img class="rounded-circle" src="/img/tuplogo.png"  style="width: 40px; height: 40px;" class="logo me-2">
-                DormXtend
+                <img src="/img/sidebar.png"  style="width: 215px; height: 100%;" class="logo">           
               </h3>
         </a>
         <div class="d-flex align-items-center ms-4 mb-4">
@@ -22,13 +21,12 @@
         </div>
         <div class="navbar-nav w-100">
             {{-- <a href="/profile" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Profile</a> --}}
-            <a href="/resident/announcements" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Announcements</a>
-            <a href="/resident/billingandpayment" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Billing</a>
-            <a href="/resident/maintenance" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Maintenance</a>
-            <a href="/resident/laundry" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Laundry</a>
-            <a href="/resident/lostandfound" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Lost and Found</a>
-
-            <a href="/resident/laundry" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Violations</a>
+            <a href="/resident/announcements" class="nav-item nav-link"><i class="fa fa-bullhorn me-2"></i>Announcements</a>
+            <a href="/resident/billingandpayment" class="nav-item nav-link"><i class="fa fa-file-invoice-dollar me-2"></i>Bills</a>
+            <a href="/resident/maintenance" class="nav-item nav-link"><i class="fa fa-solid fa-wrench me-2"></i>Maintenance</a>
+            <a href="/resident/laundry" class="nav-item nav-link"><i class="fa fa-calendar me-2"></i>Laundry</a>
+            <a href="/resident/lostandfound" class="nav-item nav-link"><i class="fa fa-eye me-2"></i>Lost and Found</a>
+            <a href="/resident/laundry" class="nav-item nav-link"><i class="fa fa-user-alt-slash me-2"></i>Violations</a>
             
             {{-- <div class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Residents</a>

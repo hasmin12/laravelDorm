@@ -106,7 +106,7 @@
         <!-- Modal for Updateing announcement -->
 
     </div>
-    @include('layouts.footer')
+    {{-- @include('layouts.footer') --}}
 </div>
 <!-- Content End -->
 

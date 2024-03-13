@@ -3,7 +3,7 @@
 @section('content')
 <head>
     <meta charset="utf-8">
-    <title>WEBUILD -  Construction Company Website Template Free</title>
+    <title>LOGIN - DormXtend</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="Free HTML Templates" name="keywords">
     <meta content="Free HTML Templates" name="description">
@@ -38,8 +38,8 @@
             <div class="d-inline-flex align-items-center">
                 <i class="bi bi-geo-alt fs-1 text-primary me-3"></i>
                 <div class="text-start">
-                    <h6 class="text-uppercase fw-bold">Our Office</h6>
-                    <span>123 Street, New York, USA</span>
+                    <h6 class="text-uppercase fw-bold">Location</h6>
+                    <span>Km 14. East Service Road, Western Bicutan, Taguig, Philippines</span>
                 </div>
             </div>
         </div>
@@ -48,7 +48,7 @@
                 <i class="bi bi-envelope-open fs-1 text-primary me-3"></i>
                 <div class="text-start">
                     <h6 class="text-uppercase fw-bold">Email Us</h6>
-                    <span>info@example.com</span>
+                    <span>dormxtend@tup.edu.ph</span>
                 </div>
             </div>
         </div>
@@ -75,7 +75,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
-            <div class="navbar-nav ms-auto py-0">
+            {{-- <div class="navbar-nav ms-auto py-0">
                 <a href="index.html" class="nav-item nav-link active">Home</a>
                 <a href="about.html" class="nav-item nav-link">About</a>
                 <a href="service.html" class="nav-item nav-link">Service</a>
@@ -91,7 +91,7 @@
                 </div>
                 <a href="contact.html" class="nav-item nav-link">Contact</a>
                 <a href="" class="nav-item nav-link bg-primary text-white px-5 ms-3 d-none d-lg-block">Get A Quote <i class="bi bi-arrow-right"></i></a>
-            </div>
+            </div> --}}
         </div>
     </nav>
 </div>

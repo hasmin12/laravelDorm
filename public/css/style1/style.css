@@ -34,15 +34,15 @@
 
 html, body {
 	height: 100%;
-	font-family: "Cabin", sans-serif;
+	font-family: "Open Sans", sans-serif;
 	-webkit-font-smoothing: antialiased;
 	font-smoothing: antialiased;
 }
 h1, h2, h3, h4, h5, h6 {
 	margin: 0;
-	color: #111111;
+	color: #730000;
 	font-weight: 400;
-	font-family: "Lora", serif;
+	font-family: sans-serif;
 }
 h1 {
 	font-size: 70px;
@@ -64,7 +64,7 @@ h6 {
 }
 p {
 	font-size: 16px;
-	font-family: "Cabin", sans-serif;
+	font-family: sans-serif;
 	color: #6b6b6b;
 	font-weight: 400;
 	line-height: 26px;
@@ -102,7 +102,7 @@ ul, ol {
 }
 .section-title h2 {
 	font-size: 44px;
-	color: #19191a;
+	color: #e95a68;
 	line-height: 58px;
 	margin-top: 10px;
 }
@@ -276,7 +276,7 @@ ul, ol {
 	list-style: none;
 	display: inline-block;
 	font-size: 16px;
-	color: #19191a;
+	color: #e95a68;
 	font-weight: 500;
 	padding: 14px 0 12px;
 	margin-right: 64px;
@@ -312,7 +312,7 @@ ul, ol {
 .top-nav .tn-right .top-social a {
 	display: inline-block;
 	font-size: 16px;
-	color: #19191a;
+	color: #e95a68;
 	margin-left: 15px;
 }
 .top-nav .tn-right .bk-btn {
@@ -345,7 +345,7 @@ ul, ol {
 }
 .top-nav .tn-right .language-option span {
 	font-size: 16px;
-	color: #19191a;
+	color: #e95a68;
 	text-transform: uppercase;
 	font-weight: 500;
 }
@@ -374,7 +374,7 @@ ul, ol {
 	font-size: 14px;
 	text-transform: uppercase;
 	font-weight: 500;
-	color: #19191a;
+	color: #e95a68;
 	-webkit-transition: all 0.3s;
 	-o-transition: all 0.3s;
 	transition: all 0.3s;
@@ -417,7 +417,7 @@ ul, ol {
 }
 .menu-item .nav-menu .mainmenu li a {
 	font-size: 16px;
-	color: #19191a;
+	color: #e95a68;
 	margin-right: 42px;
 	font-weight: 500;
 	display: inline-block;
@@ -461,7 +461,7 @@ ul, ol {
 }
 .menu-item .nav-menu .mainmenu li .dropdown li a {
 	font-size: 16px;
-	color: #19191a;
+	color: #e95a68;
 	display: block;
 	text-align: left;
 	padding: 8px 15px;
@@ -482,7 +482,7 @@ ul, ol {
 }
 .menu-item .nav-menu .nav-right i {
 	font-size: 16px;
-	color: #19191a;
+	color: #e95a68;
 	cursor: pointer;
 }
 .canvas-open {
@@ -525,7 +525,7 @@ ul, ol {
 	border-radius: 4px;
 }
 .booking-form h3 {
-	color: #19191a;
+	color: #e95a68;
 	margin-bottom: 36px;
 }
 .booking-form form .check-date {
@@ -544,7 +544,7 @@ ul, ol {
 	border: 1px solid #ebebeb;
 	border-radius: 2px;
 	font-size: 16px;
-	color: #19191a;
+	color: #e95a68;
 	text-transform: uppercase;
 	font-weight: 500;
 	padding-left: 20px;
@@ -585,7 +585,7 @@ ul, ol {
 }
 .booking-form form .select-option .nice-select span {
 	font-size: 16px;
-	color: #19191a;
+	color: #e95a68;
 	text-transform: uppercase;
 	font-weight: 500;
 }
@@ -661,7 +661,7 @@ ul, ol {
 	margin-bottom: 35px;
 }
 .about-text .about-btn {
-	color: #19191a;
+	color: #e95a68;
 }
 .about-pic img {
 	min-width: 100%;
@@ -704,7 +704,7 @@ ul, ol {
 	transition: all 0.3s;
 }
 .service-item h4 {
-	color: #19191a;
+	color: #e95a68;
 	font-size: 22px;
 	margin-bottom: 15px;
 	margin-top: 10px;
@@ -815,8 +815,8 @@ ul, ol {
 	transition: all 0.3s;
 }
 .testimonial-slider.owl-carousel .owl-nav button:hover {
-	border-color: #19191a;
-	color: #19191a;
+	border-color: #e95a68;
+	color: #e95a68;
 }
 .testimonial-slider.owl-carousel .owl-nav button.owl-next {
 	left: auto;
@@ -843,7 +843,7 @@ ul, ol {
 }
 .testimonial-slider .ts-item .ti-author h5 {
 	font-size: 20px;
-	color: #19191a;
+	color: #e95a68;
 	display: inline-block;
 }
 /*---------------------
@@ -1572,7 +1572,7 @@ ul, ol {
 	padding-top: 30px;
 }
 .load-more .primary-btn {
-	color: #19191a;
+	color: #e95a68;
 }
 /*----------------------------
   Blog Details Hero Section
@@ -1772,7 +1772,7 @@ ul, ol {
 }
 .blog-details-text .comment-option .single-comment-item .sc-text a {
 	display: inline-block;
-	color: #19191a;
+	color: #e95a68;
 	font-size: 14px;
 	font-weight: 700;
 	text-transform: uppercase;
@@ -2082,7 +2082,7 @@ ul, ol {
 	}
 	.offcanvas-menu-wrapper .header-configure-area .language-option span {
 		font-size: 16px;
-		color: #19191a;
+		color: #e95a68;
 		text-transform: uppercase;
 		font-weight: 500;
 	}
@@ -2111,7 +2111,7 @@ ul, ol {
 		font-size: 14px;
 		text-transform: uppercase;
 		font-weight: 500;
-		color: #19191a;
+		color: #e95a68;
 		-webkit-transition: all 0.3s;
 		-o-transition: all 0.3s;
 		transition: all 0.3s;

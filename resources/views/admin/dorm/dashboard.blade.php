@@ -276,7 +276,7 @@
             </div>
         </div>
         <!-- Widgets End -->
-        @include('layouts.footer')
+        {{-- @include('layouts.footer') --}}
     </div>
     <!-- Content End -->
 
