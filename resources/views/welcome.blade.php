@@ -119,7 +119,7 @@
                         <div class="p-3" style="max-width: 900px;">
                             <i class="fa fa-home fa-4x text-primary mb-4 d-none d-sm-block"></i>
                             <h1 class="display-2 text-uppercase text-white mb-md-4">HOSTEL</h1>
-                            <a href="{{ route('login') }}" class="btn btn-primary py-md-3 px-md-5 mt-2">Apply</a>
+                            <a href="{{ route('login') }}" class="btn btn-primary py-md-3 px-md-5 mt-2">Book a Room</a>
                         </div>
                     </div>
                 </div>
@@ -129,7 +129,7 @@
                         <div class="p-3" style="max-width: 900px;">
                             <i class="fa fa-building fa-4x text-primary mb-4 d-none d-sm-block"></i>
                             <h1 class="display-2 text-uppercase text-white mb-md-4">DORMITORY</h1>
-                            <a href="{{ route('login') }}" class="btn btn-primary py-md-3 px-md-5 mt-2">Book a Room</a>
+                            <a href="{{ route('login') }}" class="btn btn-primary py-md-3 px-md-5 mt-2">Apply</a>
                         </div>
                     </div>
                 </div>

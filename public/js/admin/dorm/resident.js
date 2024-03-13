@@ -34,10 +34,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
             data.residents.forEach(resident => {
                 // Card HTML structure
+                
                 const card = `
                         <div class="col-md-4 mb-3">
                         <div class="card custom-border-red" style="width: 18rem;">
-                            <img class="card-img-top" src="..." alt="Card image cap">
+                            <img class="card-img-top" style="width: 285px; height: 285px;" src="${resident.img_path}" alt="Card image cap">
                             <div class="card-body text-center">
                                 <h5 class="card-title">${resident.name}</h5>
                                 <button class="btn btn-sm btn-success" onclick="showResidentDetails(${resident.id})" data-bs-toggle="modal" data-bs-target="#residentDetailsModal">
@@ -206,7 +207,7 @@ function showResidentDetails(residentId) {
                     <div class="row">
                         <!-- Left Column for Picture -->
                         <div class="col-md-6">
-                            <img src="residentImageUrl.jpg" class="img-fluid mb-3 rounded" alt="Resident Image" style="max-width: 150%; height: 150%;">
+                            <img src="${resident.img_path}" class="img-fluid mb-3 rounded" alt="Resident Image" style="max-width: 100%; height: 100%;">
                         </div>
                         <!-- Right Column for Resident Details -->
                         <div class="col-md-6">

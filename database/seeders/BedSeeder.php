@@ -25,8 +25,8 @@ class BedSeeder extends Seeder
             $bed1 = Dormitorybed::create([
                 'name' => 'A',
                 'room_id' => $index,
-                'user_id' => $dormitory_users[$index - 1]->id,
-                'status' => "Occupied",
+                // 'user_id' => $dormitory_users[$index - 1]->id,
+                // 'status' => "Occupied",
 
             ]);
 

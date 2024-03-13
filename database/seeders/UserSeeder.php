@@ -36,20 +36,20 @@ class UserSeeder extends Seeder
             'roomdetails' => 'RoomBed'
         ]);
         
-        User::create([
-            'name' => 'Dormitory Resident',
-            'email' => 'dormitory@resident.com',
-            'password' => bcrypt("password"),
-            'role' => 'Resident',
-            'branch' => 'Dormitory',
-            'Tuptnum' => $tupt_temp . "" . $ResidentTuptnum,
-            'contacts' => $faker->phoneNumber(),
-            'address' => $faker->address(),
-            'sex' => $faker->randomElement($array = array ('Male', 'Female')), // 'b'
-            'birthdate' => $faker-> dateTimeBetween($startDate = '-30 years', $endDate = '-20 years', $timezone = null),
-            'type' => 'Student',
-            'roomdetails' => 'RoomBed'
-        ]);
+        // User::create([
+        //     'name' => 'Dormitory Resident',
+        //     'email' => 'dormitory@resident.com',
+        //     'password' => bcrypt("password"),
+        //     'role' => 'Resident',
+        //     'branch' => 'Dormitory',
+        //     'Tuptnum' => $tupt_temp . "" . $ResidentTuptnum,
+        //     'contacts' => $faker->phoneNumber(),
+        //     'address' => $faker->address(),
+        //     'sex' => $faker->randomElement($array = array ('Male', 'Female')), // 'b'
+        //     'birthdate' => $faker-> dateTimeBetween($startDate = '-30 years', $endDate = '-20 years', $timezone = null),
+        //     'type' => 'Student',
+        //     'roomdetails' => 'RoomBed'
+        // ]);
 
         // User::create([
         //     'name' => 'Hostel Admin',
@@ -118,125 +118,75 @@ class UserSeeder extends Seeder
         
         // }
 
-        foreach (range(1, 5) as $index) {
-            $first_name = $faker->firstName();
-            $last_name = $faker->lastName();
-            $cusname = $first_name . ' ' . $last_name;
-            $tupt_num = $faker->numberBetween($min = 1000, $max = 9000);
+        // foreach (range(1, 5) as $index) {
+        //     $first_name = $faker->firstName();
+        //     $last_name = $faker->lastName();
+        //     $cusname = $first_name . ' ' . $last_name;
+        //     $tupt_num = $faker->numberBetween($min = 1000, $max = 9000);
 
-            $user = User::create([
-                'name' => $cusname,
-                'email' => $faker->email(),
-                'password' => bcrypt("password"),
-                'role' => 'Resident',
-                'branch' => 'Dormitory',
-                'Tuptnum' => $tupt_temp . "" . $tupt_num,
-                'address' => $faker->address(),
-                'sex' => $faker->randomElement($array = array ('Male', 'Female')), // 'b'
-                'birthdate' => $faker-> dateTimeBetween($startDate = '-30 years', $endDate = '-20 years', $timezone = null),
-                'contacts' => $faker->phoneNumber(),
-                'type' => 'Student',
-                'roomdetails' => 'RoomBed'
+        //     $user = User::create([
+        //         'name' => $cusname,
+        //         'email' => $faker->email(),
+        //         'password' => bcrypt("password"),
+        //         'role' => 'Resident',
+        //         'branch' => 'Dormitory',
+        //         'Tuptnum' => $tupt_temp . "" . $tupt_num,
+        //         'address' => $faker->address(),
+        //         'sex' => $faker->randomElement($array = array ('Male', 'Female')), // 'b'
+        //         'birthdate' => $faker-> dateTimeBetween($startDate = '-30 years', $endDate = '-20 years', $timezone = null),
+        //         'contacts' => $faker->phoneNumber(),
+        //         'type' => 'Student',
+        //         'roomdetails' => 'RoomBed'
                 
-            ]);
+        //     ]);
         
-        }
-        foreach (range(1, 5) as $index) {
-            $first_name = $faker->firstName();
-            $last_name = $faker->lastName();
-            $cusname = $first_name . ' ' . $last_name;
-            $tupt_num = $faker->numberBetween($min = 1000, $max = 9000);
+        // }
+        // foreach (range(1, 5) as $index) {
+        //     $first_name = $faker->firstName();
+        //     $last_name = $faker->lastName();
+        //     $cusname = $first_name . ' ' . $last_name;
+        //     $tupt_num = $faker->numberBetween($min = 1000, $max = 9000);
 
-            $user = User::create([
-                'name' => $cusname,
-                'email' => $faker->email(),
-                'password' => bcrypt("password"),
-                'role' => 'Resident',
-                'branch' => 'Dormitory',
-                'Tuptnum' => $tupt_temp . "" . $tupt_num,
-                'address' => $faker->address(),
-                'sex' => $faker->randomElement($array = array ('Male', 'Female')), // 'b'
-                'birthdate' => $faker-> dateTimeBetween($startDate = '-30 years', $endDate = '-20 years', $timezone = null),
-                'contacts' => $faker->phoneNumber(),
-                'type' => "Faculty",
-                'roomdetails' => 'RoomBed'
+        //     $user = User::create([
+        //         'name' => $cusname,
+        //         'email' => $faker->email(),
+        //         'password' => bcrypt("password"),
+        //         'role' => 'Resident',
+        //         'branch' => 'Dormitory',
+        //         'Tuptnum' => $tupt_temp . "" . $tupt_num,
+        //         'address' => $faker->address(),
+        //         'sex' => $faker->randomElement($array = array ('Male', 'Female')), // 'b'
+        //         'birthdate' => $faker-> dateTimeBetween($startDate = '-30 years', $endDate = '-20 years', $timezone = null),
+        //         'contacts' => $faker->phoneNumber(),
+        //         'type' => "Faculty",
+        //         'roomdetails' => 'RoomBed'
 
-            ]);
+        //     ]);
         
-        }
+        // }
 
-        foreach (range(1, 5) as $index) {
-            $first_name = $faker->firstName();
-            $last_name = $faker->lastName();
-            $cusname = $first_name . ' ' . $last_name;
-            $tupt_num = $faker->numberBetween($min = 1000, $max = 9000);
+        // foreach (range(1, 5) as $index) {
+        //     $first_name = $faker->firstName();
+        //     $last_name = $faker->lastName();
+        //     $cusname = $first_name . ' ' . $last_name;
+        //     $tupt_num = $faker->numberBetween($min = 1000, $max = 9000);
 
-            $user = User::create([
-                'name' => $cusname,
-                'email' => $faker->email(),
-                'password' => bcrypt("password"),
-                'role' => 'Resident',
-                'branch' => 'Hostel',
-                'Tuptnum' => $tupt_temp . "" . $tupt_num,
-                'address' => $faker->address(),
-                'sex' => $faker->randomElement($array = array ('Male', 'Female')), // 'b'
-                'birthdate' => $faker-> dateTimeBetween($startDate = '-30 years', $endDate = '-20 years', $timezone = null),
-                'contacts' => $faker->phoneNumber(),
-                'type' => "Faculty",
-                'roomdetails' => 'Room'
+        //     $user = User::create([
+        //         'name' => $cusname,
+        //         'email' => $faker->email(),
+        //         'password' => bcrypt("password"),
+        //         'role' => 'Resident',
+        //         'branch' => 'Hostel',
+        //         'Tuptnum' => $tupt_temp . "" . $tupt_num,
+        //         'address' => $faker->address(),
+        //         'sex' => $faker->randomElement($array = array ('Male', 'Female')), // 'b'
+        //         'birthdate' => $faker-> dateTimeBetween($startDate = '-30 years', $endDate = '-20 years', $timezone = null),
+        //         'contacts' => $faker->phoneNumber(),
+        //         'type' => "Faculty",
+        //         'roomdetails' => 'Room'
 
-            ]);
+        //     ]);
         
-        }
-
-        foreach (range(1, 5) as $index) {
-            $first_name = $faker->firstName();
-            $last_name = $faker->lastName();
-            $cusname = $first_name . ' ' . $last_name;
-            $tupt_num = $faker->numberBetween($min = 1000, $max = 9000);
-
-            $user = User::create([
-                'name' => $cusname,
-                'email' => $faker->email(),
-                'password' => bcrypt("password"),
-                'role' => 'Resident',
-                'branch' => 'Dormitory',
-                'Tuptnum' => $tupt_temp . "" . $tupt_num,
-                'address' => $faker->address(),
-                'sex' => $faker->randomElement($array = array ('Male', 'Female')), // 'b'
-                'birthdate' => $faker-> dateTimeBetween($startDate = '-30 years', $endDate = '-20 years', $timezone = null),
-                'contacts' => $faker->phoneNumber(),
-                'type' => "Staff",
-                'roomdetails' => 'RoomBed'
-
-            ]);
-
-            
-        
-        }
-
-        foreach (range(1, 5) as $index) {
-            $first_name = $faker->firstName();
-            $last_name = $faker->lastName();
-            $cusname = $first_name . ' ' . $last_name;
-            $tupt_num = $faker->numberBetween($min = 1000, $max = 9000);
-
-            $user = User::create([
-                'name' => $cusname,
-                'email' => $faker->email(),
-                'password' => bcrypt("password"),
-                'role' => 'Resident',
-                'branch' => 'Hostel',
-                'Tuptnum' => $tupt_temp . "" . $tupt_num,
-                'address' => $faker->address(),
-                'sex' => $faker->randomElement($array = array ('Male', 'Female')), // 'b'
-                'birthdate' => $faker-> dateTimeBetween($startDate = '-30 years', $endDate = '-20 years', $timezone = null),
-                'contacts' => $faker->phoneNumber(),
-                'type' => "Staff",
-                'roomdetails' => 'Room'
-
-            ]);
-        
-        }
+        // }
     }
 }

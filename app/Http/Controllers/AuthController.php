@@ -33,6 +33,7 @@ class AuthController extends Controller
                     'token' => $token,
                     'Type' => 'Bearer',
                     'user' => $user,
+                    'name' => $user->name,
                 ]);
             }
 
@@ -93,11 +94,13 @@ class AuthController extends Controller
     }
 
     public function getNotifications(){
-        
-        $notifications = Notification::where('receiver_id', Auth::user()->id)->get();
+        $notifications = Notification::where('receiver_id', Auth::user()->id)
+                                      ->orderBy('created_at', 'desc')
+                                      ->limit(5)
+                                      ->get();
         return response()->json(['notifications' => $notifications]);
-
     }
+    
 
     public function getMaintenanceList(){
         $maintenancelist = Maintenancelist::all();

@@ -26,14 +26,14 @@ use App\Models\Residentlog;
 
 use App\Mail\NotifyMail;
 use App\Mail\Confirmationmail;
-
+use App\Notifications\RealTimeNotification;
 use Illuminate\Support\Facades\Mail;
 
 use Auth; 
 use Carbon\Carbon;
 use Log;
 
-
+use App\Events\NotificationEvent;
 class AdminController extends Controller
 {
     
@@ -137,7 +137,7 @@ class AdminController extends Controller
     public function getResident($id)
     {
         try {
-            $resident = User::findOrFail($id);           
+            $resident = User::find($id);           
             return response()->json(['resident' => $resident]);
         } catch (\Exception $e) {
             return response()->json(['error' => 'Resident not found'], 404);
@@ -288,45 +288,45 @@ class AdminController extends Controller
         }
     }
 
-    public function addRegistereduser(Request $request){
-        $registeredUser = Registration::find($request->input('registereduser_id'));
-        $bed = Dormitorybed::find($request->input('bed_id'));
-        $room = Dormitoryroom::find($request->input('room_id'));
-        Log::info($registeredUser->address);
-        $user = User::create([
-            'name' => $registeredUser->name,
-            'email' => $registeredUser->email,
-            'password' => bcrypt($registeredUser->password),
-            'branch' => $registeredUser->branch,
-            'role' => $registeredUser->role,
-            'Tuptnum' => $registeredUser->Tuptnum,
-            'sex' => $registeredUser->sex,
-            'address' => $registeredUser->address,
-            'birthdate' => $registeredUser->birthdate,
-            'contacts' => $registeredUser->contacts,
-            'cor' => $registeredUser->cor,
-            'validId' => $registeredUser->validId,
-            'vaccineCard' => $registeredUser->vaccineCard,
-            'contract' => $registeredUser->contract,
-            'type' => $registeredUser->type,
-            'roomdetails' =>$room->name.': '.$bed->name,
-        ]);
+    // public function addRegistereduser(Request $request){
+    //     $registeredUser = Registration::find($request->input('registereduser_id'));
+    //     $bed = Dormitorybed::find($request->input('bed_id'));
+    //     $room = Dormitoryroom::find($request->input('room_id'));
+    //     Log::info($registeredUser->address);
+    //     $user = User::create([
+    //         'name' => $registeredUser->name,
+    //         'email' => $registeredUser->email,
+    //         'password' => bcrypt($registeredUser->password),
+    //         'branch' => $registeredUser->branch,
+    //         'role' => $registeredUser->role,
+    //         'Tuptnum' => $registeredUser->Tuptnum,
+    //         'sex' => $registeredUser->sex,
+    //         'address' => $registeredUser->address,
+    //         'birthdate' => $registeredUser->birthdate,
+    //         'contacts' => $registeredUser->contacts,
+    //         'cor' => $registeredUser->cor,
+    //         'validId' => $registeredUser->validId,
+    //         'vaccineCard' => $registeredUser->vaccineCard,
+    //         'contract' => $registeredUser->contract,
+    //         'type' => $registeredUser->type,
+    //         'roomdetails' =>$room->name.': '.$bed->name,
+    //     ]);
 
-        $bed->update([
-            'user_id' => $user->id,
-            'status' => "Occupied",
-        ]);
+    //     $bed->update([
+    //         'user_id' => $user->id,
+    //         'status' => "Occupied",
+    //     ]);
 
-        $room->update([
-            'slot' => $room->slot - 1,
-        ]);
+    //     $room->update([
+    //         'slot' => $room->slot - 1,
+    //     ]);
 
-        $registeredUser->delete();
+    //     $registeredUser->delete();
 
-        return response()->json($user);
+    //     return response()->json($user);
 
 
-    }
+    // }
 
     public function archiveResident($id)
     {
@@ -356,6 +356,19 @@ class AdminController extends Controller
         } catch (\Exception $e) {
             // Handle errors, return error response
             return response()->json(['message' => 'Failed to fetch payment history', 'error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function getReservationHistory(Request $request)
+    {
+        try {
+            $residentId = $request->input('residentId');
+            $reservations = Reservation::where('user_id', $residentId)->get();
+
+            return response()->json(['reservations' => $reservations], 200);
+        } catch (\Exception $e) {
+            // Handle errors, return error response
+            return response()->json(['message' => 'Failed to fetch Reservation history', 'error' => $e->getMessage()], 500);
         }
     }
 
@@ -885,11 +898,14 @@ class AdminController extends Controller
                 $notifs = Notification::create([
                     'sender_id' => Auth::user()->id,
                     'receiver_id' => $resident->id,
-                    'notification_type' => "Monthly Payment",
+                    'notification_type' => "Monthly Payment1",
                     'target_id' => $dormitoryPayment->id,
                     'message' => "Hello $resident->name,
                     This is a friendly reminder to pay your monthly fees for $currentMonth.Please ensure your payment is submitted by the end of the month.Thank you for your cooperation."
                 ]);
+                // Log::info('Emails sent successfully'); // Log informational message
+
+                event(new NotificationEvent($resident->name));
             }
     
             Log::info('Emails sent successfully'); // Log informational message
@@ -1017,6 +1033,9 @@ class AdminController extends Controller
                 'totalAmount' => $totalAmount,
                 'payment_month' => $currentMonth
             ]);
+
+            $user->delete();
+            
         } catch (\Exception $e) {
             \Log::error('Error sending confirmation email: ' . $e->getMessage());
             return response()->json(['error' => 'Internal Server Error'], 500);
@@ -1047,10 +1066,16 @@ class AdminController extends Controller
         return response()->json(['bed' => $bed],200);         
     }
 
-    public function getLogs()
+    public function getLogs(Request $request)
     {
-        $logs = Residentlog::all();
+        $logs = Residentlog::where('user_id', $request->input('residentId'))->where('name',"Leave")->get();
         return response()->json( $logs);
+    }
+
+    public function getSleepLogs(Request $request)
+    {
+        $sleeplogs = Residentlog::where('user_id', $request->input('residentId'))->where('name',"Sleep")->get();
+        return response()->json( $sleeplogs);
     }
 
     

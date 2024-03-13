@@ -39,7 +39,7 @@ class GuestController extends Controller
             'id' => $room->id,
             'name' => $room->name,
             'description' => $room->description,
-            'type' => $room->type,
+            'bedtype' => $room->bedtype,
             'pax' => $room->pax,
             'price' => $room->price,
             'status' => $room->status,
@@ -79,6 +79,7 @@ class GuestController extends Controller
                 'validId' => $request->input('validId'),
                 'role' => 'Resident',
                 'branch' => 'Hostel',
+                'type' => 'Hostel Resident',
             ]);
             $hostelRoom = Hostelroom::find($request->input('room_id'));
             $hostelRoom->update([
@@ -118,9 +119,9 @@ class GuestController extends Controller
     public function createRegistration(Request $request)
     {
         
-        // $fileName1 = time() . $request->file('contract')->getClientOriginalName();
-        // $path1 = $request->file('contract')->storeAs('contract', $fileName1, 'public');
-        // $contractPath = '/storage/' . $path1;
+        $fileName1 = time() . $request->file('img_path')->getClientOriginalName();
+        $path1 = $request->file('img_path')->storeAs('residents', $fileName1, 'public');
+        $img_path = '/storage/' . $path1;
 
         $fileName2 = time() . $request->file('cor')->getClientOriginalName();
         $path2 = $request->file('cor')->storeAs('cor', $fileName2, 'public');
@@ -149,6 +150,7 @@ class GuestController extends Controller
             'cor' => $corPath,
             'validId' => $validIdPath,
             'vaccineCard' => $vaccineCardPath,
+            'img_path' => $img_path
         ]);
 
 
