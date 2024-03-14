@@ -9,19 +9,36 @@ class Registration extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'Tuptnum',
         'name',
         'email',
-        'type',
-
+        'email_verified_at',
         'password',
-        'sex',
+        'role',
+        'branch',
+        'type',
+        'img_path',
+        'remember_token',
+        'course',
+        'year',
         'birthdate',
+        'age',
+        'sex',
+        'religion',
+        'civil_status',
         'address',
-        'contacts',
+        'contactNumber',
+        'tuptNum',
         'contract',
         'cor',
-        'validId',
+        'validID',
         'vaccineCard',
+        'laptop',
+        'electricfan',
+        'lastpaidDate',
+        'is_paid',
+        'is_scheduled',
+        'roomdetails',
+        'status',
+        'specialization'
     ];
 }

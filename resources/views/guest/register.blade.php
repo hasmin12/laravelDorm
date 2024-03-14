@@ -287,7 +287,7 @@
                                 <label for="laptop" class="col-md-4 col-form-label text-md-right"></label>
                                 <div class="col-md-6">
                                     <div class="form-check">
-                                        <input id="laptop" type="checkbox" class="form-check-input @error('laptop') is-invalid @enderror" name="laptop" value="1" {{ old('laptop') ? 'checked' : '' }}>
+                                        <input id="laptop" type="checkbox" class="form-check-input @error('laptop') is-invalid @enderror" name="laptop" {{ old('laptop') ? 'checked' : '' }}>
                                         <label class="form-check-label" for="laptop">
                                             {{ __('Has Laptop') }}
                                         </label>
@@ -306,7 +306,7 @@
                                 <label for="electricfan" class="col-md-4 col-form-label text-md-right"></label>
                                 <div class="col-md-6">
                                     <div class="form-check">
-                                        <input id="electricfan" type="checkbox" class="form-check-input @error('electricfan') is-invalid @enderror" name="electricfan" value="1" {{ old('electricfan') ? 'checked' : '' }}>
+                                        <input id="electricfan" type="checkbox" class="form-check-input @error('electricfan') is-invalid @enderror" name="electricfan"  {{ old('electricfan') ? 'checked' : '' }}>
                                         <label class="form-check-label" for="electricfan">
                                             {{ __('Has Electric Fan') }}
                                         </label>

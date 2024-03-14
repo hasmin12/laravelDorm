@@ -118,7 +118,7 @@ class GuestController extends Controller
 
     public function createRegistration(Request $request)
     {
-        
+        Log::info($request);
         $fileName1 = time() . $request->file('img_path')->getClientOriginalName();
         $path1 = $request->file('img_path')->storeAs('residents', $fileName1, 'public');
         $img_path = '/storage/' . $path1;
@@ -127,18 +127,20 @@ class GuestController extends Controller
         $path2 = $request->file('cor')->storeAs('cor', $fileName2, 'public');
         $corPath = '/storage/' . $path2;
 
-        $fileName3 = time() . $request->file('validID')->getClientOriginalName();
-        $path3 = $request->file('validID')->storeAs('validID', $fileName3, 'public');
+        $fileName3 = time() . $request->file('validId')->getClientOriginalName();
+        $path3 = $request->file('validId')->storeAs('validId', $fileName3, 'public');
         $validIdPath = '/storage/' . $path3;
         
         $fileName4 = time() . $request->file('vaccineCard')->getClientOriginalName();
         $path4 = $request->file('vaccineCard')->storeAs('vaccineCard', $fileName4, 'public');
         $vaccineCardPath = '/storage/' . $path4;
-        // Log::info($request->input('password'));
+      
+        $password = bcrypt($request->input('password'));
+
         $user = Registration::create([
            
             'email' => $request->input('email'),
-            'password' =>brycpt($request->input('password')),
+            'password' => $password,
             'role' => 'Resident',
             'branch' => 'Dormitory',
             'type' => $request->input('type'),
@@ -155,9 +157,11 @@ class GuestController extends Controller
             'address' => $request->input('address'),
             'contactNumber' => $request->input('contactNumber'),
             'Tuptnum' => $request->input('Tuptnum'),
+            'laptop' => $request->input('laptop'),
+            'electricfan' => $request->input('electricfan'),
 
             'cor' => $corPath,
-            'validID' => $validIDPath,
+            'validID' => $validIdPath,
             'vaccineCard' => $vaccineCardPath,
         ]);
 
