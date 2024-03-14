@@ -1,5 +1,15 @@
 @extends('layouts.base') <!-- Assuming you have a master layout file -->
+<style>
+    .custom-select {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 200px; 
+        overflow-y: auto;
 
+    }
+</style>
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
@@ -104,9 +114,7 @@
 
                             <div class="form-group row mb-2">
                                 <label for="course" class="col-md-4 col-form-label text-md-right">{{ __('Course') }}</label>
-                                <div class="col-md-6">
-                                    <select id="course" class="form-control @error('course') is-invalid @enderror" name="course" required>
-                                        <option value="" selected hidden></option>
+                                    <select id="course" class="form-control @error('course') is-invalid @enderror" name="course" required >
                                         <option value="BET Major in Automotive Technology">BETAT-T</option>
                                         <option value="BET Major in Chemical Technology">BETChT-T</option>
                                         <option value="BET Major in Construction Technology">BETCT-T</option>
@@ -137,7 +145,6 @@
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
-                                </div>
                             </div>
                             
                             <!-- Year -->
