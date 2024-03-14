@@ -22,18 +22,24 @@ class UserSeeder extends Seeder
 
        
         User::create([
-            'name' => 'Dormitory Admin',
             'email' => 'dormitory@admin.com',
             'password' => bcrypt("password"),
             'role' => 'Admin',
             'branch' => 'Dormitory',
-            'Tuptnum' => $tupt_temp . "" . $Admintupt_num,
-            'contacts' => $faker->phoneNumber(),
-            'address' => $faker->address(),
-            'sex' => $faker->randomElement($array = array ('Male', 'Female')), // 'b'
-            'birthdate' => $faker-> dateTimeBetween($startDate = '-30 years', $endDate = '-20 years', $timezone = null),
             'type' => 'Admin',
-            'roomdetails' => 'RoomBed'
+
+            'name' => 'Dormitory Admin',
+            'course' => 'BSIT',
+            'year' => '4th year',
+            'birthdate' => $faker-> dateTimeBetween($startDate = '-30 years', $endDate = '-20 years', $timezone = null),
+            'age' => '21',
+            'sex' => $faker->randomElement($array = array ('Male', 'Female')), 
+            'religion' => 'Roman Catholic',
+            'civil_status' => 'Single',
+            'address' => $faker->address(),
+            'contactNumber' => $faker->phoneNumber(),
+            'Tuptnum' => $tupt_temp . "" . $Admintupt_num,
+            // 'roomdetails' => 'RoomBed'
         ]);
         
         // User::create([
@@ -73,7 +79,7 @@ class UserSeeder extends Seeder
             'role' => 'Technician',
             'branch' => 'Dormitory',
             'Tuptnum' => $tupt_temp . "" . $TechnicianTuptnum,
-            'contacts' => $faker->phoneNumber(),
+            'contactNumber' => $faker->phoneNumber(),
             'address' => $faker->address(),
             'sex' => $faker->randomElement($array = array ('Male', 'Female')), // 'b'
             'birthdate' => $faker-> dateTimeBetween($startDate = '-30 years', $endDate = '-20 years', $timezone = null),
@@ -89,7 +95,7 @@ class UserSeeder extends Seeder
             'role' => 'Technician',
             'branch' => 'Dormitory',
             'Tuptnum' => $tupt_temp . "" . $TechnicianTuptnum,
-            'contacts' => $faker->phoneNumber(),
+            'contactNumber' => $faker->phoneNumber(),
             'address' => $faker->address(),
             'sex' => $faker->randomElement($array = array ('Male', 'Female')), // 'b'
             'birthdate' => $faker-> dateTimeBetween($startDate = '-30 years', $endDate = '-20 years', $timezone = null),

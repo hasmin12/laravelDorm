@@ -127,30 +127,38 @@ class GuestController extends Controller
         $path2 = $request->file('cor')->storeAs('cor', $fileName2, 'public');
         $corPath = '/storage/' . $path2;
 
-        $fileName3 = time() . $request->file('validId')->getClientOriginalName();
-        $path3 = $request->file('validId')->storeAs('validId', $fileName3, 'public');
+        $fileName3 = time() . $request->file('validID')->getClientOriginalName();
+        $path3 = $request->file('validID')->storeAs('validID', $fileName3, 'public');
         $validIdPath = '/storage/' . $path3;
         
         $fileName4 = time() . $request->file('vaccineCard')->getClientOriginalName();
         $path4 = $request->file('vaccineCard')->storeAs('vaccineCard', $fileName4, 'public');
         $vaccineCardPath = '/storage/' . $path4;
-        Log::info($request->input('password'));
+        // Log::info($request->input('password'));
         $user = Registration::create([
            
-            'Tuptnum' => $request->input('Tuptnum'),
-            'name' => $request->input('fname')." ".$request->input('lname') ,
             'email' => $request->input('email'),
-            'password' => $request->input('password'),
+            'password' =>brycpt($request->input('password')),
+            'role' => 'Resident',
+            'branch' => 'Dormitory',
             'type' => $request->input('type'),
-            'sex' => $request->input('sex'),
+            'img_path' => $img_path,
+            
+            'name' => $request->input('fname')." ".$request->input('lname') ,
+            'course' => $request->input('course'),
+            'year' => $request->input('year'),
             'birthdate' => $request->input('birthdate'),
+            'age' => $request->input('age'),
+            'sex' => $request->input('sex'),
+            'religion' => $request->input('religion'),
+            'civil_status' => $request->input('civil_status'),
             'address' => $request->input('address'),
-            'contacts' => $request->input('contacts'),
-            'type' => $request->input('type'),
+            'contactNumber' => $request->input('contactNumber'),
+            'Tuptnum' => $request->input('Tuptnum'),
+
             'cor' => $corPath,
-            'validId' => $validIdPath,
+            'validID' => $validIDPath,
             'vaccineCard' => $vaccineCardPath,
-            'img_path' => $img_path
         ]);
 
 

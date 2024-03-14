@@ -999,21 +999,30 @@ class AdminController extends Controller
                 $totalAmount += 300;
             }
             $newUser = User::create([
-                'name' => $user->name,
                 'email' => $user->email,
-                'password' => bcrypt($user->password),
-                'branch' => $user->branch,
+                'password' => $user->password,
                 'role' => $user->role,
-                'Tuptnum' => $user->Tuptnum,
-                'sex' => $user->sex,
-                'address' => $user->address,
-                'birthdate' => $user->birthdate,
-                'contacts' => $user->contacts,
-                'cor' => $user->cor,
-                'schoolID' => $user->schoolID,
-                'vaccineCard' => $user->vaccineCard,
-                'contract' => $user->contract,
+                'branch' => $user->branch,
                 'type' => $user->type,
+                'img_path' => $user->img_path,
+
+                'name' => $user->name,
+                'course' => $user->course,
+                'year' => $user->year,
+                'birthdate' => $user->birthdate,
+                'age' => $user->age,
+                'sex' => $user->sex,
+                'religion' => $user->religion,
+                'civil_status' => $user->civil_status,
+                'address' => $user->address,
+                'contactNumber' => $user->contactNumber,
+                'Tuptnum' => $user->Tuptnum,
+                'cor' => $user->cor,
+                'validID' => $user->validID,
+                'vaccineCard' => $user->vaccineCard,
+                'laptop' => $user->laptop,
+                'electricfan' => $user->electricfan,
+
                 'status' => 'Applicant',
             ]);
     
