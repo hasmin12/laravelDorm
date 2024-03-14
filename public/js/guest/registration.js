@@ -8,11 +8,15 @@ document.addEventListener('DOMContentLoaded', function () {
         const formData = new FormData(this);
 
         const token = localStorage.getItem('token');
-
+        console.log(formData)
         $.ajax({
+            
             url: '/api/createRegistration',
             type: 'POST',
             headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
+                     "content"
+                ),
                 'Accept': 'application/json',
             },
             credentials: 'include',

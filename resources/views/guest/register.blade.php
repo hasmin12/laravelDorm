@@ -1,5 +1,15 @@
 @extends('layouts.base') <!-- Assuming you have a master layout file -->
+<style>
+    .custom-select {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 200px; 
+        overflow-y: auto;
 
+    }
+</style>
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
@@ -38,29 +48,11 @@
                                 </div>
                             </div>
 
-                              <!-- Role -->
-                              <div class="form-group row mb-2">
-                                <label for="role" class="col-md-4 col-form-label text-md-right">{{ __('Role') }}</label>
-                                <div class="col-md-6">
-                                    <select id="role" class="form-control @error('role') is-invalid @enderror" name="role" required>
-                                        <option value="" selected hidden></option>
-                                        <option value="Male">Male</option>
-                                        <option value="Female">Female</option>
-                                    </select>
-                                    @error('role')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div>
-
                                  <!-- Type -->
                                  <div class="form-group row mb-2">
                                     <label for="type" class="col-md-4 col-form-label text-md-right">{{ __('Type') }}</label>
                                     <div class="col-md-6">
                                         <select id="type" class="form-control @error('type') is-invalid @enderror" name="type" required>
-                                            <option value="" selected hidden></option>
                                             <option value="Male">Male</option>
                                             <option value="Female">Female</option>
                                         </select>
@@ -89,6 +81,19 @@
                             <!-- Account Information -->
                             <h4>Personal Information</h4>
                         
+                            <!-- Tuptnum -->
+                            <div class="form-group row mb-2">
+                                <label for="Tuptnum" class="col-md-4 col-form-label text-md-right">{{ __('TUPT Number') }}</label>
+                                <div class="col-md-6">
+                                    <input id="Tuptnum" type="text" class="form-control @error('Tuptnum') is-invalid @enderror" name="Tuptnum" value="{{ old('Tuptnum') }}" required>
+                                    @error('Tuptnum')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+
                             <!-- Full Name -->
                             <div class="form-group row mb-2">
                                 <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Full Name') }}</label>
@@ -105,8 +110,7 @@
                             <div class="form-group row mb-2">
                                 <label for="course" class="col-md-4 col-form-label text-md-right">{{ __('Course') }}</label>
                                 <div class="col-md-6">
-                                    <select id="course" class="form-control @error('course') is-invalid @enderror" name="course" required>
-                                        <option value="" selected hidden></option>
+                                    <select id="course" class="form-control @error('course') is-invalid @enderror" name="course" required >
                                         <option value="BET Major in Automotive Technology">BETAT-T</option>
                                         <option value="BET Major in Chemical Technology">BETChT-T</option>
                                         <option value="BET Major in Construction Technology">BETCT-T</option>
@@ -137,8 +141,8 @@
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
-                                </div>
                             </div>
+                        </div>
                             
                             <!-- Year -->
                             <div class="form-group row mb-2">
@@ -184,7 +188,6 @@
                                 <label for="sex" class="col-md-4 col-form-label text-md-right">{{ __('Sex') }}</label>
                                 <div class="col-md-6">
                                     <select id="sex" class="form-control @error('sex') is-invalid @enderror" name="sex" required>
-                                        <option value="" selected hidden></option>
                                         <option value="Male">Male</option>
                                         <option value="Female">Female</option>
                                     </select>
@@ -242,19 +245,6 @@
                                 <div class="col-md-6">
                                     <input id="contactNumber" type="text" class="form-control @error('contactNumber') is-invalid @enderror" name="contactNumber" value="{{ old('contactNumber') }}" required>
                                     @error('contactNumber')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <!-- Tuptnum -->
-                            <div class="form-group row mb-2">
-                                <label for="Tuptnum" class="col-md-4 col-form-label text-md-right">{{ __('TUPT Number') }}</label>
-                                <div class="col-md-6">
-                                    <input id="Tuptnum" type="text" class="form-control @error('Tuptnum') is-invalid @enderror" name="Tuptnum" value="{{ old('Tuptnum') }}" required>
-                                    @error('Tuptnum')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
