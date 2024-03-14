@@ -17,6 +17,8 @@ return new class extends Migration
             $table->text('content');
             $table->text('receiver');
             $table->text('branch');
+            $table->text('postedBy');
+
             $table->text('img_path')->nullable();
 
             $table->unsignedBigInteger('user_id');

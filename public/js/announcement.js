@@ -237,29 +237,29 @@ function fetchAnnouncements() {
 
         data.announcements.forEach(announcement => {
             const formattedDate = new Date(announcement.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+            // const userName = announcement.user.name; // Accessing the user's name
+            // Do whatever you want with the user's name
+            // console.log(userName);
             announcementsContainer.innerHTML += `
-                <div class="d-flex align-items-center border-bottom py-3">
-                    <div class="w-100 ms-3">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h6 class="mb-0">${announcement.user.name}</h6>
-                            <small>${formattedDate}</small>
-                        </div>
-                        <div class="d-flex w-100 justify-content-between">
-
-                            <h6>${announcement.title}</h6>
-                           <div class="btn-group">
-                          
+            <div class="d-flex align-items-center border-bottom py-3">
+                <div class="w-100 ms-3">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h6 class="mb-0">${announcement.postedBy}</h6>
+                        <small>${formattedDate}</small>
+                    </div>
+                    <div class="d-flex w-100 justify-content-between">
+                        <h6>${announcement.title}</h6>
+                        <div class="btn-group">
                             <button class="btn btn-primary update-btn" data-announcement-id="${announcement.id}">Update</button>
                             <button class="btn btn-danger delete-btn" data-announcement-id="${announcement.id}">Delete</button>
-
-                            </div>
                         </div>
-                       
-                        <p>${announcement.content}</p>
-                        
                     </div>
+                    <p>${announcement.content}</p>
+                    <img src="${announcement.img_path}" alt="Announcement Image"> <!-- Include the image -->
                 </div>
-            `;
+            </div>
+        `;
+        
         });
     })
     .catch(error => console.error('Error fetching announcements:', error));

@@ -23,7 +23,8 @@ class Announcement extends Model
         'user_id',
         'img_path',
         'receiver',
-        'branch'
+        'branch',
+        'postedBy'
     ];
 
 

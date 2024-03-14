@@ -42,20 +42,25 @@ class UserSeeder extends Seeder
             // 'roomdetails' => 'RoomBed'
         ]);
         
-        // User::create([
-        //     'name' => 'Dormitory Resident',
-        //     'email' => 'dormitory@resident.com',
-        //     'password' => bcrypt("password"),
-        //     'role' => 'Resident',
-        //     'branch' => 'Dormitory',
-        //     'Tuptnum' => $tupt_temp . "" . $ResidentTuptnum,
-        //     'contacts' => $faker->phoneNumber(),
-        //     'address' => $faker->address(),
-        //     'sex' => $faker->randomElement($array = array ('Male', 'Female')), // 'b'
-        //     'birthdate' => $faker-> dateTimeBetween($startDate = '-30 years', $endDate = '-20 years', $timezone = null),
-        //     'type' => 'Student',
-        //     'roomdetails' => 'RoomBed'
-        // ]);
+        User::create([
+            'email' => 'dormitory@resident.com',
+            'password' => bcrypt("password"),
+            'role' => 'Resident',
+            'branch' => 'Dormitory',
+            'type' => 'Admin',
+
+            'name' => 'Dormitory Resident',
+            'course' => 'BSIT',
+            'year' => '4th year',
+            'birthdate' => $faker-> dateTimeBetween($startDate = '-30 years', $endDate = '-20 years', $timezone = null),
+            'age' => '21',
+            'sex' => $faker->randomElement($array = array ('Male', 'Female')), 
+            'religion' => 'Islam',
+            'civil_status' => 'Single',
+            'address' => $faker->address(),
+            'contactNumber' => $faker->phoneNumber(),
+            'Tuptnum' => $tupt_temp . "" . $tupt_num,
+        ]);
 
         // User::create([
         //     'name' => 'Hostel Admin',

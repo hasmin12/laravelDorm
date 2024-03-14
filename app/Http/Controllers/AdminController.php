@@ -609,7 +609,7 @@ class AdminController extends Controller
         $branch = Auth::user()->branch;
 
         $announcements = Announcement::with('user')->where('branch', $branch)->get();
-
+        // Log::info($announcements);
         return response()->json(['announcements' => $announcements]);
     }
 
@@ -642,6 +642,8 @@ class AdminController extends Controller
                 'title' => $title,
                 'content' => $content,
                 'branch' => $user->branch,
+                'postedBy' => $user->name,
+
             ]);
 
             $announcement->update([
