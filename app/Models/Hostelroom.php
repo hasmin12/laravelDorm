@@ -24,7 +24,7 @@ class Hostelroom extends Model
         'name',
         'description',
         'floorNum',
-        'type',
+        'bedtype',
         'pax',
         'price',
         'status',

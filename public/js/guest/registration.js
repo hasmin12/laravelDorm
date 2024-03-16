@@ -7,17 +7,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const formData = new FormData(this);
 
-        // Check if the electric checkbox is checked
+     
         const electricCheckbox = document.getElementById("electricfan");
         formData.append("electricfan", electricCheckbox.checked ? 1 : 0);
 
-        // Check if the laptop checkbox is checked
+    
         const laptopCheckbox = document.getElementById("laptop");
         formData.append("laptop", laptopCheckbox.checked ? 1 : 0);
 
-        for (const pair of formData.entries()) {
-            console.log(pair[0], pair[1]);
-        }
 
         $.ajax({
             url: '/api/createRegistration',

@@ -39,6 +39,12 @@ class Registration extends Model
         'is_scheduled',
         'roomdetails',
         'status',
-        'specialization'
+        'specialization',
+        'guardianName',
+        'guardianContactNumber',
+        'guardianAddress',
+        'guardianRelationship',
+        'applicationForm'
+
     ];
 }

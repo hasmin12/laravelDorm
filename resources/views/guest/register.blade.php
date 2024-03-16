@@ -101,7 +101,7 @@
                                 <label for="course" class="col-md-4 col-form-label text-md-right">{{ __('Course') }}</label>
                                 <div class="col-md-6">
                                     <select id="course" class="form-control @error('course') is-invalid @enderror" name="course" required>
-                                        <option value="" selected hidden></option>
+                                        {{-- <option value="" selected hidden></option> --}}
                                         <option value="BET Major in Automotive Technology">BETAT-T</option>
                                         <option value="BET Major in Chemical Technology">BETChT-T</option>
                                         <option value="BET Major in Construction Technology">BETCT-T</option>

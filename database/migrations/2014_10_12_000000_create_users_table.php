@@ -37,13 +37,17 @@ return new class extends Migration
             $table->text('cor')->nullable();
             $table->text('validID')->nullable();
             $table->text('vaccineCard')->nullable();
+            $table->text('applicationForm')->nullable();
+
             $table->integer('laptop')->default(0);
             $table->integer('electricfan')->default(0);
             
             $table->date('lastpaidDate')->nullable();
             $table->boolean('is_paid')->default(0);
             $table->boolean('is_scheduled')->default(0);     
-            $table->text('roomdetails')->nullable();
+            $table->text('room')->nullable();
+            $table->text('bed')->nullable();
+
             $table->text('status')->nullable();
             $table->text('specialization')->nullable();
 

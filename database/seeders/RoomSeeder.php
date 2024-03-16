@@ -37,7 +37,7 @@ class RoomSeeder extends Seeder
             $roomHostel = Hostelroom::create([
                 'name' => $room,
                 'description' => "Nice room",
-                'type' => $type,
+                'bedtype' => $type,
                 'pax' => $pax,
                 'price' => $price,
             ]);

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->text('name');
             $table->text('description');
             $table->unsignedBigInteger('floorNum')->nullable();
-            $table->text('type');
+            $table->text('bedtype');
             $table->text('pax');
             $table->float('price');
             $table->string('status')->default('Vacant');

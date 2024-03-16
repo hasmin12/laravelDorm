@@ -46,6 +46,11 @@ return new class extends Migration
             $table->text('roomdetails')->nullable();
             $table->text('specialization')->nullable();
 
+            $table->text('guardianName');
+            $table->text('guardianAddress');
+            $table->text('guarduanContactNumber');
+            $table->text('guardianRelationship');
+            $table->text('applicationForm');
         
             $table->string('status')->default("Pending");
             $table->softDeletes();

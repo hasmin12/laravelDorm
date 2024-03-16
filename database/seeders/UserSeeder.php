@@ -90,7 +90,7 @@ class UserSeeder extends Seeder
             'birthdate' => $faker-> dateTimeBetween($startDate = '-30 years', $endDate = '-20 years', $timezone = null),
             'type' => 'Technician',
             'specialization' => 'General Repairs',
-            'roomdetails' => 'RoomBed'
+            // 'roomdetails' => 'RoomBed'
         ]);
 
         User::create([
@@ -106,7 +106,7 @@ class UserSeeder extends Seeder
             'birthdate' => $faker-> dateTimeBetween($startDate = '-30 years', $endDate = '-20 years', $timezone = null),
             'type' => 'Technician',
             'specialization' => 'Appliance Repair',
-            'roomdetails' => 'RoomBed'
+            // 'roomdetails' => 'RoomBed'
         ]);
         // foreach (range(1, 5) as $index) {
         //     $first_name = $faker->firstName();
