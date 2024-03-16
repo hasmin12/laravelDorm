@@ -134,13 +134,16 @@ class GuestController extends Controller
         $fileName4 = time() . $request->file('vaccineCard')->getClientOriginalName();
         $path4 = $request->file('vaccineCard')->storeAs('vaccineCard', $fileName4, 'public');
         $vaccineCardPath = '/storage/' . $path4;
-      
-        $password = bcrypt($request->input('password'));
+        
+        $fileName5 = time() . $request->file('applicationForm')->getClientOriginalName();
+        $path5 = $request->file('applicationForm')->storeAs('applicationForm', $fileName4, 'public');
+        $applicationForm = '/storage/' . $path5;
+   
 
         $user = Registration::create([
            
             'email' => $request->input('email'),
-            'password' => $password,
+            'password' => bcrypt($request->input('password')),
             'role' => 'Resident',
             'branch' => 'Dormitory',
             'type' => $request->input('type'),
@@ -159,7 +162,11 @@ class GuestController extends Controller
             'Tuptnum' => $request->input('Tuptnum'),
             'laptop' => $request->input('laptop'),
             'electricfan' => $request->input('electricfan'),
-
+            'guardianName' => $request->input('guardianName'),
+            'guardianContactNumber' => $request->input('guardianContactNumber'),
+            'guardianRelationship' => $request->input('guardianRelationship'),
+            'guardianAddress' => $request->input('guardianAddress'),
+            'applicationForm' => $applicationForm,
             'cor' => $corPath,
             'validID' => $validIdPath,
             'vaccineCard' => $vaccineCardPath,
