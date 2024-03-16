@@ -43,8 +43,9 @@
                                     <label for="type" class="col-md-4 col-form-label text-md-right">{{ __('Type') }}</label>
                                     <div class="col-md-6">
                                         <select id="type" class="form-control @error('type') is-invalid @enderror" name="type" required>
-                                            <option value="Male">Male</option>
-                                            <option value="Female">Female</option>
+                                            <option value="Student">Student</option>
+                                            <option value="Faculty">Faculty</option>
+                                            <option value="Staff">Staff</option>
                                         </select>
                                         @error('type')
                                             <span class="invalid-feedback" role="alert">
@@ -282,6 +283,19 @@
                                 </div>
                             </div>
 
+                              <!-- Vaccine Card -->
+                              <div class="form-group row mb-2">
+                                <label for="applicationForm" class="col-md-4 col-form-label text-md-right">{{ __('Application Form') }}</label>
+                                <div class="col-md-6">
+                                    <input id="applicationForm" type="file" class="form-control-file @error('applicationForm') is-invalid @enderror" name="applicationForm" required>
+                                    @error('applicationForm')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+
                             <!-- Vaccine Card -->
                             <div class="form-group row mb-2">
                                 <label for="laptop" class="col-md-4 col-form-label text-md-right"></label>
@@ -312,6 +326,61 @@
                                         </label>
                                     </div>
                                     @error('electricfan')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                             <!-- Account Information -->
+                             <h4>Guardian Information</h4>
+                             
+                            <!-- Guardian Name -->
+                            <div class="form-group row mb-2">
+                                <label for="guardianName" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
+                                <div class="col-md-6">
+                                    <input id="guardianName" type="text" class="form-control @error('guardianName') is-invalid @enderror" name="guardianName" value="{{ old('guardianName') }}" required autocomplete="guardianName" autofocus>
+                                    @error('guardianName')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                             <!-- Guardian Contact Number -->
+                             <div class="form-group row mb-2">
+                                <label for="guardianContactNumber" class="col-md-4 col-form-label text-md-right">{{ __('Contact Number') }}</label>
+                                <div class="col-md-6">
+                                    <input id="guardianContactNumber" type="text" class="form-control @error('guardianContactNumber') is-invalid @enderror" name="guardianContactNumber" value="{{ old('guardianContactNumber') }}" required autocomplete="guardianContactNumber" autofocus>
+                                    @error('guardianContactNumber')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <!-- Guardian Address -->
+                            <div class="form-group row mb-2">
+                                <label for="guardianAddress" class="col-md-4 col-form-label text-md-right">{{ __('Address') }}</label>
+                                <div class="col-md-6">
+                                    <input id="guardianAddress" type="text" class="form-control @error('guardianAddress') is-invalid @enderror" name="guardianAddress" value="{{ old('guardianAddress') }}" required autocomplete="guardianAddress" autofocus>
+                                    @error('guardianAddress')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                           
+                            <!-- Relationship -->
+                            <div class="form-group row mb-2">
+                                <label for="guardianRelationship" class="col-md-4 col-form-label text-md-right">{{ __('Relationship') }}</label>
+                                <div class="col-md-6">
+                                    <input id="guardianRelationship" type="text" class="form-control @error('guardianRelationship') is-invalid @enderror" name="guardianRelationship" value="{{ old('guardianRelationship') }}" required autocomplete="guardianRelationship" autofocus>
+                                    @error('guardianRelationship')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
