@@ -53,7 +53,7 @@ class RoomSeeder extends Seeder
                 'name' => $room,
                 'type' => $faker->randomElement($array = array ('Student', 'Faculty', 'Staff')),
                 'category' => $faker->randomElement($array = array ('Male', 'Female')),
-                'slot' => 3,
+                'occupiedBeds' => 0,
                 'totalBeds' => 4,
             ]);  
         }

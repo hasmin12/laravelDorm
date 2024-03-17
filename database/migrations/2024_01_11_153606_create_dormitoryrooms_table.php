@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('dormitoryrooms', function (Blueprint $table) {
             $table->id();
             $table->text('name');
-            $table->integer('slot')->default(0);
+            $table->integer('occupiedBeds')->default(4);
             $table->integer('totalBeds')->default(0);
             $table->text('type');
             $table->text('category');

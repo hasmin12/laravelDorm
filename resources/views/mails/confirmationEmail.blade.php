@@ -23,7 +23,7 @@
         @endif
     </ul>
     <p>If you have any questions or concerns regarding the contract or payment, feel free to contact us.</p>
-    <p>For payment submission, please follow these steps:</p>
+    <p>To complete your registration, please follow these steps:</p>
     <ol>
         <li>Download our application from: [Attached Application Download Link]</li>
         <li>Alternatively, visit our website at [Website Link] and log in to your account.</li>

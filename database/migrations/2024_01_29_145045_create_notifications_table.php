@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('sender_id');
             $table->foreign('sender_id')->references('id')->on('users')->onDelete('cascade');
             $table->text('notification_type');
-            $table->unsignedBigInteger('target_id');
+            $table->unsignedBigInteger('target_id')->nullable();
             $table->text('message');
             $table->text('status')->default('Unread');
             $table->softDeletes();

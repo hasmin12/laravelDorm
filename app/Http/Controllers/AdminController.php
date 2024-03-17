@@ -473,7 +473,7 @@ class AdminController extends Controller
                     'name' => $name,
                     'type' => $type,
                     'category' => $category,
-                    'slot' => $numBeds,
+                    // 'occupiedBeds' => $numBeds,
                     'totalBeds' => $numBeds,
                 ]);
                 
@@ -488,7 +488,7 @@ class AdminController extends Controller
                     'name' => $name,
                     'type' => $type,
                     'category' => $category,
-                    'slot' => $numBeds,
+                    // 'occupiedBeds' => $numBeds,
                     'totalBeds' => $numBeds,
                 ]);
               
@@ -1066,14 +1066,26 @@ class AdminController extends Controller
         $room = Dormitoryroom::find($bed->room_id);
         
         $room->update([
-            'slot' => $room->slot - 1,
+            'occupiedBeds' => $room->occupiedBeds + 1,
         ]);
         
         $user = User::find($residentId);
         $user->update([
-            'roomdetails' => "Room ".$bed->room_id."-".$bed->name ,
+            'room' => "Room ".$bed->room_id,
+            'bed' => $bed->name,
+            
+            // 'roomdetails' => "Room ".$bed->room_id."-".$bed->name ,
             'status'  => "Active"
         ]);
+
+        $newUser = Notification::create([
+            'sender_id' => Auth::user()->id,
+            'receiver_id' => $residentId,
+            'notification_type' => "Registration Complete",
+            // 'target_id' => $dormitoryPayment->id,
+            'message' => "Hello $user->name, Your registration is now complete. You are assigned to $user->room - $user->bed "
+        ]);
+        
         return response()->json(['bed' => $bed],200);         
     }
 

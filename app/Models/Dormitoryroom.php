@@ -18,7 +18,7 @@ class Dormitoryroom extends Model
         'price' => 'required',
         // 'minitial' => 'required',
         'totalBed' => 'required',
-        'availableBed' => 'required',
+        'occupiedBeds' => 'required',
     ];
 
     public function beds()

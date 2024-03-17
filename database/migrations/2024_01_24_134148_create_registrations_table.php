@@ -48,7 +48,7 @@ return new class extends Migration
 
             $table->text('guardianName');
             $table->text('guardianAddress');
-            $table->text('guarduanContactNumber');
+            $table->text('guardianContactNumber');
             $table->text('guardianRelationship');
             $table->text('applicationForm');
         
