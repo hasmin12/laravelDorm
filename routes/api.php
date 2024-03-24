@@ -43,12 +43,13 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::delete('archiveResident/{id}', 'AdminController@archiveResident');
     Route::get('getPaymentHistory', 'AdminController@getPaymentHistory');
     Route::get('myPaymentHistory', 'ResidentController@myPaymentHistory');
+    Route::post('/uploadReceipt', 'ResidentController@uploadReceipt');
     Route::post('createPayment', 'ResidentController@createPayment');
     Route::get('/generatePdf', 'ChartController@generatePdf');
     Route::get('/approveApplicant/{id}', 'AdminController@approveApplicant');
     Route::post('/assignResident', 'AdminController@assignResident');
     Route::post('/passContract', 'ResidentController@passContract');
-
+    Route::post('/createResident', 'AdminController@createResident');
 
     Route::post('createLaundrySchedule', 'ResidentController@createLaundrySchedule');
 

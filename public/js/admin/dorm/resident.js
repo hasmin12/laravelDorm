@@ -89,9 +89,34 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function sendEmail() {
-        // Implement your logic to send emails here
-        // This is a placeholder function, customize it based on your requirements
-        alert('Emails will be sent to selected residents.');
+        // Make an AJAX request to the notify-residents route
+        fetch('/api/notifyResidents', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            },
+            credentials: 'include',
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Error: ${response.status} - ${response.statusText}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Check for success property in the response
+            if (data.success) {
+                alert('Emails sent successfully!');
+            } else {
+                throw new Error('Error sending emails.');
+            }
+        })
+        .catch(error => {
+            console.error('Error sending emails:', error.message);
+            alert('Error sending emails. Please try again later.');
+        });
     }
 
     // Event listeners
@@ -199,17 +224,17 @@ function showResidentDetails(residentId) {
     .then(data => {
         const resident = data.resident; // Assuming the key in the response is 'resident'
         console.log(resident)
+
         // Construct the HTML for resident details
         const residentDetailsHTML = `
-        <div class="container-fluid ">
-            <div class="card border-0"> <!-- Removed card class and added border-0 -->
+        
+        <div class="container-fluid">
+            <div class="card border-0">
                 <div class="card-body">
                     <div class="row">
-                        <!-- Left Column for Picture -->
                         <div class="col-md-6">
-                            <img src="${resident.img_path}" class="img-fluid mb-3 rounded" alt="Resident Image" style="max-width: 100%; height: 100%;">
+                            <img src="${resident.img_path}" class="img-fluid mb-3 rounded" alt="Resident Image" style="max-width: 100%; height: auto;">
                         </div>
-                        <!-- Right Column for Resident Details -->
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <strong class="fw-bold fs-5">TUPT Number:</strong>
@@ -231,71 +256,50 @@ function showResidentDetails(residentId) {
                                 <strong class="fw-bold fs-5">Room & Bed:</strong>
                                 <span class="fs-5">${resident.roomdetails}</span>
                             </div>
-                            <!-- Add more resident details as needed -->
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="row justify-content-center">
+        <div class="btn-group" role="group">
+            <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked value="All">
+            <label class="btn btn-outline-primary" for="btnradio1">Bills</label>
 
-    
-        <!-- Separate Row for Card Section -->
-            <!-- Card Section -->
-            <div class="col-sm-12 col-xl-6">
-                <div class="card border-0">
-                    <div class="card-body center">
-                        <table class="table table-dark w-100 custom-table">
-                            <thead>
+            <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off" value="Faculty">
+            <label class="btn btn-outline-primary" for="btnradio3">Leave</label>
+
+            <input type="radio" class="btn-check" name="btnradio" id="btnradio4" autocomplete="off" value="Staff">
+            <label class="btn btn-outline-primary" for="btnradio4">Sleep</label>
+        </div>
+    </div>
+        <div class="container-fluid">
+            <div class="card border-0">
+                <div class="card-body">
+                    <table class="table table-dark w-100 custom-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Receipt</th>
+                                <th scope="col">Total Amount</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Paid Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${resident.payments.map(payment => `
                                 <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">First Name</th>
-                                    <th scope="col">Last Name</th>
-                                    <th scope="col">Email</th>
-                                    <th scope="col">Email</th>
-                                    <th scope="col">Email</th>
-                                    <th scope="col">Email</th>
+                                    <td>${payment.receipt}</td>
+                                    <td>${payment.totalAmount}</td>
+                                    <td>${payment.status}</td>
+                                    <td>${payment.paidDate ? new Date(payment.paidDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : '-'}</td>
                                 </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>John</td>
-                                    <td>Doe</td>
-                                    <td>john@email.com</td>
-                                    <td>john@email.com</td>
-                                    <td>john@email.com</td>
-                                    <td>john@email.com</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">2</th>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
-                                    <td>mark@email.com</td>
-                                    <td>john@email.com</td>
-                                    <td>john@email.com</td>
-                                    <td>john@email.com</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">3</th>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
-                                    <td>jacob@email.com</td>
-                                    <td>john@email.com</td>
-                                    <td>john@email.com</td>
-                                    <td>john@email.com</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                            `).join('')}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
-    </div>
-    
-
         `;
-      
-       
 
         // Set the HTML content of the modal body
         modalBody.innerHTML = residentDetailsHTML;
@@ -305,6 +309,7 @@ function showResidentDetails(residentId) {
     })
     .catch(error => console.error('Error fetching resident details:', error));
 }
+
 
 
 
@@ -348,5 +353,11 @@ function updateResident(residentId) {
         });
     });
 }
+
+// document.getElementById('addResidentButton').addEventListener('click', function() {
+//     window.location.href = '/admin/dorm/newresident';
+// });
+
+
 
 

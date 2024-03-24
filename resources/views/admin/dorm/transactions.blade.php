@@ -14,27 +14,7 @@
 <!-- Content Start -->
 <div class="content">
     @include('layouts.navbar')
-        <div class="bg-light rounded p-4">
-            <h3 class="mb-4">Rooms</h3>
-            <form class="d-none d-md-flex ms-4">
-                <input class="form-control border-0" type="search" placeholder="Search" id="searchInput">
-            </form>
-            <br>
-            <div class="btn-group" role="group">
-                <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked value="">
-                <label class="btn btn-outline-primary" for="btnradio1">All</label>
 
-                <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off" value="Student">
-                <label class="btn btn-outline-primary" for="btnradio2">Students</label>
-
-                <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off" value="Faculty">
-                <label class="btn btn-outline-primary" for="btnradio3">Faculties</label>
-
-                <input type="radio" class="btn-check" name="btnradio" id="btnradio4" autocomplete="off" value="Staff">
-                <label class="btn btn-outline-primary" for="btnradio4">Staffs</label>
-
-            </div>
-        </div>
     
     <!-- Recent Sales Start -->
     <div class="container-fluid pt-4 px-4">

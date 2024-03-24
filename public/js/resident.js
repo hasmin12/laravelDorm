@@ -191,8 +191,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-document.getElementById('addResidentButton').addEventListener('click', function() {
-    window.location.href = '/admin/newresident';
-});
+
 
 

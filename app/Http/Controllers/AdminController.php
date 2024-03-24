@@ -133,87 +133,121 @@ class AdminController extends Controller
         }
     }
 
+// Method to fetch resident details with payment history
+public function getResident($id)
+{
+    try {
+        // Find the resident by ID
+        $resident = User::findOrFail($id);
 
-    public function getResident($id)
-    {
-        try {
-            $resident = User::find($id);           
-            return response()->json(['resident' => $resident]);
-        } catch (\Exception $e) {
-            return response()->json(['error' => 'Resident not found'], 404);
-        }
+        // Load payment history for the resident from the dormitorypayments table
+        $payments = DormitoryPayment::where('user_id', $resident->id)->get();
+
+        // Attach payment history to the resident
+        $resident->payments = $payments;
+
+        return response()->json(['resident' => $resident], 200);
+    } catch (\Exception $e) {
+        return response()->json(['error' => 'Resident not found'], 404);
     }
+}
 
 
     public function createResident(Request $request)
     {
-        try {
-            $bed_id = $request->input('name');
+        Log::info($request);
+        $fileName1 = time() . $request->file('img_path')->getClientOriginalName();
+        $path1 = $request->file('img_path')->storeAs('residents', $fileName1, 'public');
+        $img_path = '/storage/' . $path1;
 
-            $name = $request->input('name');
-            $email = $request->input('email');
-            $password = bcrypt($request->input('password'));
-            $branch = Auth::user()->branch; 
-            $role = "Resident";
-            $Tuptnum = $request->input('Tuptnum');
-            $address = $request->input('address');
-            $sex = $request->input('sex');
-            $birthdate = $request->input('birthdate');
-            $contacts = $request->input('contacts');
+        $fileName2 = time() . $request->file('cor')->getClientOriginalName();
+        $path2 = $request->file('cor')->storeAs('cor', $fileName2, 'public');
+        $corPath = '/storage/' . $path2;
+
+        $fileName3 = time() . $request->file('validId')->getClientOriginalName();
+        $path3 = $request->file('validId')->storeAs('validId', $fileName3, 'public');
+        $validIdPath = '/storage/' . $path3;
+        
+        $fileName4 = time() . $request->file('vaccineCard')->getClientOriginalName();
+        $path4 = $request->file('vaccineCard')->storeAs('vaccineCard', $fileName4, 'public');
+        $vaccineCardPath = '/storage/' . $path4;
+        
+        $fileName5 = time() . $request->file('applicationForm')->getClientOriginalName();
+        $path5 = $request->file('applicationForm')->storeAs('applicationForm', $fileName5, 'public');
+        $applicationForm = '/storage/' . $path5;
+        
+        $fileName6 = time() . $request->file('contract')->getClientOriginalName();
+        $path6 = $request->file('contract')->storeAs('contract', $fileName6, 'public');
+        $contractPath = '/storage/' . $path6;
+
+
+        $user = User::create([
+           
+            'email' => $request->input('email'),
+            'password' => bcrypt($request->input('password')),
+            'role' => 'Resident',
+            'branch' => 'Dormitory',
+            'type' => $request->input('type'),
+            'img_path' => $img_path,
             
-            $fileName1 = time() . $request->file('cor')->getClientOriginalName();
-            $path1 = $request->file('cor')->storeAs('cor', $fileName1, 'public');
-            $cor = '/storage/' . $path1;
-            
-            $fileName2 = time() . $request->file('schoolID')->getClientOriginalName();
-            $path2 = $request->file('schoolID')->storeAs('schoolID', $fileName2, 'public');
-            $schoolID = '/storage/' . $path2;
+            'name' => $request->input('name') ,
+            'course' => $request->input('course'),
+            'year' => $request->input('year'),
+            'birthdate' => $request->input('birthdate'),
+            'age' => $request->input('age'),
+            'sex' => $request->input('sex'),
+            'religion' => $request->input('religion'),
+            'civil_status' => $request->input('civil_status'),
+            'address' => $request->input('address'),
+            'contactNumber' => $request->input('contactNumber'),
+            'Tuptnum' => $request->input('Tuptnum'),
+            'laptop' => $request->input('laptop'),
+            'electricfan' => $request->input('electricfan'),
+            'guardianName' => $request->input('guardianName'),
+            'guardianContactNumber' => $request->input('guardianContactNumber'),
+            'guardianRelationship' => $request->input('guardianRelationship'),
+            'guardianAddress' => $request->input('guardianAddress'),
+            'applicationForm' => $applicationForm,
+            'cor' => $corPath,
+            'validID' => $validIdPath,
+            'vaccineCard' => $vaccineCardPath,
+            'contract' => $contractPath,
+            'status' => 'Applicant',
+        ]);
 
-            $fileName3 = time() . $request->file('vaccineCard')->getClientOriginalName();
-            $path3 = $request->file('vaccineCard')->storeAs('vaccineCard', $fileName3, 'public');
-            $vaccineCard = '/storage/' . $path3;
+        $laptopIncluded = $user->laptop == 1;
+        $electricFanIncluded = $user->electricfan == 1;
 
-            $fileName4 = time() . $request->file('contract')->getClientOriginalName();
-            $path4 = $request->file('contract')->storeAs('contract', $fileName4, 'public');
-            $contract = '/storage/' . $path4;
-
-            $type = $request->input('type');
-
-            $user = User::create([
-                'name' => $name,
-                'email' => $email,
-                'password' => $password,
-                'branch' => $branch,
-                'role' => $role,
-                'Tuptnum' => $Tuptnum,
-                'sex' => $sex,
-                'address' => $address,
-                'birthdate' => $birthdate,
-                'contacts' => $contacts,
-                'cor' => $cor,
-                'schoolID' => $schoolID,
-                'vaccineCard' => $vaccineCard,
-                'contract' => $contract,
-                'type' => $type,
-            ]);
-
-            if($branch==="Dormitory"){
-                $room = Dormitoryroom::findOrFail($id);
-                $bed = Dormitorybed::create([
-                    'user_id' => $user->id
-                ]);
-            }else{
-                $bed = Hostelbed::create([
-                    'user_id' => $user->id
-                ]);
-            }
-                
-
-            return response()->json(['user' => $user], 201);
-        } catch (\Exception $e) {
-            \Log::error('Error creating Resident: ' . $e->getMessage());
-            return response()->json(['error' => 'Internal Server Error'], 500);
+        if ($laptopIncluded && $electricFanIncluded) {
+            $totalAmount = 2600;
         }
+        elseif ($electricFanIncluded && !$laptopIncluded) {
+            $totalAmount = 2300;
+        }
+         elseif ($laptopIncluded && !$electricFanIncluded) {
+            $totalAmount = 2300;
+        }
+        else {
+            $totalAmount = 2000;
+        }
+
+        $ldate = date('Y-m-d H:i:s');
+        $payment = Dormitorypayment::create([
+            'receipt' => $request->input('receipt'),
+            'paidDate' => $ldate,
+            'payment_month' => now()->format('F Y'),
+            'user_id' => $user->id,
+            // 'roomdetails' => $resident->roomdetails,
+            'laptop' => $user->laptop,
+            'electricfan' => $user->electricfan,
+            'totalAmount' => $totalAmount,
+            'status' => "PAID",
+        ]);
+
+        
+
+
+        return response()->json(['message' => 'Registration successful', 'user' => $user]);
     }
 
     public function updateResident(Request $request, $id)
@@ -907,7 +941,7 @@ class AdminController extends Controller
                 ]);
                 // Log::info('Emails sent successfully'); // Log informational message
 
-                event(new NotificationEvent($resident->name));
+                // event(new NotificationEvent($resident->name));
             }
     
             Log::info('Emails sent successfully'); // Log informational message

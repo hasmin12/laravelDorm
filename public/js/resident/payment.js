@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const token = localStorage.getItem('token');
 
-        fetch('/api/payment', {
+        fetch('/api/createPayment', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -212,69 +212,449 @@ function deletePayment(paymentId) {
     });
 }
 
+// function fetchPayments() {
+
+//     const token = localStorage.getItem('token');
+
+//     fetch(`/api/myPaymentHistory`, {
+//         method: 'GET',
+//         headers: {
+//             'Content-Type': 'application/json',
+//             'Accept': 'application/json',
+//             'Authorization': `Bearer ${token}`,
+//         },
+//         credentials: 'include',
+//     })
+//     .then(response => response.json())
+//     .then(data => {
+//         console.log('Payments data:', data);
+//         const paymentsContainer = document.getElementById('payments-container');
+//         paymentsContainer.innerHTML = '';
+
+//         // Create table element
+//         const table = document.createElement('table');
+//         table.classList.add('table', 'table-bordered', 'table-hover', 'custom-table');
+
+//         // Create table header
+//         const tableHeader = document.createElement('thead');
+//         tableHeader.innerHTML = `
+//             <tr class="table-dark">
+//                 <th>Receipt</th>
+//                 <th>Total Amount</th>
+//                 <th>Status</th>
+//                 <th>Paid Date</th>
+//             </tr>
+//         `;
+//         table.appendChild(tableHeader);
+
+//         // Create table body
+//         const tableBody = document.createElement('tbody');
+//         data.forEach(payment => {
+//             const row = document.createElement('tr');
+
+//             const receiptCell = document.createElement('td');
+//             receiptCell.textContent = payment.receipt;
+//             row.appendChild(receiptCell);
+
+//             const amountCell = document.createElement('td');
+//             amountCell.textContent = `₱${payment.totalAmount}`;
+//             row.appendChild(amountCell);
+
+//             const statusCell = document.createElement('td');
+//             statusCell.textContent = payment.status;
+//             row.appendChild(statusCell);
+
+//             const paidDateCell = document.createElement('td');
+//             if (payment.status === 'PAID') {
+//                 const formattedDate = new Date(payment.paidDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+//                 paidDateCell.textContent = formattedDate;
+//             } else {
+//                 paidDateCell.textContent = '-';
+//             }
+//             row.appendChild(paidDateCell);
+
+//             tableBody.appendChild(row);
+//         });
+//         table.appendChild(tableBody);
+
+//         paymentsContainer.appendChild(table);
+//     })
+//     .catch(error => console.error('Error fetching payments:', error));
+
+//     // Event listener for Bills button
+//     const billsButton = document.getElementById('billsButton');
+//     billsButton.addEventListener('click', () => {
+//         filterPayments('Pending');
+//     });
+
+//     // Event listener for History button
+//     const historyButton = document.getElementById('historyButton');
+//     historyButton.addEventListener('click', () => {
+//         filterPayments('PAID');
+//     });
+// }
+
+
+// function filterPayments(status) {
+//     const rows = document.querySelectorAll('#payments-container table tbody tr');
+//     rows.forEach(row => {
+//         const rowStatus = row.querySelector('td:nth-child(3)').textContent.trim();
+//         if (rowStatus === status) {
+//             row.style.display = 'table-row';
+//         } else {
+//             row.style.display = 'none';
+//         }
+//     });
+// }
+
+// // Call fetchPayments function when the page loads
+// window.onload = fetchPayments;
+
+
+// function fetchPayments() {
+//     const token = localStorage.getItem('token');
+
+//     fetch(`/api/myPaymentHistory`, {
+//         method: 'GET',
+//         headers: {
+//             'Content-Type': 'application/json',
+//             'Accept': 'application/json',
+//             'Authorization': `Bearer ${token}`,
+//         },
+//         credentials: 'include',
+//     })
+//     .then(response => response.json())
+//     .then(data => {
+//         console.log('Payments data:', data);
+//         const paymentsContainer = document.getElementById('payments-container');
+//         paymentsContainer.innerHTML = '';
+
+//         // Create table element
+//         const table = document.createElement('table');
+//         table.classList.add('table', 'table-bordered', 'table-hover', 'custom-table');
+
+//         // Create table header
+//         const tableHeader = document.createElement('thead');
+//         tableHeader.innerHTML = `
+//             <tr class="table-dark">
+//                 <th>Receipt</th>
+//                 <th>Total Amount</th>
+//                 <th>Status</th>
+//                 <th>Paid Date</th>
+//             </tr>
+//         `;
+//         table.appendChild(tableHeader);
+
+//         // Create table body
+//         const tableBody = document.createElement('tbody');
+//         data.forEach(payment => {
+//             const row = document.createElement('tr');
+
+//             const receiptCell = document.createElement('td');
+//             receiptCell.textContent = payment.receipt;
+
+//             // Add upload receipt button for pending payments
+//             if (payment.status === 'Pending') {
+//                 const uploadButton = document.createElement('button');
+//                 uploadButton.textContent = 'Upload Receipt';
+//                 uploadButton.classList.add('btn', 'btn-primary', 'upload-button');
+//                 uploadButton.setAttribute('data-toggle', 'modal');
+//                 uploadButton.setAttribute('data-target', '#uploadModal');
+//                 uploadButton.addEventListener('click', () => openModal(payment.receipt)); // Passing receipt info
+
+//                 // Append upload button to receipt cell
+//                 receiptCell.appendChild(uploadButton);
+//             }
+
+//             row.appendChild(receiptCell);
+
+//             const amountCell = document.createElement('td');
+//             amountCell.textContent = `₱${payment.totalAmount}`;
+//             row.appendChild(amountCell);
+
+//             const statusCell = document.createElement('td');
+//             statusCell.textContent = payment.status;
+//             row.appendChild(statusCell);
+
+//             const paidDateCell = document.createElement('td');
+//             if (payment.status === 'PAID') {
+//                 const formattedDate = new Date(payment.paidDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+//                 paidDateCell.textContent = formattedDate;
+//             } else {
+//                 paidDateCell.textContent = '-';
+//             }
+//             row.appendChild(paidDateCell);
+
+//             tableBody.appendChild(row);
+//         });
+//         table.appendChild(tableBody);
+
+//         paymentsContainer.appendChild(table);
+//     })
+//     .catch(error => console.error('Error fetching payments:', error));
+
+//     // Event listener for Bills button
+//     const billsButton = document.getElementById('billsButton');
+//     billsButton.addEventListener('click', () => {
+//         filterPayments('Pending');
+//     });
+
+//     // Event listener for History button
+//     const historyButton = document.getElementById('historyButton');
+//     historyButton.addEventListener('click', () => {
+//         filterPayments('PAID');
+//     });
+// }
+
+// function openModal(receipt) {
+//     // Clear previous form data
+//     document.getElementById('uploadForm').reset();
+
+//     // Set receipt information in the modal if needed
+//     // For example:
+//     // document.getElementById('receiptInfo').textContent = receipt;
+
+//     // Open the modal
+//     $('#uploadModal').modal('show');
+
+//     // Handle form submission
+//     const uploadForm = document.getElementById('uploadForm');
+//     uploadForm.addEventListener('submit', function(event) {
+//         event.preventDefault();
+
+//         // Get the uploaded file
+//         const file = document.getElementById('receiptFile').files[0];
+
+//         // Here you can implement the logic to handle the file upload
+//         // For example, you can use FormData to send the file to the server via AJAX
+//         const formData = new FormData();
+//         formData.append('receiptFile', file);
+        
+//         // Example: Sending the file using fetch
+//         fetch('/api/uploadReceipt', {
+//             method: 'POST',
+//             body: formData,
+//             headers: {
+//                 'Authorization': `Bearer ${localStorage.getItem('token')}`
+//             }
+//         })
+//         .then(response => {
+//             if (response.ok) {
+//                 // Handle successful upload
+//                 console.log('Receipt uploaded successfully!');
+//                 // Close the modal
+//                 $('#uploadModal').modal('hide');
+//             } else {
+//                 // Handle error
+//                 console.error('Failed to upload receipt:', response.statusText);
+//                 // You can display an error message to the user if needed
+//             }
+//         })
+//         .catch(error => {
+//             console.error('Error uploading receipt:', error);
+//             // You can display an error message to the user if needed
+//         });
+//     });
+// }
+
+// // Call fetchPayments function when the page loads
+// window.onload = fetchPayments;
+
+
+
+
 function fetchPayments() {
     const token = localStorage.getItem('token');
+    let filterPayment = 'Pending'; // Initialize filterPayment
 
     fetch(`/api/myPaymentHistory`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
-            'Authorization': `Bearer ${token}`, 
+            'Authorization': `Bearer ${token}`,
         },
         credentials: 'include',
     })
     .then(response => response.json())
     .then(data => {
-        console.log('Payments data:', data); 
+        console.log('Payments data:', data);
         const paymentsContainer = document.getElementById('payments-container');
         paymentsContainer.innerHTML = '';
 
-        data.forEach(payment => {
-            // Create a card for each payment
-            const paymentCard = document.createElement('div');
-            paymentCard.classList.add('card', 'mb-3');
-
-            // Set background color based on status
-            if (payment.status === 'PAID') {
-                paymentCard.classList.add('bg-lightgreen'); // Use light green for PAID
-            } else if (payment.status === 'Pending') {
-                paymentCard.classList.add('bg-lightred'); // Use light red for Pending
-            }
-
-            const cardBody = document.createElement('div');
-            cardBody.classList.add('card-body', 'd-flex', 'justify-content-between', 'align-items-center');
-
-            const paymentDetails = document.createElement('div');
-            paymentDetails.classList.add('d-flex', 'flex-column');
-
-            // Display paidDate only if the status is PAID
-            if (payment.status === 'PAID') {
-                const formattedDate = new Date(payment.paidDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-                const dateElement = document.createElement('h6');
-                dateElement.textContent = formattedDate;
-                paymentDetails.appendChild(dateElement);
-            }
-
-            const receiptElement = document.createElement('h4');
-            receiptElement.textContent = payment.receipt;
-            paymentDetails.appendChild(receiptElement);
-
-            const amountElement = document.createElement('h6');
-            amountElement.textContent = `₱${payment.totalAmount}`;
-            paymentDetails.appendChild(amountElement);
-
-            cardBody.appendChild(paymentDetails);
-
-            // Indicate the payment status
-            const statusElement = document.createElement('h6');
-            statusElement.textContent = payment.status;
-            cardBody.appendChild(statusElement);
-
-            paymentCard.appendChild(cardBody);
-
-            paymentsContainer.appendChild(paymentCard);
+        const billsButton = document.getElementById('billsButton');
+        billsButton.addEventListener('click', () => {
+            filterPayment = 'Pending';
+            filterPayments('Pending');
         });
+    
+        // Event listener for History button
+        const historyButton = document.getElementById('historyButton');
+        historyButton.addEventListener('click', () => {
+            filterPayment = 'PAID';
+            filterPayments('PAID');
+        });
+
+        // Create table element
+        const table = document.createElement('table');
+        table.classList.add('table', 'table-bordered', 'table-hover', 'custom-table');
+
+        // Create table head
+        const tableHeader = document.createElement('thead');
+        console.log(filterPayment)
+        tableHeader.innerHTML = `
+            <tr class="table-dark">
+                <th>Receipt</th>
+                <th>Payment Month</th>
+                <th>Total Amount</th>
+                <th>Status</th>
+            </tr>
+        `;
+        table.appendChild(tableHeader);
+
+        // Create table body
+        const tableBody = document.createElement('tbody');
+        data.forEach(payment => {
+            const row = document.createElement('tr');
+
+            const receiptCell = document.createElement('td');
+            receiptCell.textContent = payment.receipt;
+
+            // Add upload receipt button for pending payments
+            if (payment.status === 'Pending') {
+                const uploadButton = document.createElement('button');
+                uploadButton.textContent = 'Upload Receipt';
+                uploadButton.classList.add('btn', 'btn-primary', 'upload-button');
+                uploadButton.setAttribute('data-toggle', 'modal');
+                uploadButton.setAttribute('data-target', '#uploadModal');
+                uploadButton.addEventListener('click', () => openModal(payment)); // Passing receipt info
+
+                // Append upload button to receipt cell
+                receiptCell.appendChild(uploadButton);
+            }
+
+            row.appendChild(receiptCell);
+
+            const monthCell = document.createElement('td');
+            monthCell.textContent = `${payment.payment_month}`;
+            row.appendChild(monthCell);
+
+            const amountCell = document.createElement('td');
+            amountCell.textContent = `₱${payment.totalAmount}`;
+            row.appendChild(amountCell);
+
+            const statusCell = document.createElement('td');
+            statusCell.textContent = payment.status;
+            row.appendChild(statusCell);
+
+            tableBody.appendChild(row);
+        });
+        table.appendChild(tableBody);
+
+        paymentsContainer.appendChild(table);
+
+       
+
+        // Filter payments based on initial filter status
+        filterPayments(filterPayment);
+       
+      
+
     })
     .catch(error => console.error('Error fetching payments:', error));
+
+    // Event listener for Bills button
+   
+}
+
+function filterPayments(status) {
+    const rows = document.querySelectorAll('#payments-container table tbody tr');
+    rows.forEach(row => {
+        const rowStatus = row.querySelector('td:nth-child(4)').textContent.trim();
+        if (rowStatus === status) {        
+            row.style.display = 'table-row';
+        } else {
+            row.style.display = 'none';
+        }
+    });
+}
+
+
+
+
+// Call fetchPayments function when the page loads
+window.onload = fetchPayments;
+
+function openModal(payment) {
+    // Clear previous form data
+    document.getElementById('uploadForm').reset();
+
+    // Set payment ID in a hidden input field
+    console.log(payment)
+
+    
+        // Populate modal with payment details
+        document.getElementById('payment_month').textContent = payment.payment_month;
+        document.getElementById('total_amount').textContent = `₱${payment.totalAmount}`;
+        document.getElementById('status').textContent = payment.status;
+        document.getElementById('room_details').textContent = payment.roomdetails ? payment.roomdetails : '-';
+        document.getElementById('electric_fan').textContent = payment.electricfan ? 'Yes' : 'No';
+        document.getElementById('laptop').textContent = payment.laptop ? 'Yes' : 'No';
+
+
+
+    // Open the modal
+    $('#uploadModal').modal('show');
+
+    // Fetch payment details by ID
+   
+
+    // Handle form submission
+    const uploadForm = document.getElementById('uploadForm');
+    uploadForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        // Get the uploaded file
+        const file = document.getElementById('img_path').files[0];
+        const receipt = document.getElementById('receipt').value;
+
+        // Create FormData object and append file and payment_id
+        const formData = new FormData();
+        formData.append('receipt', receipt);
+        formData.append('img_path', file);
+        formData.append('payment_id', payment.id);
+
+        // Send the file using fetch
+        fetch('/api/createPayment', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
+        })
+        .then(response => {
+            if (response.ok) {
+                // Handle successful upload
+                console.log('Receipt uploaded successfully!');
+                // Close the modal
+                $('#uploadModal').modal('hide');
+
+                fetchPayments();
+
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Payment Success',
+                    text: 'Your payment transaction complete.',
+                });
+            } else {
+                // Handle error
+                console.error('Failed to upload receipt:', response.statusText);
+                // Display an error message to the user if needed
+            }
+        })
+        .catch(error => {
+            console.error('Error uploading receipt:', error);
+            // Display an error message to the user if needed
+        });
+    });
 }

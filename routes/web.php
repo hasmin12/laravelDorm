@@ -66,6 +66,10 @@ Route::middleware(['adminbranch:Dormitory'])->group(function () {
             return view('admin.dorm.residents');
         });
 
+        Route::get('/applicants', function () {
+            return view('admin.dorm.applicants');
+        });
+
         // Route::get('/residents', function () {
         //     $resident = Resident::all(); // Replace 'Resident' with your actual model name
         //     return view('admin.dorm.residents', compact('resident'));
@@ -95,6 +99,10 @@ Route::middleware(['adminbranch:Dormitory'])->group(function () {
             return view('admin.dorm.violations');
         });
 
+        Route::get('/newresident', function () {
+            return view('admin.dorm.newresident');
+        });
+        
         //incomplete
         Route::get('/laundry', function () {
             return view('admin.dorm.laundry');
@@ -129,9 +137,7 @@ Route::middleware(['adminbranch:Hostel'])->group(function () {
             return view('admin.hostel.residents');
         });
 
-        Route::get('/newresident', function () {
-            return view('admin.hostel.newresident');
-        });
+       
         
         //incomplete
         Route::get('/rooms', function () {

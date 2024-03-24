@@ -14,7 +14,7 @@ use App\Models\Residentlog;
 use App\Models\User;
 use App\Models\Approvemaintenance;
 use App\Models\Reservation;
-
+use Illuminate\Support\Facades\Storage;
 
 use Log;
 class ResidentController extends Controller
@@ -91,6 +91,45 @@ class ResidentController extends Controller
             return response()->json(['message' => 'Failed to fetch payment history', 'error' => $e->getMessage()], 500);
         }
     }
+    
+    public function uploadReceipt(Request $request)
+    {
+
+    
+        try {
+            // Get the payment ID and file from the request
+            $paymentId = $request->payment_id;
+            $file = $request->file('receiptFile');
+    
+            // Generate a unique file name
+            $fileName = time() . '_' . $file->getClientOriginalName();
+    
+            // Store the file in the storage/app/public/receipts directory
+            $path = $file->storeAs('public/receipts', $fileName);
+    
+            // Construct the img_path for storing in the database
+            $img_path = '/storage/receipts/' . $fileName;
+    
+            // Update the img_path column in the dormitorypayments table
+            $payment = Dormitorypayment::findOrFail($paymentId);
+            $payment->img_path = $img_path;
+            $payment->save();
+    
+            // Check if img_path is not NULL and update status to "PAID" if so
+            if ($payment->img_path !== null) {
+                $payment->update(['status' => 'PAID']);
+            }
+    
+            return response()->json(['message' => 'Receipt uploaded successfully'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Failed to upload receipt', 'error' => $e->getMessage()], 500);
+        }
+    }
+    
+    
+    
+
+    
 
     public function createPayment(Request $request){
         try {
@@ -101,7 +140,7 @@ class ResidentController extends Controller
                 $path = $request->file('img_path')->storeAs('payments', $fileName, 'public');
                 $img_path = '/storage/' . $path;
        
-                $payment = Dormitorypayment::where('user_id',Auth::user()->id)->where('status',"Pending")->first(); 
+                $payment = Dormitorypayment::find($request->input('payment_id'));
                 $payment->update([
                     'receipt' => $request->input('receipt'),
                     'img_path' => $img_path,

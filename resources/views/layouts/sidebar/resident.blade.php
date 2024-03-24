@@ -22,7 +22,7 @@
         <div class="navbar-nav w-100">
             {{-- <a href="/profile" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Profile</a> --}}
             <a href="/resident/announcements" class="nav-item nav-link"><i class="fa fa-bullhorn me-2"></i>Announcements</a>
-            <a href="/resident/billingandpayment" class="nav-item nav-link"><i class="fa fa-file-invoice-dollar me-2"></i>Bills</a>
+            <a href="/resident/payments" class="nav-item nav-link"><i class="fa fa-file-invoice-dollar me-2"></i>Bills</a>
             <a href="/resident/maintenance" class="nav-item nav-link"><i class="fa fa-solid fa-wrench me-2"></i>Maintenance</a>
             <a href="/resident/laundry" class="nav-item nav-link"><i class="fa fa-calendar me-2"></i>Laundry</a>
             <a href="/resident/lostandfound" class="nav-item nav-link"><i class="fa fa-eye me-2"></i>Lost and Found</a>

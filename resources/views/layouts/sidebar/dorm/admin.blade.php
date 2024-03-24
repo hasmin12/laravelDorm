@@ -28,6 +28,7 @@
                     <a href="element.html" class="dropdown-item">Staff</a>
                 </div>
             </div> --}}
+            <a href="/admin/dorm/applicants" class="nav-item nav-link"><i class="fa fa-solid fa-user-plus me-2"></i>Applicants</a>
             <a href="/admin/dorm/residents" class="nav-item nav-link"><i class="fa fa-users me-2"></i>Residents</a>
             <a href="/admin/dorm/rooms" class="nav-item nav-link"><i class="fa fa-person-booth me-2"></i>Rooms</a>
             <a href="/admin/dorm/announcements" class="nav-item nav-link"><i class="fa fa-bullhorn me-2"></i>Announcements</a>
