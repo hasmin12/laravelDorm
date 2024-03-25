@@ -274,7 +274,7 @@ class ResidentController extends Controller
         }
     }
 
-    public function updateLogs(Request $request)
+    public function updateLogs(Request $request, $id)
     {
         try {
             
@@ -286,7 +286,7 @@ class ResidentController extends Controller
             ]);
             return response()->json(['residentlog' => $residentlog], 201);
         } catch (\Exception $e) {
-            \Log::error('Error creating purpose: ' . $e->getMessage());
+            Log::error('Error creating purpose: ' . $e->getMessage());
             return response()->json(['error' => 'Internal Server Error'], 500);
         }
     }
