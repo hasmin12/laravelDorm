@@ -10,22 +10,36 @@ use App\Models\Laundryschedule;
 use App\Models\Announcement;
 use App\Models\Notification;
 use App\Models\Maintenancelist;
-
+use App\Models\User;
 
 use Socialite;
 class AuthController extends Controller
 {
     public function signin(Request $request)
-    {
-        try {
-            $credentials = $request->validate([
-                'email' => 'required|email',
-                'password' => 'required',
-            ]);
+{
+    try {
+        $credentials = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
 
+        // Retrieve the user by email
+        $user = User::where('email', $credentials['email'])->first();
+
+        // Check if the user exists
+        if ($user) {
+            // Check if the user is active
+            if ($user->status == "") {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Please wait for confirmation of your Application'
+                ], 401);
+            }
+
+            // Attempt authentication
             if (Auth::attempt($credentials)) {
                 $user = Auth::user(); 
-                \Log::info('User successfully logged in:', ['user' => $user]);
+                Log::info('User successfully logged in:', ['user' => $user]);
 
                 $token = $user->createToken('remember_token')->plainTextToken;
                 return response()->json([
@@ -35,23 +49,33 @@ class AuthController extends Controller
                     'user' => $user,
                     'name' => $user->name,
                 ]);
+            } else {
+                // Log an error if authentication fails
+                Log::error('Authentication failed: Wrong credentials');
+
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Wrong credentials'
+                ], 401);
             }
-
-            // Log an error if authentication fails
-            \Log::error('Authentication failed: Wrong credentials');
-
-            return response([
-                'message' => 'Wrong credentials'
-            ]);
-        } catch (\Exception $e) {
-            // Log any other exceptions that may occur
-            \Log::error('Error during login: ' . $e->getMessage());
-
-            return response([
-                'message' => 'An error occurred during login.'
-            ], 500);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'User not found'
+            ], 404);
         }
+
+    } catch (\Exception $e) {
+        // Log any other exceptions that may occur
+        Log::error('Error during login: ' . $e->getMessage());
+
+        return response()->json([
+            'success' => false,
+            'message' => 'An error occurred during login.'
+        ], 500);
     }
+}
+
 
 
     public function signout()

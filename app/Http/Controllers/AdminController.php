@@ -111,9 +111,9 @@ class AdminController extends Controller
                 $searchQuery = $request->input('search_query');
                 $residentType = $request->input('resident_type');
                 if ($branch && $branch !== '') {
-                    $query = User::where('branch', $branch)->where('role', "Resident");
+                    $query = User::where('branch', $branch)->where('role', "Resident")->where('status', "Active");
                 } else {
-                    $query = User::where('role', "Resident");
+                    $query = User::where('role', "Resident")->where('status', "Active");
                 }
 
                 if ($residentType && $residentType !== 'All') {
@@ -129,10 +129,26 @@ class AdminController extends Controller
                 return response()->json(['error' => 'Unauthorized'], 401);
             }
         } catch (\Exception $e) {
-            \Log::error('Error in getResidents: ' . $e->getMessage());
+            Log::error('Error in getResidents: ' . $e->getMessage());
             return response()->json(['error' => 'Internal Server Error'], 500);
         }
     }
+
+    public function getApplicants(Request $request)
+    {
+        try {
+            if (Auth::check()) {
+                $applicants = User::where('branch', "Dormitory")->where('role', "Resident")->where('status', "Applicant")->get();
+                return response()->json(['applicants' => $applicants]);
+            } else {
+                return response()->json(['error' => 'Unauthorized'], 401);
+            }
+        } catch (\Exception $e) {
+            Log::error('Error in getApplicants: ' . $e->getMessage());
+            return response()->json(['error' => 'Internal Server Error'], 500);
+        }
+    }
+
 
 // Method to fetch resident details with payment history
 public function getResident($id)
@@ -1024,7 +1040,7 @@ public function getResident($id)
     {
         try {
             $ldate = date('Y-m-d H:i:s');
-            $user = Registration::find($id);
+            $user = User::find($id);
             $currentMonth = now()->format('F Y');
             $totalAmount = 2000;
             $laptopIncluded = $user->laptop === 1;
@@ -1037,37 +1053,13 @@ public function getResident($id)
             if ($electricFanIncluded) {
                 $totalAmount += 300;
             }
-            $newUser = User::create([
-                'email' => $user->email,
-                'password' => $user->password,
-                'role' => $user->role,
-                'branch' => $user->branch,
-                'type' => $user->type,
-                'img_path' => $user->img_path,
-
-                'name' => $user->name,
-                'course' => $user->course,
-                'year' => $user->year,
-                'birthdate' => $user->birthdate,
-                'age' => $user->age,
-                'sex' => $user->sex,
-                'religion' => $user->religion,
-                'civil_status' => $user->civil_status,
-                'address' => $user->address,
-                'contactNumber' => $user->contactNumber,
-                'Tuptnum' => $user->Tuptnum,
-                'cor' => $user->cor,
-                'validID' => $user->validID,
-                'vaccineCard' => $user->vaccineCard,
-                'laptop' => $user->laptop,
-                'electricfan' => $user->electricfan,
-
+            $user->update([
                 'status' => 'Applicant',
             ]);
 
-            Mail::to($newUser->email)->send(
+            Mail::to($user->email)->send(
                 new ConfirmationMail(
-                    $newUser->name,
+                    $user->name,
                     $currentMonth,
                     $totalAmount,
                     $laptopIncluded,
@@ -1076,15 +1068,13 @@ public function getResident($id)
             );
 
             $dormitoryPayment = Dormitorypayment::create([
-                'user_id' => $newUser->id,
+                'user_id' => $user->id,
                 // 'roomdetails' => $user->roomdetails,
                 'laptop' => $user->laptop,
                 'electricfan' => $user->electricfan,
                 'totalAmount' => $totalAmount,
                 'payment_month' => $currentMonth
             ]);
-
-            $user->delete();
 
         } catch (\Exception $e) {
             Log::error('Error sending confirmation email: ' . $e->getMessage());

@@ -11,55 +11,100 @@ use App\Models\Registration;
 use App\Models\User;
 use App\Models\Visitor;
 use App\Models\Hostelreview;
+use App\Models\Guardian;
 
 use Log;
+
 class GuestController extends Controller
 {
     //
     public function getHostelRooms(Request $request)
-{
-    $startDate = $request->input('start_date');
-    $endDate = $request->input('end_date');
+    {
+        // $startDate = $request->input('start_date');
+        // $endDate = $request->input('end_date');
 
-    $query = HostelRoom::query();
+        //     $query = HostelRoom::query();
 
-    if ($startDate && $endDate) {
-        $query->whereDoesntHave('reservations', function ($query) use ($startDate, $endDate) {
-            $query->where(function ($query) use ($startDate, $endDate) {
-                $query->where('checkout_date', '>=', $endDate)
-                      ->where('checkin_date', '<=', $startDate);
-            });
+        //     if ($startDate && $endDate) {
+        //     $query->whereDoesntHave('reservations', function ($query) use ($startDate, $endDate) {
+        //         $query->where(function ($query) use ($startDate, $endDate) {
+        //             $query->where('checkout_date', '>=', $endDate)
+        //                 ->where('checkin_date', '<=', $startDate)
+        //                 ->where('status', '=', 'Pending');
+        //         });
+        //     });
+        // }
+
+            $hostelRooms = HostelRoom::all();
+
+            $rooms = $hostelRooms->map(function ($room) {
+            return [
+                'id' => $room->id,
+                'name' => $room->name,
+                'description' => $room->description,
+                'bedtype' => $room->bedtype,
+                'pax' => $room->pax,
+                'price' => $room->price,
+                'status' => $room->status,
+                'rating' => $room->rating,
+                'img_path' => $room->img_path,
+                'img_paths' => $room->images()->pluck('path')->toArray(),
+                'reservations' => $room->reservations, 
+            ];
         });
+
+            return response()->json($rooms);
     }
 
-    $hostelRooms = $query->get();
+    // public function getHostelRooms(Request $request)
+    // {
+    //     $startDate = $request->input('start_date');
+    //     $endDate = $request->input('end_date');
 
-    $rooms = $hostelRooms->map(function ($room) {
-        return [
-            'id' => $room->id,
-            'name' => $room->name,
-            'description' => $room->description,
-            'bedtype' => $room->bedtype,
-            'pax' => $room->pax,
-            'price' => $room->price,
-            'status' => $room->status,
-            'rating' => $room->rating,
-            'img_path' => $room->img_path,
-            'img_paths' => $room->images()->pluck('path')->toArray(),
-            'reservations' => $room->reservations, 
-        ];
-    });
-    Log::info($request);
-    Log::info($rooms);
-    return response()->json($rooms);
-}
+    //     $query = HostelRoom::query();
+
+    //     if ($startDate && $endDate) {
+    //         $query->whereDoesntHave('reservations', function ($query) use ($startDate, $endDate) {
+    //             $query->where(function ($query) use ($startDate, $endDate) {
+    //                 $query->where('checkout_date', '>=', $endDate)
+    //                     ->where('checkin_date', '<=', $startDate);
+    //             });
+    //         });
+    //     }
+
+    //     $hostelRooms = $query->get();
+
+    //     // Filter rooms with pending reservations
+    //     $filteredRooms = $hostelRooms->filter(function ($room) {
+    //         return $room->reservations->where('status', 'Pending')->isNotEmpty();
+    //     });
+
+    //     $rooms = $filteredRooms->map(function ($room) {
+    //         return [
+    //             'id' => $room->id,
+    //             'name' => $room->name,
+    //             'description' => $room->description,
+    //             'bedtype' => $room->bedtype,
+    //             'pax' => $room->pax,
+    //             'price' => $room->price,
+    //             'status' => $room->status,
+    //             'rating' => $room->rating,
+    //             'img_path' => $room->img_path,
+    //             'img_paths' => $room->images()->pluck('path')->toArray(),
+    //             'reservations' => $room->reservations,
+    //         ];
+    //     });
+
+    //     return response()->json($rooms);
+    // }
+
 
     public function createReservation(Request $request)
     {
         try {
             Log::info($request);
             $ldate = date('Y-m-d H:i:s');
-            
+
             $fileName1 = time() . $request->file('downreceipt')->getClientOriginalName();
             $path1 = $request->file('downreceipt')->storeAs('downreceipt', $fileName1, 'public');
             $payments = '/storage/' . $path1;
@@ -74,7 +119,7 @@ class GuestController extends Controller
                 'password' => bcrypt($request->input('password')),
                 'sex' => $request->input('sex'),
                 'address' => $request->input('address'),
-                'contacts' => $request->input('contacts'),
+                'contactNumber' => $request->input('contacts'),
                 'birthdate' => $request->input('birthdate'),
                 'validId' => $request->input('validId'),
                 'role' => 'Resident',
@@ -82,9 +127,9 @@ class GuestController extends Controller
                 'type' => 'Hostel Resident',
             ]);
             $hostelRoom = Hostelroom::find($request->input('room_id'));
-            $hostelRoom->update([
-                'status' => "Reserved",
-            ]);
+            // $hostelRoom->update([
+            //     'status' => "Reserved",
+            // ]);
 
             $reservation = Reservation::create([
                 'user_id' => $newHostelUser->id,
@@ -104,14 +149,15 @@ class GuestController extends Controller
                 'totalPayment' => $request->input('totalPayment'),
                 'downreceipt' => $payments,
                 'reservation_date' => $ldate,
-                'roomName' => $hostelRoom->name
+                'roomName' => $hostelRoom->name,
+                'status' => "Pending", 
             ]);
 
-            
-    
+
+
             return response()->json(['message' => 'Reservation created successfully', 'reservation' => $reservation]);
         } catch (\Exception $e) {
-            \Log::error('Error creating room: ' . $e->getMessage());
+            Log::error('Error creating room: ' . $e->getMessage());
             return response()->json(['error' => 'Internal Server Error'], 500);
         }
     }
@@ -130,25 +176,25 @@ class GuestController extends Controller
         $fileName3 = time() . $request->file('validId')->getClientOriginalName();
         $path3 = $request->file('validId')->storeAs('validId', $fileName3, 'public');
         $validIdPath = '/storage/' . $path3;
-        
+
         $fileName4 = time() . $request->file('vaccineCard')->getClientOriginalName();
         $path4 = $request->file('vaccineCard')->storeAs('vaccineCard', $fileName4, 'public');
         $vaccineCardPath = '/storage/' . $path4;
-        
-        $fileName5 = time() . $request->file('applicationForm')->getClientOriginalName();
-        $path5 = $request->file('applicationForm')->storeAs('applicationForm', $fileName4, 'public');
-        $applicationForm = '/storage/' . $path5;
-   
 
-        $user = Registration::create([
-           
+        $fileName5 = time() . $request->file('applicationForm')->getClientOriginalName();
+        $path5 = $request->file('applicationForm')->storeAs('applicationForm', $fileName5, 'public');
+        $applicationForm = '/storage/' . $path5;
+
+
+        $user = User::create([
+
             'email' => $request->input('email'),
             'password' => bcrypt($request->input('password')),
             'role' => 'Resident',
             'branch' => 'Dormitory',
             'type' => $request->input('type'),
             'img_path' => $img_path,
-            
+
             'name' => $request->input('name'),
             'course' => $request->input('course'),
             'year' => $request->input('year'),
@@ -162,21 +208,27 @@ class GuestController extends Controller
             'Tuptnum' => $request->input('Tuptnum'),
             'laptop' => $request->input('laptop'),
             'electricfan' => $request->input('electricfan'),
-            'guardianName' => $request->input('guardianName'),
-            'guardianContactNumber' => $request->input('guardianContactNumber'),
-            'guardianRelationship' => $request->input('guardianRelationship'),
-            'guardianAddress' => $request->input('guardianAddress'),
+
             'applicationForm' => $applicationForm,
             'cor' => $corPath,
             'validID' => $validIdPath,
             'vaccineCard' => $vaccineCardPath,
         ]);
 
+        $guardian = Guardian::create([
+            'user_id' => $user->id,
+            'guardianName' => $request->input('guardianName'),
+            'guardianContactNumber' => $request->input('guardianContactNumber'),
+            'guardianRelationship' => $request->input('guardianRelationship'),
+            'guardianAddress' => $request->input('guardianAddress'),
+        ]);
+
 
         return response()->json(['message' => 'Registration successful', 'user' => $user]);
     }
 
-    public function addVisitor(Request $request){
+    public function addVisitor(Request $request)
+    {
         $fileName = time() . $request->file('validId')->getClientOriginalName();
         $path = $request->file('validId')->storeAs('validId', $fileName, 'public');
         $validId = '/storage/' . $path;
@@ -190,25 +242,28 @@ class GuestController extends Controller
             'purpose' => $request->input('purpose'),
             'validId' => $validId
         ]);
-      
+
         return response()->json(['message' => 'Visitor form submitted successfully']);
     }
 
-    public function getResidents(){
-        $residents = User::where('branch', "Dormitory")->where('role',"Resident")->get();
+    public function getResidents()
+    {
+        $residents = User::where('branch', "Dormitory")->where('role', "Resident")->get();
         Log::info($residents);
         return response()->json(['residents' => $residents]);
     }
 
-    public function getReservations(){
+    public function getReservations()
+    {
         $reservations = Reservation::all();
-      
+
         return response()->json($reservations);
     }
 
-    public function getReviews($id){
-        $reviews = Hostelreview::where('room_id',$id)->get();
-      
+    public function getReviews($id)
+    {
+        $reviews = Hostelreview::where('room_id', $id)->get();
+
         return response()->json($reviews);
     }
 }
