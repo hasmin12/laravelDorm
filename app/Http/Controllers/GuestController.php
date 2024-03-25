@@ -149,7 +149,7 @@ class GuestController extends Controller
             'type' => $request->input('type'),
             'img_path' => $img_path,
             
-            'name' => $request->input('fname')." ".$request->input('lname') ,
+            'name' => $request->input('name'),
             'course' => $request->input('course'),
             'year' => $request->input('year'),
             'birthdate' => $request->input('birthdate'),

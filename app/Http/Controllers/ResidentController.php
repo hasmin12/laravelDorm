@@ -46,7 +46,7 @@ class ResidentController extends Controller
             $maintenance = Maintenance::create([
                 'itemName' => $itemName,
                 'description' => $description,
-                'room_number' => $user->roomdetails,
+                'room_number' => $user->room,
                 'request_date' => $ldate,
                 'branch' => $user->branch,
                 'residentName' => $user->name,

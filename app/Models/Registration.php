@@ -27,7 +27,7 @@ class Registration extends Model
         'civil_status',
         'address',
         'contactNumber',
-        'tuptNum',
+        'Tuptnum',
         'contract',
         'cor',
         'validID',

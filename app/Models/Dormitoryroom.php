@@ -23,6 +23,6 @@ class Dormitoryroom extends Model
 
     public function beds()
     {
-        return $this->hasMany(Dormitorybed::class);
+        return $this->hasMany(Dormitorybed::class, 'room_id');
     }
 }

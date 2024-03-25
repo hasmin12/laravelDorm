@@ -19,6 +19,13 @@ class Dormitorybed extends Model
         // 'minitial' => 'required',
         'status' => 'required',
     ];
+    protected $fillable = [
+        'user_id',
+        'name',
+        'room_id',
+        'status',
+        'user_image'
+    ];
 
     public function room()
     {
