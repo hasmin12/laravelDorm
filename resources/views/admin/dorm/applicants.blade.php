@@ -18,8 +18,8 @@
         @include('layouts.navbar')
         <div class="bg-light rounded p-4">
             <div class="d-flex align-items-center justify-content-between mb-2">
-                <h3 class="mb-0">Residents</h3>
-                <a href='/admin/dorm/newresident' class="btn btn-primary">Add Resident</a>
+                <h3 class="mb-0">Applicants</h3>
+                <a href='/admin/dorm/newresident' class="btn btn-primary">Add Applicant</a>
             </div>
             <form class="d-none d-md-flex ms-4">
                 <input class="form-control border-0" type="search" placeholder="Search" id="searchInput">
@@ -161,7 +161,7 @@
 </div>
 
 
-<script src="{{ asset('js/admin/dorm/resident.js') }}"></script>
+<script src="{{ asset('js/admin/dorm/applicant.js') }}"></script>
 
 <!-- ... (your existing HTML code) ... -->
 
