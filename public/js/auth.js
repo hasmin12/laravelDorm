@@ -11,20 +11,18 @@ $(document).ready(function() {
             headers: {
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
             },
-            
             dataType: "text",
             success: function (response) {
                 console.log(response);
-
                 window.location.href = response;
-                
             },
             error: function (error) {
-              
                 console.log(error);
             }
         });
     });
+
+    
 
     $('#loginForm').submit(function (e) {
         e.preventDefault();

@@ -16,9 +16,9 @@ class GoogleSocialiteController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      */
     public function redirectToGoogle()
-{
-    return Socialite::driver('google')->redirect()->getTargetUrl();
-}
+    {
+        return Socialite::driver('google')->redirect()->getTargetUrl();
+    }
   
     /**
      * Obtain the user information from Google.
@@ -39,9 +39,10 @@ class GoogleSocialiteController extends Controller
               
             }
             Auth::login($findUser);
+            $redirectUrl = '/resident/announcements';
 
             $token = $findUser->createToken('remember_token')->plainTextToken;
-            return response()->json([
+            return redirect('/resident/announcement')->with([
                 'success' => true,
                 'token' => $token,
                 'Type' => 'Bearer',
