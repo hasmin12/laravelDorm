@@ -121,6 +121,26 @@
         </div>
 
 
+        <!-- Modal Start -->
+        <div class="modal fade" id="residentAssignModal" tabindex="-1" aria-labelledby="residentAssignModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="residentAssignModalLabel">Resident Assign</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" id="residentAssignModalBody">
+                        <select id="roomDropdown" class="form-select"></select>
+                        <div id="bedsCard"></div>
+                    </div>
+                    <div class="modal-footer">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
         
 
     </div>

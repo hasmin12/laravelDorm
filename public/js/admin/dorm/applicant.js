@@ -5,10 +5,57 @@ document.addEventListener('DOMContentLoaded', function () {
     const sendEmailButton = document.querySelector('#sendEmailButton');
     const residentTilesContainer = document.querySelector('#residentTilesContainer');
     const token = localStorage.getItem('token');
-
+    const roomDropdown = document.getElementById('roomDropdown');
+    const bedsCard = document.getElementById('bedsCard');
+    let rooms = [];
     // Set the initial view to 'tiles'
     let currentView = 'tiles';
+    function fetchRooms() {
+        fetch(`/api/getRooms`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            },
+            credentials: 'include',
+        }) // Replace '/getRooms' with the actual route to fetch rooms
+            .then(response => response.json())
+            .then(data => {
+                // Populate the dropdown with room options
+                rooms = data.rooms;
+                data.rooms.forEach(room => {
+                    const option = document.createElement('option');
+                    option.value = room.id;
+                    option.textContent = room.name;
+                    roomDropdown.appendChild(option);
+                });
+            })
+            .catch(error => console.error('Error fetching rooms:', error));
+    }
 
+    // Function to display bed details when a room is selected
+    function displayBedDetails(roomId) {
+        // Find the selected room based on its ID
+        const selectedRoom = rooms.find(room => room.id === roomId);
+
+        // Display bed details in bedsCard
+        bedsCard.innerHTML = ''; // Clear previous content
+        selectedRoom.beds.forEach(bed => {
+        const bedDiv = document.createElement('div');
+        bedDiv.textContent = `Bed ${bed.name}, Status: ${bed.status}`;
+        bedsCard.appendChild(bedDiv);
+    });
+    }
+
+    // Event listener for dropdown change
+    roomDropdown.addEventListener('change', function () {
+        const selectedRoomId = parseInt(this.value); // Get the selected room ID
+        displayBedDetails(selectedRoomId); // Display bed details for the selected room
+    });
+
+    // Fetch rooms when the page loads
+    fetchRooms();
     function fetchResidents(viewType = 'tiles') {
         const residentType = document.querySelector('input[name="btnradio"]:checked').value;
         const searchQuery = searchInput.value;
@@ -68,7 +115,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                 View Details
                             </button>
                             <button class="btn btn-sm btn-warning" onclick="updateResident(${resident.id})">Update</button>
-                            <button class="btn btn-sm btn-info" onclick="deleteRoom(${resident.id})">Assign</button>
+                            <button class="btn btn-sm btn-info" onclick="assignResident(${resident.id})">Assign</button>
                         </td>
                     </tr>
                 `;
@@ -355,43 +402,8 @@ function updateResident(residentId) {
 }
 
 function assignResident(residentId) {
-    const updateResidentForm = document.getElementById('assignResidentForm');
-    updateResidentForm.dataset.residentId = residentId; 
-
-    const updateName = document.getElementById('updateName');
-    const updateType = document.getElementById('updateType');
-    const updateSex = document.getElementById('updateSex');
-
-    const token = localStorage.getItem('token');
-
-    fetch(`/api/getResident/${residentId}`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-            'Authorization': `Bearer ${token}`,
-        },
-        credentials: 'include',
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log(data)
-        updateName.value = data.resident.name;
-        updateType.value = data.resident.type;
-        updateSex.value = data.resident.sex;
-        $('#updateResidentModal').modal('show');
-        // console.log(updateResidentForm.dataset.residentId)
-
-    })
-    .catch(error => {
-        console.error('Error fetching resident details:', error);
-
-        Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: 'An error occurred while fetching resident details. Please try again.',
-        });
-    });
+    $('#residentAssignModal').modal('show');
+    
 }
 // document.getElementById('addResidentButton').addEventListener('click', function() {
 //     window.location.href = '/admin/dorm/newresident';
