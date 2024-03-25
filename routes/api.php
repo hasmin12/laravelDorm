@@ -38,6 +38,8 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::get('/getResidents', 'AdminController@getResidents');
     Route::get('/getResident/{id}', 'AdminController@getResident');
     Route::get('/getApplicants', 'AdminController@getApplicants');
+    Route::get('/getDormPayments', 'AdminController@getDormPayments');
+
 
     Route::get('/getRegisteredusers', 'AdminController@getRegisteredusers');
     Route::post('/addRegistereduser', 'AdminController@addRegistereduser');

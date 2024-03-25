@@ -149,6 +149,20 @@ class AdminController extends Controller
         }
     }
 
+    public function getDormPayments(){
+        try {
+            if (Auth::check()) {
+                $payments = Dormitorypayment::all();
+                return response()->json(['payments' => $payments]);
+            } else {
+                return response()->json(['error' => 'Unauthorized'], 401);
+            }
+        } catch (\Exception $e) {
+            Log::error('Error in getDormPayments: ' . $e->getMessage());
+            return response()->json(['error' => 'Internal Server Error'], 500);
+        }
+    }
+
 
 // Method to fetch resident details with payment history
 public function getResident($id)
