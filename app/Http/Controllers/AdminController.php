@@ -153,7 +153,10 @@ class AdminController extends Controller
         try {
             if (Auth::check()) {
                 $payments = Dormitorypayment::all();
-                return response()->json(['payments' => $payments]);
+                $payment_month = Dormitorypayment::select('payment_month')
+                ->groupBy('payment_month')
+                ->get();
+                return response()->json(['payments' => $payments, 'payment_month' => $payment_month]);
             } else {
                 return response()->json(['error' => 'Unauthorized'], 401);
             }
@@ -411,6 +414,7 @@ public function getResident($id)
         }
     }
 
+  
     public function getPaymentHistory(Request $request)
     {
         try {

@@ -1,62 +1,57 @@
 <?php
-  
+
 namespace App\Http\Controllers;
-  
+
 use App\Http\Controllers\Controller;
 use Socialite;
 use Auth;
 use Exception;
 use App\Models\User;
-  
+
 class GoogleSocialiteController extends Controller
 {
     /**
-     * Create a new controller instance.
+     * Redirect the user to the Google authentication page.
      *
-     * @return void
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function redirectToGoogle()
     {
         return Socialite::driver('google')->redirect();
     }
-      
+  
     /**
-     * Create a new controller instance.
+     * Obtain the user information from Google.
      *
-     * @return void
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function handleCallback()
     {
         try {
-    
             $user = Socialite::driver('google')->user();
-     
-            $finduser = User::where('social_id', $user->id)->first();
-     
-            if($finduser){
-     
-                Auth::login($finduser);
-    
-                return redirect('/resident/announcements');
-     
-            }else{
-                $newUser = User::create([
-                    'name' => $user->name,
-                    'email' => $user->email,
-                    'social_id'=> $user->id,
-                    'social_type'=> 'google',
-                    'branch'=> 'Dormitory',
-                    'type'=> 'Student',
-                    'role'=> 'Resident',
-                    'password' => encrypt('my-google')
-                ]);
-    
-                Auth::login($newUser);
-     
-                return redirect('/resident/announcements');
+            
+            // Check if the user already exists in the database
+            $findUser = User::where('email', $user->email)->first();
+            
+            if (!$findUser) {
+                
+                return redirect()->back()->with('error', 'No access. Please contact the administrator.');
+              
             }
-    
+            Auth::login($findUser);
+
+            $token = $findUser->createToken('remember_token')->plainTextToken;
+            return response()->json([
+                'success' => true,
+                'token' => $token,
+                'Type' => 'Bearer',
+                'user' => $findUser,
+                'name' => $findUser->name,
+            ]);
+
+            
         } catch (Exception $e) {
+            // Handle exceptions
             dd($e->getMessage());
         }
     }

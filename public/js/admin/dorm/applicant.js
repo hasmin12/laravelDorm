@@ -38,16 +38,50 @@ document.addEventListener('DOMContentLoaded', function () {
     function displayBedDetails(roomId) {
         // Find the selected room based on its ID
         const selectedRoom = rooms.find(room => room.id === roomId);
-
-        // Display bed details in bedsCard
-        bedsCard.innerHTML = ''; // Clear previous content
+    
+        // Clear previous content
+        bedsCard.innerHTML = '';
+    
+        // Display bed details in cards
         selectedRoom.beds.forEach(bed => {
-        const bedDiv = document.createElement('div');
-        bedDiv.textContent = `Bed ${bed.name}, Status: ${bed.status}`;
-        bedsCard.appendChild(bedDiv);
-    });
+            const cardDiv = document.createElement('div');
+            cardDiv.classList.add('col-md-4', 'mb-3');
+    
+            const card = document.createElement('div');
+            card.classList.add('card', 'custom-border-red');
+            card.style.width = '18rem';
+    
+            const bedImage = document.createElement('img');
+            bedImage.classList.add('card-img-top');
+            bedImage.style.width = '285px';
+            bedImage.style.height = '285px';
+            // Set bed image source accordingly if available
+    
+            const cardBody = document.createElement('div');
+            cardBody.classList.add('card-body', 'text-center');
+    
+            const bedName = document.createElement('h5');
+            bedName.classList.add('card-title');
+            bedName.textContent = `Bed ${bed.name}`;
+    
+            const assignButton = document.createElement('button');
+            assignButton.classList.add('btn', 'btn-sm', 'btn-primary');
+            assignButton.textContent = 'Assign';
+            assignButton.addEventListener('click', function() {
+                assignBed(residentId, bed.id); // Make sure to define assignBed function
+            });
+    
+            cardBody.appendChild(bedName);
+            cardBody.appendChild(assignButton);
+    
+            card.appendChild(bedImage); // Add bed image if available
+            card.appendChild(cardBody);
+            cardDiv.appendChild(card);
+            bedsCard.appendChild(cardDiv);
+        });
     }
-
+    
+    
     // Event listener for dropdown change
     roomDropdown.addEventListener('change', function () {
         const selectedRoomId = parseInt(this.value); // Get the selected room ID
