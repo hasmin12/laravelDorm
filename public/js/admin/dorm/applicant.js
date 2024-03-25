@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const residentType = document.querySelector('input[name="btnradio"]:checked').value;
         const searchQuery = searchInput.value;
     
-        fetch(`/api/getResidents?resident_type=${residentType}&search_query=${searchQuery}`, {
+        fetch(`/api/getApplicants`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -24,18 +24,16 @@ document.addEventListener('DOMContentLoaded', function () {
         })
         .then(response => response.json())
         .then(data => {
-            // Clear the existing table rows and tiles
+            
             residentTableBody.innerHTML = '';
             residentTilesContainer.innerHTML = '';
     
-            // Filter residents with "Applicant" status
-            const filteredResidents = data.residents.filter(resident => resident.status === "Applicant");
-    
+            
             // Create a single row to contain all the cards
             const cardRow = document.createElement('div');
             cardRow.classList.add('row');
     
-            filteredResidents.forEach(resident => {
+            data.applicants.forEach(resident => {
                 // Card HTML structure
                 const card = `
                     <div class="col-md-4 mb-3">
@@ -47,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                     View Details
                                 </button>
                                 <button class="btn btn-sm btn-warning" onclick="updateResident(${resident.id})">Update</button>
-                                <button class="btn btn-sm btn-info" onclick="deleteRoom(${resident.id})">Assign</button>
+                                <button class="btn btn-sm btn-info" onclick="assignResident(${resident.id})">Assign</button>
                             </div>
                         </div>
                     </div>
@@ -356,6 +354,45 @@ function updateResident(residentId) {
     });
 }
 
+function assignResident(residentId) {
+    const updateResidentForm = document.getElementById('assignResidentForm');
+    updateResidentForm.dataset.residentId = residentId; 
+
+    const updateName = document.getElementById('updateName');
+    const updateType = document.getElementById('updateType');
+    const updateSex = document.getElementById('updateSex');
+
+    const token = localStorage.getItem('token');
+
+    fetch(`/api/getResident/${residentId}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': `Bearer ${token}`,
+        },
+        credentials: 'include',
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data)
+        updateName.value = data.resident.name;
+        updateType.value = data.resident.type;
+        updateSex.value = data.resident.sex;
+        $('#updateResidentModal').modal('show');
+        // console.log(updateResidentForm.dataset.residentId)
+
+    })
+    .catch(error => {
+        console.error('Error fetching resident details:', error);
+
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'An error occurred while fetching resident details. Please try again.',
+        });
+    });
+}
 // document.getElementById('addResidentButton').addEventListener('click', function() {
 //     window.location.href = '/admin/dorm/newresident';
 // });
