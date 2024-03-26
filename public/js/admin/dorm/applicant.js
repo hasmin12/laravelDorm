@@ -43,18 +43,25 @@ document.addEventListener('DOMContentLoaded', function () {
         bedsCard.innerHTML = '';
     
         // Display bed details in cards
-        selectedRoom.beds.forEach(bed => {
+        let row; // Variable to hold the current row
+        selectedRoom.beds.forEach((bed, index) => {
+            if (index % 2 === 0) { // Create a new row for every two cards
+                row = document.createElement('div');
+                row.classList.add('row');
+                bedsCard.appendChild(row);
+            }
+            
             const cardDiv = document.createElement('div');
-            cardDiv.classList.add('col-md-4', 'mb-3');
+            cardDiv.classList.add('col-md-6', 'mb-3'); // Each card takes 6 columns in Bootstrap grid system
     
             const card = document.createElement('div');
             card.classList.add('card', 'custom-border-red');
-            card.style.width = '18rem';
+            card.style.width = '100%';
     
             const bedImage = document.createElement('img');
             bedImage.classList.add('card-img-top');
-            bedImage.style.width = '285px';
-            bedImage.style.height = '285px';
+            bedImage.style.width = '100%';
+            bedImage.style.height = '300px';
             // Set bed image source accordingly if available
     
             const cardBody = document.createElement('div');
@@ -63,6 +70,10 @@ document.addEventListener('DOMContentLoaded', function () {
             const bedName = document.createElement('h5');
             bedName.classList.add('card-title');
             bedName.textContent = `Bed ${bed.name}`;
+
+            const bedStatus = document.createElement('h6');
+            bedStatus.classList.add('card-title');
+            bedStatus.textContent = `${bed.status}`;
     
             const assignButton = document.createElement('button');
             assignButton.classList.add('btn', 'btn-sm', 'btn-primary');
@@ -72,14 +83,17 @@ document.addEventListener('DOMContentLoaded', function () {
             });
     
             cardBody.appendChild(bedName);
+            cardBody.appendChild(bedStatus);
             cardBody.appendChild(assignButton);
     
             card.appendChild(bedImage); // Add bed image if available
             card.appendChild(cardBody);
             cardDiv.appendChild(card);
-            bedsCard.appendChild(cardDiv);
+            row.appendChild(cardDiv);
         });
     }
+    
+    
     
     
     // Event listener for dropdown change
@@ -149,7 +163,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                 View Details
                             </button>
                             <button class="btn btn-sm btn-warning" onclick="updateResident(${resident.id})">Update</button>
-                            <button class="btn btn-sm btn-info" onclick="assignResident(${resident.id})">Assign</button>
+                            <button class="btn btn-sm btn-info" onclick="assignResident(${resident})">Assign</button>
                         </td>
                     </tr>
                 `;
@@ -435,7 +449,7 @@ function updateResident(residentId) {
     });
 }
 
-function assignResident(residentId) {
+function assignResident(resident) {
     $('#residentAssignModal').modal('show');
     
 }

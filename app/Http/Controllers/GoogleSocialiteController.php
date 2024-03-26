@@ -42,7 +42,7 @@ class GoogleSocialiteController extends Controller
             $redirectUrl = '/resident/announcements';
 
             $token = $findUser->createToken('remember_token')->plainTextToken;
-            return redirect('/resident/announcement')->with([
+            return redirect('/resident/announcements')->with([
                 'success' => true,
                 'token' => $token,
                 'Type' => 'Bearer',
