@@ -31,9 +31,7 @@ class ResidentController extends Controller
             $maintenances = Maintenance::all();
         }
         Log::info($maintenances);
-        // return response()->json($maintenances, 200);
-        dd($maintenances);
-        return view('resident.maintenance');
+        return response()->json($maintenances, 200);
     }
 
     public function createMaintenance(Request $request)

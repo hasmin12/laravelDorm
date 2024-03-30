@@ -1,9 +1,9 @@
 document.addEventListener('DOMContentLoaded', function () {
-    fetchrepairs();
+    fetchmaintenances();
     
 });
 
-function fetchrepairs() {
+function fetchmaintenances() {
     const token = localStorage.getItem('token');
     console.log(token)
     fetch('/api/getMaintenances', {
@@ -17,11 +17,11 @@ function fetchrepairs() {
     })
         .then(response => response.json())
         .then(data => {
-            const repairsContainer = document.getElementById('repair-items-container');
-            repairsContainer.innerHTML = '';
-            console.log(data.maintenances)
+            const maintenancesContainer = document.getElementById('maintenance-items-container');
+            maintenancesContainer.innerHTML = '';
+            console.log(data)
            
-            data.maintenances.forEach((maintenance, index) => {
+            data.forEach(maintenance => {
                 const cardContainer = document.createElement('div');
                 cardContainer.classList.add('col-sm-12', 'col-md-4');
                 
@@ -45,28 +45,28 @@ function fetchrepairs() {
                 }
 
                 const cardContent = `
-                    <div class="card h-100" style="cursor: pointer;" onclick="showItemDetails('${maintenance.itemName}', '${maintenance.img_path}', '${maintenance.status}', '${maintenance.dateRepair}')">
+                    <div class="card h-100" style="cursor: pointer;" onclick="showItemDetails('${maintenance}')">
                         <div class="card-body">
                             <div class="d-flex align-items-center justify-content-between mb-2">
                                 <h5 class="card-title">${maintenance.itemName}</h5>
                                 <small class="${statusColorClass}">${maintenance.status}</small>
                             </div>
-                            <img src="${maintenance.img_path}" alt="Repair Item Image" class="card-img-top" style="max-height: 150px;">
+                            <img src="${maintenance.img_path}" alt="Maintenance Item Image" class="card-img-top" style="max-height: 150px;">
                         </div>
                     </div>
                 `;
 
                 cardContainer.innerHTML = cardContent;
-                repairsContainer.appendChild(cardContainer);
+                maintenancesContainer.appendChild(cardContainer);
             });
         })
-        .catch(error => console.error('Error fetching repair items:', error));
+        .catch(error => console.error('Error fetching maintenance items:', error));
 }
 
 
-const createRepairForm = $('#createRepairForm');
+const createMaintenanceForm = $('#createMaintenanceForm');
     const token = localStorage.getItem('token');    
-    createRepairForm.submit(function (event) {
+    createMaintenanceForm.submit(function (event) {
     event.preventDefault();
 
     const itemNameInput = $('#itemName');
@@ -84,7 +84,7 @@ const createRepairForm = $('#createRepairForm');
     const token = localStorage.getItem('token');
 
     $.ajax({
-        url: '/api/createRepair',
+        url: '/api/createMaintenance',
         type: 'POST',
         headers: {
             'Authorization': 'Bearer ' + token,
@@ -93,19 +93,19 @@ const createRepairForm = $('#createRepairForm');
         processData: false,  
         contentType: false,
         success: function (data) {
-            console.log('Repair request successfully:', data);
+            console.log('Maintenance request successfully:', data);
 
-            $('#createRepairModal').modal('hide');
+            $('#createMaintenanceModal').modal('hide');
 
             itemNameInput.val('');
             descriptionInput.val('');
             $('#img_path').val('');
 
-            fetchrepairs(); // Update the function name to match your lost items
+            fetchmaintenances(); // Update the function name to match your lost items
 
             Swal.fire({
                 icon: 'success',
-                title: 'Repair Created',
+                title: 'Maintenance Created',
                 text: 'Your request has been successfully created.',
             });
         },
@@ -120,3 +120,14 @@ const createRepairForm = $('#createRepairForm');
         }
     });
 });
+
+function showItemDetails(maintenance) {
+    const token = localStorage.getItem('token');
+    const formData = new FormData();
+    formData.append('maintenance_id', maintenance.id);
+    if (maintenance.status == "Pending" || maintenance.status == "Cancelled"){
+
+    }else{
+        
+    }
+}

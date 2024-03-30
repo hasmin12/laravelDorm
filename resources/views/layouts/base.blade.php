@@ -27,7 +27,7 @@
         }
 
         // Call the function with the token and user variables passed from the server-side
-        saveUserDataToLocalStorage('{{ $token ?? '' }}', {!! json_encode($user ?? null) !!});
+        // saveUserDataToLocalStorage('{{ $token ?? '' }}', {!! json_encode($user ?? null) !!});
     </script>
 </body>
 </html>

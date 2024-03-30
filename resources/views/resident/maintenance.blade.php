@@ -9,7 +9,7 @@
 </div>
 <!-- Spinner End -->
 
-@include('layouts.sidebar.hostel.resident')
+@include('layouts.sidebar.resident')
 
 <!-- Content Start -->
 <div class="content">
@@ -17,27 +17,27 @@
     {{-- Calendar --}}
     <div class="h-100 bg-light rounded p-4">
         <div class="d-flex align-items-center justify-content-between mb-2">
-            <h3 class="mb-0">Request Repair</h3>
-            {{-- <button id="addMaintenanceButton" class="btn btn-primary">Request Repair</button> --}}
-            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createRepairModal">Request Repair</button>                   
+            <h3 class="mb-0">Request Maintenance</h3>
+            {{-- <button id="addMaintenanceButton" class="btn btn-primary">Request Maintenance</button> --}}
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createMaintenanceModal">Request Maintenance</button>                   
         </div>
 
-        <div id="repair-items-container" class="row">
-            <!-- Display existing repair items here using JavaScript -->
+        <div id="maintenance-items-container" class="row">
+            <!-- Display existing maintenance items here using JavaScript -->
         </div>
     </div>
 
-    <!-- Modal for creating a new repair -->
-<div class="modal fade" id="createRepairModal" tabindex="-1" aria-labelledby="createRepairModalLabel" aria-hidden="true">
+    <!-- Modal for creating a new maintenance -->
+<div class="modal fade" id="createMaintenanceModal" tabindex="-1" aria-labelledby="createMaintenanceModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="createRepairModalLabel">Request Repair</h5>
+                <h5 class="modal-title" id="createMaintenanceModalLabel">Request Maintenance</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <!-- Add your form fields for creating a new repair here -->
-                <form id="createRepairForm" enctype="multipart/form-data">
+                <!-- Add your form fields for creating a new maintenance here -->
+                <form id="createMaintenanceForm" enctype="multipart/form-data">
                     <!-- Example: Name -->
                         
                 
@@ -45,7 +45,7 @@
                         <label for="itemName" class="col-md-4 col-form-label text-md-right">{{ __('itemName') }}</label>
                                     <div class="col-md-6">
                                         <select id="itemName" class="form-control @error('itemName') is-invalid @enderror" name="itemName" required>
-                                            <option value="General Repair">General Repair</option>
+                                            <option value="General Maintenance">General Maintenance</option>
                                             <option value="Technician">Technician</option>
                                             <option value="Handy Man">Handy Man</option>
                                         </select>
@@ -68,7 +68,7 @@
 
                     <!-- Add other form fields as needed -->
 
-                    <button type="submit" class="btn btn-primary">Request Repair</button>
+                    <button type="submit" class="btn btn-primary">Request Maintenance</button>
                 </form>
             </div>
         </div>
