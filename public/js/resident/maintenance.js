@@ -45,7 +45,7 @@ function fetchmaintenances() {
                 }
 
                 const cardContent = `
-                    <div class="card h-100" style="cursor: pointer;" onclick="showItemDetails('${maintenance}')">
+                    <div class="card h-100" style="cursor: pointer;" onclick="showItemDetails('${maintenance.id}','${maintenance.status}', '${maintenance.itemName}','${maintenance.description}', '${maintenance.technicianName}','${maintenance.completionPercentage}')">
                         <div class="card-body">
                             <div class="d-flex align-items-center justify-content-between mb-2">
                                 <h5 class="card-title">${maintenance.itemName}</h5>
@@ -121,13 +121,34 @@ const createMaintenanceForm = $('#createMaintenanceForm');
     });
 });
 
-function showItemDetails(maintenance) {
+function showItemDetails(id,status,itemName,description,technicianName,completionPercentage) {
     const token = localStorage.getItem('token');
     const formData = new FormData();
-    formData.append('maintenance_id', maintenance.id);
-    if (maintenance.status == "Pending" || maintenance.status == "Cancelled"){
-
-    }else{
-        
+    formData.append('maintenance_id', id);
+    if (status === "PENDING" || status === "Cancelled") {
+        // Display details for pending or cancelled requests
+        Swal.fire({
+            title: 'Maintenance Request Details',
+            html: `
+                <b>Item Name:</b> ${itemName}<br>
+                <b>Description:</b> ${description}<br>
+                <b>Status:</b> Waiting for approval
+            `
+        });
+    } else {
+        // Display details for completed or in-progress requests
+        Swal.fire({
+            title: 'Maintenance Request Details',
+            html: `
+                <b>Item Name:</b> ${itemName}<br>
+                <b>Description:</b> ${description}<br>
+                <b>Status:</b> ${status}<br>
+                <b>Completion Percentage:</b>
+                <div class="progress" style="height: 20px;">
+                    <div class="progress-bar bg-success" role="progressbar" style="width: ${completionPercentage}%" aria-valuenow="${completionPercentage}" aria-valuemin="0" aria-valuemax="100">${completionPercentage}%</div>
+                </div><br>
+                <b>Assigned Technician:</b> ${technicianName}
+            `
+        });
     }
 }
