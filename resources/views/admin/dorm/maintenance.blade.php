@@ -14,44 +14,69 @@
 <!-- Content Start -->
 <div class="content">
     @include('layouts.navbar')
-        <div class="bg-light rounded p-4">
-            <div class="d-flex align-items-center justify-content-between mb-2">
-                <h3 class="mb-0">Repairs</h3>
-                {{-- <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createRoomModal">Create Room</button> --}}
-            </div>
-        </div>
+    {{-- Calendar --}}
+    <div class="h-100 bg-light rounded p-4">
+        <div class="d-flex align-items-center justify-content-between mb-2">
+            <h3 class="mb-0">Maintenance Requests</h3>
+            {{-- <button id="addMaintenanceButton" class="btn btn-primary">Request Maintenance</button> --}}
     
-    <!-- Recent Sales Start -->
-    <div class="container-fluid pt-4 px-4">
-        <div class="bg-light text-center rounded p-4">
-            <div class="table-responsive">
-                <table class="table text-start align-middle table-bordered table-hover mb-0">
-                    <thead>
-                        <tr class="text-dark">
-                            <th scope="col">Room</th>
-                            <th scope="col">Request Date</th>
-                            <th scope="col">Item</th>
-                           
-                            <th scope="col">Technician</th>
-                            <th scope="col">Resident</th>
-                         
-                            <th scope="col">Image</th>
-                            <th scope="col">Status</th>
-                        </tr>
-                    </thead>
-                    <tbody id="repairsTableBody">
+        </div>
+
+        <div id="maintenance-items-container" class="row">
+            <!-- Display existing maintenance items here using JavaScript -->
+        </div>
+    </div>
+
+    <!-- Modal for creating a new maintenance -->
+<div class="modal fade" id="createMaintenanceModal" tabindex="-1" aria-labelledby="createMaintenanceModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createMaintenanceModalLabel">Request Maintenance</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Add your form fields for creating a new maintenance here -->
+                <form id="createMaintenanceForm" enctype="multipart/form-data">
+                    <!-- Example: Name -->
                         
-                    </tbody>
-                </table>
+                
+                    <div class="mb-3">
+                        <label for="itemName" class="col-md-4 col-form-label text-md-right">{{ __('itemName') }}</label>
+                                    <div class="col-md-6">
+                                        <select id="itemName" class="form-control @error('itemName') is-invalid @enderror" name="itemName" required>
+                                            <option value="General Maintenance">General Maintenance</option>
+                                            <option value="Technician">Technician</option>
+                                            <option value="Handy Man">Handy Man</option>
+                                        </select>
+                                        @error('itemName')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description</label>
+                        <textarea class="form-control" id="description" rows="4" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="img_path" class="form-label">Image</label>
+                        <input type="file" class="form-control" id="img_path" name="img_path">
+                    </div>
+
+                    <!-- Add other form fields as needed -->
+
+                    <button type="submit" class="btn btn-primary">Request Maintenance</button>
+                </form>
             </div>
         </div>
     </div>
-    <!-- Recent Sales End -->
+</div>
 
   
-    
-
-    {{-- @include('layouts.footer') --}}
+    @include('layouts.footer')
 
 </div>
 <!-- Content End -->
@@ -61,5 +86,6 @@
 <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
 </div>
 
-<script src="{{ asset('js/admin/repair.js') }}"></script>
+
+<script src="{{ asset('js/admin/dorm/maintenance.js') }}"></script>
 @endsection

@@ -70,11 +70,6 @@ Route::middleware(['adminbranch:Dormitory'])->group(function () {
             return view('admin.dorm.applicants');
         });
 
-        // Route::get('/residents', function () {
-        //     $resident = Resident::all(); // Replace 'Resident' with your actual model name
-        //     return view('admin.dorm.residents', compact('resident'));
-        // });
-
         Route::get('/registereduser', function () {
             return view('admin.dorm.registered');
         });
