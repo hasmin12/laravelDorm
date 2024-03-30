@@ -49,7 +49,8 @@ class User extends Authenticatable
         'lastpaidDate',
         'is_paid',
         'is_scheduled',
-        'roomdetails',
+        'room',
+        'bed',
         'status',
         'specialization'
     ];

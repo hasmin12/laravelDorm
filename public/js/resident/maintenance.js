@@ -126,7 +126,7 @@ function showItemDetails(maintenance) {
     const formData = new FormData();
     formData.append('maintenance_id', maintenance.id);
     if (maintenance.status == "Pending" || maintenance.status == "Cancelled"){
-
+        
     }else{
         
     }
