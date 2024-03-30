@@ -57,7 +57,7 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
 
     Route::post('createLaundrySchedule', 'ResidentController@createLaundrySchedule');
 
-
+   
     
     
     Route::get('/notifyResidents', 'AdminController@notifyResidents');
@@ -95,7 +95,7 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::post('/updateEquipment', 'ResidentController@updateEquipment');
 
 
-    Route::post('/createMaintenance', 'ResidentController@createMaintenance');
+    Route::post('/createRepair', 'ResidentController@createMaintenance');
     Route::get('/getMaintenances', 'ResidentController@getMaintenances');
     Route::get('/admin/getMaintenances', 'AdminController@getMaintenances');
     Route::post('/approveMaintenance/{id}', 'ResidentController@approveMaintenance');

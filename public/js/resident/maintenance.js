@@ -1,11 +1,12 @@
 document.addEventListener('DOMContentLoaded', function () {
     fetchrepairs();
+    
 });
 
 function fetchrepairs() {
     const token = localStorage.getItem('token');
-
-    fetch('/api/getRepairs', {
+    console.log(token)
+    fetch('/api/getMaintenances', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -18,14 +19,15 @@ function fetchrepairs() {
         .then(data => {
             const repairsContainer = document.getElementById('repair-items-container');
             repairsContainer.innerHTML = '';
-
-            data.repairs.forEach((repair, index) => {
+            console.log(data.maintenances)
+           
+            data.maintenances.forEach((maintenance, index) => {
                 const cardContainer = document.createElement('div');
                 cardContainer.classList.add('col-sm-12', 'col-md-4');
-
+                
                 // Set color based on status
                 let statusColorClass;
-                switch (repair.status) {
+                switch (maintenance.status) {
                     case 'Pending':
                         statusColorClass = 'text-warning';
                         break;
@@ -43,13 +45,13 @@ function fetchrepairs() {
                 }
 
                 const cardContent = `
-                    <div class="card h-100" style="cursor: pointer;" onclick="showItemDetails('${repair.itemName}', '${repair.img_path}', '${repair.status}', '${repair.dateRepair}')">
+                    <div class="card h-100" style="cursor: pointer;" onclick="showItemDetails('${maintenance.itemName}', '${maintenance.img_path}', '${maintenance.status}', '${maintenance.dateRepair}')">
                         <div class="card-body">
                             <div class="d-flex align-items-center justify-content-between mb-2">
-                                <h5 class="card-title">${repair.itemName}</h5>
-                                <small class="${statusColorClass}">${repair.status}</small>
+                                <h5 class="card-title">${maintenance.itemName}</h5>
+                                <small class="${statusColorClass}">${maintenance.status}</small>
                             </div>
-                            <img src="${repair.img_path}" alt="Repair Item Image" class="card-img-top" style="max-height: 150px;">
+                            <img src="${maintenance.img_path}" alt="Repair Item Image" class="card-img-top" style="max-height: 150px;">
                         </div>
                     </div>
                 `;
@@ -63,8 +65,8 @@ function fetchrepairs() {
 
 
 const createRepairForm = $('#createRepairForm');
-
-createRepairForm.submit(function (event) {
+    const token = localStorage.getItem('token');    
+    createRepairForm.submit(function (event) {
     event.preventDefault();
 
     const itemNameInput = $('#itemName');

@@ -39,9 +39,22 @@
                 <!-- Add your form fields for creating a new repair here -->
                 <form id="createRepairForm" enctype="multipart/form-data">
                     <!-- Example: Name -->
+                        
+                
                     <div class="mb-3">
-                        <label for="itemName" class="form-label">Item</label>
-                        <input type="text" class="form-control" id="itemName" name="itemName" required>
+                        <label for="itemName" class="col-md-4 col-form-label text-md-right">{{ __('itemName') }}</label>
+                                    <div class="col-md-6">
+                                        <select id="itemName" class="form-control @error('itemName') is-invalid @enderror" name="itemName" required>
+                                            <option value="General Repair">General Repair</option>
+                                            <option value="Technician">Technician</option>
+                                            <option value="Handy Man">Handy Man</option>
+                                        </select>
+                                        @error('itemName')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
                     </div>
 
                     <div class="mb-3">
