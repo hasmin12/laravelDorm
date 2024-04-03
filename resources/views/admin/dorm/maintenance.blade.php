@@ -75,6 +75,26 @@
     </div>
 </div>
 
+<div class="modal fade" id="maintenanceModal" tabindex="-1" aria-labelledby="maintenanceModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="maintenanceModalTitle"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="maintenanceModalBody">
+                <!-- Maintenance request details will be displayed here -->
+            </div>
+            <div class="modal-footer" id="maintenanceModalFooter">
+                <!-- Form for assigning technician will be displayed here -->
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
   
     @include('layouts.footer')
 

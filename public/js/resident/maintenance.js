@@ -121,34 +121,32 @@ const createMaintenanceForm = $('#createMaintenanceForm');
     });
 });
 
-function showItemDetails(id,status,itemName,description,technicianName,completionPercentage) {
-    const token = localStorage.getItem('token');
-    const formData = new FormData();
-    formData.append('maintenance_id', id);
-    if (status === "PENDING" || status === "Cancelled") {
-        // Display details for pending or cancelled requests
-        Swal.fire({
-            title: 'Maintenance Request Details',
-            html: `
-                <b>Item Name:</b> ${itemName}<br>
-                <b>Description:</b> ${description}<br>
-                <b>Status:</b> Waiting for approval
-            `
-        });
+function showItemDetails(id, status, itemName, description, technicianName, completionPercentage) {
+    const modalTitle = document.getElementById('maintenanceModalTitle');
+    const modalBody = document.getElementById('maintenanceModalBody');
+
+    modalTitle.innerText = 'Maintenance Request Details';
+
+    let modalContent = `
+        <b>Item Name:</b> ${itemName}<br>
+        <b>Description:</b> ${description}<br>
+        <b>Status:</b> ${status}<br>
+    `;
+
+    if (status === "Pending" || status === "Cancelled") {
+        modalContent += `<b>Status:</b> Waiting for approval`;
     } else {
-        // Display details for completed or in-progress requests
-        Swal.fire({
-            title: 'Maintenance Request Details',
-            html: `
-                <b>Item Name:</b> ${itemName}<br>
-                <b>Description:</b> ${description}<br>
-                <b>Status:</b> ${status}<br>
-                <b>Completion Percentage:</b>
-                <div class="progress" style="height: 20px;">
-                    <div class="progress-bar bg-success" role="progressbar" style="width: ${completionPercentage}%" aria-valuenow="${completionPercentage}" aria-valuemin="0" aria-valuemax="100">${completionPercentage}%</div>
-                </div><br>
-                <b>Assigned Technician:</b> ${technicianName}
-            `
-        });
+        modalContent += `
+            <b>Completion Percentage:</b>
+            <div class="progress" style="height: 20px;">
+                <div class="progress-bar bg-success" role="progressbar" style="width: ${completionPercentage}%" aria-valuenow="${completionPercentage}" aria-valuemin="0" aria-valuemax="100">${completionPercentage}%</div>
+            </div><br>
+            <b>Assigned Technician:</b> ${technicianName}
+        `;
     }
+
+    modalBody.innerHTML = modalContent;
+
+    $('#maintenanceModal').modal('show');
 }
+

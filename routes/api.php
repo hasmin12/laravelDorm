@@ -100,6 +100,19 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::get('/admin/getMaintenances', 'AdminController@getMaintenances');
     Route::post('/approveMaintenance/{id}', 'ResidentController@approveMaintenance');
 
+
+    Route::get('/getTechnicians', 'AdminController@getTechnicians');
+
+    // Get maintenance changes
+    Route::get('/getMaintenanceChanges','AdminController@getMaintenanceChanges');
+
+    // Create maintenance request
+    Route::post('/createMaintenance', 'AdminController@createMaintenance');
+
+    // Assign technician to maintenance request
+    Route::post('/assignTechnician', 'AdminController@assignTechnician');
+    
+
     Route::get('/api/getViolations', 'AdminController@getViolations');
     Route::post('/api/addViolationuser', 'AdminController@addViolationuser');
     Route::get('/notifyViolations', 'AdminController@notifyResidents');

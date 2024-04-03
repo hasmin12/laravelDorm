@@ -20,7 +20,7 @@ use App\Models\Notification;
 use App\Models\Complaint;
 use App\Models\Violation;
 use App\Models\Residentlog;
-
+use App\Models\Maintenacechange;
 
 
 
@@ -164,6 +164,60 @@ class AdminController extends Controller
             Log::error('Error in getDormPayments: ' . $e->getMessage());
             return response()->json(['error' => 'Internal Server Error'], 500);
         }
+    }
+
+    public function getTechnicians()
+    {
+        // Fetch users with role "Technician"
+        $technicians = User::where('role', 'Technician')->get(['id', 'name']); // Adjust attributes as needed
+        return response()->json($technicians);
+    }
+
+    public function getMaintenanceChanges(Request $request)
+    {
+        $maintenanceId = $request->input('maintenance_id');
+
+        // Fetch maintenance changes based on maintenanceId
+        $changes = MaintenanceChange::where('maintenance_id', $maintenanceId)->get();
+
+        return response()->json($changes);
+    }
+
+    public function createMaintenance(Request $request)
+    {
+        $validatedData = $request->validate([
+            'itemName' => 'required|string',
+            'description' => 'required|string',
+            'img_path' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        $imageName = time().'.'.$request->img_path->extension();  
+   
+        $request->img_path->move(public_path('images'), $imageName);
+
+        $maintenance = new Maintenance();
+        $maintenance->itemName = $validatedData['itemName'];
+        $maintenance->description = $validatedData['description'];
+        $maintenance->img_path = $imageName;
+        $maintenance->status = 'Pending';
+        $maintenance->save();
+
+        return response()->json($maintenance);
+    }
+
+    public function assignTechnician(Request $request)
+    {
+        $validatedData = $request->validate([
+            'maintenance_id' => 'required|integer',
+            'technician_id' => 'required|integer',
+        ]);
+
+        $maintenance = Maintenance::findOrFail($validatedData['maintenance_id']);
+        $maintenance->technician_id = $validatedData['technician_id'];
+        $maintenance->status = 'In Progress';
+        $maintenance->save();
+
+        return response()->json($maintenance);
     }
 
 
