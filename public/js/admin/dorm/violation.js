@@ -1,19 +1,14 @@
 document.addEventListener('DOMContentLoaded', function () {
     const searchInput = document.querySelector('#searchInput');
     const violationTypeButtons = document.querySelectorAll('input[name="btnradio"]');
-    const violationTableBody = document.querySelector('#violationTableBody');
     const sendEmailButton = document.querySelector('#sendEmailButton');
-    const violationTilesContainer = document.querySelector('#violationTilesContainer');
     const token = localStorage.getItem('token');
-
+    const residentDropdown = document.getElementById('residentDropdown');
     // Set the initial view to 'tiles'
     let currentView = 'tiles';
-
-    function fetchViolations(viewType = 'tiles') {
-        const violationType = document.querySelector('input[name="btnradio"]:checked').value;
-        const searchQuery = searchInput.value;
-
-        fetch(`/api/getViolations?violation_type=${violationType}&search_query=${searchQuery}`, {
+    
+    function fetchResidents() {
+        fetch(`/api/getResidents`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -24,68 +19,126 @@ document.addEventListener('DOMContentLoaded', function () {
         })
         .then(response => response.json())
         .then(data => {
-            // Clear the existing table rows and tiles
+            const residentDropdown = document.getElementById('residentDropdown');
+            residentDropdown.innerHTML = ''; // Clear previous options
+    
+            // Add a default empty option
+            const defaultOption = document.createElement('option');
+            defaultOption.value = "";
+            defaultOption.textContent = "Select Resident";
+            residentDropdown.appendChild(defaultOption);
+    
+            // Filter residents with role 'Resident' and status 'Active'
+            const activeResidents = data.residents.filter(resident => {
+                return resident.role === 'Resident' && resident.status === 'Active';
+            });
+    
+            // Populate the dropdown with active resident options
+            activeResidents.forEach(resident => {
+                const option = document.createElement('option');
+                option.value = resident.id;
+                option.textContent = resident.name;
+                residentDropdown.appendChild(option);
+            });
+        })
+        .catch(error => console.error('Error fetching residents:', error));
+    }
+    
+
+    function fetchViolations() {
+        const token = localStorage.getItem('token');
+
+        fetch('/api/getViolations', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            },
+            credentials: 'include',
+        })
+        .then(response => response.json())
+        .then(data => {
+            const violationTableBody = document.getElementById('violationTableBody');
+
             violationTableBody.innerHTML = '';
-            violationTilesContainer.innerHTML = '';
-
-            // Create a single row to contain all the cards
-            const cardRow = document.createElement('div');
-            cardRow.classList.add('row');
-
+            console.log(data)
+            // Add new rows based on the fetched data
             data.violations.forEach(violation => {
-                // Card HTML structure
-                    const card = `
-                        <div class="col-md-4 mb-3"> <!-- Added mb-3 class for margin-bottom -->
-                            <div class="card" style="width: 18rem;">
-                                <img class="card-img-top" src="..." alt="Card image cap">
-                                <div class="card-body text-center">
-                                    <h5 class="card-title">${violation.name}</h5>
-                                    <button class="btn btn-sm btn-success" onclick="showViolationDetails(${violation.id})" data-bs-toggle="modal" data-bs-target="#violationDetailsModal">
-                                        Check
-                                    </button>
-                                    <button class="btn btn-sm btn-warning" onclick="updateRoom(${violation.id})">Update</button>
-                                    <button class="btn btn-sm btn-danger" onclick="deleteRoom(${violation.id})">Delete</button>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-
-                // Append each card to the row
-                cardRow.innerHTML += card;
-
-                // Table row HTML structure
-                const tableRow = `
+                const row = `
                     <tr>
-                    <td>${violation.violationName}</td>
-                    <td>${violation.user_id}</td>
-                    <td>${violation.penalty}</td>
-                    <td>${violation.violationDate}</td>
-                    <td>${violation.violationType}</td>
-                    <td>${violation.status}</td>
+                        <td>${violation.residentName}</td>
+                        <td>${violation.violationName}</td>                          
+                        <td>${violation.penalty}</td>
+                        <td>${violation.violationDate}</td>
+                        <td>${violation.violationType}</td>
+                        <td>${violation.status}</td>
                         <td>
-                        <button class="btn btn-sm btn-success" onclick="showViolationDetails(${JSON.stringify(violation)})" data-bs-toggle="modal" data-bs-target="#violationDetailsModal">
-                            Check
-                        </button>
-
-                            <button class="btn btn-sm btn-warning" onclick="updateRoom(${violation.id})">Update</button>
-                            <button class="btn btn-sm btn-danger" onclick="deleteRoom(${violation.id})">Delete</button>
+                            <button class="btn btn-sm btn-warning" onclick="updateLostItem(${violation.id})">Update</button>
+                            <button class="btn btn-sm btn-danger" onclick="confirmDeleteLostItem(${violation.id})">Delete</button>
                         </td>
                     </tr>
                 `;
-
-                // Append each table row
-                violationTableBody.insertAdjacentHTML('beforeend', tableRow);
+                violationTableBody.innerHTML += row;
             });
-
-            // Insert the row containing all cards into the container
-            violationTilesContainer.appendChild(cardRow);
         })
-        .catch(error => console.error('Error fetching violations:', error))
-        .finally(() => {
-            // Hide spinner or loading indicator
-            document.getElementById('spinner').classList.remove('show');
+        .catch(error => console.error('Error fetching Violations items:', error));
+    }
+
+    function createViolation() {
+        const createViolationForm = document.getElementById('createViolationForm');
+        createViolationForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+    
+            // Get form input values
+            const residentId = document.getElementById('residentDropdown').value;
+            const violationName = document.getElementById('violationName').value;
+            const violationType = document.getElementById('violationType').value;
+            const penalty = document.getElementById('penalty').value;
+    
+            // Prepare data for submission
+            const formData = new FormData();
+            formData.append('user_id', residentId);
+            formData.append('violationName', violationName);
+            formData.append('violationType', violationType);
+            formData.append('penalty', penalty);
+    
+            // Fetch API endpoint to create violation
+            fetch('/api/createViolation', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                },
+                body: formData,
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Violation created successfully:', data);
+                // Clear form inputs
+                createViolationForm.reset();
+                // Close modal
+                $('#createViolationModal').modal('hide');
+                // Fetch and update violation table
+                fetchViolations();
+                // Show success message
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Violation Created',
+                    text: 'The violation has been successfully created.',
+                });
+            })
+            .catch(error => {
+                console.error('Error creating violation:', error);
+                // Show error message
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'An error occurred while creating the violation. Please try again.',
+                });
+            });
         });
     }
+    
 
     function sendEmail() {
         // Implement your logic to send emails here
@@ -99,12 +152,12 @@ document.addEventListener('DOMContentLoaded', function () {
     violationTypeButtons.forEach(button => button.addEventListener('change', () => fetchViolations(currentView)));
     sendEmailButton.addEventListener('click', sendEmail);
 
-    // Fetch residents with the initial view type
+    // Fetch violations with the initial view type
     fetchViolations(currentView);
+    fetchResidents();
+    createViolation();
+    // Event listener for Add Violators button to show the create violation modal
+    document.getElementById('addViolationButton').addEventListener('click', function() {
+        $('#createViolationModal').modal('show');
+    });
 });
-
-
-document.getElementById('addViolationButton').addEventListener('click', function() {
-    window.location.href = '/admin/newviolation';
-});
-

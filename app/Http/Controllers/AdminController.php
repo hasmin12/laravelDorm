@@ -1077,31 +1077,37 @@ public function getResident($id)
 
     public function getViolations()
     {
-        // $branch = Auth::user()->branch;
+        try {
+            
+       $violations = Violation::all();
 
-        $violations = Violation::all();
 
-        return response()->json(['violations' => $violations]);
+            return response()->json(['violations' => $violations]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Violations not found'], 404);
+        }
     }
+
+
 
     public function createViolation(Request $request)
     {
         try {
             $ldate = date('Y-m-d H:i:s');
             $user = User::find($request->input('user_id'));
+            $residentName = $user->name;
+    
             $violation = Violation::create([
                 'user_id' => $user->id,
-                'residentName' => $user->name,
+                'residentName' => $residentName,
                 'violationName' => $request->input('violationName'),
-                'violationDate' => $ldate,
                 'violationType' => $request->input('violationType'),
+                'violationDate' => $ldate,
                 'penalty' => $request->input('penalty'),
                 'status' => 'Active',
-
             ]);
-            return response()->json(['violation' => $violation], 200);
-
-
+    
+            return response()->json(['violation' => $violation], 201);
         } catch (\Exception $e) {
             \Log::error('Error creating Violation: ' . $e->getMessage());
             return response()->json(['error' => 'Internal Server Error'], 500);

@@ -46,8 +46,8 @@
                     <table class="table text-start align-middle table-bordered table-hover mb-0">
                         <thead>
                             <tr class="text-dark">
-                                <th scope="col">Violation</th>
                                 <th scope="col">Violator</th>
+                                <th scope="col">Violation</th>
                                 <th scope="col">Penalty</th>
                                 <th scope="col">Violation Date</th>
                                 <th scope="col">Violation Type</th>
@@ -64,28 +64,45 @@
         </div>
         <!-- Recent Sales End -->
 
+        <!-- Create Violation Modal -->
         <div class="modal fade" id="createViolationModal" tabindex="-1" aria-labelledby="createViolationModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="createViolationModalLabel">Create New Violator</h5>
+                        <h5 class="modal-title" id="createViolationModalLabel">Create New Violation</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <!-- Add your form fields for creating a violation -->
                         <form id="createViolationForm">
-                            <!-- ... (unchanged) ... -->
+                            <div class="mb-3">
+                                <label for="residentDropdown" class="form-label">Resident Name</label>
+                                <select class="form-select" id="residentDropdown" required>
+                                    <!-- Resident options will be populated dynamically by JavaScript -->
+                                </select>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="violationName" class="form-label">Violation Name</label>
+                                <input type="text" class="form-control" id="violationName" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="violationType" class="form-label">Violation Type</label>
+                                <input type="text" class="form-control" id="violationType" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="penalty" class="form-label">Penalty</label>
+                                <input type="text" class="form-control" id="penalty" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Create Violation</button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
 
-        @include('layouts.footer')
-
     </div>
     <!-- Content End -->
-
+    <script src="{{ asset('js/admin/dorm/violation.js') }}"></script>
     <!-- Back to Top -->
     <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
 </div>
