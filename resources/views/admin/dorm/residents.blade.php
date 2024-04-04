@@ -161,7 +161,7 @@
 </div>
 
 
-<script src="{{ asset('js/admin/dorm/resident.js') }}"></script>
+<script src="{{ secure_asset('js/admin/dorm/resident.js') }}"></script>
 
 <!-- ... (your existing HTML code) ... -->
 
