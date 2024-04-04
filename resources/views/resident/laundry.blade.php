@@ -71,5 +71,5 @@
 </div>
 
 
-<script src="{{ asset('js/resident/laundry.js') }}"></script>
+<script src="{{ secure_asset('js/resident/laundry.js') }}"></script>
 @endsection

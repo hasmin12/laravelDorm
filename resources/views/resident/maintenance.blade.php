@@ -134,5 +134,5 @@
 </div>
 
 
-<script src="{{ asset('js/resident/maintenance.js') }}"></script>
+<script src="{{ secure_asset('js/resident/maintenance.js') }}"></script>
 @endsection
