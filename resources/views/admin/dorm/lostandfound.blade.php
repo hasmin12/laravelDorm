@@ -54,6 +54,7 @@
                         <div class="modal-body">
                             <!-- Add your form fields for creating a new lost item here -->
                             <form id="createLostItemForm" enctype="multipart/form-data">
+                                @csrf
                                 <!-- Example: Name -->
                                 <div class="mb-3">
                                     <label for="itemName" class="form-label">Name</label>
@@ -122,6 +123,7 @@
                     <div class="modal-body">
         
                         <form id="updateLostItemForm">
+                            @csrf
                             <div class="mb-3">
                                 <label for="updateitemName" class="form-label">Name</label>
                                 <input type="text" class="form-control" id="updateitemName" name="updateitemName" required>
