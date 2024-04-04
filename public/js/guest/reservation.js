@@ -213,8 +213,7 @@ createReservationForm.addEventListener('submit', function (event) {
 
     fetch('/api/createReservation', {
         method: 'POST',
-        headers: {
-          
+        headers: {         
             'Accept': 'application/json',
         },
         credentials: 'include',
