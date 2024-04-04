@@ -40,6 +40,7 @@ class UserSeeder extends Seeder
             'contactNumber' => $faker->phoneNumber(),
             'Tuptnum' => $tupt_temp . "" . $Admintupt_num,
             // 'roomdetails' => 'RoomBed'
+            'status' => "Active"
         ]);
         
         User::create([
@@ -60,6 +61,8 @@ class UserSeeder extends Seeder
             'address' => $faker->address(),
             'contactNumber' => $faker->phoneNumber(),
             'Tuptnum' => $tupt_temp . "" . $tupt_num,
+            'status' => "Active"
+
         ]);
 
         // User::create([
@@ -91,6 +94,8 @@ class UserSeeder extends Seeder
             'type' => 'Technician',
             'specialization' => 'General Repairs',
             // 'roomdetails' => 'RoomBed'
+            'status' => "Active"
+
         ]);
 
         User::create([
@@ -107,6 +112,8 @@ class UserSeeder extends Seeder
             'type' => 'Technician',
             'specialization' => 'Appliance Repair',
             // 'roomdetails' => 'RoomBed'
+            'status' => "Active"
+
         ]);
         // foreach (range(1, 5) as $index) {
         //     $first_name = $faker->firstName();
