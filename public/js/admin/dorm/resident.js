@@ -109,6 +109,7 @@ document.addEventListener('DOMContentLoaded', function () {
             // Check for success property in the response
             if (data.success) {
                 alert('Emails sent successfully!');
+                fetchNotifications();
             } else {
                 throw new Error('Error sending emails.');
             }

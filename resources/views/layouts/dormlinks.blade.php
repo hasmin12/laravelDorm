@@ -10,9 +10,11 @@
 <script src="{{ asset('lib/tempusdominus/js/moment-timezone.min.js') }}"></script>
 <script src="{{ asset('lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.js" integrity="sha512-iusSCweltSRVrjOz+4nxOL9OXh2UA0m8KdjsX8/KUUiJz+TCNzalwE0WE6dYTfHDkXuGuHq3W9YIhDLN7UNB0w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-<!-- Template Javascript -->
+<script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
 <script src="{{ asset('js/main.js') }}"></script>
+<script src="{{ asset('js/admin/dorm/dashboard.js') }}"></script>
+<script src="{{ asset('js/notification.js') }}"></script>
+
 @else
 <script src="{{ asset('css/style1/js/jquery-3.3.1.min.js')}} "></script>
 <script src="{{ asset('css/style1/js/bootstrap.min.js')}} "></script>

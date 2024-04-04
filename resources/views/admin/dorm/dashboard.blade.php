@@ -14,40 +14,44 @@
         @include('layouts.navbar')
         <!-- Sale & Revenue Start -->
         <div class="container-fluid pt-4 px-4">
+            <div class="row mb-2">
+                <select id="dashboardBranch" class="form-control" name="dashboardBranch">
+                    <option value="Both">All</option>
+                    <option value="Dormitory">Dormitory</option>
+                    <option value="Hostel">Hostel</option>
+                </select>
+            </div>
+            
             <div class="row g-4">
                 <div class="col-sm-6 col-xl-3">
                     <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
-                        <i class="fa fa-chart-line fa-3x text-primary"></i>
-                        <div class="ms-3">
-                            <p class="mb-2">Today Sale</p>
-                            <h6 class="mb-0">$1234</h6>
+                        <i class="fa fa-users fa-2x text-primary"></i>
+                        <div id = "residentData" class="ms-3">
+                         
                         </div>
                     </div>
                 </div>
                 <div class="col-sm-6 col-xl-3">
                     <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
                         <i class="fa fa-chart-bar fa-3x text-primary"></i>
-                        <div class="ms-3">
-                            <p class="mb-2">Total Sale</p>
-                            <h6 class="mb-0">$1234</h6>
+                        <div id = "roomData" class="ms-3">
+                         
                         </div>
                     </div>
                 </div>
                 <div class="col-sm-6 col-xl-3">
                     <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
                         <i class="fa fa-chart-area fa-3x text-primary"></i>
-                        <div class="ms-3">
-                            <p class="mb-2">Today Revenue</p>
-                            <h6 class="mb-0">$1234</h6>
+                        <div id = "monthlyRevenueData" class="ms-3">
+                         
                         </div>
                     </div>
                 </div>
                 <div class="col-sm-6 col-xl-3">
                     <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
                         <i class="fa fa-chart-pie fa-3x text-primary"></i>
-                        <div class="ms-3">
-                            <p class="mb-2">Total Revenue</p>
-                            <h6 class="mb-0">$1234</h6>
+                        <div id = "totalData" class="ms-3">
+                         
                         </div>
                     </div>
                 </div>
@@ -62,28 +66,37 @@
                 <div class="col-sm-12 col-xl-6">
                     <div class="bg-light text-center rounded p-4">
                         <div class="d-flex align-items-center justify-content-between mb-4">
-                            <h6 class="mb-0">Worldwide Sales</h6>
-                            <a href="">Show All</a>
+                            <h6 class="mb-0">Residents</h6>
+                            {{-- <a href="">Show All</a> --}}
                         </div>
-                        <canvas id="worldwide-sales"></canvas>
+                        {{-- <canvas id="worldwide-sales"></canvas> --}}
+                    <canvas id="residentCanvas"></canvas>
+
                     </div>
                 </div>
                 <div class="col-sm-12 col-xl-6">
                     <div class="bg-light text-center rounded p-4">
                         <div class="d-flex align-items-center justify-content-between mb-4">
-                            <h6 class="mb-0">Salse & Revenue</h6>
-                            <a href="">Show All</a>
+                            <h6 class="mb-0">Revenue</h6>
+                            {{-- <a href="">Show All</a> --}}
                         </div>
-                        <canvas id="salse-revenue"></canvas>
+                        <canvas id="DormPaymentCanvas"></canvas>
                     </div>
                 </div>
             </div>
         </div>
         <!-- Sales Chart End -->
-
-
+        {{-- <div class="col-sm-6 col-xl-3">
+            <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                <i class="fa fa-users fa-2x text-primary"></i>
+                <div id="residentData" class="ms-3">
+                    <canvas id="residentCanvas"></canvas>
+                </div>
+            </div>
+        </div> --}}
+        
         <!-- Recent Sales Start -->
-        <div class="container-fluid pt-4 px-4">
+        {{-- <div class="container-fluid pt-4 px-4">
             <div class="bg-light text-center rounded p-4">
                 <div class="d-flex align-items-center justify-content-between mb-4">
                     <h6 class="mb-0">Recent Salse</h6>
@@ -274,9 +287,9 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
         <!-- Widgets End -->
-        {{-- @include('layouts.footer') --}}
+        @include('layouts.footer')
     </div>
     <!-- Content End -->
 

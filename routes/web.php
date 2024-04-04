@@ -25,7 +25,7 @@ use App\Http\Controllers\GoogleSocialiteController;
 
     Route::get('/hostelrooms', function () {
         return view('guest.reservation');
-    });
+    })->name('hostelrooms');
 
     Route::get('/dormlogs', function () {
         return view('guest.dormlogs');

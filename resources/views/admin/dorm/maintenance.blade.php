@@ -75,18 +75,55 @@
     </div>
 </div>
 
-<div class="modal fade" id="maintenanceModal" tabindex="-1" aria-labelledby="maintenanceModalLabel" aria-hidden="true">
+
+<div class="modal fade" id="pendingMaintenanceModal" tabindex="-1" aria-labelledby="pendingMaintenanceLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="maintenanceModalTitle"></h5>
+                <h5 class="modal-title" id="pendingMaintenanceTitle">Maintenance Details</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body" id="maintenanceModalBody">
-                <!-- Maintenance request details will be displayed here -->
+            <div class="modal-body" id="pendingMaintenanceBody">    
+                <form id="assignTechnicianForm">
+                    <div id="pendingMaintenanceDetails" class="mb-3">
+                    </div>
+               
+                    <div class="mb-3">
+                        <label for="technicianSelect" class="form-label">Select Technician:</label>
+                        <select class="form-select" id="technicianDropdown" required>
+                            
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Assign Technician</button>
+                </form>
             </div>
-            <div class="modal-footer" id="maintenanceModalFooter">
-                <!-- Form for assigning technician will be displayed here -->
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="inprogressMaintenanceModal" tabindex="-1" aria-labelledby="inprogressMaintenanceLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="inprogressMaintenanceTitle">Maintenance Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="inprogressMaintenanceBody">
+                <div id="inprogressMaintenanceDetails" class="mb-3">
+                </div>
+                
+            
+            <b>Maintenance Changes:</b><br>
+            <table class="table" id="maintenanceChangesTbody">
+                <thead>
+                    <tr>
+                        <th>Description</th>
+                        <th>Change Percentage</th>
+                    </tr>
+                </thead>
+                <tbody id="maintenanceChangesTbody">
+                </tbody>
+            </table>
             </div>
         </div>
     </div>

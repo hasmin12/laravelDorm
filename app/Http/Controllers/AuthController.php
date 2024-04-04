@@ -47,7 +47,7 @@ class AuthController extends Controller
                     'token' => $token,
                     'Type' => 'Bearer',
                     'user' => $user,
-                    'name' => $user->name,
+                    'email' => $user->email,
                 ]);
             } else {
                 // Log an error if authentication fails

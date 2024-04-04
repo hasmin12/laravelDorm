@@ -75,19 +75,52 @@
     </div>
 </div>
 
-<div class="modal fade" id="maintenanceModal" tabindex="-1" aria-labelledby="maintenanceModalLabel" aria-hidden="true">
+<div class="modal fade" id="pendingMaintenanceModal" tabindex="-1" aria-labelledby="pendingMaintenanceLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="maintenanceModalTitle"></h5>
+                <h5 class="modal-title" id="pendingMaintenanceTitle">Maintenance Details</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body" id="maintenanceModalBody">
-                <!-- Maintenance request details will be displayed here -->
+            <div class="modal-body" id="pendingMaintenanceBody">    
+                <form id="assignTechnicianForm">
+                    <div class="mb-3">
+                        <label for="technicianSelect" class="form-label">Select Technician:</label>
+                        <select class="form-select" id="technicianSelect" required>
+                            <option value="technician1">Technician 1</option>
+                            <option value="technician2">Technician 2</option>
+                            <option value="technician3">Technician 3</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Assign Technician</button>
+                </form>
             </div>
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="inprogressMaintenanceModal" tabindex="-1" aria-labelledby="inprogressMaintenanceLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="inprogressMaintenanceTitle"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="inprogressMaintenanceBody">
+                <!-- Maintenance request details will be displayed here -->
+                <b>Completion Percentage:</b>
+            <div class="progress" style="height: 20px;">
+                {{-- <div class="progress-bar bg-success" role="progressbar" style="width: ${completionPercentage}%" aria-valuenow="${completionPercentage}" aria-valuemin="0" aria-valuemax="100">${completionPercentage}%</div> --}}
+            </div><br>
+            <b>Assigned Technician:</b>s<br>
+            <b>Maintenance Changes:</b><br>
+            <table class="table" id="maintenanceChangesTable">
+            </table>
+            </div>
+        </div>
+    </div>
+</div>
+
 
   
     @include('layouts.footer')

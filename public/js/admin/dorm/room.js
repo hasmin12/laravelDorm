@@ -1,41 +1,49 @@
 document.addEventListener('DOMContentLoaded', function () {
     
-    const roomTypeButtons = document.querySelectorAll('input[name="roomRadiobtn"]');
+    // const roomTypeButtons = document.querySelectorAll('input[name="roomRadiobtn"]');
+    const roomBranchButtons = document.querySelectorAll('input[name="branchRadiobtn"]');
    
-
+    const createbranchDropdown = document.getElementById('createbranchDropdown');
+    createbranchDropdown.addEventListener('change', displaycreateForm);
     
     // Initial rooms
     fetchRooms();
     
 
     // Event listeners
-    roomTypeButtons.forEach(button => button.addEventListener('change', fetchRooms));
+    // roomTypeButtons.forEach(button => button.addEventListener('change', fetchRooms));
+    roomBranchButtons.forEach(button => button.addEventListener('change', fetchRooms));
 
 
     const createRoomForm = document.getElementById('createRoomForm');
     createRoomForm.addEventListener('submit', function (event) {
         event.preventDefault();
+    
+        let formData = {};
+    
+        if (createbranchDropdown.value == "Dormitory") {
+            formData = {
+                branch: createbranchDropdown.value,
+                name: document.getElementById('roomName').value,
+                category: document.getElementById('roomCategory').value,
+                type: document.getElementById('roomType').value,
+                numBed: document.getElementById('numBeds').value
+            };
+        } else {
+            formData = {
+                branch: createbranchDropdown.value,
+                name: document.getElementById('roomName').value,
+                floorNum: document.getElementById('floorNum').value,
+                bedtype: document.getElementById('bedtype').value,
+                description: document.getElementById('description').value,
+                pax: document.getElementById('pax').value,
+                price: document.getElementById('price').value
 
-        const roomName = document.getElementById('roomName');
-        const roomCategory = document.getElementById('roomCategory');
-        const roomType = document.getElementById('roomType');
-        const numBeds = document.getElementById('numBeds');
-
-        const name = roomName.value;
-        const category = roomCategory.value;
-        const type = roomType.value;
-        const numBed = numBeds.value;
-
-
-        const formData = {
-            name: name,
-            category: category,
-            type: type,
-            numBed: numBed,
-        };
-
+            };
+        }
+    
         const token = localStorage.getItem('token');
-
+    
         fetch('/api/createRoom', {
             method: 'POST',
             headers: {
@@ -49,16 +57,13 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(response => response.json())
         .then(data => {
             console.log('Room created successfully:', data);
-
+    
             $('#createRoomModal').modal('hide');
+            createRoomForm.reset();
 
-            roomName.value = '';
-            roomCategory.value = '';
-            roomType.value = '';
-            numBeds.value = '';
-
+    
             fetchRooms();
-
+    
             Swal.fire({
                 icon: 'success',
                 title: 'Room Created',
@@ -67,7 +72,7 @@ document.addEventListener('DOMContentLoaded', function () {
         })
         .catch(error => {
             console.error('Error creating room:', error);
-
+    
             Swal.fire({
                 icon: 'error',
                 title: 'Error',
@@ -75,17 +80,99 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         });
     });
+    
 });
 const roomTableBody = document.querySelector('#roomsTableBody');
+const roomTable = document.querySelector('#roomTable');
+function displaycreateForm(){
+    const createbranchDropdown = document.getElementById('createbranchDropdown').value;
+    const createContent = document.getElementById('createContent');
+    createContent.innerHTML="";
+    console.log(createbranchDropdown)
+    if(createbranchDropdown=="Dormitory"){
+        createContent.innerHTML = `
+        <div class="mb-3">
+                            <label for="roomName" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="roomName" autocomplete="off" required>
+                        </div>
+    
+                        <div class="mb-3">
+                            <label for="roomType" class="form-label">Type</label>
+                            <select class="form-select" id="roomType" required>
+                                <option value="" selected hidden></option>
+                                <option value="Student">Student</option>
+                                <option value="Faculty">Faculty</option>
+                                <option value="Staff">Staff</option>
+                            </select>
+                        </div>
+    
+                        <div class="mb-3">
+                            <label for="roomCategory" class="form-label">Category</label>
+                            <select class="form-select" id="roomCategory" required>
+                                <option value="" selected hidden></option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <!-- Add other category options as needed -->
+                            </select>
+                        </div>
+    
+                        <div class="mb-3">
+                            <label for="numBeds" class="form-label">Number of Beds</label>
+                            <select class="form-select" id="numBeds" required>
+                                <option value="" selected hidden></option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
 
+                            </select>
+                        </div>
+`
+    }else{
+        createContent.innerHTML = `
+        <div class="mb-3">
+            <label for="roomName" class="form-label">Name</label>
+            <input type="text" class="form-control" id="roomName" autocomplete="off" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="roomName" class="form-label">Description</label>
+            <input type="text" class="form-control" id="description" autocomplete="off" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="roomName" class="form-label">Floor Number</label>
+            <input type="text" class="form-control" id="floorNum" autocomplete="off" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="roomName" class="form-label">Bed Type</label>
+            <input type="text" class="form-control" id="bedtype" autocomplete="off" required>
+        </div>
+        
+        <div class="mb-3">
+            <label for="roomName" class="form-label">Pax</label>
+            <input type="text" class="form-control" id="pax" autocomplete="off" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="roomName" class="form-label">Price</label>
+            <input type="number" class="form-control" id="price" autocomplete="off" required>
+        </div>
+`
+    }
+}
+    
+    
 function fetchRooms() {
-    const roomType = document.querySelector('input[name="roomRadiobtn"]:checked').value;
+    // const roomType = document.querySelector('input[name="roomRadiobtn"]:checked').value;
+    const branch = document.querySelector('input[name="branchRadiobtn"]:checked').value;
     
 
     // Retrieve the token from localStorage
     const token = localStorage.getItem('token');
 
-    fetch(`/api/getRooms?room_type=${roomType}`, {
+    fetch(`/api/getRooms?branch=${branch}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -98,28 +185,89 @@ function fetchRooms() {
     .then(data => {
         // Clear the existing table rows
         roomTableBody.innerHTML = '';
-    
-        // Add new rows based on the fetched data
-        data.rooms.forEach(room => {
-            const row = `
-                <tr>
-                    <!-- Populate your resident data here -->
-                    <td>${room.name}</td>
-                    <td>${room.type}</td>
-                    <td>${room.category}</td>
-                    <td>${room.slot}</td>
-                    <td>${room.totalBeds}</td>
-                    <td>${room.status}</td>
-                    <td>
-                        <button class="btn btn-sm btn-success" onclick="checkRoom(${room.id})">Check</button>
-                        <button class="btn btn-sm btn-warning" onclick="updateRoom(${room.id})">Update</button>
-                        <button class="btn btn-sm btn-danger" onclick="confirmDelete(${room.id})">Delete</button>
-                    </td>
+        roomTable.innerHTML = '';
+        if(branch=="Dormitory"){
+            const thead =  `
+            <tr class="text-dark">
+                <th scope="col">Name</th>
+                <th scope="col">Type</th>
+                <th scope="col">Category</th>
+                <th scope="col">Number of beds</th>
+                <th scope="col">Occupied</th>
+                <th scope="col">Status</th>
+                <th scope="col">Action</th>
+            </tr>
+            `;
+        roomTable.innerHTML += thead;
+
+        }else{
+            const thead =  `
+                <tr class="text-dark">
+                    <th scope="col">Name</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Floor Number</th>
+                    <th scope="col">Bed Type</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Pax</th>
+                    <th scope="col">Rating</th>
+                    <th scope="col">Status</th>
 
                 </tr>
-            `;
-            roomTableBody.innerHTML += row;
-        });
+                `;
+        roomTable.innerHTML += thead;
+
+        }
+        
+
+        // Add new rows based on the fetched 
+        if (branch=="Dormitory"){
+            data.rooms.forEach(room => {
+                const row = `
+                    <tr>
+                        <!-- Populate your resident data here -->
+                        <td>${room.name}</td>
+                        <td>${room.type}</td>
+                        <td>${room.category}</td>
+                        <td>${room.totalBeds}</td>
+                        <td>${room.occupiedBeds}</td>
+
+                        <td>${room.status}</td>
+                        <td>
+                            <button class="btn btn-sm btn-success" onclick="checkRoom(${room.id})">Check</button>
+                            <button class="btn btn-sm btn-warning" onclick="updateRoom(${room.id})">Update</button>
+                            <button class="btn btn-sm btn-danger" onclick="confirmDelete(${room.id})">Delete</button>
+                        </td>
+    
+                    </tr>
+                `;
+                roomTableBody.innerHTML += row;
+            });
+        }else{
+            data.rooms.forEach(room => {
+                const row = `
+                    <tr>
+                        <!-- Populate your resident data here -->
+                        <td>${room.name}</td>
+                        <td>${room.description}</td>
+                        <td>${room.floorNum}</td>
+                        <td>${room.bedtype}</td>
+                        <td>${room.pax}</td>
+                        <td>${room.price}</td>
+                        <td>${room.rating}</td>
+
+                        <td>${room.status}</td>
+                        <td>
+                            <button class="btn btn-sm btn-success" onclick="checkRoom(${room.id})">Check</button>
+                            <button class="btn btn-sm btn-warning" onclick="updateRoom(${room.id})">Update</button>
+                            <button class="btn btn-sm btn-danger" onclick="confirmDelete(${room.id})">Delete</button>
+                        </td>
+    
+                    </tr>
+                `;
+                roomTableBody.innerHTML += row;
+            });
+        }
+       
     });
 }
 
@@ -130,12 +278,15 @@ updateRoomForm.addEventListener('submit', function (event) {
     const updateName = document.getElementById('updateName');
     const updateType = document.getElementById('updateType');
     const updateCategory = document.getElementById('updateCategory');
+    const updateStatus = document.getElementById('updateStatus');
+
     const roomId = updateRoomForm.dataset.roomId; // Add a data attribute to store room ID
 
     const updatedFormData = {
         name: updateName.value,
         type: updateType.value,
         category: updateCategory.value,
+        status: updateStatus.value
     };
 
     const token = localStorage.getItem('token');
@@ -159,6 +310,7 @@ updateRoomForm.addEventListener('submit', function (event) {
         updateName.value = '';
         updateType.value = '';
         updateCategory.value = '';
+        updateStatus,value = '';
       
         fetchRooms(); 
 
