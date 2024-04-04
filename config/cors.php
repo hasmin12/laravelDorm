@@ -20,7 +20,7 @@ return [
     'allowed_methods' => ['*'],
 
     // 'allowed_origins' => ['*'],
-    'allowed_origins' => ['https://dormxtend-dormxtend.bdsahf.easypanel.host/'],
+    'allowed_origins' => ['https://dormxtend.online/'],
 
     'allowed_origins_patterns' => [],
 
