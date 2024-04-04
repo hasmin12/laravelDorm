@@ -50,7 +50,6 @@ return new class extends Migration
 
             $table->text('status')->nullable();
             $table->text('specialization')->nullable();
-            $table->text('becomeResident');
 
             $table->softDeletes();
             $table->timestamps();

@@ -53,7 +53,6 @@ class User extends Authenticatable
         'bed',
         'status',
         'specialization',
-        'becomeResident'
     ];
 
     /**
