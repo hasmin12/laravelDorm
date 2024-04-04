@@ -20,7 +20,7 @@ return new class extends Migration
             $table->text('notification_type');
             $table->unsignedBigInteger('target_id')->nullable();
             $table->text('message');
-            $table->text('status')->default('Unread');
+            $table->string('status')->default('Unread');
             $table->softDeletes();
             $table->timestamps();
         });
