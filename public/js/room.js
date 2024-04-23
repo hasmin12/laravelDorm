@@ -1,18 +1,21 @@
 document.addEventListener('DOMContentLoaded', function () {
+    console.log("DOMContentLoaded event fired");
     
     const roomTypeButtons = document.querySelectorAll('input[name="roomRadiobtn"]');
-   
-
+    const roomBranchButtons = document.querySelectorAll('input[name="branchRadiobtn"]');
+    
+    console.log(roomTypeButtons.length + " roomTypeButtons found");
+    console.log(roomBranchButtons.length + " roomBranchButtons found");
     
     // Initial rooms
     fetchRooms();
-    
 
     // Event listeners
     roomTypeButtons.forEach(button => button.addEventListener('change', fetchRooms));
+    roomBranchButtons.forEach(button => button.addEventListener('change', fetchRooms));
+});
 
-
-    const createRoomForm = document.getElementById('createRoomForm');
+const createRoomForm = document.getElementById('createRoomForm');
     createRoomForm.addEventListener('submit', function (event) {
         event.preventDefault();
 
@@ -75,17 +78,19 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         });
     });
-});
 const roomTableBody = document.querySelector('#roomsTableBody');
 
 function fetchRooms() {
-    const roomType = document.querySelector('input[name="roomRadiobtn"]:checked').value;
+    const branch = document.querySelector('input[name="branchRadiobtn"]:checked').value;
     
-
     // Retrieve the token from localStorage
     const token = localStorage.getItem('token');
-
-    fetch(`/api/getRooms?room_type=${roomType}`, {
+    console.log(branch); // Make sure this line is logging the branch value
+    if (!branch || branch=="") {
+        console.error('No branch radio button is checked.');
+        return;
+    }
+    fetch(`/api/getRooms?branch=${branch}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -111,15 +116,18 @@ function fetchRooms() {
                     <td>${room.totalBeds}</td>
                     <td>${room.status}</td>
                     <td>
-                        <button class="btn btn-sm btn-success" onclick="checkRoom(${room.id})">Check</button>
+                        <button class="btn btn-sm btn-success" onclick="checkRoom(${room.id})">Check Beds</button>
                         <button class="btn btn-sm btn-warning" onclick="updateRoom(${room.id})">Update</button>
                         <button class="btn btn-sm btn-danger" onclick="confirmDelete(${room.id})">Delete</button>
                     </td>
-
                 </tr>
             `;
             roomTableBody.innerHTML += row;
         });
+    })
+    .catch(error => {
+        console.error('Error fetching rooms:', error);
+        // Handle error
     });
 }
 
@@ -130,12 +138,16 @@ updateRoomForm.addEventListener('submit', function (event) {
     const updateName = document.getElementById('updateName');
     const updateType = document.getElementById('updateType');
     const updateCategory = document.getElementById('updateCategory');
+    const updateStatus = document.getElementById('updateStatus');
+
     const roomId = updateRoomForm.dataset.roomId; // Add a data attribute to store room ID
 
     const updatedFormData = {
         name: updateName.value,
         type: updateType.value,
         category: updateCategory.value,
+        status: updateStatus.value,
+
     };
 
     const token = localStorage.getItem('token');
@@ -217,6 +229,7 @@ function updateRoom(roomId) {
         });
     });
 }
+
 
 
 function checkRoom(roomId) {

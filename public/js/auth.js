@@ -14,7 +14,7 @@ $(document).ready(function() {
             dataType: "text",
             success: function (response) {
                 console.log(response);
-                window.location.href = response;
+                // window.location.href = response;
             },
             error: function (error) {
                 console.log(error);
@@ -43,7 +43,7 @@ $(document).ready(function() {
             success: function (response) {
                 if (response.success) {
                     localStorage.setItem('token', response.token);
-                    localStorage.setItem('user', response.user);
+                    localStorage.setItem('email', response.email);
 
                     // localStorage.setItem('authname', response.user.name);
 

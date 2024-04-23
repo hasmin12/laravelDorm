@@ -19,11 +19,9 @@
                 <h3 class="mb-0">Rooms</h3>
                 <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createRoomModal">Create Room</button>
             </div>
-            {{-- <form class="d-none d-md-flex ms-4">
-                <input class="form-control border-0" type="search" placeholder="Search" id="searchInput">
-            </form> --}}
-            {{-- <br> --}}
-            <div class="btn-group" role="group">
+            <div class="d-flex align-items-center justify-content-between mb-2">
+         
+            {{-- <div class="btn-group" role="group">
                 <input type="radio" class="btn-check" name="roomRadiobtn" id="btnradio1" autocomplete="off" checked value="">
                 <label class="btn btn-outline-primary" for="btnradio1">All</label>
 
@@ -36,7 +34,18 @@
                 <input type="radio" class="btn-check" name="roomRadiobtn" id="btnradio4" autocomplete="off" value="Staff">
                 <label class="btn btn-outline-primary" for="btnradio4">Staffs</label>
 
+            </div> --}}
+
+            <div class="btn-group" role="group">
+                <input type="radio" class="btn-check" name="branchRadiobtn" id="branchBtnradio1" autocomplete="off" checked  value="Dormitory">
+                <label class="btn btn-outline-primary" for="branchBtnradio1">Dormitory</label>
+
+                <input type="radio" class="btn-check" name="branchRadiobtn" id="branchBtnradio2" autocomplete="off" value="Hostel">
+                <label class="btn btn-outline-primary" for="branchBtnradio2">Hostel</label>
+
             </div>
+        </div>
+
         </div>
     
     <!-- Recent Sales Start -->
@@ -44,8 +53,8 @@
         <div class="bg-light text-center rounded p-4">
             <div class="table-responsive">
                 <table class="table text-start align-middle table-bordered table-hover mb-0">
-                    <thead>
-                        <tr class="text-dark">
+                    <thead id="roomTable">
+                        {{-- <tr class="text-dark">
                             <th scope="col">Name</th>
                             <th scope="col">Type</th>
                             <th scope="col">Category</th>
@@ -53,7 +62,7 @@
                             <th scope="col">Available</th>
                             <th scope="col">Status</th>
                             <th scope="col">Action</th>
-                        </tr>
+                        </tr> --}}
                     </thead>
                     <tbody id="roomsTableBody">
                         
@@ -78,43 +87,18 @@
                     <!-- Add your form fields for creating a room -->
                     <form id="createRoomForm">
                         <div class="mb-3">
-                            <label for="roomName" class="form-label">Name</label>
-                            <input type="text" class="form-control" id="roomName" autocomplete="off" required>
-                        </div>
-    
-                        <div class="mb-3">
-                            <label for="roomType" class="form-label">Type</label>
-                            <select class="form-select" id="roomType" required>
-                                <option value="" selected hidden></option>
-                                <option value="Student">Student</option>
-                                <option value="Faculty">Faculty</option>
-                                <option value="Staff">Staff</option>
-                            </select>
-                        </div>
-    
-                        <div class="mb-3">
-                            <label for="roomCategory" class="form-label">Category</label>
-                            <select class="form-select" id="roomCategory" required>
-                                <option value="" selected hidden></option>
-                                <option value="Male">Male</option>
-                                <option value="Female">Female</option>
-                                <!-- Add other category options as needed -->
-                            </select>
-                        </div>
-    
-                        <div class="mb-3">
-                            <label for="numBeds" class="form-label">Number of Beds</label>
-                            <select class="form-select" id="numBeds" required>
-                                <option value="" selected hidden></option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
 
+                        <label for="createbranchDropdown" class="form-label">Branch</label>
+                            <select class="form-select" id="createbranchDropdown" required>
+                                <option value="" selected hidden></option>
+                                <option value="Dormitory">Dormitory</option>
+                                <option value="Hostel">Hostel</option>
                             </select>
                         </div>
-    
-                        <button type="submit" class="btn btn-primary">Create Room</button>
+                        <div id="createContent">
+
+                        </div>
+                    <button type="submit" class="btn btn-primary">Create Room</button>
                     </form>
                 </div>
             </div>
@@ -154,6 +138,15 @@
                                 <option value="Female">Female</option>
                             </select>
                         </div>
+
+                        <div class="mb-3">
+                            <label for="updateStatus" class="form-label">Status</label>
+                            <select class="form-select" id="updateStatus" required>
+                                <option value="" selected hidden></option>
+                                <option value="Active">Active</option>
+                                <option value="Inactive">Inactive</option>
+                            </select>
+                        </div>
  
                        
     
@@ -163,10 +156,11 @@
             </div>
         </div>
     </div>
-    
-    
 
-    @include('layouts.footer')
+  
+    
+{{-- 
+    @include('layouts.footer') --}}
 
 </div>
 <!-- Content End -->

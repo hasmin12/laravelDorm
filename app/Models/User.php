@@ -52,7 +52,7 @@ class User extends Authenticatable
         'room',
         'bed',
         'status',
-        'specialization'
+        'specialization',
     ];
 
     /**

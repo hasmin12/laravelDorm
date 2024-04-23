@@ -40,10 +40,11 @@ function fetchResidents() {
         },
         credentials: 'include',
     })
+   
     .then(response => response.json())
     .then(data => {
         console.log(data);
-        const residentDropdown = document.getElementById('resident_id');
+        const residentDropdown = document.getElementById('residentDropdown');
 
         // Populate the dropdown with residents
         data.residents.forEach(resident => {
@@ -51,6 +52,7 @@ function fetchResidents() {
             option.value = resident.id;
             option.text = resident.name;
             residentDropdown.add(option);
+            console.log(resident)
         });
     })
     .catch(error => console.error('Error fetching residents:', error));

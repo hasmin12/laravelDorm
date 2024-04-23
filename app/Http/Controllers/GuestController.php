@@ -248,7 +248,7 @@ class GuestController extends Controller
 
     public function getResidents()
     {
-        $residents = User::where('branch', "Dormitory")->where('role', "Resident")->get();
+        $residents = User::where('branch', "Dormitory")->where('role', "Resident")->where('status', "Active")->get();
         Log::info($residents);
         return response()->json(['residents' => $residents]);
     }

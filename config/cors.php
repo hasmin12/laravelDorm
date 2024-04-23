@@ -19,8 +19,8 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['*'],
-    // 'allowed_origins' => ['https://laraveldorm-production.up.railway.app'],
+    // 'allowed_origins' => ['*'],
+    'allowed_origins' => ['https://dormxtend.online/'],
 
     'allowed_origins_patterns' => [],
 

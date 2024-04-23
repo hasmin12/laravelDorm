@@ -22,6 +22,7 @@ class Dormitorybed extends Model
     protected $fillable = [
         'user_id',
         'name',
+        'type',
         'room_id',
         'status',
         'user_image'

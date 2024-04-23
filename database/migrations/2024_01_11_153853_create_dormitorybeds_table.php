@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('dormitorybeds', function (Blueprint $table) {
             $table->id();
             $table->text('name');
+            $table->text('type');
             $table->unsignedBigInteger('room_id');
             $table->foreign('room_id')->references('id')->on('dormitoryrooms')->onDelete('cascade');
             $table->unsignedBigInteger('user_id')->nullable();

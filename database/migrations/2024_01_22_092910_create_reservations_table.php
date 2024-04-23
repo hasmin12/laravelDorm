@@ -28,7 +28,6 @@ return new class extends Migration
             $table->string('password');
             $table->text('roomName')->nullable();
             $table->string('role')->default('Resident');
-            $table->text('branch')->default('Hostel');
             $table->text('img_path')->nullable();
             $table->rememberToken();
             $table->text('address');

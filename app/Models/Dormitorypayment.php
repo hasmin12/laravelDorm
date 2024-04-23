@@ -24,14 +24,17 @@ class Dormitorypayment extends Model
     ];
 
     public static function getThisMonthsIncome()
-    {
-        return self::whereMonth('paidDate', Carbon::now()->month)
-            ->whereYear('paidDate', Carbon::now()->year)
-            ->sum('totalAmount');
-    }
+{
+    return self::whereMonth('created_at', Carbon::now()->month)
+               ->whereYear('created_at', Carbon::now()->year)
+               ->where('status', 'PAID') // Assuming you want to count only PAID payments
+               ->sum('totalAmount');
+}
+
+
 
     public static function getTotalIncome()
     {
-        return self::sum('totalAmount');
+        return self::where('status', 'PAID')->sum('totalAmount');
     }
 }

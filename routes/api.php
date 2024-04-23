@@ -34,6 +34,13 @@ Route::post('/getHostelrooms', 'GuestController@getHostelrooms');
 Route::get('/getReviews/{id}', 'GuestController@getReviews');
 
 Route::group(['middleware' => ['auth:sanctum']], function(){
+    
+    Route::get('/getResidentDataByType', 'ChartController@getResidentDataByType');
+    Route::get('/countResidentsByType', 'ChartController@countResidentsByType');
+    Route::get('/getDormPaymentChartData', 'ChartController@getDormPaymentChartData');
+
+
+    
     Route::get('/getDashboardData', 'AdminController@getDashboardData');
     Route::get('/getResidents', 'AdminController@getResidents');
     Route::get('/getResident/{id}', 'AdminController@getResident');
@@ -62,6 +69,8 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     
     Route::get('/notifyResidents', 'AdminController@notifyResidents');
     Route::get('/getBeds/{id}', 'AdminController@getBeds');
+    Route::get('/fetchBed/{id}', 'AdminController@fetchBed');
+    Route::post('updateBed/{id}', 'AdminController@updateBed');
     Route::get('/getViolations', 'AdminController@getViolations');
     Route::post('/createViolation', 'AdminController@createViolation');
 

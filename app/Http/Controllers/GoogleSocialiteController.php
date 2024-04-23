@@ -1,13 +1,10 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use App\Http\Controllers\Controller;
 use Laravel\Socialite\Facades\Socialite;
 use Auth;
 use Exception;
 use App\Models\User;
-
 class GoogleSocialiteController extends Controller
 {
     /**
@@ -42,14 +39,14 @@ class GoogleSocialiteController extends Controller
             $redirectUrl = '/resident/announcements';
 
             $token = $findUser->createToken('remember_token')->plainTextToken;
-            return redirect('/resident/announcements')->with([
+            return redirect('/resident/announcement')->with([
+            // return redirect('/resident/announcements')->with([
                 'success' => true,
                 'token' => $token,
                 'Type' => 'Bearer',
                 'user' => $findUser,
                 'name' => $findUser->name,
             ]);
-
             
         } catch (Exception $e) {
             // Handle exceptions

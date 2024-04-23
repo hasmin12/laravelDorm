@@ -18,15 +18,15 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
     <!-- Libraries Stylesheet -->
-    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="lib/owlcarousel/secure_assets/owl.carousel.min.css" rel="stylesheet">
     <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
     <link href="lib/lightbox/css/lightbox.min.css" rel="stylesheet">
 
     <!-- Customized Bootstrap Stylesheet -->
 
-    <link href="{{ asset('css1/bootstrap.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('css1/style.css') }}" rel="stylesheet">
-    {{-- <link href="{{ asset('css/style1.css') }}" rel="stylesheet"> --}}
+    <link href="{{ secure_asset('/css1/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ secure_asset('/css1/style.css') }}" rel="stylesheet">
+    {{-- <link href="{{ secure_asset('css/style1.css') }}" rel="stylesheet"> --}}
 
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -140,7 +140,7 @@
 
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                        {{-- <img class="rounded-circle me-lg-2" src="{{asset('img/user.jpg')}}" alt="" style="width: 40px; height: 40px;"> --}}
+                        {{-- <img class="rounded-circle me-lg-2" src="{{secure_asset('img/user.jpg')}}" alt="" style="width: 40px; height: 40px;"> --}}
                         <i class="fas fa-user"></i>
                         <span class="d-none d-lg-inline-flex">{{ auth()->user()->name }}</span>
                     </a>
@@ -364,5 +364,5 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     </div>
 </footer>
 
-<script src="{{ asset('js/auth.js') }}"></script>
+<script src="{{ secure_asset('js/auth.js') }}"></script>
 

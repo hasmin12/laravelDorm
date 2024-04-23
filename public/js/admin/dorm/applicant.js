@@ -78,6 +78,10 @@ document.addEventListener('DOMContentLoaded', function () {
             bedName.classList.add('card-title');
             bedName.textContent = `Bed ${bed.name}`;
 
+            const bedType = document.createElement('h5');
+            bedType.classList.add('card-title');
+            bedType.textContent = `Bed ${bed.name}`;
+
             const bedStatus = document.createElement('h6');
             bedStatus.classList.add('card-title');
             bedStatus.textContent = `${bed.status}`;
@@ -90,6 +94,7 @@ document.addEventListener('DOMContentLoaded', function () {
             });
     
             cardBody.appendChild(bedName);
+            cardBody.appendChild(bedType);
             cardBody.appendChild(bedStatus);
             cardBody.appendChild(assignButton);
     

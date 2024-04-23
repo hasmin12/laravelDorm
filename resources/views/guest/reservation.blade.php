@@ -1,8 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.base')
+@section('content')
+
 <head>
     <meta charset="utf-8">
-    <title>LOGIN - DormXtend</title>
+    <title>Hostel Reserve - DormXtend</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="Free HTML Templates" name="keywords">
     <meta content="Free HTML Templates" name="description">
@@ -28,49 +29,61 @@
 
     <!-- Template Stylesheet -->
     <link href="css1/style.css" rel="stylesheet">
-</head>
 
 
-<body>
-    <!-- Navbar Start -->
-    <div class="container-fluid sticky-top bg-dark bg-light-radial shadow-sm px-5 pe-lg-0">
-        <nav class="navbar navbar-expand-lg bg-dark bg-light-radial navbar-dark py-3 py-lg-0">
-            <a href="index.html" class="navbar-brand">
-                <h1 class="m-0 display-4 text-uppercase text-white">DORMXTEND</h1>
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarCollapse">
-                {{-- <div class="navbar-nav ms-auto py-0">
-                    <a href="index.html" class="nav-item nav-link active">Home</a>
-                    <a href="about.html" class="nav-item nav-link">About</a>
-                    <a href="service.html" class="nav-item nav-link">Service</a>
-                    <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
-                        <div class="dropdown-menu m-0">
-                            <a href="project.html" class="dropdown-item">Our Project</a>
-                            <a href="team.html" class="dropdown-item">The Team</a>
-                            <a href="testimonial.html" class="dropdown-item">Testimonial</a>
-                            <a href="blog.html" class="dropdown-item">Blog Grid</a>
-                            <a href="detail.html" class="dropdown-item">Blog Detail</a>
-                        </div>
-                    </div>
-                    <a href="contact.html" class="nav-item nav-link">Contact</a>
-                    <a href="" class="nav-item nav-link bg-primary text-white px-5 ms-3 d-none d-lg-block">Get A Quote <i class="bi bi-arrow-right"></i></a>
-                </div> --}}
+   <!-- Topbar Start -->
+   <div class="container-fluid px-5 d-none d-lg-block">
+    <div class="row gx-5">
+        <div class="col-lg-4 text-center py-3">
+            <div class="d-inline-flex align-items-center">
+                <i class="bi bi-geo-alt fs-1 text-primary me-3"></i>
+                <div class="text-start">
+                    <h6 class="text-uppercase fw-bold">Location</h6>
+                    <span>Km 14. East Service Road, Western Bicutan, Taguig, Philippines</span>
+                </div>
             </div>
-        </nav>
-    </div>
-    <!-- Navbar End -->
-<div class="container-xxl position-relative bg-white d-flex p-0">
-    <!-- Spinner Start -->
-    <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
-        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
-            <span class="sr-only">Loading...</span>
+        </div>
+        <div class="col-lg-4 text-center border-start border-end py-3">
+            <div class="d-inline-flex align-items-center">
+                <i class="bi bi-envelope-open fs-1 text-primary me-3"></i>
+                <div class="text-start">
+                    <h6 class="text-uppercase fw-bold">Email Us</h6>
+                    <span>dormxtend@tup.edu.ph</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 text-center py-3">
+            <div class="d-inline-flex align-items-center">
+                <i class="bi bi-phone-vibrate fs-1 text-primary me-3"></i>
+                <div class="text-start">
+                    <h6 class="text-uppercase fw-bold">Call Us</h6>
+                    <span>+012 345 6789</span>
+                </div>
+            </div>
         </div>
     </div>
-    <!-- Spinner End -->
+</div>
+
+<!-- Navbar Start -->
+<div class="container-fluid sticky-top bg-dark bg-light-radial shadow-sm px-5 pe-lg-0">
+    <nav class="navbar navbar-expand-lg bg-dark bg-light-radial navbar-dark py-3 py-lg-0">
+        <a href="index.html" class="navbar-brand">
+            <h1 class="m-0 display-4 text-uppercase text-white">DORMXTEND</h1>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav ms-auto py-0">
+
+            </div>
+        </div>
+    </nav>
+</div>
+<!-- Navbar End -->
+
+<div class="container-xxl position-relative bg-white d-flex p-0">
+  
     <div class="bg-light rounded p-4">
 
         <div class="d-flex align-items-center justify-content-between mb-2">
@@ -233,22 +246,5 @@
 
 <script src="{{ asset('js/guest/reservation.js') }}"></script>
 
-</body>
-  <!-- JavaScript Libraries -->
-  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="lib/easing/easing.min.js"></script>
-  <script src="lib/waypoints/waypoints.min.js"></script>
-  <script src="lib/owlcarousel/owl.carousel.min.js"></script>
-  <script src="lib/tempusdominus/js/moment.min.js"></script>
-  <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
-  <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
-  <script src="lib/isotope/isotope.pkgd.min.js"></script>
-  <script src="lib/lightbox/js/lightbox.min.js"></script>
-
-  <!-- Template Javascript -->
-  <script src="js/main.js"></script>
-
-
-</html>
-
+@include('layouts.footer')
+@endsection

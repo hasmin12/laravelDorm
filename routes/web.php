@@ -25,7 +25,7 @@ use App\Http\Controllers\GoogleSocialiteController;
 
     Route::get('/hostelrooms', function () {
         return view('guest.reservation');
-    });
+    })->name('hostelrooms');
 
     Route::get('/dormlogs', function () {
         return view('guest.dormlogs');
@@ -38,6 +38,11 @@ use App\Http\Controllers\GoogleSocialiteController;
     Route::get('/register', function () {
         return view('guest.register');
     })->name('register');
+
+    Route::get('/example', function () {
+        return view('guest.example');
+    })->name('example');
+    
     // Route::post('signin', 'AuthController@signin');
     Route::post('signin', 'AuthController@signin');
 
@@ -52,7 +57,7 @@ use App\Http\Controllers\GoogleSocialiteController;
 
     Route::get('/visitor', function () {
         return view('guest.visitor');
-    });
+    })->name('visitor');
 
 Route::middleware(['adminbranch:Dormitory'])->group(function () {
 
