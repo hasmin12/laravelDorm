@@ -17,10 +17,13 @@ use App\Http\Controllers\GoogleSocialiteController;
 
     Route::get('auth/google', [GoogleSocialiteController::class, 'redirectToGoogle']);
     Route::get('callback/google', [GoogleSocialiteController::class, 'handleCallback']);
+    Route::get('callback/googleMobile', [GoogleSocialiteController::class, 'handleCallbackMobile']);
+
+    
     
     Route::get('/', function () {
         return view('welcome');
-    });
+    })->name('welcome');
 
 
     Route::get('/hostelrooms', function () {
