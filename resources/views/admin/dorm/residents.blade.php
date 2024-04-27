@@ -73,9 +73,11 @@
     </div>
 </div>
 
-
-
-
+<style>
+    thead {
+        background-color: salmon;
+    }
+</style>
 
         <!-- Table View Start -->
         <div class="container-fluid pt-10 px-10" id="residentTableView">
@@ -83,7 +85,7 @@
                 <div class="table-responsive">
                     <table class="table text-start align-middle table-bordered table-hover mb-0" class="table table-dark">
                         <thead>
-                            <tr>
+                            <tr class="text-dark">
                                 {{-- <th scope="col"><input class="form-check-input" type="checkbox"></th> --}}
                                 <th scope="col">TUPT Number</th>
                                 <th scope="col">Name</th>

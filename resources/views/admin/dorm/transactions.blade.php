@@ -48,13 +48,19 @@
         <select id="MY_dropdown" class="form-control">
             <option value="All">All</option>
         </select>
-        
+
+        <style>
+            thead {
+                background-color: salmon;
+            }
+        </style>
+    
         <div class="container-fluid pt-10 px-10" id="residentTableView">
+            <div class="col-sm-12 col-xl-18">
             <div class="bg-light text-center rounded p-4">
                 <div class="table-responsive">
                     <table id="payments-table" border="1" class="table text-start align-middle table-bordered table-hover mb-0" class="table table-dark">
-                        <thead>
-                            <tr>
+                        <thead class="text-dark">
                                 {{-- <th scope="col"><input class="form-check-input" type="checkbox"></th> --}}
                                 <th scope="col">View Receipt</th>
                                 <th scope="col">Resident Name</th>
@@ -88,6 +94,6 @@
 <!-- ... (your existing HTML code) ... -->
 
 
-@include('layouts.footer')
+{{-- @include('layouts.footer') --}}
 
 @endsection

@@ -211,7 +211,7 @@ function fetchRooms() {
                     <th scope="col">Pax</th>
                     <th scope="col">Rating</th>
                     <th scope="col">Status</th>
-
+                    <th scope="col">Action</th>
                 </tr>
                 `;
         roomTable.innerHTML += thead;
@@ -223,7 +223,7 @@ function fetchRooms() {
         if (branch=="Dormitory"){
             data.rooms.forEach(room => {
                 const row = `
-                    <tr>
+                    <tr class="text-dark">
                         <!-- Populate your resident data here -->
                         <td>${room.name}</td>
                         <td>${room.type}</td>
@@ -245,7 +245,7 @@ function fetchRooms() {
         }else{
             data.rooms.forEach(room => {
                 const row = `
-                    <tr>
+                    <tr class="text-dark">
                         <!-- Populate your resident data here -->
                         <td>${room.name}</td>
                         <td>${room.description}</td>

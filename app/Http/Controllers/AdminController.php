@@ -1243,16 +1243,49 @@ public function getResident($id)
 
     public function getLogs(Request $request)
     {
-        $logs = Residentlog::where('user_id', $request->input('residentId'))->where('name', "Leave")->get();
+        $logs = Residentlog::where('user_id', $request->input('residentId'))->where('purpose', "Leave")->get();
         return response()->json($logs);
     }
 
     public function getSleepLogs(Request $request)
     {
-        $sleeplogs = Residentlog::where('user_id', $request->input('residentId'))->where('name', "Sleep")->get();
+        $sleeplogs = Residentlog::where('user_id', $request->input('residentId'))->where('purpose', "Sleep")->get();
         return response()->json($sleeplogs);
     }
 
+    public function getResidentLogs(Request $request)
+{
+    $type = $request->input('type');
+    
+    try {
+        // Fetch logs based on type (Leave/Sleep)
+        $logs = ResidentLog::where('purpose', $type)->with('user')->get();
 
+        // Prepare logs data for response
+        $formattedLogs = [];
+        foreach ($logs as $log) {
+            $formattedLogs[] = [
+                'student_name' => $log->user->name, // Get user's name
+                'leave_date' => $log->leave_date,
+                'expected_return' => $log->expectedReturn,
+                'return_date' => $log->return_date,
+                'purpose' => $log->purpose,
+                'gatepass' => $log->gatepass,
+                'status' => $log->status,
+                'date_log' => $log->dateLog,
+            ];
+        }
+
+        return response()->json([
+            'success' => true,
+            'logs' => $formattedLogs
+        ]);
+    } catch (\Exception $e) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Error fetching logs: ' . $e->getMessage()
+        ], 500);
+    }
+}
 
 }

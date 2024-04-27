@@ -59,7 +59,7 @@
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="residentDetailsModalLabel">Resident Details</h5>
+                <h5 class="modal-title" id="residentDetailsModalLabel">Applicaent Details</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body" id="residentDetailsModalBody">
@@ -73,17 +73,19 @@
     </div>
 </div>
 
-
-
-
-
+<style>
+    thead {
+        background-color: salmon;
+    }
+</style>
         <!-- Table View Start -->
-        <div class="container-fluid pt-10 px-10" id="residentTableView">
-            <div class="bg-light text-center rounded p-4">
+        <div class="container-fluid pt-4 px-4" id="residentTableView">
+            <div class="col-sm-12 col-xl-18">
+                <div class="bg-light rounded h-100 p-4">
                 <div class="table-responsive">
                     <table class="table text-start align-middle table-bordered table-hover mb-0" class="table table-dark">
                         <thead>
-                            <tr>
+                            <tr class="text-dark">
                                 {{-- <th scope="col"><input class="form-check-input" type="checkbox"></th> --}}
                                 <th scope="col">TUPT Number</th>
                                 <th scope="col">Name</th>
@@ -221,6 +223,6 @@
 
 
 
-@include('layouts.footer')
+
 
 @endsection

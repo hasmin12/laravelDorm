@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             const bedType = document.createElement('h5');
             bedType.classList.add('card-title');
-            bedType.textContent = `Bed ${bed.name}`;
+            bedType.textContent = `Bed ${bed.type}`;
 
             const bedStatus = document.createElement('h6');
             bedStatus.classList.add('card-title');
@@ -274,7 +274,7 @@ function fetchResidents(viewType = 'tiles') {
 
             // Table row HTML structure
             const tableRow = `
-                <tr>
+                <tr class="text-dark">
                     <td>${resident.Tuptnum}</td>
                     <td>${resident.name}</td>
                     <td>${resident.type}</td>
@@ -421,32 +421,6 @@ function showResidentDetails(residentId) {
             <label class="btn btn-outline-primary" for="btnradio4">Sleep</label>
         </div>
     </div>
-        <div class="container-fluid">
-            <div class="card border-0">
-                <div class="card-body">
-                    <table class="table table-dark w-100 custom-table">
-                        <thead>
-                            <tr>
-                                <th scope="col">Receipt</th>
-                                <th scope="col">Total Amount</th>
-                                <th scope="col">Status</th>
-                                <th scope="col">Paid Date</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            ${resident.payments.map(payment => `
-                                <tr>
-                                    <td>${payment.receipt}</td>
-                                    <td>${payment.totalAmount}</td>
-                                    <td>${payment.status}</td>
-                                    <td>${payment.paidDate ? new Date(payment.paidDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : '-'}</td>
-                                </tr>
-                            `).join('')}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
         `;
 
         // Set the HTML content of the modal body

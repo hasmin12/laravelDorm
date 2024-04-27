@@ -50,12 +50,12 @@ document.addEventListener('DOMContentLoaded', function () {
         payments.forEach(payment => {
             const row = document.createElement('tr');
             row.innerHTML = `
-                <td>${payment.img_path}</td>
-                <td>${payment.user_id}</td>
-                <td>${payment.receipt}</td>
-                <td>${payment.totalAmount}</td>
-                <td>${payment.status}</td>
-                <td>${payment.payment_month}</td>
+                <td class="text-dark">${payment.img_path}</td>
+                <td class="text-dark">${payment.user_id}</td>
+                <td class="text-dark">${payment.receipt}</td>
+                <td class="text-dark">${payment.totalAmount}</td>
+                <td class="text-dark">${payment.status}</td>
+                <td class="text-dark">${payment.payment_month}</td>
             `;
             tableBody.appendChild(row);
         });

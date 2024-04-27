@@ -126,6 +126,10 @@ Route::middleware(['adminbranch:Dormitory'])->group(function () {
         Route::get('/maintenance', function () {
             return view('admin.dorm.maintenance');
         });
+
+        Route::get('/logs', function () {
+            return view('admin.dorm.logs');
+        });
     });
 });
     

@@ -213,6 +213,7 @@ class GuestController extends Controller
             'cor' => $corPath,
             'validID' => $validIdPath,
             'vaccineCard' => $vaccineCardPath,
+            'status' => 'Applicant',
         ]);
 
         $guardian = Guardian::create([

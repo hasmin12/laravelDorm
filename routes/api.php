@@ -44,9 +44,12 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::get('/getDashboardData', 'AdminController@getDashboardData');
     Route::get('/getResidents', 'AdminController@getResidents');
     Route::get('/getResident/{id}', 'AdminController@getResident');
+    Route::get('/getLogs/{id}', 'AdminController@getLogs');
+    Route::get('/getSleepLogs/{id}', 'AdminController@getSleepLogs');
+    Route::get('/admin/logs', 'AdminController@getResidentLogs');
     Route::get('/getApplicants', 'AdminController@getApplicants');
     Route::get('/getDormPayments', 'AdminController@getDormPayments');
-
+    
 
     Route::get('/getRegisteredusers', 'AdminController@getRegisteredusers');
     Route::post('/addRegistereduser', 'AdminController@addRegistereduser');

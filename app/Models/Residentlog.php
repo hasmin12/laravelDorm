@@ -18,4 +18,9 @@ class Residentlog extends Model
         'expectedReturn',
         'dateLog'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

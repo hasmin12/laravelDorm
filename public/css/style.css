@@ -37,6 +37,9 @@
     opacity: 1;
 }
 
+.status-icon {
+    font-size: 1.8em; /* Adjust the font size as needed */
+}
 
 /*** Button ***/
 .btn {

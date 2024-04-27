@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 // Table row HTML structure
                 const tableRow = `
-                    <tr>
+                    <tr class="text-dark">
                         <td>${resident.Tuptnum}</td>
                         <td>${resident.name}</td>
                         <td>${resident.type}</td>
@@ -201,18 +201,17 @@ styleElement.textContent = cssRules;
 document.head.appendChild(styleElement);
 
 
-// Function to show resident details in modal
+
 function showResidentDetails(residentId) {
     const modalBody = document.getElementById('residentDetailsModalBody');
     const token = localStorage.getItem('token');
 
-    // Fetch resident details by id
     fetch(`/api/getResident/${residentId}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
-            'Authorization': `Bearer ${token}`, // Assuming you have a token variable
+            'Authorization': `Bearer ${token}`,
         },
         credentials: 'include',
     })
@@ -223,93 +222,263 @@ function showResidentDetails(residentId) {
         return response.json();
     })
     .then(data => {
-        const resident = data.resident; // Assuming the key in the response is 'resident'
-        console.log(resident)
+        const resident = data.resident;
 
         // Construct the HTML for resident details
         const residentDetailsHTML = `
-        
-        <div class="container-fluid">
-            <div class="card border-0">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <img src="${resident.img_path}" class="img-fluid mb-3 rounded" alt="Resident Image" style="max-width: 100%; height: auto;">
-                        </div>
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <strong class="fw-bold fs-5">TUPT Number:</strong>
-                                <span class="fs-5">${resident.Tuptnum}</span>
-                            </div>
-                            <div class="mb-3">
-                                <strong class="fw-bold fs-5">Type:</strong>
-                                <span class="fs-5">${resident.type}</span>
-                            </div>
-                            <div class="mb-3">
-                                <strong class="fw-bold fs-5">Sex:</strong>
-                                <span class="fs-5">${resident.sex}</span>
-                            </div>
-                            <div class="mb-3">
-                                <strong class="fw-bold fs-5">Contacts:</strong>
-                                <span class="fs-5">${resident.contacts}</span>
-                            </div>
-                            <div class="mb-3">
-                                <strong class="fw-bold fs-5">Room & Bed:</strong>
-                                <span class="fs-5">${resident.roomdetails}</span>
+            <div class="container-fluid pt-4 px-4">
+            <div class="h-100 bg-light rounded p-10">
+                <div class="row g-4">
+                    <div class="col-sm-12 col-md-4 col-xl-6">
+                        <img src="${resident.img_path}" class="img-fluid mb-2 rounded " alt="Resident Image" style="max-width: 350px; height: 250px;">
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-xl-5">
+                        
+                            <div class="resident-details">
+                                <div class="mb-3">
+                                    <strong class="fw-bold fs-5">TUPT Number:</strong>
+                                    <span class="fs-5">${resident.Tuptnum}</span>
+                                </div>
+                                <div class="mb-3">
+                                    <strong class="fw-bold fs-5">Type:</strong>
+                                    <span class="fs-5">${resident.type}</span>
+                                </div>
+                                <div class="mb-3">
+                                    <strong class="fw-bold fs-5">Sex:</strong>
+                                    <span class="fs-5">${resident.sex}</span>
+                                </div>
+                                <div class="mb-3">
+                                    <strong class="fw-bold fs-5">Contacts:</strong>
+                                    <span class="fs-5">${resident.contacts}</span>
+                                </div>
+                                <div class="mb-3">
+                                    <strong class="fw-bold fs-5">Room & Bed:</strong>
+                                    <span class="fs-5">${resident.roomdetails}</span>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row justify-content-center">
-        <div class="btn-group" role="group">
-            <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked value="All">
-            <label class="btn btn-outline-primary" for="btnradio1">Bills</label>
-
-            <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off" value="Faculty">
-            <label class="btn btn-outline-primary" for="btnradio3">Leave</label>
-
-            <input type="radio" class="btn-check" name="btnradio" id="btnradio4" autocomplete="off" value="Staff">
-            <label class="btn btn-outline-primary" for="btnradio4">Sleep</label>
-        </div>
-    </div>
-        <div class="container-fluid">
-            <div class="card border-0">
-                <div class="card-body">
-                    <table class="table table-dark w-100 custom-table">
-                        <thead>
-                            <tr>
-                                <th scope="col">Receipt</th>
-                                <th scope="col">Total Amount</th>
-                                <th scope="col">Status</th>
-                                <th scope="col">Paid Date</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            ${resident.payments.map(payment => `
-                                <tr>
-                                    <td>${payment.receipt}</td>
-                                    <td>${payment.totalAmount}</td>
-                                    <td>${payment.status}</td>
-                                    <td>${payment.paidDate ? new Date(payment.paidDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : '-'}</td>
-                                </tr>
-                            `).join('')}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+            <br>
+            <br>
+         
         `;
 
-        // Set the HTML content of the modal body
+        // Set the HTML content of the modal body for resident details
         modalBody.innerHTML = residentDetailsHTML;
 
-        // Show the modal
+        // Construct the HTML for radio buttons
+        const radioButtonsHTML = `
+            <div class="row justify-content-center">
+                <div class="btn-group" role="group">
+                    <input type="radio" class="btn-check" name="modalBtnradio" id="modalBtnradio1" autocomplete="off" checked value="Bill">
+                    <label class="btn btn-outline-primary" for="modalBtnradio1">Bills</label>
+                    
+                    <input type="radio" class="btn-check" name="modalBtnradio" id="modalBtnradio2" autocomplete="off" value="Leave">
+                    <label class="btn btn-outline-primary" for="modalBtnradio2">Leave</label>
+                    
+                    <input type="radio" class="btn-check" name="modalBtnradio" id="modalBtnradio3" autocomplete="off" value="Sleep">
+                    <label class="btn btn-outline-primary" for="modalBtnradio3">Sleep</label>
+                </div>
+            </div>
+        `;
+        // Append the HTML content of radio buttons to the modal body
+        modalBody.innerHTML += radioButtonsHTML;
+
+// Function to clear content added by specific radio button
+const clearRadioButtonContent = () => {
+    const contentToRemove = modalBody.querySelector('.radio-button-content');
+    if (contentToRemove) {
+        contentToRemove.remove();
+    }
+};
+
+// Add event listener to the parent container and delegate to radio buttons
+modalBody.addEventListener('change', event => {
+    const target = event.target;
+    console.log('Change event triggered'); // Debugging: Check if change event is triggered
+    if (target.matches('input[name="modalBtnradio"]')) {
+        console.log('Radio button change event triggered');
+        const value = target.value;
+        console.log('Selected radio button value:', value);
+        clearRadioButtonContent(); // Clear content added by previously selected radio button
+        if (value === 'Bill') {
+            showBills();
+        } else if (value === 'Leave') {
+            showLeaveLogs();
+        } else if (value === 'Sleep') {
+            showSleepLogs();
+        }
+    }
+});
+
+// Function to show bills
+const showBills = () => {
+    console.log('Displaying bills table');
+    console.log('Resident payments:', resident.payments);
+    console.log('Modal body:', modalBody); // Debugging: Check if modalBody is correctly referenced
+    if (resident.payments && resident.payments.length > 0) {
+        const html = `
+            <div class="bills-table radio-button-content"> <!-- Added unique class for identification -->
+                <table class="table table-dark w-100 custom-table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Receipt</th>
+                            <th scope="col">Total Amount</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Paid Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${resident.payments.map(payment => `
+                            <tr>
+                                <td>${payment.receipt}</td>
+                                <td>${payment.totalAmount}</td>
+                                <td>${payment.status}</td>
+                                <td>${payment.paidDate ? new Date(payment.paidDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : '-'}</td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            </div>
+        `;
+        modalBody.insertAdjacentHTML('beforeend', html);
+    } else {
+        console.log('No payments found for the resident.'); // Debugging: Check if payments are available
+    }
+};
+
+// Function to show leave logs
+const showLeaveLogs = () => {
+    const token = localStorage.getItem('token');
+    fetch(`/api/getLogs/${residentId}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': `Bearer ${token}`,
+        },
+        credentials: 'include',
+    })
+    .then(response => response.json())
+    .then(logs => {
+        console.log('Leave logs:', logs); 
+        let html = `
+            <div class="leave-logs radio-button-content">
+                <table class="table table-dark w-100 custom-table">
+                    <thead>
+                        <tr>
+                            <th>Leave Date</th>
+                            <th>Expected Return</th>
+                            <th>Return Date</th>
+                            <th>Purpose</th>
+                            <th>Gatepass</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+        `;
+        logs.forEach(log => {
+            html += `
+                <tr>
+                    <td>${log.leave_date}</td>
+                    <td>${log.expectedReturn}</td>
+                    <td>${log.return_date}</td>
+                    <td>${log.purpose}</td>
+                    <td>${log.gatepass}</td>
+                    <td>${log.status}</td>
+                </tr>
+            `;
+        });
+        html += `
+                    </tbody>
+                </table>
+            </div>
+        `;
+        modalBody.insertAdjacentHTML('beforeend', html);
+    })
+    .catch(error => console.error('Error fetching leave logs:', error));
+};
+
+// Function to show sleep logs
+const showSleepLogs = () => {
+    const token = localStorage.getItem('token');
+    fetch(`/api/getSleepLogs/${residentId}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': `Bearer ${token}`,
+        },
+        credentials: 'include',
+    })
+    .then(response => response.json())
+    .then(sleeplogs => {
+        console.log('Sleep logs:', sleeplogs); 
+        let html = `
+            <div class="sleep-logs radio-button-content">
+                <table class="table table-dark w-100 custom-table">
+                    <thead>
+                        <tr>
+                            <th>Leave Date</th>
+                            <th>Expected Return</th>
+                            <th>Return Date</th>
+                            <th>Purpose</th>
+                            <th>Gatepass</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+        `;
+        sleeplogs.forEach(log => {
+           
+            html += `
+                <tr>
+                    <td>${log.leave_date}</td>
+                    <td>${log.expectedReturn}</td>
+                    <td>${log.return_date}</td>
+                    <td>${log.purpose}</td>
+                    <td>${log.gatepass}</td>
+                    <td>${log.status}</td>
+                </tr>
+            `;
+        });
+        html += `
+                    </tbody>
+                </table>
+            </div>
+        `;
+        modalBody.insertAdjacentHTML('beforeend', html);
+    })
+    .catch(error => console.error('Error fetching sleep logs:', error));
+};
+
+
         $('#residentDetailsModal').modal('show');
     })
     .catch(error => console.error('Error fetching resident details:', error));
 }
+
+
+
+
+
+
+// Event listener for radio buttons outside the modal
+const radioButtonsOutsideModal = document.querySelectorAll('.content input[name="btnradio"]');
+radioButtonsOutsideModal.forEach(button => {
+    button.addEventListener('change', event => {
+        const value = event.target.value;
+        // Handle radio button change outside the modal
+    });
+});
+
+
+
+
+
+
 
 
 
