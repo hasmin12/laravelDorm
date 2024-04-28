@@ -13,6 +13,7 @@ class UpdateLogStatus extends Command
 
     public function handle()
     {
+        $ldate = date('Y-m-d H:i:s');
         $logs = ResidentLog::whereNull('return_date')->get();
 
         foreach ($logs as $log) {

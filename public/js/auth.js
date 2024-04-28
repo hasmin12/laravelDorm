@@ -55,15 +55,12 @@ $(document).ready(function() {
                     if (response.user.role === 'Resident') {
                         window.location.href = '/resident/announcements';
                     } else if (response.user.role === 'Admin') {
-                        if(response.user.branch === 'Dormitory'){
-                            window.location.href = '/admin/dorm/dashboard';
-                        }else{
-                            window.location.href = '/admin/hostel/dashboard';
-                        }
+                        window.location.href = '/admin/dorm/dashboard';
                     
+                    }else{
+                        window.location.href = '/technician/maintenance';
                     }
                 } else {
-                    // Display SweetAlert for wrong credentials
                     Swal.fire({
                         icon: 'error',
                         text: 'Login failed. Please check your credentials.',

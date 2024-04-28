@@ -5,7 +5,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 function fetchmaintenances() {
     const token = localStorage.getItem('token');
-    console.log(token)
     fetch('/api/getMaintenances', {
         method: 'GET',
         headers: {
@@ -19,7 +18,6 @@ function fetchmaintenances() {
         .then(data => {
             const maintenancesContainer = document.getElementById('maintenance-items-container');
             maintenancesContainer.innerHTML = '';
-            console.log(data)
            
             data.forEach(maintenance => {
                 const cardContainer = document.createElement('div');

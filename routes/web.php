@@ -219,6 +219,20 @@ Route::middleware(['adminbranch:Hostel'])->group(function () {
             Route::get('/payments', function () {
                 return view('resident.payments');
             });
+            
+            Route::get('/reservations', function () {
+                return view('resident.reservations');
+            });
+        });
+    });
+
+    Route::group(['middleware' => ['role:Technician']], function () {
+        Route::prefix('technician')->group(function () {
+            
+            
+            Route::get('/maintenance', function () {
+                return view('technician.maintenance');
+            });
         });
     });
 

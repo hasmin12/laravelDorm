@@ -22,7 +22,7 @@
     <!-- Libraries Stylesheet -->
     <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
     <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
-    <link href="lib/lightbox/css/lightbox.min.css" rel="stylesheet">
+    {{-- <link href="lib/lightbox/css/lightbox.min.css" rel="stylesheet"> --}}
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="css1/bootstrap.min.css" rel="stylesheet">
@@ -110,7 +110,7 @@
                 </div>
                 <div class="col-xl-4 col-lg-5 offset-xl-2 offset-lg-1">
                     <div class="service-item bg-white rounded d-flex flex-column align-items-center text-center">
-                        <img class="img-fluid" src="img/service-2.jpg" alt="">
+                        {{-- <img class="img-fluid" src="img/service-2.jpg" alt=""> --}}
                         <div class="service-icon bg-white">
                             <i class="fa fa-3x fa-home text-primary"></i>
                         </div>

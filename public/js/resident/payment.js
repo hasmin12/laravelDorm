@@ -1,60 +1,60 @@
 document.addEventListener('DOMContentLoaded', function () {
     fetchPayments();
 
-    const createPaymentForm = document.getElementById('createPaymentForm');
-    createPaymentForm.addEventListener('submit', function (event) {
-        event.preventDefault();
+    // const createPaymentForm = document.getElementById('createPaymentForm');
+    // createPaymentForm.addEventListener('submit', function (event) {
+    //     event.preventDefault();
 
-        const titleInput = document.getElementById('paymentTitle');
-        const contentInput = document.getElementById('paymentContent');
+    //     const titleInput = document.getElementById('paymentTitle');
+    //     const contentInput = document.getElementById('paymentContent');
 
-        const title = titleInput.value;
-        const content = contentInput.value;
+    //     const title = titleInput.value;
+    //     const content = contentInput.value;
 
-        const formData = {
-            title: title,
-            content: content,
-        };
+    //     const formData = {
+    //         title: title,
+    //         content: content,
+    //     };
 
-        const token = localStorage.getItem('token');
+    //     const token = localStorage.getItem('token');
 
-        fetch('/api/createPayment', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                'Authorization': `Bearer ${token}`,
-            },
-            credentials: 'include',
-            body: JSON.stringify(formData),
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Payment created successfully:', data);
+    //     fetch('/api/createPayment', {
+    //         method: 'POST',
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //             'Accept': 'application/json',
+    //             'Authorization': `Bearer ${token}`,
+    //         },
+    //         credentials: 'include',
+    //         body: JSON.stringify(formData),
+    //     })
+    //     .then(response => response.json())
+    //     .then(data => {
+    //         console.log('Payment created successfully:', data);
 
-            $('#createPaymentModal').modal('hide');
+    //         $('#createPaymentModal').modal('hide');
 
-            titleInput.value = '';
-            contentInput.value = '';
+    //         titleInput.value = '';
+    //         contentInput.value = '';
 
-            fetchPayments();
+    //         fetchPayments();
 
-            Swal.fire({
-                icon: 'success',
-                title: 'Payment Created',
-                text: 'Your payment has been successfully created.',
-            });
-        })
-        .catch(error => {
-            console.error('Error creating payment:', error);
+    //         Swal.fire({
+    //             icon: 'success',
+    //             title: 'Payment Created',
+    //             text: 'Your payment has been successfully created.',
+    //         });
+    //     })
+    //     .catch(error => {
+    //         console.error('Error creating payment:', error);
 
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: 'An error occurred while creating the payment. Please try again.',
-            });
-        });
-    });
+    //         Swal.fire({
+    //             icon: 'error',
+    //             title: 'Error',
+    //             text: 'An error occurred while creating the payment. Please try again.',
+    //         });
+    //     });
+    // });
 
     const paymentsContainer = document.getElementById('payments-container');
     paymentsContainer.addEventListener('click', function (event) {
@@ -69,58 +69,58 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-const updatePaymentForm = document.getElementById('updatePaymentForm');
-updatePaymentForm.addEventListener('submit', function (event) {
-    event.preventDefault();
+// const updatePaymentForm = document.getElementById('updatePaymentForm');
+// updatePaymentForm.addEventListener('submit', function (event) {
+//     event.preventDefault();
 
-    const updateTitleInput = document.getElementById('updateTitleInput');
-    const updateContentInput = document.getElementById('updateContentInput');
-    const paymentId = updatePaymentForm.dataset.paymentId; // Add a data attribute to store payment ID
+//     const updateTitleInput = document.getElementById('updateTitleInput');
+//     const updateContentInput = document.getElementById('updateContentInput');
+//     const paymentId = updatePaymentForm.dataset.paymentId; // Add a data attribute to store payment ID
 
-    const updatedFormData = {
-        title: updateTitleInput.value,
-        content: updateContentInput.value,
-    };
+//     const updatedFormData = {
+//         title: updateTitleInput.value,
+//         content: updateContentInput.value,
+//     };
 
-    const token = localStorage.getItem('token');
+//     const token = localStorage.getItem('token');
 
-    fetch(`/api/updatePayment/${paymentId}`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-            'Authorization': `Bearer ${token}`,
-        },
-        credentials: 'include',
-        body: JSON.stringify(updatedFormData),
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log('Payment updated successfully:', data);
+//     fetch(`/api/updatePayment/${paymentId}`, {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json',
+//             'Accept': 'application/json',
+//             'Authorization': `Bearer ${token}`,
+//         },
+//         credentials: 'include',
+//         body: JSON.stringify(updatedFormData),
+//     })
+//     .then(response => response.json())
+//     .then(data => {
+//         console.log('Payment updated successfully:', data);
 
-        $('#updatePaymentModal').modal('hide');
+//         $('#updatePaymentModal').modal('hide');
 
-        updateTitleInput.value = '';
-        updateContentInput.value = '';
+//         updateTitleInput.value = '';
+//         updateContentInput.value = '';
 
-        fetchPayments();
+//         fetchPayments();
 
-        Swal.fire({
-            icon: 'success',
-            title: 'Payment Updated',
-            text: 'Your payment has been successfully updated.',
-        });
-    })
-    .catch(error => {
-        console.error('Error updating payment:', error);
+//         Swal.fire({
+//             icon: 'success',
+//             title: 'Payment Updated',
+//             text: 'Your payment has been successfully updated.',
+//         });
+//     })
+//     .catch(error => {
+//         console.error('Error updating payment:', error);
 
-        Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: 'An error occurred while updating the payment. Please try again.',
-        });
-    });
-});
+//         Swal.fire({
+//             icon: 'error',
+//             title: 'Error',
+//             text: 'An error occurred while updating the payment. Please try again.',
+//         });
+//     });
+// });
 
 
 function openUpdateModal(paymentId) {

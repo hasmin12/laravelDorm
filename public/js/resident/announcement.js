@@ -1,61 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
     fetchAnnouncements();
-
-    const createAnnouncementForm = document.getElementById('createAnnouncementForm');
-    createAnnouncementForm.addEventListener('submit', function (event) {
-        event.preventDefault();
-
-        const titleInput = document.getElementById('announcementTitle');
-        const contentInput = document.getElementById('announcementContent');
-
-        const title = titleInput.value;
-        const content = contentInput.value;
-
-        const formData = {
-            title: title,
-            content: content,
-        };
-
-        const token = localStorage.getItem('token');
-
-        fetch('/api/announcement', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                'Authorization': `Bearer ${token}`,
-            },
-            credentials: 'include',
-            body: JSON.stringify(formData),
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Announcement created successfully:', data);
-
-            $('#createAnnouncementModal').modal('hide');
-
-            titleInput.value = '';
-            contentInput.value = '';
-
-            fetchAnnouncements();
-
-            Swal.fire({
-                icon: 'success',
-                title: 'Announcement Created',
-                text: 'Your announcement has been successfully created.',
-            });
-        })
-        .catch(error => {
-            console.error('Error creating announcement:', error);
-
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: 'An error occurred while creating the announcement. Please try again.',
-            });
-        });
-    });
-
     const announcementsContainer = document.getElementById('announcements-container');
     announcementsContainer.addEventListener('click', function (event) {
         const target = event.target;
@@ -69,58 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-const updateAnnouncementForm = document.getElementById('updateAnnouncementForm');
-updateAnnouncementForm.addEventListener('submit', function (event) {
-    event.preventDefault();
 
-    const updateTitleInput = document.getElementById('updateTitleInput');
-    const updateContentInput = document.getElementById('updateContentInput');
-    const announcementId = updateAnnouncementForm.dataset.announcementId; // Add a data attribute to store announcement ID
-
-    const updatedFormData = {
-        title: updateTitleInput.value,
-        content: updateContentInput.value,
-    };
-
-    const token = localStorage.getItem('token');
-
-    fetch(`/api/updateAnnouncement/${announcementId}`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-            'Authorization': `Bearer ${token}`,
-        },
-        credentials: 'include',
-        body: JSON.stringify(updatedFormData),
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log('Announcement updated successfully:', data);
-
-        $('#updateAnnouncementModal').modal('hide');
-
-        updateTitleInput.value = '';
-        updateContentInput.value = '';
-
-        fetchAnnouncements();
-
-        Swal.fire({
-            icon: 'success',
-            title: 'Announcement Updated',
-            text: 'Your announcement has been successfully updated.',
-        });
-    })
-    .catch(error => {
-        console.error('Error updating announcement:', error);
-
-        Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: 'An error occurred while updating the announcement. Please try again.',
-        });
-    });
-});
 
 
 function openUpdateModal(announcementId) {
