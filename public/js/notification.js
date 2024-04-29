@@ -64,5 +64,6 @@ function displayNotifications(notifications) {
 
        if (data.name==email){
             fetchNotifications();
+            toastr.info('New Notification')
        }
     });

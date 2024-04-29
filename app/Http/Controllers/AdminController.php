@@ -1066,6 +1066,8 @@ public function getResident($id)
 
                 $notifs = Notification::create([
                     'sender_id' => Auth::user()->id,
+                    'senderName' => Auth::user()->name,
+
                     'receiver_id' => $resident->id,
                     'notification_type' => "Monthly Payment1",
                     'target_id' => $dormitoryPayment->id,

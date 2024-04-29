@@ -129,7 +129,7 @@ function fetchAnnouncements() {
                 <div class="d-flex align-items-center border-bottom py-3">
                     <div class="w-100 ms-3">
                         <div class="d-flex w-100 justify-content-between">
-                            <h6 class="mb-0">${announcement.user.name}</h6>
+                            <h6 class="mb-0">${announcement.postedBy}</h6>
                             <small>${formattedDate}</small>
                         </div>
                         <div class="d-flex w-100 justify-content-between">

@@ -48,7 +48,7 @@ class UserSeeder extends Seeder
             'password' => bcrypt("password"),
             'role' => 'Resident',
             'branch' => 'Dormitory',
-            'type' => 'Admin',
+            'type' => 'Student',
 
             'name' => 'Dormitory Resident',
             'course' => 'BSIT',
