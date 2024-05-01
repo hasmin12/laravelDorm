@@ -55,7 +55,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="receipt" class="form-label">Official Receipt Number:</label>
-                        <input type="text" class="form-control" id="receipt" required>
+                        <input  type="text" class="form-control" id="receipt" required>
                     </div>
     
                     <div class="mb-3">

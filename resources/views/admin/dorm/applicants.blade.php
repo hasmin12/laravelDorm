@@ -19,7 +19,6 @@
         <div class="bg-light rounded p-4">
             <div class="d-flex align-items-center justify-content-between mb-2">
                 <h3 class="mb-0">Applicants</h3>
-                <a href='/admin/dorm/newresident' class="btn btn-primary">Add Applicant</a>
             </div>
             <form class="d-none d-md-flex ms-4">
                 <input class="form-control border-0" type="search" placeholder="Search" id="searchInput">
@@ -38,7 +37,6 @@
                 <input type="radio" class="btn-check" name="btnradio" id="btnradio4" autocomplete="off" value="Staff">
                 <label class="btn btn-outline-primary" for="btnradio4">Staffs</label>
             </div>
-            <button class="btn btn-primary" id="sendEmailButton">Send Email</button>                      
         </div>
          <!-- Toggle Button for View -->
          <div class="form-check form-switch ms-3">
@@ -92,7 +90,6 @@
                                 <th scope="col">Type</th>
                                 <th scope="col">Sex</th>
                                 <th scope="col">Contacts</th>
-                                <th scope="col">Room & Bed</th>
                                 <th scope="col">Actions</th>
                             </tr>
                         </thead>

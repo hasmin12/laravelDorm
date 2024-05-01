@@ -82,7 +82,7 @@ const createMaintenanceForm = $('#createMaintenanceForm');
     const token = localStorage.getItem('token');
 
     $.ajax({
-        url: '/api/createMaintenance',
+        url: '/api/resident/createMaintenance',
         type: 'POST',
         headers: {
             'Authorization': 'Bearer ' + token,

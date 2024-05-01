@@ -218,10 +218,10 @@ class GuestController extends Controller
 
         $guardian = Guardian::create([
             'user_id' => $user->id,
-            'guardianName' => $request->input('guardianName'),
-            'guardianContactNumber' => $request->input('guardianContactNumber'),
-            'guardianRelationship' => $request->input('guardianRelationship'),
-            'guardianAddress' => $request->input('guardianAddress'),
+            'name' => $request->input('guardianName'),
+            'contactNumber' => $request->input('guardianContactNumber'),
+            'relationship' => $request->input('guardianRelationship'),
+            'address' => $request->input('guardianAddress'),
         ]);
 
 

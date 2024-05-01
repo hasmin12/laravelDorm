@@ -42,7 +42,7 @@ class ResidentController extends Controller
             $user = Auth::user(); 
             $itemName = $request->input('itemName');
             $description = $request->input('description');
-
+            Log::info($user);
             $maintenance = Maintenance::create([
                 'itemName' => $itemName,
                 'description' => $description,
@@ -139,7 +139,7 @@ class ResidentController extends Controller
                 $fileName = time() . $request->file('img_path')->getClientOriginalName();
                 $path = $request->file('img_path')->storeAs('payments', $fileName, 'public');
                 $img_path = '/storage/' . $path;
-       
+                Log::info($request);
                 $payment = Dormitorypayment::find($request->input('payment_id'));
                 $payment->update([
                     'receipt' => $request->input('receipt'),

@@ -1,12 +1,19 @@
 $(document).ready(function () {
     var currentStep = 0;
     var steps = $('form fieldset');
+
     steps.hide().eq(currentStep).show();
 
     $(".next-step").click(function () {
         steps.eq(currentStep).hide();
         currentStep++;
         steps.eq(currentStep).show();
+
+        if(currentStep==0){
+            steps.eq(currentStep).hide();
+            currentStep++;
+            steps.eq(currentStep).show();
+        }
     });
 
     $(".previous-step").click(function () {
@@ -20,18 +27,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
     registrationForm.submit(function (event) {
         event.preventDefault();
-
+    
         const formData = new FormData(this);
-
-     
+    
         const electricCheckbox = document.getElementById("electricfan");
         formData.append("electricfan", electricCheckbox.checked ? 1 : 0);
-
     
         const laptopCheckbox = document.getElementById("laptop");
         formData.append("laptop", laptopCheckbox.checked ? 1 : 0);
-
-
+    
         $.ajax({
             url: '/api/createRegistration',
             type: 'POST',
@@ -55,11 +59,11 @@ document.addEventListener('DOMContentLoaded', function () {
             },
             error: function (error) {
                 console.error('Error during registration:', error);
-
+    
                 Swal.fire({
                     icon: 'error',
                     title: 'Registration Error',
-                    text: 'An error occurred during registration. Please try again.',
+                    text: 'Please Fill Out the inputs',
                 });
             }
         });

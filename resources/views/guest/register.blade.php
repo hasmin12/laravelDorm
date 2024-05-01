@@ -103,7 +103,7 @@
                                         <h5 class="col-md-4 col-form-label text-md-right text-primary text-uppercase"><label for="email" >{{ __('E-Mail Address') }}</label></h5>
                                         <div class="col-md-6">
                                             
-                                            <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
+                                            <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}"  autocomplete="email">
                                             @error('email')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -115,7 +115,7 @@
                                     <div class="form-group row mb-2">
                                         <h5 class="col-md-4 col-form-label text-md-right text-primary text-uppercase"><label for="password">{{ __('Password') }}</label></h5>
                                         <div class="col-md-6">
-                                            <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" value="{{ old('password') }}" required autocomplete="off" autofocus>
+                                            <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" value="{{ old('password') }}"  autocomplete="off" autofocus>
                                             @error('password')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -128,7 +128,7 @@
                                         <div class="form-group row mb-2">
                                             <h5 class="col-md-4 col-form-label text-md-right text-primary text-uppercase"><label for="type">{{ __('Type') }}</label></h5>
                                             <div class="col-md-6">
-                                                <select id="type" class="form-control @error('type') is-invalid @enderror" name="type" required>
+                                                <select id="type" class="form-control @error('type') is-invalid @enderror" name="type" >
                                                     <option value="Student">Student</option>
                                                     <option value="Faculty">Faculty</option>
                                                     <option value="Staff">Staff</option>
@@ -145,7 +145,7 @@
                                     <div class="form-group row mb-2">
                                         <h5 class="col-md-4 col-form-label text-md-right text-primary text-uppercase"><label for="img_path" >{{ __('Image') }}</label></h5>
                                         <div class="col-md-6">
-                                            <input id="img_path" type="file" class="form-control-file @error('img_path') is-invalid @enderror" name="img_path" required>
+                                            <input id="img_path" type="file" class="form-control-file @error('img_path') is-invalid @enderror" name="img_path" >
                                             @error('img_path')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -162,7 +162,7 @@
                               <div class="form-group row mb-2">
                                 <h5 class="col-md-4 col-form-label text-md-right text-primary text-uppercase"><label for="Tuptnum">{{ __('TUPT Number') }}</label></h5>
                                 <div class="col-md-6">
-                                    <input id="Tuptnum" type="text" class="form-control @error('Tuptnum') is-invalid @enderror" name="Tuptnum" value="{{ old('Tuptnum') }}" required>
+                                    <input id="Tuptnum" type="text" class="form-control @error('Tuptnum') is-invalid @enderror" name="Tuptnum" value="{{ old('Tuptnum') }}" >
                                     @error('Tuptnum')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -175,7 +175,7 @@
                             <div class="form-group row mb-2">
                                 <h5 class="col-md-4 col-form-label text-md-right text-primary text-uppercase"><label for="name">{{ __('Full Name') }}</label></h5>
                                 <div class="col-md-6">
-                                    <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+                                    <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}"  autocomplete="name" autofocus>
                                     @error('name')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -187,7 +187,7 @@
                             <div class="form-group row mb-2">
                                 <h5 class="col-md-4 col-form-label text-md-right text-primary text-uppercase"><label for="course">{{ __('Course') }}</label></h5>
                                 <div class="col-md-6">
-                                    <select id="course" class="form-control @error('course') is-invalid @enderror" name="course" required>
+                                    <select id="course" class="form-control @error('course') is-invalid @enderror" name="course" >
                                         {{-- <option value="" selected hidden></option> --}}
                                         <option value="BET Major in Automotive Technology">BETAT-T</option>
                                         <option value="BET Major in Chemical Technology">BETChT-T</option>
@@ -226,7 +226,7 @@
                             <div class="form-group row mb-2">
                                 <h5 class="col-md-4 col-form-label text-md-right text-primary text-uppercase"><label for="year">{{ __('Year') }}</label></h5>
                                 <div class="col-md-6">
-                                    <input id="year" type="text" class="form-control @error('year') is-invalid @enderror" name="year" value="{{ old('year') }}" required autocomplete="year" autofocus>
+                                    <input id="year" type="text" class="form-control @error('year') is-invalid @enderror" name="year" value="{{ old('year') }}"  autocomplete="year" autofocus>
                                     @error('year')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -239,7 +239,7 @@
                             <div class="form-group row mb-2">
                                 <h5 class="col-md-4 col-form-label text-md-right text-primary text-uppercase"><label for="birthdate">{{ __('Birthdate') }}</label></h5>
                                 <div class="col-md-6">
-                                    <input id="birthdate" type="date" class="form-control @error('birthdate') is-invalid @enderror" name="birthdate" required>
+                                    <input id="birthdate" type="date" class="form-control @error('birthdate') is-invalid @enderror" name="birthdate" >
                                     @error('birthdate')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -252,7 +252,7 @@
                             <div class="form-group row mb-2">
                                 <h5 class="col-md-4 col-form-label text-md-right text-primary text-uppercase"><label for="age">{{ __('Age') }}</label></h5>
                                 <div class="col-md-6">
-                                    <input id="age" type="text" class="form-control @error('age') is-invalid @enderror" name="age" value="{{ old('age') }}" required autocomplete="age" autofocus>
+                                    <input id="age" type="text" class="form-control @error('age') is-invalid @enderror" name="age" value="{{ old('age') }}"  autocomplete="age" autofocus>
                                     @error('age')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -265,7 +265,7 @@
                             <div class="form-group row mb-2">
                                 <h5 class="col-md-4 col-form-label text-md-right text-primary text-uppercase"><label for="sex">{{ __('Sex') }}</label></h5>
                                 <div class="col-md-6">
-                                    <select id="sex" class="form-control @error('sex') is-invalid @enderror" name="sex" required>
+                                    <select id="sex" class="form-control @error('sex') is-invalid @enderror" name="sex" >
                                         <option value="Male">Male</option>
                                         <option value="Female">Female</option>
                                     </select>
@@ -282,7 +282,7 @@
                             <div class="form-group row mb-2">
                                 <h5 class="col-md-4 col-form-label text-md-right text-primary text-uppercase"><label for="religion">{{ __('Religion') }}</label></h5>
                                 <div class="col-md-6">
-                                    <input id="religion" type="text" class="form-control @error('religion') is-invalid @enderror" name="religion" value="{{ old('religion') }}" required autocomplete="religion" autofocus>
+                                    <input id="religion" type="text" class="form-control @error('religion') is-invalid @enderror" name="religion" value="{{ old('religion') }}"  autocomplete="religion" autofocus>
                                     @error('religion')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -295,7 +295,7 @@
                             <div class="form-group row mb-2">
                                 <h5 class="col-md-4 col-form-label text-md-right text-primary text-uppercase"><label for="civil_status">{{ __('Civil Status') }}</label></h5>
                                 <div class="col-md-6">
-                                    <input id="civil_status" type="text" class="form-control @error('civil_status') is-invalid @enderror" name="civil_status" value="{{ old('civil_status') }}" required autocomplete="civil_status" autofocus>
+                                    <input id="civil_status" type="text" class="form-control @error('civil_status') is-invalid @enderror" name="civil_status" value="{{ old('civil_status') }}"  autocomplete="civil_status" autofocus>
                                     @error('civil_status')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -308,7 +308,7 @@
                             <div class="form-group row mb-2">
                                 <h5 class="col-md-4 col-form-label text-md-right text-primary text-uppercase"><label for="address">{{ __('Permanent Address') }}</label></h5>
                                 <div class="col-md-6">
-                                    <input id="address" type="text" class="form-control @error('address') is-invalid @enderror" name="address" value="{{ old('address') }}" required autocomplete="address" autofocus>
+                                    <input id="address" type="text" class="form-control @error('address') is-invalid @enderror" name="address" value="{{ old('address') }}"  autocomplete="address" autofocus>
                                     @error('address')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -321,7 +321,7 @@
                             <div class="form-group row mb-2">
                                 <h5 class="col-md-4 col-form-label text-md-right text-primary text-uppercase"><label for="contactNumber">{{ __('Contact Number') }}</label></h5>
                                 <div class="col-md-6">
-                                    <input id="contactNumber" type="text" class="form-control @error('contactNumber') is-invalid @enderror" name="contactNumber" value="{{ old('contactNumber') }}" required>
+                                    <input id="contactNumber" type="text" class="form-control @error('contactNumber') is-invalid @enderror" name="contactNumber" value="{{ old('contactNumber') }}" >
                                     @error('contactNumber')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -335,7 +335,7 @@
                                 <h5 class="col-md-4 col-form-label text-md-right text-primary text-uppercase"><label for="cor">{{ __('COR') }}</label></h5>
                                 <div class="col-md-6 ">
                                     
-                                    <input id="cor" type="file" class="form-control-file input_container @error('cor') is-invalid @enderror" name="cor" required>
+                                    <input id="cor" type="file" class="form-control-file input_container @error('cor') is-invalid @enderror" name="cor" >
                                     @error('cor')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -348,9 +348,9 @@
 
                             <!-- Valid ID -->
                             <div class="form-group row mb-2">
-                                <h5 class="col-md-4 col-form-label text-md-right text-primary text-uppercase"><label for="validId">{{ __('Student ID') }}</label></h5>
+                                <h5 class="col-md-4 col-form-label text-md-right text-primary text-uppercase"><label for="validId">{{ __('School ID') }}</label></h5>
                                 <div class="col-md-6">
-                                    <input id="validId" type="file" class="form-control-file input_container @error('validId') is-invalid @enderror" name="validId" required>
+                                    <input id="validId" type="file" class="form-control-file input_container @error('validId') is-invalid @enderror" name="validId" >
                                     @error('validId')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -363,7 +363,7 @@
                             <div class="form-group row mb-2">
                                 <h5 class="col-md-4 col-form-label text-md-right text-primary text-uppercase"><label for="vaccineCard">{{ __('Vaccine Card') }}</label></h5>
                                 <div class="col-md-6">
-                                    <input id="vaccineCard" type="file" class="form-control-file input_container @error('vaccineCard') is-invalid @enderror" name="vaccineCard" required>
+                                    <input id="vaccineCard" type="file" class="form-control-file input_container @error('vaccineCard') is-invalid @enderror" name="vaccineCard" >
                                     @error('vaccineCard')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -376,7 +376,7 @@
                             <div class="form-group row mb-2">
                                 <h5 class="col-md-4 col-form-label text-md-right text-primary text-uppercase"><label for="applicationForm">{{ __('Application Form') }}</label></h5>
                                 <div class="col-md-6">
-                                    <input id="applicationForm" type="file" class="form-control-file input_container @error('applicationForm') is-invalid @enderror" name="applicationForm" required>
+                                    <input id="applicationForm" type="file" class="form-control-file input_container @error('applicationForm') is-invalid @enderror" name="applicationForm" >
                                     @error('applicationForm')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -491,7 +491,7 @@
 
 
 
-<script src="{{ asset('js/guest/example.js') }}"></script>
+<script src="{{ asset('js/guest/registration.js') }}"></script>
 <br>
 <br>
 <br>

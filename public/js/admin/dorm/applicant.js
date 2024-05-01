@@ -5,7 +5,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const searchInput = document.querySelector('#searchInput');
     const residentTypeButtons = document.querySelectorAll('input[name="btnradio"]');
     const residentTableBody = document.querySelector('#residentTableBody');
-    const sendEmailButton = document.querySelector('#sendEmailButton');
     const residentTilesContainer = document.querySelector('#residentTilesContainer');
     const roomDropdown = document.getElementById('roomDropdown');
     const bedsCard = document.getElementById('bedsCard');
@@ -151,7 +150,6 @@ document.addEventListener('DOMContentLoaded', function () {
     // Event listeners
     searchInput.addEventListener('input', () => fetchResidents(currentView));
     residentTypeButtons.forEach(button => button.addEventListener('change', () => fetchResidents(currentView)));
-    sendEmailButton.addEventListener('click', sendEmail);
 
     // Fetch residents with the initial view type
     fetchResidents(currentView);
@@ -279,8 +277,7 @@ function fetchResidents(viewType = 'tiles') {
                     <td>${resident.name}</td>
                     <td>${resident.type}</td>
                     <td>${resident.sex}</td>
-                    <td>${resident.contacts}</td>
-                    <td>${resident.roomdetails}</td>
+                    <td>${resident.contactNumber}</td>
                     <td>
                         <button class="btn btn-sm btn-success" onclick="showResidentDetails(${resident.id})" data-bs-toggle="modal" data-bs-target="#residentDetailsModal">
                             View Details
