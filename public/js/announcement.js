@@ -217,9 +217,52 @@ function deleteAnnouncement(announcementId) {
     });
 }
 
+document.addEventListener('DOMContentLoaded', function() {
+    const lockCommentsButtons = document.querySelectorAll('.lock-comments-button');
+
+    lockCommentsButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            console.log('Lock comment button clicked');
+            const announcementId = this.dataset.announcementId;
+            const locked = this.dataset.locked === 'true' ? 'No' : 'Yes'; // Toggle the locked status
+            const token = localStorage.getItem('token');
+
+            // Send AJAX request to update the announcement's locked status
+            fetch(`/update_announcement/${announcementId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`, 
+                },
+                body: JSON.stringify({
+                    locked: locked
+                })
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log('Announcement updated successfully.');
+                    // Update the button's data-locked attribute
+                    this.dataset.locked = locked === 'Yes' ? 'true' : 'false';
+                    // Update button text based on locked status
+                    this.innerText = locked === 'Yes' ? 'Unlock Comments' : 'Lock Comments';
+                } else {
+                    console.error('Failed to update announcement.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    });
+    // Call fetchAnnouncements to load initial announcements
+    fetchAnnouncements();
+
+});
+
+
 function fetchAnnouncements() {
     const token = localStorage.getItem('token');
-
+    
     fetch(`/api/getAnnouncements`, {
         method: 'GET',
         headers: {
@@ -242,37 +285,35 @@ function fetchAnnouncements() {
             // console.log(userName);
             announcementsContainer.innerHTML += `
             <div class="d-flex align-items-center border-bottom py-3">
-            <div class="w-100 ms-3">
-                <div class="d-flex w-100 justify-content-between">
-                    <div class="d-flex align-items-center">
-                        <img src="${announcement.img_path}" alt="Admin Image" class="me-2 rounded" width="40px" height="40px">
-                        <h6 class="mb-0">${announcement.postedBy}</h6>
-                    </div>
-                    <div class="btn-group">
-                        <div class="btn-group">
-                            <button class="btn btn-danger dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="bi bi-three-dots"></i>
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <li><button class="dropdown-item update-btn" data-announcement-id="${announcement.id}"><i class="bi bi-pencil"></i> Update</button></li>
-                                <li><button class="dropdown-item delete-btn" data-announcement-id="${announcement.id}"><i class="bi bi-trash"></i> Delete</button></li>
-                                <li class="m-3">
-                                <div class="form-check">
-                                    <input class="form-check-input lock-comments-checkbox" type="checkbox" id="lockCommentsToggle${announcement.id}" data-announcement-id="${announcement.id}">
-                                    <label class="form-check-label" for="lockCommentsToggle${announcement.id}">Lock Comments</label>
-                                </div>
-                            </li>
-                            </ul>
+                <div class="w-100 ms-3">
+                    <div class="d-flex w-100 justify-content-between">
+                        <div class="d-flex align-items-center">
+                            <img src="${announcement.img_path}" alt="Admin Image" class="me-2 rounded" width="40px" height="40px">
+                            <h6 class="mb-0">${announcement.postedBy}</h6>
                         </div>
+                        <div class="btn-group">
+                            <div class="btn-group">
+                                <button class="btn btn-danger dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-three-dots"></i>
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <li><button class="dropdown-item update-btn" data-announcement-id="${announcement.id}"><i class="bi bi-pencil"></i> Update</button></li>
+                                    <li><button class="dropdown-item delete-btn" data-announcement-id="${announcement.id}"><i class="bi bi-trash"></i> Delete</button></li>
+                                </ul>
+                                <button class="btn ${announcement.locked === 'Yes' ? 'btn-success' : 'btn-danger'} lock-comments-button" data-announcement-id="${announcement.id}" data-locked="${announcement.locked === 'Yes' ? 'true' : 'false'}">
+                                ${announcement.locked === 'Yes' ? 'Unlock Comments' : 'Lock Comments'}
+                            </button>
+                            </div>
+                        </div>
+                       
                     </div>
+                    <div class="d-flex w-100 justify-content-between align-items-center">
+                        <h6>${announcement.title}</h6>
+                    </div>
+                    <p>${announcement.content}</p>
+                    <small>${formattedDate}</small>
                 </div>
-                <div class="d-flex w-100 justify-content-between align-items-center">
-                    <h6>${announcement.title}</h6>
-                </div>
-                <p>${announcement.content}</p>
-                <small>${formattedDate}</small>
             </div>
-        </div>         
         `;
         // <img src="${announcement.img_path}" alt="Announcement Image" width="250px" height="250px"> <!-- Include the image --></img>
         });
@@ -280,26 +321,8 @@ function fetchAnnouncements() {
     .catch(error => console.error('Error fetching announcements:', error));
 }
 
-$(document).ready(function() {
-    $('.lock-comments-checkbox').change(function() {
-        var announcementId = $(this).data('announcement-id');
-        var isChecked = $(this).prop('checked');
 
-        // Send an AJAX request to your server to handle locking/unlocking comments
-        // Example:
-        // $.ajax({
-        //     url: '/lock-comments',
-        //     method: 'POST',
-        //     data: {
-        //         announcementId: announcementId,
-        //         isChecked: isChecked
-        //     },
-        //     success: function(response) {
-        //         console.log('Comments locked/unlocked successfully');
-        //     },
-        //     error: function(xhr, status, error) {
-        //         console.error('Error:', error);
-        //     }
-        // });
-    });
-});
+
+
+
+

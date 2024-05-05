@@ -84,6 +84,7 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::get('/getAnnouncement/{id}', 'AdminController@getAnnouncement');
     Route::post('/announcement', 'AdminController@createAnnouncement');
     Route::post('updateAnnouncement/{id}', 'AdminController@updateAnnouncement');
+    Route::post('/update_announcement/{id}', [AdminController::class, 'lockComments']);
     Route::delete('deleteAnnouncement/{id}', 'AdminController@deleteAnnouncement');
 
     Route::get('/getRooms', 'AdminController@getRooms');

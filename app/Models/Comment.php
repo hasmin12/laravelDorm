@@ -14,7 +14,7 @@ class Comment extends Model
         'user_id',
         'username',
         'userImage',
-
+        'locked', 
     ];
 
      public function announcement()

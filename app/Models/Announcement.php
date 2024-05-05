@@ -24,7 +24,8 @@ class Announcement extends Model
         'img_path',
         'receiver',
         'branch',
-        'postedBy'
+        'postedBy',
+        'locked'
     ];
 
 

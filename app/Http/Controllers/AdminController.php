@@ -1370,4 +1370,23 @@ public function getResident($id)
     }
 }
 
+public function lockComments(Request $request, $id)
+    {
+        $locked = $request->input('locked');
+
+        // Find the announcement by its ID
+        $announcement = Announcement::find($id);
+
+        // Check if the announcement exists
+        if (!$announcement) {
+            return response()->json(['error' => 'Announcement not found.'], 404);
+        }
+
+        // Update the locked status with the value received from the request
+        $announcement->locked = $locked;
+        $announcement->save();
+
+        return response()->json(['message' => 'Announcement updated successfully.'], 200);
+    }
+
 }
