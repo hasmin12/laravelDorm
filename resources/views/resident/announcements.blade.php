@@ -14,9 +14,10 @@
 <!-- Content Start -->
 <div class="content">
     @include('layouts.navbar')
-    <div class="h-100 bg-light rounded">
+
+    <div class="h-100 bg-light rounded p-4">
         <div class="d-flex align-items-center justify-content-between mb-2">
-            <h3 class="mb-0">Announcements</h3>
+            <h3 class="mb-0">Announcement</h3>
         </div>
 
         <div class="container my-5 py-5">
@@ -35,7 +36,7 @@
             <!-- Add your modal HTML structure here -->
         </div>
     </div>
-    @include('layouts.footer')
+    {{-- @include('layouts.footer') --}}
 </div>
 <!-- Content End -->
 

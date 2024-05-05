@@ -134,12 +134,13 @@ function fetchAnnouncements() {
                                     <div class="d-flex flex-start align-items-center py-3">
                                         <img class="rounded-circle shadow-1-strong me-3" src="${announcement.img_path}" alt="avatar" width="60" height="60" />
                                         <div>
-                                            <h6 class="fw-bold text-primary mb-1">${announcement.title}</h6>
+                                            <h6 class="fw-bold text-primary mb-1">${announcement.postedBy}</h6>
                                             <p class="text-muted small mb-0">
                                             ${announcement.branch} - ${formattedDate}
                                             </p>
                                         </div>
                                     </div>
+                                    <h6 class="fw-bold align-items-center text-center mb-1">${announcement.title}</h6>
                                     <img class="img-fluid mx-auto mb-4" src="${announcement.img_path}" style="width: 500; height: 350px;">
                                     <p class="mt-3 mb-4 pb-2">
                                         ${announcement.content}                                      
