@@ -242,25 +242,64 @@ function fetchAnnouncements() {
             // console.log(userName);
             announcementsContainer.innerHTML += `
             <div class="d-flex align-items-center border-bottom py-3">
-                <div class="w-100 ms-3">
-                    <div class="d-flex w-100 justify-content-between">
+            <div class="w-100 ms-3">
+                <div class="d-flex w-100 justify-content-between">
+                    <div class="d-flex align-items-center">
+                        <img src="${announcement.img_path}" alt="Admin Image" class="me-2 rounded" width="40px" height="40px">
                         <h6 class="mb-0">${announcement.postedBy}</h6>
-                        <small>${formattedDate}</small>
                     </div>
-                    <div class="d-flex w-100 justify-content-between">
-                        <h6>${announcement.title}</h6>
+                    <div class="btn-group">
                         <div class="btn-group">
-                            <button class="btn btn-primary update-btn" data-announcement-id="${announcement.id}">Update</button>
-                            <button class="btn btn-danger delete-btn" data-announcement-id="${announcement.id}">Delete</button>
+                            <button class="btn btn-danger dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-three-dots"></i>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <li><button class="dropdown-item update-btn" data-announcement-id="${announcement.id}"><i class="bi bi-pencil"></i> Update</button></li>
+                                <li><button class="dropdown-item delete-btn" data-announcement-id="${announcement.id}"><i class="bi bi-trash"></i> Delete</button></li>
+                                <li class="m-3">
+                                <div class="form-check">
+                                    <input class="form-check-input lock-comments-checkbox" type="checkbox" id="lockCommentsToggle${announcement.id}" data-announcement-id="${announcement.id}">
+                                    <label class="form-check-label" for="lockCommentsToggle${announcement.id}">Lock Comments</label>
+                                </div>
+                            </li>
+                            </ul>
                         </div>
                     </div>
-                    <p>${announcement.content}</p>
-                    <img src="${announcement.img_path}" alt="Announcement Image"> <!-- Include the image -->
                 </div>
+                <div class="d-flex w-100 justify-content-between align-items-center">
+                    <h6>${announcement.title}</h6>
+                </div>
+                <p>${announcement.content}</p>
+                <small>${formattedDate}</small>
             </div>
+        </div>         
         `;
-        
+        // <img src="${announcement.img_path}" alt="Announcement Image" width="250px" height="250px"> <!-- Include the image --></img>
         });
     })
     .catch(error => console.error('Error fetching announcements:', error));
 }
+
+$(document).ready(function() {
+    $('.lock-comments-checkbox').change(function() {
+        var announcementId = $(this).data('announcement-id');
+        var isChecked = $(this).prop('checked');
+
+        // Send an AJAX request to your server to handle locking/unlocking comments
+        // Example:
+        // $.ajax({
+        //     url: '/lock-comments',
+        //     method: 'POST',
+        //     data: {
+        //         announcementId: announcementId,
+        //         isChecked: isChecked
+        //     },
+        //     success: function(response) {
+        //         console.log('Comments locked/unlocked successfully');
+        //     },
+        //     error: function(xhr, status, error) {
+        //         console.error('Error:', error);
+        //     }
+        // });
+    });
+});

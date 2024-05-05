@@ -19,7 +19,6 @@ use Illuminate\Support\Facades\Storage;
 use Log;
 class ResidentController extends Controller
 {
-    //
     public function getMaintenances()
     {
         $user = Auth::user();

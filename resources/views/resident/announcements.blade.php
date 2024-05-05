@@ -14,14 +14,21 @@
 <!-- Content Start -->
 <div class="content">
     @include('layouts.navbar')
-    <div class="h-100 bg-light rounded p-4">
+    <div class="h-100 bg-light rounded">
         <div class="d-flex align-items-center justify-content-between mb-2">
             <h3 class="mb-0">Announcements</h3>
         </div>
 
-        <div id="announcements-container">
-            <!-- Display existing announcements here using JavaScript -->
+        <div class="container my-5 py-5">
+            <div class="row d-flex justify-content-center">
+                <div class="col-md-12 col-lg-10 col-xl-8">  
+                    <div id="announcements-container">
+                        <!-- Display existing announcements here using JavaScript -->
+                    </div>       
+                </div>
+            </div>
         </div>
+
 
         <!-- Modal for creating a new announcement -->
         <div class="modal fade" id="createAnnouncementModal" tabindex="-1" aria-labelledby="createAnnouncementModalLabel" aria-hidden="true">

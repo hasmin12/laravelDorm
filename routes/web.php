@@ -130,6 +130,8 @@ Route::middleware(['adminbranch:Dormitory'])->group(function () {
         Route::get('/logs', function () {
             return view('admin.dorm.logs');
         });
+
+        
     });
 });
     
@@ -223,6 +225,7 @@ Route::middleware(['adminbranch:Hostel'])->group(function () {
             Route::get('/reservations', function () {
                 return view('resident.reservations');
             });
+
         });
     });
 
