@@ -42,14 +42,14 @@
                         
                 
                     <div class="mb-3">
-                        <label for="itemName" class="col-md-4 col-form-label text-md-right">{{ __('itemName') }}</label>
+                        <label for="type" class="col-md-4 col-form-label text-md-right">{{ __('type') }}</label>
                                     <div class="col-md-6">
-                                        <select id="itemName" class="form-control @error('itemName') is-invalid @enderror" name="itemName" required>
+                                        <select id="type" class="form-control @error('type') is-invalid @enderror" name="type" required>
                                             <option value="General Maintenance">General Maintenance</option>
                                             <option value="Technician">Technician</option>
                                             <option value="Handy Man">Handy Man</option>
                                         </select>
-                                        @error('itemName')
+                                        @error('type')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
@@ -83,17 +83,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body" id="pendingMaintenanceBody">    
-                <form id="assignTechnicianForm">
-                    <div class="mb-3">
-                        <label for="technicianSelect" class="form-label">Select Technician:</label>
-                        <select class="form-select" id="technicianSelect" required>
-                            <option value="technician1">Technician 1</option>
-                            <option value="technician2">Technician 2</option>
-                            <option value="technician3">Technician 3</option>
-                        </select>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Assign Technician</button>
-                </form>
+                
             </div>
         </div>
     </div>
@@ -103,7 +93,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="inprogressMaintenanceTitle"></h5>
+                <h5 class="modal-title" id="inprogressMaintenanceTitle">In Progress</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body" id="inprogressMaintenanceBody">

@@ -14,6 +14,22 @@ use App\Http\Controllers\GoogleSocialiteController;
 |
 */
 // Route::group(['middleware' => ['web', 'cors']], function () {
+    use Illuminate\Support\Facades\Auth;
+
+// Example route that requires authentication
+    Route::get('/getAuthUser', function () {
+        // Check if the user is authenticated
+        if (Auth::check()) {
+            // Get the authenticated user
+            $user = Auth::user();
+
+            // Return the authenticated user as JSON response
+            return response()->json($user);
+        } else {
+            // User is not authenticated, return an error response
+            return response()->json(['error' => 'Unauthenticated'], 401);
+        }
+    });
 
     Route::get('auth/google', [GoogleSocialiteController::class, 'redirectToGoogle']);
     Route::get('callback/google', [GoogleSocialiteController::class, 'handleCallback']);

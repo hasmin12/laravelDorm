@@ -44,8 +44,6 @@
         </div>
         <div id="resident-reports">
             <div class="bg-light text-center rounded p-4">
-
-            <div class="bg-light text-center rounded p-4">
                 <div class="d-flex align-items-center justify-content-between mb-4">
                     <h6 class="mb-0">Residents</h6>
                 </div>
@@ -84,7 +82,6 @@
             </div>
         </div>
 
-        </div>
         
         <div id="announcements-reports">
         </div>

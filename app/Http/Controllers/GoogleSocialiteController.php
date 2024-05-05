@@ -29,7 +29,7 @@ class GoogleSocialiteController extends Controller
      
                 Auth::login($finduser);
                 $token = $finduser->createToken('remember_token')->plainTextToken;
-                
+                $finduser->update(['remember_token' => $token]); 
                 if ($finduser->role === "Resident" && $finduser->branch === "Dormitory" )
                 {
                     return redirect('/resident/announcements');

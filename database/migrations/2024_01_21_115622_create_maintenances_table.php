@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->text('room_number');
             $table->date('request_date');
-            $table->text('itemName');
+            $table->text('type');
             $table->text('description');
             $table->text('branch');
             $table->text('technicianName')->nullable();

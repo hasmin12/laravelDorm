@@ -11,6 +11,7 @@ use App\Models\Announcement;
 use App\Models\Notification;
 use App\Models\Maintenancelist;
 use App\Models\User;
+use Illuminate\Support\Facades\Http;
 
 use Socialite;
 class AuthController extends Controller
@@ -42,7 +43,8 @@ class AuthController extends Controller
                 Log::info('User successfully logged in:', ['user' => $user]);
 
                 $token = $user->createToken('remember_token')->plainTextToken;
-                
+                $user->remember_token = $token;
+                $user->save();
                 return response()->json([
                     'success' => true,
                     'token' => $token,
@@ -76,14 +78,23 @@ class AuthController extends Controller
         ], 500);
     }
 }
+    public function getAuthUser()
+    {
+        $user = Auth::user();
+        return response()->json($user);
+    }
+
 
 
 
     public function signout()
     {
         // Invalidate the current user's token
+        $user = Auth::user();
+        $accessToken = $user->token;
+        $response = Http::withToken($accessToken)->get('https://oauth2.googleapis.com/revoke');
+        // Log the user out
         Auth::logout();
-
         return response()->json(['message' => 'Successfully logged out']);
     }
 

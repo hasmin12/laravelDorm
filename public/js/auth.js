@@ -42,12 +42,8 @@ $(document).ready(function() {
             dataType: "json",
             success: function (response) {
                 if (response.success) {
-                    localStorage.setItem('token', response.token);
-                    localStorage.setItem('email', response.email);
+                    getAuthUser();
 
-                    // localStorage.setItem('authname', response.user.name);
-
-                    // fetchNotifications();
                     Swal.fire({
                         icon: 'success',
                         text: 'Login Successful.',
@@ -68,7 +64,6 @@ $(document).ready(function() {
                 }
             },
             error: function (error) {
-                // Display SweetAlert for other errors
                 Swal.fire({
                     icon: 'error',
                     text: 'An error occurred during login. Please try again.',
@@ -95,7 +90,7 @@ $(document).ready(function() {
             success: function (data) {
               
                 localStorage.removeItem("token");
-                localStorage.removeItem("user");
+                localStorage.removeItem("email");
 
                 Swal.fire({
                     icon: 'success',
@@ -109,7 +104,29 @@ $(document).ready(function() {
         });
     });
 
-
-});
+    function getAuthUser() {
+        fetch('/getAuthUser', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            },
+            credentials: 'include',
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log(data);
+            localStorage.setItem('token', data.remember_token);
+            localStorage.setItem('email', data.email);
+        })
+        .catch(error => console.error('Error fetching user data:', error));
+    }
+}
+)    
 
  

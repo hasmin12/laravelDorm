@@ -54,16 +54,12 @@
                     <form id="updateBedForm">
                         <div class="mb-3">
                             <label for="updateName" class="form-label">Name</label>
-                            <input type="text" class="form-control" id="updateName" autocomplete="off" required>
+                            <input type="text" class="form-control" id="updateName" autocomplete="off" @readonly(true)>
                         </div>
     
                         <div class="mb-3">
                             <label for="updateType" class="form-label">Type</label>
-                            <select class="form-select" id="updateType" required>
-                                <option value="" selected hidden></option>
-                                <option value="Up">Up</option>
-                                <option value="Down">Down</option>
-                            </select>
+                            <input type="text" class="form-control" id="updateType" autocomplete="off" @readonly(true)>
                         </div>
   
                         <div class="mb-3">

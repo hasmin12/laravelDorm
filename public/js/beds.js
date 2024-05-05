@@ -99,9 +99,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         <td>${residentName}</td>
                         <td>${bed.status}</td>
                         <td>
-                            <button class="btn btn-sm btn-success" onclick="checkRoom(${bed.id})">Check</button>
-                            <button class="btn btn-sm btn-warning" onclick="fetchBed(${bed.id})">Update</button>
-                            <button class="btn btn-sm btn-danger" onclick="deleteRoom(${bed.id})">Delete</button>
+                            <button class="btn btn-sm btn-info" onclick="fetchBed(${bed.id})">Update</button>
                         </td>
                     </tr>
                 `;

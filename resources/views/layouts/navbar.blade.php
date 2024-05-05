@@ -10,10 +10,13 @@
     <div class="navbar-nav align-items-center ms-auto">
         <div class="nav-item dropdown">
             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                <i class="fa fa-bell me-lg-2"></i>
+                <i class="fa fa-bell me-lg-2" style="position: relative;"> 
+                    <span id="notification-count" class="badge bg-danger" style="position: absolute; bottom: 0; right: 0;"></span>
+                </i>
+                
                 <span class="d-none d-lg-inline-flex" style="color: white; cursor: pointer;" onmouseover="this.style.color='red'" onmouseout="this.style.color='white'">Notifications</span>
             </a>
-            <div id="notifications" class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
+            <div id="notifications" class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0 w-5">
                 <!-- Notifications will be dynamically inserted here -->
             </div>
         </div>

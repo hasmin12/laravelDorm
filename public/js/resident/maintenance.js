@@ -43,10 +43,10 @@ function fetchmaintenances() {
                 }
 
                 const cardContent = `
-                    <div class="card h-100" style="cursor: pointer;" onclick="showItemDetails('${maintenance.id}','${maintenance.status}', '${maintenance.itemName}','${maintenance.description}', '${maintenance.technicianName}','${maintenance.completionPercentage}')">
+                    <div class="card h-100" style="cursor: pointer;" onclick="showItemDetails('${maintenance.id}','${maintenance.status}', '${maintenance.type}','${maintenance.description}', '${maintenance.technicianName}','${maintenance.completionPercentage}','${maintenance.branch}','${maintenance.room_number}')">
                         <div class="card-body">
                             <div class="d-flex align-items-center justify-content-between mb-2">
-                                <h5 class="card-title">${maintenance.itemName}</h5>
+                                <h5 class="card-title">${maintenance.type}</h5>
                                 <small class="${statusColorClass}">${maintenance.status}</small>
                             </div>
                             <img src="${maintenance.img_path}" alt="Maintenance Item Image" class="card-img-top" style="max-height: 150px;">
@@ -67,15 +67,15 @@ const createMaintenanceForm = $('#createMaintenanceForm');
     createMaintenanceForm.submit(function (event) {
     event.preventDefault();
 
-    const itemNameInput = $('#itemName');
+    const typeInput = $('#type');
     const descriptionInput = $('#description');
     const imageInput = $('#img_path')[0].files[0];
 
-    const itemName = itemNameInput.val();
+    const type = typeInput.val();
     const description = descriptionInput.val();
 
     const formData = new FormData();
-    formData.append('itemName', itemName);
+    formData.append('type', type);
     formData.append('description', description);
     formData.append('img_path', imageInput);
 
@@ -95,7 +95,7 @@ const createMaintenanceForm = $('#createMaintenanceForm');
 
             $('#createMaintenanceModal').modal('hide');
 
-            itemNameInput.val('');
+            typeInput.val('');
             descriptionInput.val('');
             $('#img_path').val('');
 
@@ -119,20 +119,26 @@ const createMaintenanceForm = $('#createMaintenanceForm');
     });
 });
 
-function showItemDetails(id, status, itemName, description, technicianName, completionPercentage) {
-    const modalTitle = document.getElementById('maintenanceModalTitle');
-    const modalBody = document.getElementById('maintenanceModalBody');
+function showItemDetails(id, status, type, description, technicianName, completionPercentage,branch,room_number) {
 
-    modalTitle.innerText = 'Maintenance Request Details';
 
     let modalContent = `
-        <b>Item Name:</b> ${itemName}<br>
-        <b>Description:</b> ${description}<br>
+        <b>Item Name:</b> ${type}<br>
+        <b>Description:</b> ${branch}: Room ${room_number}<br>
+        <b>Room Details:</b> ${status}<br>
+
         <b>Status:</b> ${status}<br>
+        
     `;
 
-    if (status === "Pending" || status === "Cancelled") {
+    if (status === "PENDING" || status === "Cancelled") {
         modalContent += `<b>Status:</b> Waiting for approval`;
+    const modalBody = document.getElementById('pendingMaintenanceBody');
+
+    modalBody.innerHTML = modalContent;
+
+    $('#pendingMaintenanceModal').modal('show');
+
     } else {
         modalContent += `
             <b>Completion Percentage:</b>
@@ -141,10 +147,15 @@ function showItemDetails(id, status, itemName, description, technicianName, comp
             </div><br>
             <b>Assigned Technician:</b> ${technicianName}
         `;
-    }
+        
+    const modalBody = document.getElementById('inprogressMaintenanceBody');
 
     modalBody.innerHTML = modalContent;
 
-    $('#maintenanceModal').modal('show');
+    $('#inprogressMaintenanceModal').modal('show');
+
+    }
+
+
 }
 

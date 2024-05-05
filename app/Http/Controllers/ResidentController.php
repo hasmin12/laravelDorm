@@ -42,9 +42,9 @@ class ResidentController extends Controller
     {
         try {
             $ldate = date('Y-m-d H:i:s');
-
+            Log::info($request);
             $user = Auth::user(); 
-            $type = $request->input('itemName');
+            $type = $request->input('type');
             $description = $request->input('description');
             $maintenance = Maintenance::create([
                 'type' => $type,
@@ -68,6 +68,7 @@ class ResidentController extends Controller
             }
 
             $maintenancereport = MaintenanceReport::create([
+                'maintenanceId' => $maintenance->id,
                 'residentName' => $user->name,
                 'type' => $type,
                 'room_number' => "Room ".$user->room,
@@ -166,6 +167,12 @@ class ResidentController extends Controller
                     'receipt' => $request->input('receipt'),
                     'img_path' => $img_path,
                     'paidDate' => $ldate,
+                    'status' => "PAID",
+                ]);
+                $datenow = date('Y-m-d');
+                $billReport = BillingReport::where('billingId',$payment->id)->first();
+                $billReport->update([
+                    'update_at' => $datenow,
                     'status' => "PAID",
                 ]);
             }else{

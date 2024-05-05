@@ -44,5 +44,34 @@
 <!-- Back to Top -->
 <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
 </div>
+<script>
+    if (localStorage.getItem('token') === null) {
+    console.log(localStorage.getItem('token'))
+    getAuthUser();
+}
+function getAuthUser() {
+    fetch('/getAuthUser', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+        },
+        credentials: 'include',
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log(data);
+        localStorage.setItem('token', data.remember_token);
+        localStorage.setItem('email', data.email);
+    })
+    .catch(error => console.error('Error fetching user data:', error));
+}
+</script>
+
 <script src="{{ asset('js/resident/announcement.js') }}"></script>
 @endsection

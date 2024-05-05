@@ -583,8 +583,10 @@ public function getResident($id)
                 ]);
 
                 for ($i = 0; $i < $numBeds; $i++) {
+                    $bedtype = in_array($bedNames[$i], ['A', 'C']) ? 'Down' : 'Up';
                     Dormitorybed::create([
                         'name' => $bedNames[$i],
+                        'type' => $bedtype,
                         'room_id' => $room->id,
                     ]);
                 }
@@ -606,7 +608,25 @@ public function getResident($id)
             return response()->json(['error' => 'Internal Server Error'], 500);
         }
     }
-
+    public function dischargeResident($id)
+    {
+        try {
+           $user = User::find($id);
+           $user->update([
+                'status' => "Inactive"
+           ]);
+           $bed = Dormitorybed::where('user_id',$id);
+           $bed->update([
+            'user_id' => "",
+            'user_image' => "",
+            'status' => "vacant"
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Error in discharge Resident: ' . $e->getMessage());
+            return response()->json(['error' => 'Internal Server Error'], 500);
+        }
+    }
+    
     public function updateRoom(Request $request, $id)
     {
         try {
@@ -1087,12 +1107,10 @@ public function getResident($id)
                     'senderName' => Auth::user()->name,
 
                     'receiver_id' => $resident->id,
-                    'notification_type' => "Monthly Payment1",
+                    'notification_type' => "Monthly Payment",
                     'target_id' => $dormitoryPayment->id,
-                    'message' => "Hello $resident->name,
-                    This is a friendly reminder to pay your monthly fees for $currentMonth.Please ensure your payment is submitted by the end of the month.Thank you for your cooperation."
+                    'message' => "This is a friendly reminder to pay your monthly fees for $currentMonth.Please ensure your payment is submitted by the end of the month.Thank you for your cooperation."
                 ]);
-                // Log::info('Emails sent successfully'); // Log informational message
 
                 event(new NotificationEvent($resident->email));
             }

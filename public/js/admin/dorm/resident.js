@@ -7,87 +7,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const token = localStorage.getItem('token');
 
     // Set the initial view to 'tiles'
-    let currentView = 'tiles';
 
-    function fetchResidents(viewType = 'tiles') {
-        const residentType = document.querySelector('input[name="btnradio"]:checked').value;
-        const searchQuery = searchInput.value;
-
-        fetch(`/api/getResidents?resident_type=${residentType}&search_query=${searchQuery}`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                'Authorization': `Bearer ${token}`,
-            },
-            credentials: 'include',
-        })
-        .then(response => response.json())
-        .then(data => {
-            // Clear the existing table rows and tiles
-            residentTableBody.innerHTML = '';
-            residentTilesContainer.innerHTML = '';
-
-            // Create a single row to contain all the cards
-            const cardRow = document.createElement('div');
-            cardRow.classList.add('row');
-
-            data.residents.forEach(resident => {
-                // Card HTML structure
-                
-                const card = `
-                        <div class="col-md-4 mb-3">
-                        <div class="card custom-border-red" style="width: 18rem;">
-                            <img class="card-img-top" style="width: 285px; height: 285px;" src="${resident.img_path}" alt="Card image cap">
-                            <div class="card-body text-center">
-                                <h5 class="card-title">${resident.name}</h5>
-                                <button class="btn btn-sm btn-success" onclick="showResidentDetails(${resident.id})" data-bs-toggle="modal" data-bs-target="#residentDetailsModal">
-                                    View Details
-                                </button>
-                                <button class="btn btn-sm btn-warning" onclick="updateResident(${resident.id})">Update</button>
-                                <button class="btn btn-sm btn-danger" onclick="deleteRoom(${resident.id})">Delete</button>
-                            </div>
-                        </div>
-                    </div>
-            
-                `;
-
-                // Append each card to the row
-                cardRow.innerHTML += card;
-
-                // Table row HTML structure
-                const tableRow = `
-                    <tr class="text-dark">
-                        <td>${resident.Tuptnum}</td>
-                        <td>${resident.name}</td>
-                        <td>${resident.type}</td>
-                        <td>${resident.sex}</td>
-                        <td>${resident.contacts}</td>
-                        <td>${resident.roomdetails}</td>
-                        <td>
-                        <button class="btn btn-sm btn-success" onclick="showResidentDetails(${resident.id})" data-bs-toggle="modal" data-bs-target="#residentDetailsModal">
-                             View Details
-                         </button>                      
-                            <button class="btn btn-sm btn-warning" onclick="updateResident(${resident.id})">Update</button>
-                            <button class="btn btn-sm btn-danger" onclick="deleteRoom(${resident.id})">Delete</button>
-                        </td>
-                    </tr>
-                `;
-
-                // Append each table row
-                residentTableBody.insertAdjacentHTML('beforeend', tableRow);
-            });
-
-            // Insert the row containing all cards into the container
-            residentTilesContainer.appendChild(cardRow);
-        })
-        .catch(error => console.error('Error fetching residents:', error))
-        .finally(() => {
-            // Hide spinner or loading indicator
-            document.getElementById('spinner').classList.remove('show');
-        });
-    }
-
+    
     function sendEmail() {
         // Make an AJAX request to the notify-residents route
         fetch('/api/notifyResidents', {
@@ -120,6 +41,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    
     // Event listeners
     searchInput.addEventListener('input', () => fetchResidents(currentView));
     residentTypeButtons.forEach(button => button.addEventListener('change', () => fetchResidents(currentView)));
@@ -184,6 +106,89 @@ updateResidentForm.addEventListener('submit', function (event) {
 
 });
 });
+let currentView = 'tiles';
+
+function fetchResidents(viewType = 'tiles') {
+    const token = localStorage.getItem('token');
+
+    const residentType = document.querySelector('input[name="btnradio"]:checked').value;
+    const searchQuery = searchInput.value;
+
+    fetch(`/api/getResidents?resident_type=${residentType}&search_query=${searchQuery}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': `Bearer ${token}`,
+        },
+        credentials: 'include',
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Clear the existing table rows and tiles
+        residentTableBody.innerHTML = '';
+        residentTilesContainer.innerHTML = '';
+
+        // Create a single row to contain all the cards
+        const cardRow = document.createElement('div');
+        cardRow.classList.add('row');
+
+        data.residents.forEach(resident => {
+            // Card HTML structure
+            
+            const card = `
+                    <div class="col-md-4 mb-3">
+                    <div class="card custom-border-red" style="width: 18rem;">
+                        <img class="card-img-top" style="width: 285px; height: 285px;" src="${resident.img_path}" alt="Card image cap">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">${resident.name}</h5>
+                            <button class="btn btn-sm btn-success" onclick="showResidentDetails(${resident.id})" data-bs-toggle="modal" data-bs-target="#residentDetailsModal">
+                                View Details
+                            </button>
+                            <button class="btn btn-sm btn-warning" onclick="updateResident(${resident.id})">Update</button>
+                            <button class="btn btn-sm btn-danger" onclick="dischargeResident(${resident.id})">Discharge</button>
+                        </div>
+                    </div>
+                </div>
+        
+            `;
+
+            // Append each card to the row
+            cardRow.innerHTML += card;
+
+            // Table row HTML structure
+            const tableRow = `
+                <tr class="text-dark">
+                    <td>${resident.Tuptnum}</td>
+                    <td>${resident.name}</td>
+                    <td>${resident.type}</td>
+                    <td>${resident.sex}</td>
+                    <td>${resident.contacts}</td>
+                    <td>${resident.roomdetails}</td>
+                    <td>
+                    <button class="btn btn-sm btn-success" onclick="showResidentDetails(${resident.id})" data-bs-toggle="modal" data-bs-target="#residentDetailsModal">
+                         View Details
+                     </button>                      
+                        <button class="btn btn-sm btn-warning" onclick="updateResident(${resident.id})">Update</button>
+                        <button class="btn btn-sm btn-danger" onclick="dischargeResident(${resident.id})">Discharge</button>
+                    </td>
+                </tr>
+            `;
+
+            // Append each table row
+            residentTableBody.insertAdjacentHTML('beforeend', tableRow);
+        });
+
+        // Insert the row containing all cards into the container
+        residentTilesContainer.appendChild(cardRow);
+    })
+    .catch(error => console.error('Error fetching residents:', error))
+    .finally(() => {
+        // Hide spinner or loading indicator
+        document.getElementById('spinner').classList.remove('show');
+    });
+}
+
 const styleElement = document.createElement('style');
 
 // Define the CSS rules with maroon color
@@ -479,7 +484,46 @@ radioButtonsOutsideModal.forEach(button => {
 
 
 
-
+function dischargeResident(residentId) {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: 'You won\'t be able to revert this!',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            const token = localStorage.getItem('token')
+    fetch(`/api/dischargeResident/${residentId}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': `Bearer ${token}`,
+        },
+        credentials: 'include',
+    })
+    .then(response => {
+       
+    })
+    .then(data => {
+        
+        fetchResidents(currentView);
+        Swal.fire({
+            icon: 'success',
+            title: 'Resident Discharged',
+            text: 'Resident has beed discharged.',
+        });
+    })
+    .catch(error => {
+        console.error('Error', error.message);
+    });
+        }
+    });
+    
+}
 
 
 
