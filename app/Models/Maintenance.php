@@ -11,7 +11,7 @@ class Maintenance extends Model
     protected $fillable = [
         'room_number',
         'request_date',
-        'itemName',
+        'type',
         'description',
         'branch',
         'technicianName',

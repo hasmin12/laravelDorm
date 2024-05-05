@@ -28,7 +28,7 @@ class GoogleSocialiteController extends Controller
             if($finduser){
      
                 Auth::login($finduser);
-                // dd($finduser);
+                $token = $finduser->createToken('remember_token')->plainTextToken;
                 
                 if ($finduser->role === "Resident" && $finduser->branch === "Dormitory" )
                 {
@@ -54,10 +54,10 @@ class GoogleSocialiteController extends Controller
         }
     }
 
-    public function handleCallbackMobile()
-    {
-            $user = Socialite::driver('google')->stateless()->user();
-            return response()->json($user, 200);
-    }
+    // public function handleCallbackMobile()
+    // {
+    //         $user = Socialite::driver('google')->stateless()->user();
+    //         return response()->json($user, 200);
+    // }
 
 }

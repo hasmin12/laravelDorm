@@ -35,6 +35,10 @@ use Log;
 
 use App\Events\NotificationEvent;
 
+
+//reports
+use App\Models\BillingReport;
+
 class AdminController extends Controller
 {
 
@@ -1042,6 +1046,7 @@ public function getResident($id)
         try {
             $residents = User::where('is_paid', 0)->where('branch', "Dormitory")->where('role', "Resident")->get();
             $currentMonth = now()->format('F Y');
+            $ldate = date('Y-m-d');
 
 
             foreach ($residents as $resident) {
@@ -1062,6 +1067,19 @@ public function getResident($id)
                     'electricfan' => $resident->electricfan,
                     'totalAmount' => $totalAmount,
                     'payment_month' => $currentMonth
+                ]);
+            
+                $billing = BillingReport::create([
+                    'billingId' => $dormitoryPayment->id,
+                    'residentName' => $resident->name,
+
+                    'roomdetails' => $resident->room,
+                    'totalAmount' => $totalAmount,
+                    'payment_month' => $currentMonth,
+                    'status' => "Pending",
+                    'created_at' => $ldate
+
+
                 ]);
 
                 $notifs = Notification::create([
@@ -1248,6 +1266,68 @@ public function getResident($id)
         $logs = Residentlog::where('user_id', $request->input('residentId'))->where('purpose', "Leave")->get();
         return response()->json($logs);
     }
+
+    public function getAllLogs(Request $request)
+    {
+        $logs = Residentlog::all();
+        return response()->json($logs);
+    }
+
+    public function getAllSleepLogs(Request $request)
+{
+    $users = User::where('role', "Resident")->where('status', "Active")->pluck('name', 'id')->toArray();
+    Log::info($users);
+    $months = Residentlog::selectRaw("DATE_FORMAT(dateLog, '%M') as month")->where('name', "Sleep")
+        ->distinct()
+        ->orderByRaw("MONTH(dateLog)")
+        ->pluck('month')
+        ->toArray();
+
+    $formattedData = [];
+
+    foreach ($users as $userId => $userName) {
+        $attendanceData = ['resident' => $userName, 'attendance' => []];
+
+        foreach ($months as $month) {
+            $sleepLogs = Residentlog::where('user_id', $userId)
+                ->where('name', "Sleep")
+                ->whereMonth('dateLog', Carbon::parse($month)->month) // Use Carbon to parse month
+                ->get();
+
+            $attendance = [];
+
+            $currentMonth = Carbon::parse($month);
+            $currentDate = Carbon::now();
+        for ($day = 1; $day <= $currentMonth->daysInMonth; $day++) {
+            $dateToCheck = $currentMonth->copy()->day($day);
+
+           
+            if ($dateToCheck->greaterThan($currentDate)) {
+                $attendance[] = null; 
+                continue;
+            }
+            $sleepLog = $sleepLogs->first(function ($log) use ($dateToCheck) {
+            Log::info($log->dateLog);
+
+                return Carbon::parse($log->dateLog)->format('Y-m-d') === $dateToCheck->format('Y-m-d');
+            });
+            Log::info($sleepLog);
+
+            $attendance[] = $sleepLog ? 'P' : 'A';
+        }
+
+
+            $attendanceData['attendance'][$month] = $attendance;
+        }
+
+        // Add attendance data for this resident to the formatted data
+        $formattedData[] = $attendanceData;
+    }
+    $selectedMonth = Carbon::now()->format('F');
+
+    // Return the formatted data as JSON response
+    return response()->json(["attendance" => $formattedData,"months"=>$months, "currentMonth" => $selectedMonth]);
+}
 
     public function getSleepLogs(Request $request)
     {

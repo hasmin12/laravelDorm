@@ -131,7 +131,11 @@ Route::middleware(['adminbranch:Dormitory'])->group(function () {
             return view('admin.dorm.logs');
         });
 
-        
+        Route::get('/reports', function () {
+            return view('admin.dorm.reports');
+        });
+
+
     });
 });
     

@@ -111,6 +111,9 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::get('/getMaintenances', 'ResidentController@getMaintenances');
     Route::get('/admin/getMaintenances', 'AdminController@getMaintenances');
     Route::post('/approveMaintenance/{id}', 'ResidentController@approveMaintenance');
+    Route::get('/getAllLogs', 'AdminController@getAllLogs');
+    Route::get('/getAllSleepLogs', 'AdminController@getAllSleepLogs');
+
 
 
     Route::get('/getTechnicians', 'AdminController@getTechnicians');
@@ -135,6 +138,7 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::get('/getMaintenanceStatus', 'TechnicianController@getMaintenanceStatus');
     
     Route::post('/addMaintenanceStatus', 'TechnicianController@addMaintenanceStatus');
+    Route::get('/technician/getMaintenance', 'TechnicianController@getMaintenance');
 
     Route::get('/getNotifications', 'AuthController@getNotifications');
 
@@ -159,6 +163,9 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
 Route::get('/residentChart', 'ChartController@residentChart');
 Route::get('/residentTypeChart', 'ChartController@residentTypeChart');
 
+
+//reports
+Route::get('/residentsReport', 'ReportController@residentsReport');
     
 });
 

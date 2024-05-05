@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Announcement;
 use Illuminate\Http\Request;
 use Auth;
 use App\Models\Maintenance;
@@ -15,6 +16,10 @@ use App\Models\User;
 use App\Models\Approvemaintenance;
 use App\Models\Reservation;
 use Illuminate\Support\Facades\Storage;
+//reports
+use App\Models\BillingReport;
+use App\Models\AnnouncementReport;
+use App\Models\MaintenanceReport;
 
 use Log;
 class ResidentController extends Controller
@@ -39,11 +44,10 @@ class ResidentController extends Controller
             $ldate = date('Y-m-d H:i:s');
 
             $user = Auth::user(); 
-            $itemName = $request->input('itemName');
+            $type = $request->input('itemName');
             $description = $request->input('description');
-            Log::info($user);
             $maintenance = Maintenance::create([
-                'itemName' => $itemName,
+                'type' => $type,
                 'description' => $description,
                 'room_number' => $user->room,
                 'request_date' => $ldate,
@@ -63,14 +67,18 @@ class ResidentController extends Controller
                 ]);
             }
 
-            $approve = Approvemaintenance::create([
-                'maintenance_id' => $maintenance->id,
-                'user_id' => $user->id,
+            $maintenancereport = MaintenanceReport::create([
+                'residentName' => $user->name,
+                'type' => $type,
+                'room_number' => "Room ".$user->room,
+                'branch' => $user->branch,
+                'status' => "Pending",
+
             ]);
 
             return response()->json(['maintenance' => $maintenance], 201);
         } catch (\Exception $e) {
-            \Log::error('Error creating maintenance: ' . $e->getMessage());
+            Log::error('Error creating maintenance: ' . $e->getMessage());
             return response()->json(['error' => 'Internal Server Error'], 500);
         }
     }
@@ -88,6 +96,20 @@ class ResidentController extends Controller
         } catch (\Exception $e) {
        
             return response()->json(['message' => 'Failed to fetch payment history', 'error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function readAnnouncement(Request $request)
+    {
+        try {
+            $announcement = AnnouncementReport::where('announcementId',$request->input('announcementId'))->get();
+
+            $announcementreport = AnnouncementReport::where('announcementId',$request->input('announcementId'))->get();
+            
+            return response()->json($announcementreport, 200);
+        } catch (\Exception $e) {
+       
+            return response()->json(['message' => 'Failed', 'error' => $e->getMessage()], 500);
         }
     }
     

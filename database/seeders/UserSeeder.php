@@ -58,6 +58,9 @@ class UserSeeder extends Seeder
             'sex' => $faker->randomElement($array = array ('Male', 'Female')), 
             'religion' => 'Islam',
             'civil_status' => 'Single',
+            'room' => 1,
+            'bed' => "A",
+
             'address' => $faker->address(),
             'contactNumber' => $faker->phoneNumber(),
             'Tuptnum' => $tupt_temp . "" . $tupt_num,

@@ -21,15 +21,12 @@
             </div>
             <div class="d-flex align-items-center justify-content-between mb-2">
                 <div class="btn-group" role="group">
-                    <input type="radio" class="btn-check" name="branchRadiobtn" id="branchBtnradio1" autocomplete="off" checked  value="Leave">
-                    <label class="btn btn-outline-primary" for="branchBtnradio1">Leave</label>
+                    <input type="radio" class="btn-check" name="nameRadiobtn" id="nameRadiobtn1" autocomplete="off" checked  value="Leave">
+                    <label class="btn btn-outline-primary" for="nameRadiobtn1">Leave</label>
 
-                    <input type="radio" class="btn-check" name="branchRadiobtn" id="branchBtnradio2" autocomplete="off" value="Sleep">
-                    <label class="btn btn-outline-primary" for="branchBtnradio2">Sleep</label>
+                    <input type="radio" class="btn-check" name="nameRadiobtn" id="nameRadiobtn2" autocomplete="off" value="Sleep">
+                    <label class="btn btn-outline-primary" for="nameRadiobtn2">Sleep</label>
 
-                    <select id="dateDropdown" class="form-select">
-                        <!-- Date options will be populated dynamically here -->
-                    </select>
                 </div>
             </div>
         </div>
@@ -44,22 +41,35 @@
         <div class="container-fluid pt-4 px-4">
             <div class="col-sm-12 col-xl-18">
                 <div class="bg-light rounded h-100 p-4">
-                <div class="table-responsive">
-                    <table class="table text-start align-middle table-bordered table-hover mb-0">
+                <div id="LeaveTable"  class="table-responsive">
+                    <table id="LeaveTable" class="table text-start align-middle table-bordered table-hover mb-0">
                         <thead>
                             <tr class="text-dark">
-                                <th>Action</th>
                                 <th>Student Name</th>
+                                <th>Purpose</th>
+
                                 <th>Leave Date</th>
                                 <th>Expected Return</th>
                                 <th>Return Date</th>
-                                <th>Purpose</th>
-                                <th>Gatepass</th>
                                 <th>Status</th>
-                                <th>Date Logged</th>
+                                <th>Gatepass</th>
                             </tr>
                         </thead>
-                        <tbody id="logsTableBody">
+                        <tbody id="LeaveTbody">
+                            
+                        </tbody>
+                    </table>
+                </div>
+                <div id="SleepTable"  class="table-responsive" style="overflow-x: auto;">
+
+                    <table id="SleepTable" class="table text-start align-middle table-bordered table-hover mb-0">
+                        <thead>
+                            <tr class="text-dark">
+                                <th>Name</th>
+                               
+                            </tr>
+                        </thead>
+                        <tbody id="SleepTbody">
                             
                         </tbody>
                     </table>

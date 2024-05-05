@@ -42,6 +42,7 @@ class AuthController extends Controller
                 Log::info('User successfully logged in:', ['user' => $user]);
 
                 $token = $user->createToken('remember_token')->plainTextToken;
+                
                 return response()->json([
                     'success' => true,
                     'token' => $token,

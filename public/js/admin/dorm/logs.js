@@ -1,52 +1,126 @@
 $(document).ready(function() {
-    // Function to fetch logs based on type and date
-    function fetchLogs(type, date) {
-        const token = localStorage.getItem('token');
+    const logsNameButtons = document.querySelectorAll('input[name="nameRadiobtn"]');
+    logsNameButtons.forEach(button => button.addEventListener('change', () => fetchLogs()));
 
-        // Fetch logs and unique dates from the server
+    function fetchLogs() {
+        const logsName = document.querySelector('input[name="nameRadiobtn"]:checked').value;
+        const LeaveTable = document.getElementById('LeaveTable');
+        const SleepTable = document.getElementById('SleepTable');
+
+        const LeaveTbody = document.getElementById('LeaveTbody');
+        const SleepTbody = document.getElementById('SleepTbody');
+        
+        const token = localStorage.getItem('token');
+        if (logsName == "Leave") {
+            LeaveTable.style.display = "block"
+            SleepTable.style.display = "none"
+            SleepTbody.innerHTML = "";
+            LeaveTbody.innerHTML = "";
+
+            $.ajax({
+                url: "/api/getAllLogs",
+                method: "GET",
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                },
+                dataType: "json",
+                beforeSend: function() {
+                    $('#spinner').addClass('show');
+                },
+                success: function(data) {
+                console.log(data)
+
+                        data.forEach(logs => {
+                            if (logs.name == "Leave") {
+                                    const tableRow = `
+                                    <tr class="text-dark">
+                                    
+                                        <td>${logs.user_id}</td>
+                                        <td>${logs.purpose}</td>
+
+                                        <td>${logs.leave_date}</td>
+                                        <td>${logs.expectedReturn}</td>
+                                        <td>${logs.return_date}</td>
+
+                                        <td>${logs.status}</td>
+                                        <td>${logs.gatepass}</td>
+                                        
+                                    </tr>
+                                `;
+
+                                LeaveTbody.insertAdjacentHTML('beforeend', tableRow);
+                            }
+
+                        })
+                                        
+                    $('#spinner').removeClass('show');
+
+                },
+                error: function(xhr, status, error) {
+                    $('#spinner').removeClass('show');
+                    console.error(error);
+                }
+            });
+    }else{
+        LeaveTable.style.display = "none"
+        SleepTable.style.display = "block"
+        LeaveTbody.innerHTML = "";
+        SleepTbody.innerHTML = "";
+
         $.ajax({
-            url: "/api/admin/logs",
+            url: "/api/getAllSleepLogs",
             method: "GET",
             headers: {
                 'Authorization': `Bearer ${token}`,
             },
-            data: { type: type }, // Include type parameter
             dataType: "json",
             beforeSend: function() {
                 $('#spinner').addClass('show');
             },
             success: function(data) {
-                $('#spinner').removeClass('show');
-                console.log(data)
-                if (data.success) {
-                    // Clear existing table data
-                    $('#logsTableBody').empty();
-
-                    // Populate table with logs data
-                    $.each(data.logs, function(index, log) {
-                        var statusIcon = log.status === 'Active' ? '❌' : '✅'; // X emoji for "Active", check emoji for "Inactive"
-                        var gatepassImage = log.gatepass ? '<button class="btn btn-secondary download-image" data-url="' + log.gatepass + '">Download Gatepass</button>' : ''; // Download button if gatepass image exists
-                        var row = '<tr class="text-dark">' +
-                            '<td><span class="status-icon">' + statusIcon + '</span></td>' + // Display X emoji for "Active", check emoji for "Inactive"
-                            '<td>' + log.student_name + '</td>' +
-                            '<td>' + log.leave_date + '</td>' +
-                            '<td>' + log.expected_return + '</td>' +
-                            '<td>' + log.return_date + '</td>' +
-                            '<td>' + log.purpose + '</td>' +
-                            '<td>' + gatepassImage + '</td>' +
-                            '<td>' + log.status + '</td>' +
-                            '<td>' + log.date_log + '</td>' +
-                            '</tr>';
-                        $('#logsTableBody').append(row);
-                    });
-
-                    // Populate dropdown menu with dates from the logs data
-                    populateDateDropdown(data.logs.map(log => log.date_log), date);
-                } else {
-                    // Handle error
-                    console.error(data.message);
+                const currentDate = new Date();
+                const currentMonth = currentDate.getMonth() + 1; // Months are zero-based in JavaScript
+            
+                const daysInMonth = new Date(currentDate.getFullYear(), currentMonth, 0).getDate();
+            
+                const tableHeader = document.getElementById("SleepTable").getElementsByTagName("thead")[0].getElementsByTagName("tr")[0];
+                for (let i = 1; i <= daysInMonth; i++) {
+                    const th = document.createElement("th");
+                    th.textContent = i;
+                    tableHeader.appendChild(th);
                 }
+            
+                const tbody = document.getElementById("SleepTable").getElementsByTagName("tbody")[0];
+                tbody.innerHTML = ""; 
+            
+                data.attendance.forEach(attendance => {
+                    const row = document.createElement("tr");
+                
+                    const nameTd = document.createElement("td");
+                    nameTd.textContent = attendance.resident;
+                    row.appendChild(nameTd);
+                
+                    for (let i = 0; i < daysInMonth; i++) {
+                        const td = document.createElement("td");
+                        const attendanceValue = attendance.attendance[data.currentMonth][i];
+                        td.textContent = attendanceValue; 
+                        if (attendanceValue === 'P') {
+                            td.style.backgroundColor = 'lightgreen';
+                        } else if (attendanceValue === 'A') {
+                            td.style.backgroundColor = 'pink';
+                        } else {
+                            td.style.backgroundColor = 'lightblue';
+                        }
+                        row.appendChild(td);
+                    }
+                
+                    tbody.appendChild(row);
+                });
+                
+            
+                $('#spinner').removeClass('show');
             },
+            
             error: function(xhr, status, error) {
                 $('#spinner').removeClass('show');
                 console.error(error);
@@ -54,44 +128,38 @@ $(document).ready(function() {
         });
     }
 
-    // Function to populate the dropdown menu with unique dates
+    }
+
     function populateDateDropdown(dates, selectedDate) {
-        // Extract unique dates
         var uniqueDates = [...new Set(dates)];
 
         var dropdown = $('#dateDropdown');
         dropdown.empty();
-        dropdown.append('<option value="">Select Date</option>'); // Add default option
+        dropdown.append('<option value="">Select Date</option>'); 
         uniqueDates.forEach(function(date) {
             dropdown.append($('<option></option>').text(date));
         });
-        // Set selected date if provided
         if (selectedDate) {
             dropdown.val(selectedDate);
         }
     }
 
-    // Fetch logs data for default type and date
     fetchLogs('Leave', '');
 
-    // Handle radio button change event
     $('input[name="branchRadiobtn"]').change(function() {
         var type = $(this).val();
         var date = $('#dateDropdown').val(); // Get selected date from dropdown
         fetchLogs(type, date);
     });
 
-    // Handle dropdown change event
     $('#dateDropdown').change(function() {
         var type = $('input[name="branchRadiobtn"]:checked').val(); // Get selected type
         var date = $(this).val();
         fetchLogs(type, date);
     });
 
-    // Handle click event for download image button
     $('#logsTableBody').on('click', '.download-image', function() {
         var imageUrl = $(this).data('url');
-        // Trigger download for the image
         window.open(imageUrl, '_blank');
     });
 });

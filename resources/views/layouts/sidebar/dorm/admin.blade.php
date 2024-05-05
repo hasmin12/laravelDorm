@@ -39,6 +39,7 @@
             <a href="/admin/dorm/laundry" class="nav-item nav-link"><i class="fa fa-calendar me-2"></i>Laundry</a>
             <a href="/admin/dorm/lostandfound" class="nav-item nav-link"><i class="fa fa-eye me-2"></i>Lost and Found</a>
             <a href="/admin/dorm/logs" class="nav-item nav-link"><i class="fa fa-eye me-2"></i>Resident Logs</a>
+            <a href="/admin/dorm/reports" class="nav-item nav-link"><i class="fa fa-eye me-2"></i>Reports</a>
 
             
         </div>

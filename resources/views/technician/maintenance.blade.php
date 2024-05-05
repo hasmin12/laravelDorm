@@ -144,5 +144,5 @@
 </div>
 
 
-<script src="{{ asset('js/admin/dorm/maintenance.js') }}"></script>
+<script src="{{ asset('js/technician/maintenance.js') }}"></script>
 @endsection

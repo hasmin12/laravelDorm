@@ -44,7 +44,13 @@ class TechnicianController extends Controller
      
         return response()->json($maintenanceStatus, 200);
     }
-
+    public function getMaintenance(Request $request)
+    {
+ 
+        $maintenance = Maintenance::where('technician_id', Auth::user()->id)->get();
+     
+        return response()->json($maintenance, 200);
+    }
     public function addMaintenanceStatus(Request $request)
     {
         try {
