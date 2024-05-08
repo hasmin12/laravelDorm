@@ -90,13 +90,17 @@ document.addEventListener('DOMContentLoaded', function () {
                 bedStatus.textContent = `${bed.status}`;
     
                 if (bed.status !== 'Occupied') {
-                    const assignButton = document.createElement('button');
-                    assignButton.classList.add('btn', 'btn-sm', 'btn-primary');
-                    assignButton.textContent = 'Assign';
-                    assignButton.addEventListener('click', function() {
+                    const assignForm = document.createElement('form');
+                    assignForm.addEventListener('submit', function(event) {
+                        event.preventDefault();
                         assignBed(bed.id); 
                     });
-                    cardBody.appendChild(assignButton);
+                    const assignButton = document.createElement('button');
+                    assignButton.setAttribute('type', 'submit');
+                    assignButton.classList.add('btn', 'btn-sm', 'btn-primary');
+                    assignButton.textContent = 'Assign';
+                    assignForm.appendChild(assignButton);
+                    cardBody.appendChild(assignForm);
                 }
         
                 cardBody.appendChild(bedName);
