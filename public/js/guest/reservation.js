@@ -46,8 +46,7 @@ function fetchHostelRooms() {
                             <p class="card-text">Pax: ${room.pax}</p>
                             <p class="card-text">Price: ₱${room.price}/day</p>
                             <div class="d-flex align-items-center justify-content-between mb-2">
-                                ${reserveButton}
-                                <p class="card-text" style="color: ${statusColor};">${room.status}</p>                     
+                                ${reserveButton}                     
                             </div>
                         </div>
                     </div>

@@ -57,7 +57,7 @@
                 <i class="bi bi-phone-vibrate fs-1 text-primary me-3"></i>
                 <div class="text-start">
                     <h6 class="text-uppercase fw-bold">Call Us</h6>
-                    <span>+012 345 6789</span>
+                    <span>09-XXX-XXX-XXXX</span>
                 </div>
             </div>
         </div>

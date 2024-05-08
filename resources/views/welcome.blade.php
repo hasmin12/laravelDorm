@@ -40,7 +40,7 @@
                     <i class="bi bi-geo-alt fs-1 text-primary me-3"></i>
                     <div class="text-start">
                         <h6 class="text-uppercase fw-bold">Our Office</h6>
-                        <span>123 Street, New York, USA</span>
+                        <span>Km 14. East Service Road, Western Bicutan, Taguig, Philippines</span>
                     </div>
                 </div>
             </div>
@@ -49,7 +49,7 @@
                     <i class="bi bi-envelope-open fs-1 text-primary me-3"></i>
                     <div class="text-start">
                         <h6 class="text-uppercase fw-bold">Email Us</h6>
-                        <span>info@example.com</span>
+                        <span>dormxtend@tup.edu.ph</span>
                     </div>
                 </div>
             </div>
@@ -58,7 +58,7 @@
                     <i class="bi bi-phone-vibrate fs-1 text-primary me-3"></i>
                     <div class="text-start">
                         <h6 class="text-uppercase fw-bold">Call Us</h6>
-                        <span>+012 345 6789</span>
+                        <span>09-XXX-XXX-XXXX</span>
                     </div>
                 </div>
             </div>
@@ -70,7 +70,7 @@
     <!-- Navbar Start -->
     <div class="container-fluid sticky-top bg-dark bg-light-radial shadow-sm px-5 pe-lg-0">
         <nav class="navbar navbar-expand-lg bg-dark bg-light-radial navbar-dark py-3 py-lg-0">
-            <a href="index.html" class="navbar-brand">
+            <a href="/" class="navbar-brand">
                 <h1 class="m-0 display-4 text-uppercase text-white">DORMXTEND</h1>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
@@ -94,7 +94,7 @@
                         <div class="p-3" style="max-width: 900px;">
                             <i class="fa fa-home fa-4x text-primary mb-4 d-none d-sm-block"></i>
                             <h1 class="display-2 text-uppercase text-white mb-md-4">HOSTEL</h1>
-                            <a href="{{ route('login') }}" class="btn btn-primary py-md-3 px-md-5 mt-2">Book a Room</a>
+                            <a href="{{ route('hostelrooms') }}" class="btn btn-primary py-md-3 px-md-5 mt-2">Book a Room</a>
                         </div>
                     </div>
                 </div>
