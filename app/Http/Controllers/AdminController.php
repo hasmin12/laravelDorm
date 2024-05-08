@@ -1077,7 +1077,7 @@ public function getResident($id)
     public function notifyResidents()
     {
         try {
-            $residents = User::where('is_paid', 0)->where('branch', "Dormitory")->where('role', "Resident")->get();
+            $residents = User::where('is_paid', 0)->where('branch', "Dormitory")->where('role', "Resident")->where('status', "Active")->get();
             $currentMonth = now()->format('F Y');
             $ldate = date('Y-m-d');
 

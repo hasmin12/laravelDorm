@@ -107,6 +107,18 @@ class AuthController extends Controller
         return response()->json(['announcements' => $announcements]);
     }
 
+    public function notificationRead()
+    {
+        $user = Auth::user()->id;
+
+        $notifications = Notification::where('receiver_id', $user)->get();
+        foreach ($notifications as $notification) {
+            $notification->status="Read";
+            $notification->save();
+        }
+        return response()->json(['notifications' => $notifications]);
+    }
+
     public function getLaundry()
     {
        

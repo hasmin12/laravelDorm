@@ -1,8 +1,36 @@
 document.addEventListener('DOMContentLoaded', function () {
     fetchNotifications();
-  
+   
+    const notifs = document.querySelector('#notificationsRead');
+    notifs.addEventListener('click', updateNotificationStatus);
+
     
 })
+
+function updateNotificationStatus() {
+    const token = localStorage.getItem('token');
+
+    fetch('/api/notificationRead', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': `Bearer ${token}`,
+        },
+        credentials: 'include',
+    })
+    .then(response => {
+        if (response.ok) {
+            console.log('Status updated successfully');
+            fetchNotifications();
+        } else {
+            throw new Error('Error updating status');
+        }
+    })
+    .catch(error => {
+        console.error('Error updating status:', error);
+    });
+}
 function fetchNotifications() {
     const token = localStorage.getItem('token');
 
@@ -22,17 +50,20 @@ function fetchNotifications() {
         })
         .catch(error => console.error('Error fetching notifications:', error));
 }
+
 function displayNotifications(notifications) {
     const dropdownMenu = document.getElementById('notifications');
     dropdownMenu.innerHTML = ''; 
     const notificationCountBadge = document.getElementById('notification-count');
 
-    if (notifications.length > 0) {
-        notificationCountBadge.textContent = notifications.length;
-        notificationCountBadge.style.display = 'inline';
-    } else {
-        notificationCountBadge.style.display = 'none';
-    }
+    const unreadNotificationsCount = notifications.filter(notification => notification.status === 'Unread').length;
+
+if (unreadNotificationsCount > 0) {
+    notificationCountBadge.textContent = unreadNotificationsCount;
+    notificationCountBadge.style.display = 'inline';
+} else {
+    notificationCountBadge.style.display = 'none';
+}
     notifications.forEach(notification => {
         const notificationItem = document.createElement('a');
         notificationItem.classList.add('dropdown-item');
@@ -99,10 +130,11 @@ function displayNotifications(notifications) {
        if (data.data.email==email){
             fetchNotifications();
             toastr.info('New Notification')
+            if (data.data.notification_type=="Monthly Payment"){
+                fetchPayments();
+                }
        }
-       if (data.data.notification_type=="Monthly Payment"){
-        fetchPayments();
-        }
+       
     });
 
     function fetchPayments() {
@@ -194,14 +226,7 @@ function displayNotifications(notifications) {
             table.appendChild(tableBody);
     
             paymentsContainer.appendChild(table);
-    
-           
-    
-            // Filter payments based on initial filter status
-            filterPayments(filterPayment);
-           
-          
-    
+            filterPayments(filterPayment);    
         })
         .catch(error => console.error('Error fetching payments:', error));
     

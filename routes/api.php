@@ -134,6 +134,8 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::get('/notifyViolations', 'AdminController@notifyResidents');
     Route::get('/dischargeResident/{id}', 'AdminController@dischargeResident');
     Route::post('/addComment', 'ResidentController@addComment');
+    Route::get('/notificationRead', 'AuthController@notificationRead');
+
 
 
     Route::post('/acceptMaintenance', 'TechnicianController@acceptMaintenance');

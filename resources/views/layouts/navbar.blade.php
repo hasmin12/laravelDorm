@@ -8,7 +8,7 @@
     </a>
     
     <div class="navbar-nav align-items-center ms-auto">
-        <div class="nav-item dropdown">
+        <div class="nav-item dropdown" id="notificationsRead">
             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                 <i class="fa fa-bell me-lg-2" style="position: relative;"> 
                     <span id="notification-count" class="badge bg-danger" style="position: absolute; bottom: 0; right: 0;"></span>
