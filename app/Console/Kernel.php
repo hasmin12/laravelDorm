@@ -10,10 +10,11 @@ class Kernel extends ConsoleKernel
     /**
      * Define the application's command schedule.
      */
-    protected function schedule(Schedule $schedule)
+    protected function schedule(Schedule $schedule): void
     {
-        // $schedule->command('logs:update-status')->dailyAt('20:00');
         $schedule->command('logs:update-status')->everyMinute();
+        $schedule->command('app:update-pending-payments')->everyMinute();
+
     }
 
 

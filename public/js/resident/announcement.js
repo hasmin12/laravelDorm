@@ -123,86 +123,102 @@ function fetchAnnouncements() {
         const announcementsContainer = document.getElementById('announcements-container');
         announcementsContainer.innerHTML = '';
 
-       data.announcements.forEach(announcement => {
-    const formattedDate = new Date(announcement.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+        data.announcements.forEach(announcement => {
+            const formattedDate = new Date(announcement.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 
-    // Check if announcement is not locked
-    if (announcement.locked === 'No') {
-        announcementsContainer.innerHTML += `
-        <div class="row d-flex justify-content-center border-bottom py-5">
-            <div class="col-md-50 col-lg-50 col-xl-50">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex flex-start align-items-center py-3">
-                            <img class="rounded-circle shadow-1-strong me-3" src="${announcement.img_path}" alt="avatar" width="60" height="60" />
-                            <div>
-                                <h6 class="fw-bold text-primary mb-1">${announcement.postedBy}</h6>
-                                <p class="text-muted small mb-0">
-                                    ${announcement.branch} - ${formattedDate}
-                                </p>
+            let commentsHtml = '';
+            if (announcement.comments.length > 0) {
+                commentsHtml = '<ul>';
+                announcement.comments.forEach(comment => {
+                    commentsHtml += `
+                        <li>
+                            <div class="comment">
+                                <img class="rounded-circle shadow-1-strong me-3" src="${comment.userImage}" alt="avatar" width="40" height="40" />
+                                <div class="comment-content">
+                                    <h6 class="fw-bold text-primary mb-1">${comment.username}</h6>
+                                    <p>${comment.content}</p>
+                                </div>
                             </div>
-                        </div>
-                        <h6 class="fw-bold align-items-center text-center mb-1">${announcement.title}</h6>
-                        <img class="img-fluid mx-auto mb-4" src="${announcement.img_path}" style="width: 500; height: 350px;">
-                        <p class="mt-3 mb-4 pb-2">
-                            ${announcement.content}                                      
-                        </p>
-                      
-                        <div class="small d-flex justify-content-start">
-                            <a href="#!" class="d-flex align-items-center me-3">
-                                <i class="far fa-thumbs-up me-2"></i>
-                                <p class="mb-0">Like</p>
-                            </a>
-                            <a href="#!" class="d-flex align-items-center me-3">
-                                <i class="far fa-comment-dots me-2"></i>
-                                <p class="mb-0">Comment</p>
-                            </a>
+                        </li>`;
+                });
+                commentsHtml += '</ul>';
+            } else {
+                commentsHtml = '<p>No comments yet.</p>';
+            }
+
+            const commentSection = `
+                <div class="card-footer py-3 border-0" style="background-color: #f8f9fa;">
+                    <div class="d-flex flex-start w-100">
+                        <div data-mdb-input-init class="form-outline w-100">
+                            <textarea class="form-control" id="commentTextArea-${announcement.id}" rows="4" style="background: #fff;"></textarea>
+                            <label class="form-label" for="commentTextArea-${announcement.id}">Message</label>
                         </div>
                     </div>
-                    <div class="card-footer py-3 border-0" style="background-color: #f8f9fa;">
-                        <div class="d-flex flex-start w-100">
-                            <img class="rounded-circle shadow-1-strong me-3" src="{{ auth()->user()->img_path}}" alt="avatar" width="40" height="40" />
-                            <div data-mdb-input-init class="form-outline w-100">
-                                <textarea class="form-control" id="textAreaExample" rows="4" style="background: #fff;"></textarea>
-                                <label class="form-label" for="textAreaExample">Message</label>
+                    <div class="float-end mt-2 pt-1">
+                        <button type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-sm" onclick="postComment(${announcement.id})">Post comment</button>
+                    </div>
+                </div>
+                <div class="comment-section">
+                    <h5>Comments</h5>
+                    ${commentsHtml}
+                </div>
+            `;
+
+            const announcementHtml = `
+                <div class="row d-flex justify-content-center border-bottom py-5">
+                    <div class="col-md-50 col-lg-50 col-xl-50">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex flex-start align-items-center py-3">
+                                    <img class="rounded-circle shadow-1-strong me-3" src="${announcement.img_path}" alt="avatar" width="60" height="60" />
+                                    <div>
+                                        <h6 class="fw-bold text-primary mb-1">${announcement.postedBy}</h6>
+                                        <p class="text-muted small mb-0">
+                                            ${announcement.branch} - ${formattedDate}
+                                        </p>
+                                    </div>
+                                </div>
+                                <h6 class="fw-bold align-items-center text-center mb-1">${announcement.title}</h6>
+                                <img class="img-fluid mx-auto mb-4" src="${announcement.img_path}" style="width: 500; height: 350px;">
+                                <p class="mt-3 mb-4 pb-2">
+                                    ${announcement.content}                                      
+                                </p>
+                                ${commentSection}
                             </div>
-                        </div>
-                        <div class="float-end mt-2 pt-1">
-                            <button type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-sm">Post comment</button>
-                            <button type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-primary btn-sm">Cancel</button>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>`;
-    } else {
-        announcementsContainer.innerHTML += `
-        <div class="row d-flex justify-content-center border-bottom py-5">
-            <div class="col-md-50 col-lg-50 col-xl-50">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex flex-start align-items-center py-3">
-                            <img class="rounded-circle shadow-1-strong me-3" src="${announcement.img_path}" alt="avatar" width="60" height="60" />
-                            <div>
-                                <h6 class="fw-bold text-primary mb-1">${announcement.postedBy}</h6>
-                                <p class="text-muted small mb-0">
-                                    ${announcement.branch} - ${formattedDate}
-                                </p>
-                            </div>
-                        </div>
-                        <h6 class="fw-bold align-items-center text-center mb-1">${announcement.title}</h6>
-                        <img class="img-fluid mx-auto mb-4" src="${announcement.img_path}" style="width: 500; height: 350px;">
-                        <p class="mt-3 mb-4 pb-2">
-                            ${announcement.content}                                      
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>`;
-        console.log('Announcement is locked. Comment section not displayed.');
-    }
-});
+            `;
 
+            announcementsContainer.innerHTML += announcementHtml;
+        });
     })
     .catch(error => console.error('Error fetching announcements:', error));
+}
+
+
+function postComment(announcementId) {
+    const commentTextArea = document.getElementById(`commentTextArea-${announcementId}`).value;
+    const token = localStorage.getItem('token');
+
+    fetch(`/api/addComment`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': `Bearer ${token}`, 
+        },
+        credentials: 'include',
+        body: JSON.stringify({
+            announcement_id: announcementId,
+            content: commentTextArea
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Comment posted:', data.comment); 
+        commentTextArea.innerHTML="";
+        fetchAnnouncements();
+    })
+    .catch(error => console.error('Error posting comment:', error));
 }

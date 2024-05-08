@@ -15,6 +15,8 @@ use App\Models\Residentlog;
 use App\Models\User;
 use App\Models\Approvemaintenance;
 use App\Models\Reservation;
+use App\Models\Comment;
+
 use Illuminate\Support\Facades\Storage;
 //reports
 use App\Models\BillingReport;
@@ -80,6 +82,23 @@ class ResidentController extends Controller
             return response()->json(['maintenance' => $maintenance], 201);
         } catch (\Exception $e) {
             Log::error('Error creating maintenance: ' . $e->getMessage());
+            return response()->json(['error' => 'Internal Server Error'], 500);
+        }
+    }
+
+    public function addComment(Request $request)
+    {
+        try {
+            $comment = Comment::create([
+                'content' =>  $request->input('content'),
+                'announcement_id' =>  $request->input('announcement_id'),
+                'user_id' =>  Auth::user()->id,
+                'username' =>  Auth::user()->name,
+                'userImage' =>  Auth::user()->img_path,
+            ]);
+            return response()->json(['comment' => $comment], 201);
+        } catch (\Exception $e) {
+            Log::error('Error creating comment: ' . $e->getMessage());
             return response()->json(['error' => 'Internal Server Error'], 500);
         }
     }

@@ -10,12 +10,26 @@ document.addEventListener('DOMContentLoaded', function () {
             center: 'title',
             right: 'month,agendaWeek,agendaDay'
         },
+        dayRender: function (date, cell) {
+            // Check if the date is in the past
+            if (date.isBefore(moment(), 'day')) {
+                // Date is in the past, add a CSS class to style it gray
+                cell.addClass('fc-past-day');
+            }
+        },
         // Add other FullCalendar configurations as needed
         dayClick: function (date, jsEvent, view) {
-            // Show modal for scheduling laundry
+            // Check if the clicked date is in the past
+            if (date.isBefore(moment(), 'day')) {
+                // Date is in the past, prevent default action
+                return false;
+            }
+    
+            // Date is not in the past, show modal for scheduling laundry
             showLaundryModal(date);
         }
     });
+    
 
     const createLaundryScheduleForm = $('#createLaundryScheduleForm');
 

@@ -7,19 +7,24 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const titleInput = document.getElementById('announcementTitle');
         const contentInput = document.getElementById('announcementContent');
-        const receiverInput = document.getElementById('receiver');
+        const branchInput = document.getElementById('branch');
+        const lockedInput = document.getElementById('locked');
+
         const imageInput = $('#img_path')[0].files[0];
 
 
         const title = titleInput.value;
         const content = contentInput.value;
-        const receiver = receiverInput.value;
+        const branch = branchInput.value;
+        const locked = lockedInput.value;
+
 
 
         const formData = new FormData();
         formData.append('title', title);
         formData.append('content', content);
-        formData.append('receiver', receiver);
+        formData.append('branch', branch);
+        formData.append('locked', locked);
         formData.append('img_path', imageInput);
 
         const token = localStorage.getItem('token');
@@ -80,11 +85,19 @@ updateAnnouncementForm.addEventListener('submit', function (event) {
 
     const updateTitleInput = document.getElementById('updateTitleInput');
     const updateContentInput = document.getElementById('updateContentInput');
+    const updateBranchInput = document.getElementById('updateBranchInput');
+    const updateLockedInput = document.getElementById('updateLockedInput');
+    const updateImageInput = document.getElementById('updateImageInput');
+
+
     const announcementId = updateAnnouncementForm.dataset.announcementId; // Add a data attribute to store announcement ID
 
     const updatedFormData = {
         title: updateTitleInput.value,
         content: updateContentInput.value,
+        branch: updateBranchInput.value,
+        locked: updateLockedInput.value,
+        img_path: updateImageInput.files[0]
     };
 
     const token = localStorage.getItem('token');
@@ -107,6 +120,8 @@ updateAnnouncementForm.addEventListener('submit', function (event) {
 
         updateTitleInput.value = '';
         updateContentInput.value = '';
+        updateBranchInput.value = '';
+        updateLockedInput.value = '';
 
         fetchAnnouncements();
 
@@ -134,6 +149,9 @@ function openUpdateModal(announcementId) {
 
     const updateTitleInput = document.getElementById('updateTitleInput');
     const updateContentInput = document.getElementById('updateContentInput');
+    const updateBranchInput = document.getElementById('updateBranchInput');
+    const updateLockedInput = document.getElementById('updateLockedInput');
+    // const updateImageInput = document.getElementById('updateImageInput');
 
     const token = localStorage.getItem('token');
 
@@ -151,6 +169,9 @@ function openUpdateModal(announcementId) {
         // Populate the update modal fields with the retrieved data
         updateTitleInput.value = data.announcement.title;
         updateContentInput.value = data.announcement.content;
+        updateBranchInput.value = data.announcement.branch;
+        updateLockedInput.value = data.announcement.locked;
+        // updateImageInput.value = data.announcement.img_path;
 
         // Show the update modal
         $('#updateAnnouncementModal').modal('show');
@@ -288,8 +309,7 @@ function fetchAnnouncements() {
                 <div class="w-100 ms-3">
                     <div class="d-flex w-100 justify-content-between">
                         <div class="d-flex align-items-center">
-                            <img src="${announcement.img_path}" alt="Admin Image" class="me-2 rounded" width="40px" height="40px">
-                            <h6 class="mb-0">${announcement.postedBy}</h6>
+                            <h6 class="mb-0">${announcement.title}</h6>
                         </div>
                         <div class="btn-group">
                             <div class="btn-group">
@@ -300,18 +320,19 @@ function fetchAnnouncements() {
                                     <li><button class="dropdown-item update-btn" data-announcement-id="${announcement.id}"><i class="bi bi-pencil"></i> Update</button></li>
                                     <li><button class="dropdown-item delete-btn" data-announcement-id="${announcement.id}"><i class="bi bi-trash"></i> Delete</button></li>
                                 </ul>
-                                <button class="btn ${announcement.locked === 'Yes' ? 'btn-success' : 'btn-danger'} lock-comments-button" data-announcement-id="${announcement.id}" data-locked="${announcement.locked === 'Yes' ? 'true' : 'false'}">
-                                ${announcement.locked === 'Yes' ? 'Unlock Comments' : 'Lock Comments'}
-                            </button>
+                               
                             </div>
                         </div>
                        
                     </div>
                     <div class="d-flex w-100 justify-content-between align-items-center">
-                        <h6>${announcement.title}</h6>
+                        <small>${announcement.postedBy}</small>
+                        <small class="py-3">${formattedDate}</small>
+
                     </div>
                     <p>${announcement.content}</p>
-                    <small>${formattedDate}</small>
+                    <img src="${announcement.img_path}" alt="Admin Image" class="me-2 rounded" width="1000px" height="500px">
+
                 </div>
             </div>
         `;

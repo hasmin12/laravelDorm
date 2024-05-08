@@ -44,11 +44,20 @@
                                 <textarea class="form-control" id="announcementContent" rows="4" required></textarea>
                             </div>
                             <div class="mb-3">
-                                <label for="receiver" class="form-label">Announce To</label>
-                                <select class="form-select" id="receiver" required>
+                                <label for="branch" class="form-label">Announce To</label>
+                                <select class="form-select" id="branch" required>
                                     <option value="" selected hidden></option>
-                                    <option value="Residents">Residents</option>
-                                    <option value="Public">Public</option>
+                                    <option value="Dormitory">Dormitory</option>
+                                    <option value="Hostel">Hostel</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="locked" class="form-label">Comment Lock?</label>
+                                <select class="form-select" id="locked" required>
+                                    <option value="" selected hidden></option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
                                 </select>
                             </div>
 
@@ -80,23 +89,36 @@
                         <form id="updateAnnouncementForm">
                             <div class="mb-3">
                                 <label for="updateTitleInput" class="form-label">Title</label>
-                                <input type="text" class="form-control" id="updateTitleInput" required>
+                                <input type="text" class="form-control" id="updateTitleInput" name="title" required>
                             </div>
                             <div class="mb-3">
                                 <label for="updateContentInput" class="form-label">Content</label>
-                                <textarea class="form-control" id="updateContentInput" rows="4" required></textarea>
+                                <textarea class="form-control" id="updateContentInput" name="content" rows="4" required></textarea>
                             </div>
 
                             <div class="mb-3">
-                                <label for="updateReceiver" class="form-label">Announce To</label>
-                                <select class="form-select" id="updateReceiver" required>
+                                <label for="updateBranchInput" class="form-label">Announce To</label>
+                                <select class="form-select" id="updateBranchInput" name="branch" required>
                                     <option value="" selected hidden></option>
-                                    <option value="Residents">Residents</option>
-                                    <option value="Public">Public</option>
+                                    <option value="Dormitory">Dormitory</option>
+                                    <option value="Hostel">Hostel</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="updateLockedInput" class="form-label">Comment Locked?</label>
+                                <select class="form-select" id="updateLockedInput" name="locked" required>
+                                    <option value="" selected hidden></option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
                                 </select>
                             </div>
                             <!-- Add other necessary form fields -->
-        
+                            <div class="mb-3">
+                                <label for="updateImageInput" class="form-label">Image</label>
+                                <input type="file" class="form-control" id="updateImageInput" name="img_path">
+
+                            </div>
                             <button type="submit" class="btn btn-primary">Update Announcement</button>
                         </form>
                     </div>
