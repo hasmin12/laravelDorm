@@ -30,7 +30,7 @@ class AuthController extends Controller
         // Check if the user exists
         if ($user) {
             // Check if the user is active
-            if ($user->status == "") {
+            if ($user->status == "Applicant") {
                 return response()->json([
                     'success' => false,
                     'message' => 'Please wait for confirmation of your Application'
