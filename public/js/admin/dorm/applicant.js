@@ -337,7 +337,7 @@ function assignBed(bedId) {
         },
         credentials: 'include',
         body: JSON.stringify({
-            locked: locked
+            formData
         })
     })
     .then(response => response.json())
