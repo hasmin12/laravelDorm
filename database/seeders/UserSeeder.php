@@ -209,5 +209,155 @@ class UserSeeder extends Seeder
         //     ]);
         
         // }
+
+        User::create([
+            'email' => 'aliyah@gmail.com',
+            'password' => bcrypt("password"),
+            'role' => 'Resident',
+            'branch' => 'Dormitory',
+            'type' => 'Staff',
+
+            'name' => 'Aliyah Tolentino',
+            'course' => 'BSIT',
+            'year' => '4th year',
+            'birthdate' => $faker-> dateTimeBetween($startDate = '-30 years', $endDate = '-20 years', $timezone = null),
+            'age' => '21',
+            'sex' => $faker->randomElement($array = array ('Male', 'Female')), 
+            'religion' => 'Roman Catholic',
+            'civil_status' => 'Single',
+            'address' => $faker->address(),
+            'contactNumber' => $faker->phoneNumber(),
+            'Tuptnum' => $tupt_temp . "" . $Admintupt_num,
+            // 'roomdetails' => 'RoomBed'
+            'status' => "Active"
+        ]);
+        User::create([
+            'email' => 'jun@gmail.com',
+            'password' => bcrypt("password"),
+            'role' => 'Resident',
+            'branch' => 'Dormitory',
+            'type' => 'Faculty',
+
+            'name' => 'Jun Benipisyo',
+            'course' => 'BSIT',
+            'year' => '4th year',
+            'birthdate' => $faker-> dateTimeBetween($startDate = '-30 years', $endDate = '-20 years', $timezone = null),
+            'age' => '21',
+            'sex' => $faker->randomElement($array = array ('Male', 'Female')), 
+            'religion' => 'Roman Catholic',
+            'civil_status' => 'Single',
+            'address' => $faker->address(),
+            'contactNumber' => $faker->phoneNumber(),
+            'Tuptnum' => $tupt_temp . "" . $Admintupt_num,
+            // 'roomdetails' => 'RoomBed'
+            'status' => "Active"
+        ]);
+        User::create([
+            'email' => 'nina@gmail.com',
+            'password' => bcrypt("password"),
+            'role' => 'Resident',
+            'branch' => 'Dormitory',
+            'type' => 'Student',
+
+            'name' => 'Nina Dejan',
+            'course' => 'BSIT',
+            'year' => '4th year',
+            'birthdate' => $faker-> dateTimeBetween($startDate = '-30 years', $endDate = '-20 years', $timezone = null),
+            'age' => '21',
+            'sex' => $faker->randomElement($array = array ('Male', 'Female')), 
+            'religion' => 'Roman Catholic',
+            'civil_status' => 'Single',
+            'address' => $faker->address(),
+            'contactNumber' => $faker->phoneNumber(),
+            'Tuptnum' => $tupt_temp . "" . $Admintupt_num,
+            // 'roomdetails' => 'RoomBed'
+            'status' => "Active"
+        ]);
+        User::create([
+            'email' => 'Maye@gmail.com',
+            'password' => bcrypt("password"),
+            'role' => 'Resident',
+            'branch' => 'Dormitory',
+            'type' => 'Student',
+
+            'name' => 'Maye Balbada',
+            'course' => 'BSIT',
+            'year' => '4th year',
+            'birthdate' => $faker-> dateTimeBetween($startDate = '-30 years', $endDate = '-20 years', $timezone = null),
+            'age' => '21',
+            'sex' => $faker->randomElement($array = array ('Male', 'Female')), 
+            'religion' => 'Roman Catholic',
+            'civil_status' => 'Single',
+            'address' => $faker->address(),
+            'contactNumber' => $faker->phoneNumber(),
+            'Tuptnum' => $tupt_temp . "" . $Admintupt_num,
+            // 'roomdetails' => 'RoomBed'
+            'status' => "Applicant"
+        ]);
+
+        User::create([
+            'email' => 'James@gmail.com',
+            'password' => bcrypt("password"),
+            'role' => 'Resident',
+            'branch' => 'Dormitory',
+            'type' => 'Student',
+
+            'name' => 'James Bryant',
+            'course' => 'BSIT',
+            'year' => '4th year',
+            'birthdate' => $faker-> dateTimeBetween($startDate = '-30 years', $endDate = '-20 years', $timezone = null),
+            'age' => '21',
+            'sex' => $faker->randomElement($array = array ('Male', 'Female')), 
+            'religion' => 'Roman Catholic',
+            'civil_status' => 'Single',
+            'address' => $faker->address(),
+            'contactNumber' => $faker->phoneNumber(),
+            'Tuptnum' => $tupt_temp . "" . $Admintupt_num,
+            // 'roomdetails' => 'RoomBed'
+            'status' => "Applicant"
+        ]);
+        User::create([
+            'email' => 'kobe@gmail.com',
+            'password' => bcrypt("password"),
+            'role' => 'Resident',
+            'branch' => 'Dormitory',
+            'type' => 'Student',
+
+            'name' => 'Kobe Jordan',
+            'course' => 'BSIT',
+            'year' => '4th year',
+            'birthdate' => $faker-> dateTimeBetween($startDate = '-30 years', $endDate = '-20 years', $timezone = null),
+            'age' => '21',
+            'sex' => $faker->randomElement($array = array ('Male', 'Female')), 
+            'religion' => 'Roman Catholic',
+            'civil_status' => 'Single',
+            'address' => $faker->address(),
+            'contactNumber' => $faker->phoneNumber(),
+            'Tuptnum' => $tupt_temp . "" . $Admintupt_num,
+            // 'roomdetails' => 'RoomBed'
+            'status' => "Applicant"
+        ]);
+        User::create([
+            'email' => 'steven@gmail.com',
+            'password' => bcrypt("password"),
+            'role' => 'Resident',
+            'branch' => 'Dormitory',
+            'type' => 'Student',
+
+            'name' => 'Steven Strange',
+            'course' => 'BSIT',
+            'year' => '4th year',
+            'birthdate' => $faker-> dateTimeBetween($startDate = '-30 years', $endDate = '-20 years', $timezone = null),
+            'age' => '21',
+            'sex' => $faker->randomElement($array = array ('Male', 'Female')), 
+            'religion' => 'Roman Catholic',
+            'civil_status' => 'Single',
+            'address' => $faker->address(),
+            'contactNumber' => $faker->phoneNumber(),
+            'Tuptnum' => $tupt_temp . "" . $Admintupt_num,
+            // 'roomdetails' => 'RoomBed'
+            'status' => "Applicant"
+        ]);
+      
     }
 }
