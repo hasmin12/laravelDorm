@@ -98,7 +98,7 @@
 <!-- Navbar End -->
 
 <div class="full-width-container">
-    <section class="hero-section" style="background-image: url('{{ asset('/img/tt.jpg')}}')">
+    <section class="hero-section" style="background-image: url('{{ secure_asset('/img/tt.jpg')}}')">
         <div class="container">
             <div class="row">
                 <div class="col-lg-6">                 
@@ -153,7 +153,7 @@
                 
             </div>
         </div>
-        <script src="{{ asset('js/auth.js') }}"></script>
+        <script src="{{ secure_asset('js/auth.js') }}"></script>
     </section>
     
     <!-- Sign In End -->

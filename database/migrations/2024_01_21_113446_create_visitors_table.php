@@ -13,14 +13,14 @@ return new class extends Migration
     {
         Schema::create('visitors', function (Blueprint $table) {
             $table->id();
-            $table->text('name');
-            $table->text('phone');
-            $table->date('visit_date');
-            $table->unsignedBigInteger('user_id');
+            $table->text('name')->nullable();
+            $table->text('phone')->nullable();
+            $table->date('visit_date')->nullable();
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->text('relationship');
-            $table->text('purpose');
-            $table->text('validId');
+            $table->text('relationship')->nullable();
+            $table->text('purpose')->nullable();
+            $table->text('validId')->nullable();
             $table->timestamps();
         });
     }

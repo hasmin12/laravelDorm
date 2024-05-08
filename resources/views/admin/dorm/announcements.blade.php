@@ -137,5 +137,5 @@
 <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
 </div>
 
-<script src="{{asset('js/announcement.js') }}"></script>
+<script src="{{ secure_asset('js/announcement.js') }}"></script>
 @endsection

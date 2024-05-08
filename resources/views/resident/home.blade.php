@@ -49,7 +49,7 @@
    
 
 
-    <link rel="stylesheet" href="{{ asset('css/style1/style.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ secure_asset('css/style1/style.css') }}" type="text/css">
       
 </head>
 

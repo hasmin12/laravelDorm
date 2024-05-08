@@ -131,12 +131,15 @@
             </div>
 
             <div class="mb-3">
-                <label for="residentDropdown" class="form-label">Select Resident</label>
+                {{-- <label for="residentDropdown" class="form-label">Select Resident</label>
                 <select class="form-select" id="residentDropdown" name="residentDropdown" required>
                     <option value="1">asd</option>
                     <option value="2">asd</option>
                     <option value="3">asd</option>
-                </select>
+                </select> --}}
+
+                <label for="residentDropdown" class="form-label">Resident</label>
+                <input type="text" class="form-control" id="residentDropdown" name="residentDropdown" required>
             </div>
             
             
@@ -207,7 +210,7 @@
     <!-- Back to Top -->
     <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
 
-<script src="{{asset('js/guest/visitor.js') }}"></script>
+<script src="{{ secure_asset('js/guest/visitor.js') }}"></script>
 
 
 @include('layouts.footer')
