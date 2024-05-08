@@ -129,7 +129,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body" id="residentAssignModalBody">
-                        <select id="roomDropdown" class="form-select"></select>
+                        <select id="roomDropdown" name="Select Room" class="form-select"></select>
                         <div id="bedsCard"></div>
                     </div>
                     <div class="modal-footer">

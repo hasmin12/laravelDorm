@@ -45,7 +45,7 @@ class RoomSeeder extends Seeder
             foreach (range(1, 4) as $index) {
                 Hostelimage::create([
                     'room_id' => $roomHostel->id,
-                    'path' => "/storage/hostel/hostelroom.png",
+                    'path' => "/storage/hostel/room1.jpg",
                 ]);
             }
 

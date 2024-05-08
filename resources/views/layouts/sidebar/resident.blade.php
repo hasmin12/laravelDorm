@@ -30,26 +30,7 @@
             @endif
             <a href="/resident/maintenance" class="nav-item nav-link"><i class="fa fa-solid fa-wrench me-2"></i>Maintenance</a>
             <a href="/resident/laundry" class="nav-item nav-link"><i class="fa fa-calendar me-2"></i>Laundry</a>
-            <a href="/resident/lostandfound" class="nav-item nav-link"><i class="fa fa-eye me-2"></i>Lost and Found</a>
-            <a href="/resident/laundry" class="nav-item nav-link"><i class="fa fa-user-alt-slash me-2"></i>Violations</a>
-            
-            {{-- <div class="nav-item dropdown">
-                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Residents</a>
-                <div class="dropdown-menu bg-transparent border-0">
-                    <a href="button.html" class="dropdown-item">Students</a>
-                    <a href="typography.html" class="dropdown-item">Faculty</a>
-                    <a href="element.html" class="dropdown-item">Staff</a>
-                </div>
-            </div> --}}
-            {{-- <a href="/residents" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Residents</a>
-            <a href="/rooms" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Rooms</a>
-            <a href="/announcements" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Announcements</a>
-            <a href="/transactions" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Transactions</a>
-            <a href="/violations" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Violations</a>
-            <a href="/laundry" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Laundry</a>
-            <a href="/lostandfound" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Lost and Found</a> --}}
-
-            
+            <a href="/resident/lostandfound" class="nav-item nav-link"><i class="fa fa-eye me-2"></i>Lost and Found</a>            
         </div>
     </nav>
 </div>
