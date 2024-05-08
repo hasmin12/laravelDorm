@@ -109,15 +109,19 @@
                     </div>
                 </div>
                 <div class="col-xl-4 col-lg-5 offset-xl-2 offset-lg-1">
-                    <div class="service-item bg-white rounded d-flex flex-column align-items-center text-center">
+                    {{-- <div class="service-item bg-white rounded d-flex flex-column align-items-center text-center"> --}}
                         {{-- <img class="img-fluid" src="img/service-2.jpg" alt=""> --}}
-                        <div class="service-icon bg-white">
+                        {{-- <div class="service-icon bg-white">
                             <i class="fa fa-3x fa-home text-primary"></i>
-                        </div>
+                        </div> --}}
                        <div class="booking-form">
+                        <div class="service-icon bg-white">
+                            {{-- <i class="fa fa-3x fa-home text-primary"></i> --}}
+                            <h4>Login</h4>
+                        </div>
                         <form id="loginForm">
                             <div class="form-floating mb-3">
-                                <input type="email" class="form-control custom-input" id="floatingInput" placeholder="name@example.com" name="email" style="width: 300px;">
+                                <input type="email" class="form-control custom-input" id="floatingInput" placeholder="name@example.com" name="email">
                                 <label for="floatingInput">Email address</label>
                             </div>
                             <div class="form-floating mb-4">
@@ -142,7 +146,7 @@
                         </svg>
                         Google Sign Up
                     </a>
-                </div>
+                {{-- </div> --}}
                 
                     </div>
                 </div>

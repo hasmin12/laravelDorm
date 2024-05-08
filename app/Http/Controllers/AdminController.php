@@ -525,11 +525,12 @@ public function getResident($id)
             if (Auth::check()) {
                 $branch = $request->input('branch');
              
-                if ($branch === "Dormitory"){
+                if ($branch === "Hostel"){
 
-                    $query = Dormitoryroom::with('beds.resident');
-                }else{
                     $query = Hostelroom::query();
+                    
+                }else{
+                    $query = Dormitoryroom::with('beds.resident');
                 }
 
 

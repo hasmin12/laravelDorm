@@ -8,7 +8,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const residentTilesContainer = document.querySelector('#residentTilesContainer');
     const roomDropdown = document.getElementById('roomDropdown');
     const bedsCard = document.getElementById('bedsCard');
-    let rooms = [];
     let selectedResident;
 
     // Set the initial view to 'tiles'
@@ -24,8 +23,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }) // Replace '/getRooms' with the actual route to fetch rooms
             .then(response => response.json())
             .then(data => {
-                // Populate the dropdown with room options
-                rooms = data.rooms;
+                
                 const option = document.createElement('option');
                     option.value = "";
                     option.textContent = "";
@@ -40,69 +38,80 @@ document.addEventListener('DOMContentLoaded', function () {
             .catch(error => console.error('Error fetching rooms:', error));
     }
 
-    // Function to display bed details when a room is selected
     function displayBedDetails(roomId) {
-        // Find the selected room based on its ID
-        const selectedRoom = rooms.find(room => room.id === roomId);
+        fetch(`/api/getBeds/${roomId}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            },
+            credentials: 'include',
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Clear previous content
+            bedsCard.innerHTML = '';
     
-        // Clear previous content
-        bedsCard.innerHTML = '';
+            let row; // Variable to hold the current row
     
-        // Display bed details in cards
-        let row; // Variable to hold the current row
-        selectedRoom.beds.forEach((bed, index) => {
-            if (index % 2 === 0) { // Create a new row for every two cards
-                row = document.createElement('div');
-                row.classList.add('row');
-                bedsCard.appendChild(row);
-            }
-            
-            const cardDiv = document.createElement('div');
-            cardDiv.classList.add('col-md-6', 'mb-3'); // Each card takes 6 columns in Bootstrap grid system
+            data.beds.forEach((bed, index) => {
+                if (index % 2 === 0) {
+                    row = document.createElement('div');
+                    row.classList.add('row');
+                    bedsCard.appendChild(row);
+                }
+                
+                const cardDiv = document.createElement('div');
+                cardDiv.classList.add('col-md-6', 'mb-3'); // Each card takes 6 columns in Bootstrap grid system
+        
+                const card = document.createElement('div');
+                card.classList.add('card', 'custom-border-red');
+                card.style.width = '100%';
+        
+                const bedImage = document.createElement('img');
+                bedImage.classList.add('card-img-top');
+                bedImage.style.width = '100%';
+                bedImage.style.height = '300px';
+        
+                const cardBody = document.createElement('div');
+                cardBody.classList.add('card-body', 'text-center');
+        
+                const bedName = document.createElement('h5');
+                bedName.classList.add('card-title');
+                bedName.textContent = `Bed ${bed.name}`;
     
-            const card = document.createElement('div');
-            card.classList.add('card', 'custom-border-red');
-            card.style.width = '100%';
+                const bedType = document.createElement('h5');
+                bedType.classList.add('card-title');
+                bedType.textContent = `Bed ${bed.type}`;
     
-            const bedImage = document.createElement('img');
-            bedImage.classList.add('card-img-top');
-            bedImage.style.width = '100%';
-            bedImage.style.height = '300px';
-            // Set bed image source accordingly if available
+                const bedStatus = document.createElement('h6');
+                bedStatus.classList.add('card-title');
+                bedStatus.textContent = `${bed.status}`;
     
-            const cardBody = document.createElement('div');
-            cardBody.classList.add('card-body', 'text-center');
-    
-            const bedName = document.createElement('h5');
-            bedName.classList.add('card-title');
-            bedName.textContent = `Bed ${bed.name}`;
-
-            const bedType = document.createElement('h5');
-            bedType.classList.add('card-title');
-            bedType.textContent = `Bed ${bed.type}`;
-
-            const bedStatus = document.createElement('h6');
-            bedStatus.classList.add('card-title');
-            bedStatus.textContent = `${bed.status}`;
-    
-            const assignButton = document.createElement('button');
-            assignButton.classList.add('btn', 'btn-sm', 'btn-primary');
-            assignButton.textContent = 'Assign';
-            assignButton.addEventListener('click', function() {
-                assignBed(bed.id); 
+                if (bed.status !== 'Occupied') {
+                    const assignButton = document.createElement('button');
+                    assignButton.classList.add('btn', 'btn-sm', 'btn-primary');
+                    assignButton.textContent = 'Assign';
+                    assignButton.addEventListener('click', function() {
+                        assignBed(bed.id); 
+                    });
+                    cardBody.appendChild(assignButton);
+                }
+        
+                cardBody.appendChild(bedName);
+                cardBody.appendChild(bedType);
+                cardBody.appendChild(bedStatus);
+                
+                card.appendChild(bedImage); 
+                card.appendChild(cardBody);
+                cardDiv.appendChild(card);
+                row.appendChild(cardDiv);
             });
-    
-            cardBody.appendChild(bedName);
-            cardBody.appendChild(bedType);
-            cardBody.appendChild(bedStatus);
-            cardBody.appendChild(assignButton);
-    
-            card.appendChild(bedImage); // Add bed image if available
-            card.appendChild(cardBody);
-            cardDiv.appendChild(card);
-            row.appendChild(cardDiv);
-        });
+        })
+        .catch(error => console.error('Error fetching beds:', error));
     }
+    
     
     
     roomDropdown.addEventListener('change', function () {
@@ -324,10 +333,13 @@ function assignBed(bedId) {
             success: function (data) {
         
             $('#residentAssignModal').modal('hide');
-
+            roomDropdown.selectedIndex = 0; 
+            bedsCard.innerHTML = '';
+            selectedResident = null;
 
             fetchResidents(currentView);
-
+            fetchRooms();
+           
             Swal.fire({
                 icon: 'success',
                 title: 'Resident Assigned',

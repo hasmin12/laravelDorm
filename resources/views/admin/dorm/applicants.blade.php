@@ -100,6 +100,8 @@
                 </div>
             </div>
         </div>
+    </div>
+
         <!-- Table View End -->
 
         <div class="modal fade" id="createResidentModal" tabindex="-1" aria-labelledby="createResidentModalLabel" aria-hidden="true">
@@ -142,7 +144,6 @@
 
         
 
-    </div>
     <!-- Content End -->
 
 

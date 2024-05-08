@@ -40,6 +40,7 @@ class UserSeeder extends Seeder
             'contactNumber' => $faker->phoneNumber(),
             'Tuptnum' => $tupt_temp . "" . $Admintupt_num,
             // 'roomdetails' => 'RoomBed'
+            'img_path' => "/storage/residents/resident.png",
             'status' => "Active"
         ]);
         
@@ -60,6 +61,7 @@ class UserSeeder extends Seeder
             'civil_status' => 'Single',
             'room' => 1,
             'bed' => "A",
+            'img_path' => "/storage/residents/resident.png",
 
             'address' => $faker->address(),
             'contactNumber' => $faker->phoneNumber(),
@@ -97,6 +99,8 @@ class UserSeeder extends Seeder
             'type' => 'Technician',
             'specialization' => 'General Repairs',
             // 'roomdetails' => 'RoomBed'
+            'img_path' => "/storage/residents/resident.png",
+
             'status' => "Active"
 
         ]);
@@ -115,7 +119,8 @@ class UserSeeder extends Seeder
             'type' => 'Technician',
             'specialization' => 'Appliance Repair',
             // 'roomdetails' => 'RoomBed'
-            'status' => "Active"
+            'status' => "Active",
+            'img_path' => "/storage/residents/resident.png"
 
         ]);
         // foreach (range(1, 5) as $index) {
@@ -229,6 +234,7 @@ class UserSeeder extends Seeder
             'contactNumber' => $faker->phoneNumber(),
             'Tuptnum' => $tupt_temp . "" . $Admintupt_num,
             // 'roomdetails' => 'RoomBed'
+            'img_path' => "/storage/residents/resident.png",
             'status' => "Active"
         ]);
         User::create([
@@ -250,6 +256,8 @@ class UserSeeder extends Seeder
             'contactNumber' => $faker->phoneNumber(),
             'Tuptnum' => $tupt_temp . "" . $Admintupt_num,
             // 'roomdetails' => 'RoomBed'
+            'img_path' => "/storage/residents/resident.png",
+
             'status' => "Active"
         ]);
         User::create([
@@ -271,6 +279,8 @@ class UserSeeder extends Seeder
             'contactNumber' => $faker->phoneNumber(),
             'Tuptnum' => $tupt_temp . "" . $Admintupt_num,
             // 'roomdetails' => 'RoomBed'
+            'img_path' => "/storage/residents/resident.png",
+
             'status' => "Active"
         ]);
         User::create([
@@ -292,6 +302,8 @@ class UserSeeder extends Seeder
             'contactNumber' => $faker->phoneNumber(),
             'Tuptnum' => $tupt_temp . "" . $Admintupt_num,
             // 'roomdetails' => 'RoomBed'
+            'img_path' => "/storage/residents/resident.png",
+
             'status' => "Applicant"
         ]);
 
@@ -314,6 +326,8 @@ class UserSeeder extends Seeder
             'contactNumber' => $faker->phoneNumber(),
             'Tuptnum' => $tupt_temp . "" . $Admintupt_num,
             // 'roomdetails' => 'RoomBed'
+            'img_path' => "/storage/residents/resident.png",
+
             'status' => "Applicant"
         ]);
         User::create([
@@ -335,6 +349,8 @@ class UserSeeder extends Seeder
             'contactNumber' => $faker->phoneNumber(),
             'Tuptnum' => $tupt_temp . "" . $Admintupt_num,
             // 'roomdetails' => 'RoomBed'
+            'img_path' => "/storage/residents/resident.png",
+
             'status' => "Applicant"
         ]);
         User::create([
@@ -356,6 +372,8 @@ class UserSeeder extends Seeder
             'contactNumber' => $faker->phoneNumber(),
             'Tuptnum' => $tupt_temp . "" . $Admintupt_num,
             // 'roomdetails' => 'RoomBed'
+            'img_path' => "/storage/residents/resident.png",
+
             'status' => "Applicant"
         ]);
       

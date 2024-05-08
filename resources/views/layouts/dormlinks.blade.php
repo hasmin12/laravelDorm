@@ -1,9 +1,8 @@
 <!-- JavaScript Libraries -->
 {{-- <script src="{{ asset('/css/style1/js/jquery-3.3.1.min.js')}} "></script> --}}
 @if(auth()->check())
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.css" integrity="sha512-liDnOrsa/NzR+4VyWQ3fBzsDBzal338A1VfUpQvAcdt+eL88ePCOd3n9VQpdA0Yxi4yglmLy/AmH+Lrzmn0eMQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script src="{{ asset('/lib/chart/chart.min.js') }}"></script>
 <script src="{{ asset('/lib/easing/easing.min.js') }}"></script>
 <script src="{{ asset('/lib/waypoints/waypoints.min.js') }}"></script>
