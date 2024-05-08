@@ -312,7 +312,7 @@ function fetchResidents(viewType = 'tiles') {
 }
 
 function assignBed(bedId) {
-    console.log(selectedResident)
+    console.log(selectedResident);
     const residentId = updateResidentForm.dataset.residentId; // Add a data attribute to store resident ID
 
     const formData = new FormData();
@@ -321,40 +321,44 @@ function assignBed(bedId) {
 
     const token = localStorage.getItem('token');
 
+    getCSRFToken().then(csrfToken => {
         $.ajax({
             url: `/api/assignResident/`,
             type: 'POST',
             headers: {
                 'Authorization': 'Bearer ' + token,
+                'X-CSRF-TOKEN': csrfToken // Include the CSRF token in the request headers
             },
             data: formData,
-            processData: false,  
+            processData: false,
             contentType: false,
             success: function (data) {
-        
-            $('#residentAssignModal').modal('hide');
-            roomDropdown.selectedIndex = 0; 
-            bedsCard.innerHTML = '';
-            selectedResident = null;
+                $('#residentAssignModal').modal('hide');
+                roomDropdown.selectedIndex = 0;
+                bedsCard.innerHTML = '';
+                selectedResident = null;
 
-            fetchResidents(currentView);
-            fetchRooms();
-           
-            Swal.fire({
-                icon: 'success',
-                title: 'Resident Assigned',
-                text: 'Your resident has been successfully updated.',
-            });
-        },
-        error: function (error) {
-            console.error('Error updating resident:', error);
+                fetchResidents(currentView);
+                fetchRooms();
 
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: 'An error occurred while updating the resident. Please try again.',
-            });
-        }
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Resident Assigned',
+                    text: 'Your resident has been successfully updated.',
+                });
+            },
+            error: function (error) {
+                console.error('Error updating resident:', error);
+
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'An error occurred while updating the resident. Please try again.',
+                });
+            }
+        });
+    }).catch(error => {
+        console.error('Error fetching CSRF token:', error);
     });
 }
 // Function to show resident details in modal
