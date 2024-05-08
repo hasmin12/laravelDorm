@@ -336,9 +336,7 @@ function assignBed(bedId) {
             'Authorization': 'Bearer ${token}',
         },
         credentials: 'include',
-        body: JSON.stringify({
-            formData
-        })
+        body: JSON.stringify({formData})
     })
     .then(response => response.json())
     .then(data => {
