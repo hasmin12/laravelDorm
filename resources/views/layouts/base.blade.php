@@ -14,6 +14,7 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     @yield('content')
     @include('layouts.dormlinks')
+    @yield('scripts')
     <script>
         function saveUserDataToLocalStorage(token, user) {
             // Check if token and user are not null or undefined

@@ -817,10 +817,12 @@ public function getResident($id)
     {
         try {
             $user = Auth::user();
+            Log::info($user);
             $title = $request->input('title');
 
             $content = $request->input('content');
-            $receiver = $request->input('receiver');
+            $branch = $request->input('branch');
+            $locked = $request->input('locked');
 
             $fileName = time() . $request->file('img_path')->getClientOriginalName();
             $path = $request->file('img_path')->storeAs('announcement', $fileName, 'public');
@@ -828,17 +830,19 @@ public function getResident($id)
 
             $announcement = Announcement::create([
                 'user_id' => $user->id,
-                'receiver' => $receiver,
+                // 'receiver' => $receiver,
                 'title' => $title,
                 'content' => $content,
-                'branch' => $user->branch,
+                'branch' => $branch,
                 'postedBy' => $user->name,
+                'img_path' => $img_path,
+                'locked' => $locked,
+
 
             ]);
 
-            $announcement->update([
-                'img_path' => $img_path
-            ]);
+            // $announcement->update([
+            // ]);
 
             return response()->json(['announcement' => $announcement], 201);
         } catch (\Exception $e) {
@@ -855,16 +859,24 @@ public function getResident($id)
                 if (!$announcement) {
                     return response()->json(['error' => 'Announcement not found'], 404);
                 }
+                if($request->hasFile('img_path')){
+                    $fileName = time() . $request->file('img_path')->getClientOriginalName();
+                    $path = $request->file('img_path')->storeAs('announcement', $fileName, 'public');
+                    $img_path = '/storage/' . $path;
+                    $announcement->update([
+                        'img_path' => $img_path
+                    ]);
+                }
+                
 
-                $fileName = time() . $request->file('img_path')->getClientOriginalName();
-                $path = $request->file('img_path')->storeAs('announcement', $fileName, 'public');
-                $img_path = '/storage/' . $path;
                 $announcement->update([
                     'title' => $request->input('title'),
                     'content' => $request->input('content'),
-                    'receiver' => $request->input('receiver'),
-                    'img_path' => $img_path
+                    'branch' => $request->input('branch'),
+                    'locked' => $request->input('locked'),
                 ]);
+
+
 
                 return response()->json(['success' => true, 'message' => 'Announcement updated successfully']);
             } else {
@@ -1111,8 +1123,12 @@ public function getResident($id)
                     'target_id' => $dormitoryPayment->id,
                     'message' => "This is a friendly reminder to pay your monthly fees for $currentMonth.Please ensure your payment is submitted by the end of the month.Thank you for your cooperation."
                 ]);
-
-                event(new NotificationEvent($resident->email));
+                $data = [
+                    'email' =>  $resident->email,
+                    'notification_type' => "Monthly Payment",
+                ];
+                
+                event(new NotificationEvent($data));
             }
 
             Log::info('Emails sent successfully'); // Log informational message

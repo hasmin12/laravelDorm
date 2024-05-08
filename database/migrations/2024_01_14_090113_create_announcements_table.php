@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->text('title');
             $table->text('content');
-            $table->text('receiver');
             $table->text('branch');
             $table->text('postedBy');
 

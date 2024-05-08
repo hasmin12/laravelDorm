@@ -4,6 +4,11 @@
     --light: #F3F6F9;
     --dark: #000000;
 }
+.fc-past-day {
+    background-color: #f3f3f3; /* Light gray background */
+    color: #999; /* Gray text color */
+    cursor: not-allowed; /* Change cursor to not-allowed */
+}
 
 
 .back-to-top {
