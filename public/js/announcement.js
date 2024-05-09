@@ -33,7 +33,9 @@ document.addEventListener('DOMContentLoaded', function () {
             url: '/api/announcement',
             type: 'POST',
             headers: {
-                'Authorization': 'Bearer ' + token,
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Authorization': `Bearer ${token}`,
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             data: formData,
