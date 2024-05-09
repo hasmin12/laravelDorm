@@ -320,13 +320,9 @@ function fetchResidents(viewType = 'tiles') {
 }
 
 function assignBed(bedId) {
-    selectedBed = bedId   
-}
-const AssignResidentForm = document.getElementById('AssignResidentForm');
-AssignResidentForm.addEventListener('submit', function (event) {
-    event.preventDefault();
+
     const formData = {
-        bedId: selectedBed,
+        bedId: bedId,
         residentId: selectedResident,
 
     };
@@ -359,7 +355,7 @@ AssignResidentForm.addEventListener('submit', function (event) {
             text: 'Your resident has been successfully updated.',
         });
     })
-})
+}
 
 // Function to show resident details in modal
 function showResidentDetails(residentId) {
