@@ -34,7 +34,7 @@
                     </div>
                     <div class="modal-body">
                         <!-- Add your form fields for creating an announcement -->
-                        <form id="createAnnouncementForm">
+                        <form id="createAnnouncementForm" enctype='multipart/form-data'>
                             <div class="mb-3">
                                 <label for="announcementTitle" class="form-label">Title</label>
                                 <input type="text" class="form-control" id="announcementTitle" required>
