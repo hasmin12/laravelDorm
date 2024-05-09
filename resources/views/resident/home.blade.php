@@ -307,7 +307,7 @@
 
 
 
-<footer class="footer-section">
+<!-- <footer class="footer-section">
     <div class="container">
         <div class="footer-text">
             <div class="row">
@@ -362,7 +362,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
             </div>
         </div>
     </div>
-</footer>
+</footer> -->
 
 <script src="{{ secure_asset('js/auth.js') }}"></script>
 
