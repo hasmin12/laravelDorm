@@ -206,7 +206,8 @@ function postComment(announcementId) {
         headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
-            'Authorization': `Bearer ${token}`, 
+            'Authorization': `Bearer ${token}`,
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         credentials: 'include',
         body: JSON.stringify({

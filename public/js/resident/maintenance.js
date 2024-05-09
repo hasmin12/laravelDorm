@@ -86,6 +86,7 @@ const createMaintenanceForm = $('#createMaintenanceForm');
         type: 'POST',
         headers: {
             'Authorization': 'Bearer ' + token,
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         data: formData,
         processData: false,  
