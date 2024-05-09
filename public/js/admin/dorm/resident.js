@@ -72,6 +72,8 @@ updateResidentForm.addEventListener('submit', function (event) {
             type: 'POST',
             headers: {
                 'Authorization': 'Bearer ' + token,
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+
             },
             data: formData,
             processData: false,  
@@ -538,19 +540,18 @@ function updateResident(residentId) {
 
     const token = localStorage.getItem('token');
 
-    $.ajaxSetup({
+    $.ajax({
+        url: `/api/getResident/${residentId}`,
+        type: 'GET',
+        dataType: 'json',
         headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
             'Content-Type': 'application/json',
             'Accept': 'application/json',
             'Authorization': `Bearer ${token}`,
-        }
-    });
-
-    $.ajax({
-        url: `/api/updateResident/${residentId}`,
-        type: 'POST',
-        dataType: 'json',
+        },
+        xhrFields: {
+            withCredentials: true
+        },
         success: function(data) {
             console.log(data);
             updateName.value = data.resident.name;
