@@ -9,8 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const contentInput = document.getElementById('announcementContent');
         const branchInput = document.getElementById('branch');
         const lockedInput = document.getElementById('locked');
-
-        const imageInput = $('#img_path')[0].files[0];
+        const imageInput = document.getElementById('img_path').files[0];
 
 
         const title = titleInput.value;
@@ -32,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
         $.ajax({
             url: '/api/announcement',
             type: 'POST',
-            headers: {
+             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
                 'Authorization': `Bearer ${token}`,

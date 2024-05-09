@@ -63,7 +63,7 @@
 
                             <div class="mb-3">
                                 <label for="img_path" class="form-label">Image</label>
-                                <input type="file" class="form-control" id="img_path" name="img_path" required>
+                                <input type="file" class="form-control" id="img_path" required>
                             </div>
 
                             <!-- Add other necessary form fields -->
