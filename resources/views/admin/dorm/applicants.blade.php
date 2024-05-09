@@ -135,7 +135,6 @@
                             @csrf
                         <select id="roomDropdown" name="Select Room" class="form-select"></select>
                         <div id="bedsCard"></div>
-                        <button class="btn btn-sm btn-successs">Assign</button>
 
                         </form>
                     </div>
