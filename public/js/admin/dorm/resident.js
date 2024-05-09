@@ -539,14 +539,14 @@ function updateResident(residentId) {
     const token = localStorage.getItem('token');
 
     $.ajax({
-        url: `/api/getResident/${residentId}`,
-        type: 'GET',
+        url: `/api/updateResident/${residentId}`,
+        type: 'POST',
         dataType: 'json',
         headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
             'Content-Type': 'application/json',
             'Accept': 'application/json',
             'Authorization': `Bearer ${token}`,
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         xhrFields: {
             withCredentials: true
