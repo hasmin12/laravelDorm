@@ -538,19 +538,19 @@ function updateResident(residentId) {
 
     const token = localStorage.getItem('token');
 
-    $.ajax({
-        url: `/api/updateResident/${residentId}`,
-        type: 'POST',
-        dataType: 'json',
+    $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
             'Content-Type': 'application/json',
             'Accept': 'application/json',
             'Authorization': `Bearer ${token}`,
-        },
-        xhrFields: {
-            withCredentials: true
-        },
+        }
+    });
+
+    $.ajax({
+        url: `/api/updateResident/${residentId}`,
+        type: 'POST',
+        dataType: 'json',
         success: function(data) {
             console.log(data);
             updateName.value = data.resident.name;
