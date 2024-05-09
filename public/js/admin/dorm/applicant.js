@@ -9,6 +9,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const roomDropdown = document.getElementById('roomDropdown');
     const bedsCard = document.getElementById('bedsCard');
     let selectedResident;
+    let selectedBed;
+
 
     // Set the initial view to 'tiles'
     
@@ -318,9 +320,13 @@ function fetchResidents(viewType = 'tiles') {
 }
 
 function assignBed(bedId) {
-    console.log(bedId)
+    selectedBed = bedId   
+}
+const AssignResidentForm = document.getElementById('AssignResidentForm');
+AssignResidentForm.addEventListener('submit', function (event) {
+    event.preventDefault();
     const formData = {
-        bedId: bedId,
+        bedId: selectedBed,
         residentId: selectedResident,
 
     };
@@ -344,14 +350,15 @@ function assignBed(bedId) {
 
         fetchResidents(currentView);
         fetchRooms();
-
+        console.log(data)
         Swal.fire({
             icon: 'success',
             title: 'Resident Assigned',
             text: 'Your resident has been successfully updated.',
         });
     })
-}
+})
+
 // Function to show resident details in modal
 function showResidentDetails(residentId) {
     const modalBody = document.getElementById('residentDetailsModalBody');

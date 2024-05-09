@@ -134,6 +134,8 @@
                         <form id="AssignResidentForm">
                         <select id="roomDropdown" name="Select Room" class="form-select"></select>
                         <div id="bedsCard"></div>
+                        <button class="btn btn-sm btn-successs">Assign</button>
+
                         </form>
                     </div>
                     <div class="modal-footer">

@@ -1276,12 +1276,10 @@ public function getResident($id)
             'occupiedBeds' => $room->occupiedBeds + 1,
         ]);
 
-        $user = User::find($residentId);
         $user->update([
             'room' => "Room " . $bed->room_id,
             'bed' => $bed->name,
 
-            // 'roomdetails' => "Room ".$bed->room_id."-".$bed->name ,
             'status' => "Active"
         ]);
 

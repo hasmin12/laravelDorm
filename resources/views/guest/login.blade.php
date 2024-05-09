@@ -132,11 +132,9 @@
                                 <a href="">Forgot Password</a>
                             </div>
                             <button type="submit" class="btn btn-primary w-100 py-3">Sign In</button>
-
-                            <button onclick="window.location.href='{{ url('register') }}'" class="btn btn-primary w-100 py-3">Apply Here</button>
-
                             
                         </form>
+                        <button onclick="window.location.href='{{ url('register') }}'" class="btn btn-primary w-100 py-3">Apply Here</button>
                       
                         
                     </div>
