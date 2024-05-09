@@ -134,7 +134,7 @@
                             <button type="submit" class="btn btn-primary w-100 py-3">Sign In</button>
                             
                         </form>
-                        <button onclick="window.location.href='{{ url('register') }}'" class="btn btn-primary w-100 py-3" style="margin-bottom: 10px;">Apply Here</button>
+                        <button onclick="window.location.href='{{ url('register') }}'" class="btn btn-primary w-100 py-3" style="margin-bottom:10px;">Apply Here</button>
                       
                         
                     </div>

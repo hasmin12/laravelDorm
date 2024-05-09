@@ -45,6 +45,7 @@ const createRoomForm = document.getElementById('createRoomForm');
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
                 'Authorization': `Bearer ${token}`,
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             credentials: 'include',
             body: JSON.stringify(formData),

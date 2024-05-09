@@ -49,8 +49,8 @@
 /*** Button ***/
 .btn {
     transition: .5s;
+    margin-bottom: 10px;
 }
-
 .btn.btn-primary {
     color: #FFFFFF;
 }

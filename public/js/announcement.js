@@ -34,6 +34,7 @@ document.addEventListener('DOMContentLoaded', function () {
             type: 'POST',
             headers: {
                 'Authorization': 'Bearer ' + token,
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             data: formData,
             processData: false,  
@@ -108,6 +109,7 @@ updateAnnouncementForm.addEventListener('submit', function (event) {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
             'Authorization': `Bearer ${token}`,
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         credentials: 'include',
         body: JSON.stringify(updatedFormData),
@@ -253,7 +255,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`, 
+                    'Authorization': `Bearer ${token}`,
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 body: JSON.stringify({
                     locked: locked
