@@ -11,32 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let selectedResident;
 
     // Set the initial view to 'tiles'
-    function fetchRooms() {
-        fetch(`/api/getRooms`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                'Authorization': `Bearer ${token}`,
-            },
-            credentials: 'include',
-        }) // Replace '/getRooms' with the actual route to fetch rooms
-            .then(response => response.json())
-            .then(data => {
-                
-                const option = document.createElement('option');
-                    option.value = "";
-                    option.textContent = "";
-                    roomDropdown.appendChild(option);
-                data.rooms.forEach(room => {
-                    const option = document.createElement('option');
-                    option.value = room.id;
-                    option.textContent = room.name;
-                    roomDropdown.appendChild(option);
-                });
-            })
-            .catch(error => console.error('Error fetching rooms:', error));
-    }
+    
 
     function displayBedDetails(roomId) {
         fetch(`/api/getBeds/${roomId}`, {
@@ -223,6 +198,33 @@ updateResidentForm.addEventListener('submit', function (event) {
 
 });
 });
+
+function fetchRooms() {
+    fetch(`/api/getRooms`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': `Bearer ${token}`,
+        },
+        credentials: 'include',
+    }) // Replace '/getRooms' with the actual route to fetch rooms
+        .then(response => response.json())
+        .then(data => {
+            
+            const option = document.createElement('option');
+                option.value = "";
+                option.textContent = "";
+                roomDropdown.appendChild(option);
+            data.rooms.forEach(room => {
+                const option = document.createElement('option');
+                option.value = room.id;
+                option.textContent = room.name;
+                roomDropdown.appendChild(option);
+            });
+        })
+        .catch(error => console.error('Error fetching rooms:', error));
+}
 const styleElement = document.createElement('style');
 
 // Define the CSS rules with maroon color
@@ -316,12 +318,7 @@ function fetchResidents(viewType = 'tiles') {
 }
 
 function assignBed(bedId) {
-    console.log(selectedResident)
-    const residentId = updateResidentForm.dataset.residentId; // Add a data attribute to store resident ID
-
-    // const formData = new FormData();
-    // formData.append('bedId', bedId);
-    // formData.append('residentId', selectedResident);
+    console.log(bedId)
     const formData = {
         bedId: bedId,
         residentId: selectedResident,
