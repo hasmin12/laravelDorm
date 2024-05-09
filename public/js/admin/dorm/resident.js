@@ -530,7 +530,7 @@ function dischargeResident(residentId) {
 
 function updateResident(residentId) {
     const updateResidentForm = document.getElementById('updateResidentForm');
-    updateResidentForm.dataset.residentId = residentId; 
+    updateResidentForm.dataset.residentId = residentId;
 
     const updateName = document.getElementById('updateName');
     const updateType = document.getElementById('updateType');
@@ -538,34 +538,35 @@ function updateResident(residentId) {
 
     const token = localStorage.getItem('token');
 
-    fetch(`/api/getResident/${residentId}`, {
-        method: 'GET',
+    $.ajax({
+        url: `/api/getResident/${residentId}`,
+        type: 'GET',
+        dataType: 'json',
         headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
             'Authorization': `Bearer ${token}`,
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
-        credentials: 'include',
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log(data)
-        updateName.value = data.resident.name;
-        updateType.value = data.resident.type;
-        updateSex.value = data.resident.sex;
-        $('#updateResidentModal').modal('show');
-        // console.log(updateResidentForm.dataset.residentId)
+        xhrFields: {
+            withCredentials: true
+        },
+        success: function(data) {
+            console.log(data);
+            updateName.value = data.resident.name;
+            updateType.value = data.resident.type;
+            updateSex.value = data.resident.sex;
+            $('#updateResidentModal').modal('show');
+        },
+        error: function(xhr, status, error) {
+            console.error('Error fetching resident details:', error);
 
-    })
-    .catch(error => {
-        console.error('Error fetching resident details:', error);
-
-        Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: 'An error occurred while fetching resident details. Please try again.',
-        });
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'An error occurred while fetching resident details. Please try again.',
+            });
+        }
     });
 }
 
