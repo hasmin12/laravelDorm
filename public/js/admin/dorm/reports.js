@@ -110,22 +110,22 @@ function downloadPdf() {
         const pdfWidth = pdf.internal.pageSize.width;
         const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
 
-        // Add logo
         const logoImg = new Image();
         logoImg.onload = function() {
             const logoHeight = 10; // Adjust logo height as needed
             const logoWidth = (this.width * logoHeight) / this.height;
             pdf.addImage(this, 'PNG', 10, 10, logoWidth, logoHeight);
-
+        
             // Add header text
             const headerText = 'Resident Report'; // Modify header text as needed
             const headerHeight = 15; // Adjust header height as needed
+            const headerX = (pdfWidth - pdf.getStringUnitWidth(headerText) * pdf.internal.getFontSize()) / 2;
             pdf.setFontSize(18);
-            pdf.text(headerText, pdfWidth / 2, 10, { align: 'center' });
-
+            pdf.text(headerText, headerX, 10, { align: 'center' });
+        
             // Add main content
             pdf.addImage(imgData, 'PNG', 0, headerHeight + logoHeight, pdfWidth, pdfHeight - headerHeight - logoHeight);
-
+        
             pdf.save('resident_report.pdf');
         };
         logoImg.onerror = function(error) {
