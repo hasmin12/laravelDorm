@@ -29,10 +29,13 @@
                 </div>
             </div> --}}
             <a href="/admin/dorm/applicants" class="nav-item nav-link"><i class="fa fa-solid fa-user-plus me-2"></i>Applicants</a>
-            <select id="dropdownMenu">
-                <option value="/admin/dorm/residents"><i class="fa fa-solid fa-user-plus me-2"></i>Residents</option>
-                <option value="/admin/dorm/inactive"><i class="fa fa-solid fa-notdef me-2"></i>Inactive</option>
-            </select>
+            <div class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Elements</a>
+                <div class="dropdown-menu bg-transparent border-0" id="dropdownMenu">
+                    <a href="/admin/dorm/residents" class="dropdown-item">Residents</a>
+                    <a href="/admin/dorm/inactive" class="dropdown-item">Inactive</a>
+                </div>
+            </div>
 
             <a href="/admin/dorm/rooms" class="nav-item nav-link"><i class="fa fa-person-booth me-2"></i>Rooms</a>
             <a href="/admin/dorm/announcements" class="nav-item nav-link"><i class="fa fa-bullhorn me-2"></i>Announcements</a>
@@ -52,8 +55,11 @@
 <!-- Sidebar End -->
 
 <script>
-    document.getElementById('dropdownMenu').addEventListener('change', function() {
-    const selectedOption = this.value;
-    window.location.href = selectedOption;
+      // JavaScript to handle dropdown selection
+    document.querySelectorAll('#dropdownMenu .dropdown-item').forEach(function(item) {
+        item.addEventListener('click', function() {
+            const selectedOption = this.getAttribute('href');
+            window.location.href = selectedOption;
+        });
     });
     </script>
