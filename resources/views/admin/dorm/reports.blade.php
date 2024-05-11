@@ -71,7 +71,7 @@
                     </table>
                 </div>
                 <div class="explanations mt-4">
-                    <h6>Explanations:</h6>
+                    <h6>Summary of Reports</h6>
                     <ul>
                         <li>Number of residents not yet paid : This metric reflects the count of residents who have not made their payments within a specific month. Currently, there are <span id="notPaidCount">0</span> residents who have not paid.</li>
                         <li>Number of residents paid on time : This statistic represents the number of residents who have made their payments within the stipulated timeframe for a given month. Currently, there are <span id="paidCount">0</span> residents who have paid on time.</li>

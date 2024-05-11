@@ -69,11 +69,11 @@ if (unreadNotificationsCount > 0) {
         notificationItem.classList.add('dropdown-item');
 
         const title = document.createElement('h6');
-        title.classList.add('fw-normal', 'mb-0');
+        title.classList.add('fw-normal', 'mb-0','font-weight-bold');
         title.textContent = notification.notification_type;
 
         const sender = document.createElement('p');
-        sender.textContent = `From: ${notification.senderName}`;
+        sender.textContent = `From: Admin`;
 
         // Check message length
         let messageText = notification.message;

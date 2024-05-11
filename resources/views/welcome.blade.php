@@ -90,7 +90,7 @@
             <div class="carousel-inner">
                 <div class="carousel-item active">
                     <img class="w-100" src="img/land.jpg" alt="Image">
-                    <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                    <div class="carousel-caption d-flex flex-column align-items-center justify-content-center width: fit-content;">
                         <div class="p-3" style="max-width: 900px;">
                             <i class="fa fa-home fa-4x text-primary mb-4 d-none d-sm-block"></i>
                             <h1 class="display-2 text-uppercase text-white mb-md-4">HOSTEL</h1>
@@ -122,7 +122,7 @@
         </div>
     </div>
     <!-- Carousel End -->
-
+    
 
     <!-- About Start -->
   
