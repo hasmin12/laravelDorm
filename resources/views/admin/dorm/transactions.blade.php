@@ -67,7 +67,7 @@
                                 <th scope="col">Receipt</th>
                                 <th scope="col">Total Amount</th>
                                 <th scope="col">Status</th>
-                                <th scope="col">Payment Month</th>
+                                <th scope="col">Month</th>
                             </tr>
                         </thead>
                         <tbody id="payments-body">

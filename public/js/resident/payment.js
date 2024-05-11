@@ -110,7 +110,7 @@ function fetchPayments() {
         tableHeader.innerHTML = `
             <tr class="table-dark">
                 <th>Receipt</th>
-                <th>Payment Month</th>
+                <th>Month</th>
                 <th>Total Amount</th>
                 <th>Status</th>
             </tr>
