@@ -148,7 +148,7 @@ function fetchResidents(viewType = 'tiles') {
                                 View Details
                             </button>
                             <button class="btn btn-sm btn-warning" onclick="updateResident(${resident.id})">Update</button>
-                            <button class="btn btn-sm btn-danger" onclick="dischargeResident(${resident.id})">Discharge</button>
+                            <button class="btn btn-sm btn-info" onclick="ReActivateResident(${resident.id})">Re-Activate</button>
                         </div>
                     </div>
                 </div>
@@ -486,7 +486,7 @@ radioButtonsOutsideModal.forEach(button => {
 
 
 
-function dischargeResident(residentId) {
+function ReActivateResident(residentId) {
     Swal.fire({
         title: 'Are you sure?',
         text: 'You won\'t be able to revert this!',
@@ -498,7 +498,7 @@ function dischargeResident(residentId) {
     }).then((result) => {
         if (result.isConfirmed) {
             const token = localStorage.getItem('token')
-    fetch(`/api/dischargeResident/${residentId}`, {
+    fetch(`/api/ReActivate/${residentId}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -515,8 +515,8 @@ function dischargeResident(residentId) {
         fetchResidents(currentView);
         Swal.fire({
             icon: 'success',
-            title: 'Resident Discharged',
-            text: 'Resident has beed discharged.',
+            title: 'Resident Re-Activate',
+            text: 'Resident has beed Re-Activated.',
         });
     })
     .catch(error => {

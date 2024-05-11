@@ -658,6 +658,25 @@ public function getResident($id)
             return response()->json(['error' => 'Internal Server Error'], 500);
         }
     }
+
+    public function ReActivate($id)
+    {
+        try {
+           $user = User::find($id);
+           $user->update([
+                'status' => "Active"
+           ]);
+           $bed = Dormitorybed::where('user_id',$id);
+           $bed->update([
+            'user_id' => "",
+            'user_image' => "",
+            'status' => "vacant"
+        ]);
+        } catch (\Exception $e) {
+            Log::error('Error in Re-Activate Resident: ' . $e->getMessage());
+            return response()->json(['error' => 'Internal Server Error'], 500);
+        }
+    }
     
     public function updateRoom(Request $request, $id)
     {
