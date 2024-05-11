@@ -43,6 +43,7 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     
     Route::get('/getDashboardData', 'AdminController@getDashboardData');
     Route::get('/getResidents', 'AdminController@getResidents');
+    Route::get('/getInactive', 'AdminController@getInactive');
     Route::get('/getResident/{id}', 'AdminController@getResident');
     Route::get('/getLogs/{id}', 'AdminController@getLogs');
     Route::get('/getSleepLogs/{id}', 'AdminController@getSleepLogs');

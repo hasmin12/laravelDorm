@@ -41,7 +41,7 @@
          <!-- Toggle Button for View -->
          <div class="form-check form-switch ms-3">
             <input class="form-check-input form-switch-lg" type="checkbox" id="viewToggle">
-            <label class="form-check-label" for="viewToggle">Toggle View</label>
+            <label class="form-check-label" for="viewToggle">Grid View</label>
         </div>
        
 

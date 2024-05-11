@@ -29,7 +29,11 @@
                 </div>
             </div> --}}
             <a href="/admin/dorm/applicants" class="nav-item nav-link"><i class="fa fa-solid fa-user-plus me-2"></i>Applicants</a>
-            <a href="/admin/dorm/residents" class="nav-item nav-link"><i class="fa fa-users me-2"></i>Residents</a>
+            <select id="dropdownMenu">
+                <option value="/admin/dorm/residents"><i class="fa fa-solid fa-user-plus me-2"></i>Residents</option>
+                <option value="/admin/dorm/inactive"><i class="fa fa-solid fa-notdef me-2"></i>Inactive</option>
+            </select>
+
             <a href="/admin/dorm/rooms" class="nav-item nav-link"><i class="fa fa-person-booth me-2"></i>Rooms</a>
             <a href="/admin/dorm/announcements" class="nav-item nav-link"><i class="fa fa-bullhorn me-2"></i>Announcements</a>
             <a href="/admin/dorm/transactions" class="nav-item nav-link"><i class="fa fa-file-invoice-dollar me-2"></i>Payments</a>
@@ -40,9 +44,16 @@
             <a href="/admin/dorm/lostandfound" class="nav-item nav-link"><i class="fa fa-box-open me-2"></i>Lost and Found</a>
             <a href="/admin/dorm/logs" class="nav-item nav-link"><i class="fa fa-list me-2"></i>Logs</a>
             <a href="/admin/dorm/reports" class="nav-item nav-link"><i class="fa fa-file-export me-2"></i></i>Reports</a>
-
             
         </div>
     </nav>
 </div>
+
 <!-- Sidebar End -->
+
+<script>
+    document.getElementById('dropdownMenu').addEventListener('change', function() {
+    const selectedOption = this.value;
+    window.location.href = selectedOption;
+    });
+    </script>

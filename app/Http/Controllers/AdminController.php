@@ -117,6 +117,37 @@ class AdminController extends Controller
         }
     }
 
+    public function getInactive(Request $request)
+    {
+        try {
+            if (Auth::check()) {
+                $branch = $request->input('branch');
+                $searchQuery = $request->input('search_query');
+                $residentType = $request->input('resident_type');
+                if ($branch && $branch !== '') {
+                    $query = User::where('branch', $branch)->where('role', "Resident")->where('status', "Inactive");
+                } else {
+                    $query = User::where('role', "Resident")->where('status', "Active");
+                }
+
+                if ($residentType && $residentType !== 'All') {
+                    $query->where('type', $residentType);
+                }
+                if ($searchQuery) {
+                    $query->where('name', 'LIKE', '%' . $searchQuery . '%');
+                }
+                $residents = $query->get();
+                Log::info($residents);
+                return response()->json(['residents' => $residents]);
+            } else {
+                return response()->json(['error' => 'Unauthorized'], 401);
+            }
+        } catch (\Exception $e) {
+            Log::error('Error in getResidents: ' . $e->getMessage());
+            return response()->json(['error' => 'Internal Server Error'], 500);
+        }
+    }
+
     public function getApplicants(Request $request)
     {
         try {
