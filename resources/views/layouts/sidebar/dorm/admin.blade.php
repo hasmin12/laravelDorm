@@ -30,10 +30,10 @@
             </div> --}}
             <a href="/admin/dorm/applicants" class="nav-item nav-link"><i class="fa fa-solid fa-user-plus me-2"></i>Applicants</a>
             <div class="nav-item dropdown">
-                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Elements</a>
+                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-user me-2"></i>Residents</a>
                 <div class="dropdown-menu bg-transparent border-0" id="dropdownMenu">
-                    <a href="/admin/dorm/residents" class="dropdown-item">Residents</a>
-                    <a href="/admin/dorm/inactive" class="dropdown-item">Inactive</a>
+                    <a href="/admin/dorm/residents" class="dropdown-item"><i class="fa fa-solid fa-person-circle-check me-2"></i>Active</a>
+                    <a href="/admin/dorm/inactive" class="dropdown-item"><i class="fa fa-solid fa-notdef me-2"></i>Inactive</a>
                 </div>
             </div>
 
