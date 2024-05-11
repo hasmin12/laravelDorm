@@ -65,10 +65,10 @@
             <div class="modal-body" id="residentDetailsModalBody">
                 <!-- Resident details will be dynamically added here -->
             </div>
-            <div class="modal-footer">
+            {{-- <div class="modal-footer">
                 <button class="btn btn-sm btn-warning" onclick="updateRoom(${resident.id})">Update</button>
-                            <button class="btn btn-sm btn-danger" onclick="deleteRoom(${resident.id})">Delete</button>
-            </div>
+                            <button class="btn btn-sm btn-danger" onclick="ReAc(${resident.id})">Delete</button>
+            </div> --}}
         </div>
     </div>
 </div>
