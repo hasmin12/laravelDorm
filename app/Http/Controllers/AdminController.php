@@ -127,7 +127,7 @@ class AdminController extends Controller
                 if ($branch && $branch !== '') {
                     $query = User::where('branch', $branch)->where('role', "Resident")->where('status', "Inactive");
                 } else {
-                    $query = User::where('role', "Resident")->where('status', "Active");
+                    $query = User::where('role', "Resident")->where('status', "Inactive");
                 }
 
                 if ($residentType && $residentType !== 'All') {
