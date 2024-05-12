@@ -1308,41 +1308,51 @@ public function getResident($id)
     }
 
     public function assignResident(Request $request)
-    {
+{
+    try {
         $bedId = $request->input('bedId');
         $residentId = $request->input('residentId');
+        
+        // Find the bed and user
+        $bed = Dormitorybed::findOrFail($bedId);
+        $user = User::findOrFail($residentId);
 
-        $bed = Dormitorybed::find($bedId);
-        $user = User::find($residentId);
+        // Update bed details
         $bed->update([
             'user_id' => $residentId,
             'user_image' => $user->img_path,
             'status' => "Occupied"
         ]);
 
-        $room = Dormitoryroom::find($bed->room_id);
-
+        // Find and update room details
+        $room = Dormitoryroom::findOrFail($bed->room_id);
         $room->update([
             'occupiedBeds' => $room->occupiedBeds + 1,
         ]);
 
+        // Update user details
         $user->update([
             'room' => "Room " . $bed->room_id,
             'bed' => $bed->name,
-
             'status' => "Active"
         ]);
 
-        $newUser = Notification::create([
+        // Create notification for the user
+        Notification::create([
             'sender_id' => Auth::user()->id,
+            'senderName' => Auth::user()->name,
             'receiver_id' => $residentId,
             'notification_type' => "Registration Complete",
-            // 'target_id' => $dormitoryPayment->id,
-            'message' => "Hello $user->name, Your registration is now complete. You are assigned to $user->room - $user->bed "
+            'message' => "Hello $user->name, Your registration is now complete. You are assigned to Room $bed->room_id - $bed->name "
         ]);
 
         return response()->json(['bed' => $bed], 200);
+    } catch (\Exception $e) {
+        // Log and handle any exceptions
+        Log::error($e->getMessage());
+        return response()->json(['error' => 'An error occurred while processing the request.'], 500);
     }
+}
 
     public function getLogs(Request $request)
     {
