@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Announcement;
+use App\Models\Hostelreview;
+use App\Models\Notification;
 use Illuminate\Http\Request;
 use Auth;
 use App\Models\Maintenance;
@@ -79,6 +81,14 @@ class ResidentController extends Controller
 
             ]);
 
+            $notification = Notification::create([
+                'sender_id' => Auth::user()->id,
+                'senderName' => Auth::user()->name,
+                'receiver_id' => 1,
+                'notification_type' => "Maintenance Request",
+                'message' => Auth::user()->name." requested a Maintenance"
+            ]);
+
             return response()->json(['maintenance' => $maintenance], 201);
         } catch (\Exception $e) {
             Log::error('Error creating maintenance: ' . $e->getMessage());
@@ -95,6 +105,13 @@ class ResidentController extends Controller
                 'user_id' =>  Auth::user()->id,
                 'username' =>  Auth::user()->name,
                 'userImage' =>  Auth::user()->img_path,
+            ]);
+            $notification = Notification::create([
+                'sender_id' => Auth::user()->id,
+                'senderName' => Auth::user()->name,
+                'receiver_id' => 1,
+                'notification_type' => "Announcement Comment",
+                'message' => Auth::user()->name." add a comment"
             ]);
             return response()->json(['comment' => $comment], 201);
         } catch (\Exception $e) {
@@ -160,6 +177,14 @@ class ResidentController extends Controller
             if ($payment->img_path !== null) {
                 $payment->update(['status' => 'PAID']);
             }
+
+            $notification = Notification::create([
+                'sender_id' => Auth::user()->id,
+                'senderName' => Auth::user()->name,
+                'receiver_id' => 1,
+                'notification_type' => "Monthly Payment",
+                'message' => Auth::user()->name." sends a receipt of payment"
+            ]);
     
             return response()->json(['message' => 'Receipt uploaded successfully'], 200);
         } catch (\Exception $e) {
@@ -194,6 +219,14 @@ class ResidentController extends Controller
                     'update_at' => $datenow,
                     'status' => "PAID",
                 ]);
+
+                $notification = Notification::create([
+                    'sender_id' => Auth::user()->id,
+                    'senderName' => Auth::user()->name,
+                    'receiver_id' => 1,
+                    'notification_type' => "Monthly Payment",
+                    'message' => Auth::user()->name." sends a receipt of payment"
+                ]);
             }else{
                 $payment = Hostelpayment::where('user_id',Auth::user()->id)->get(); 
             }
@@ -219,7 +252,7 @@ class ResidentController extends Controller
                     ->where('laundrytime', $input['laundrytime'])->count();
 
                 // Adjust the maximum allowed bookings per time slot
-                $maxBookingsPerSlot = 3;
+                $maxBookingsPerSlot = 2;
 
                 if ($timeSched < $maxBookingsPerSlot) {
                     $Laundryschedule = new Laundryschedule();
@@ -276,6 +309,13 @@ class ResidentController extends Controller
                 'branch' =>  Auth::user()->branch
 
             ]);
+
+            $notification = Notification::create([
+                'sender_id' => Auth::user()->id,
+                'receiver_id' => 1,
+                'notification_type' => "Complaint",
+                'message' => $request->input('name')." makes a complaint"
+            ]);
             return response()->json(['complaint' => $complaint], 201);
         } catch (\Exception $e) {
             \Log::error('Error creating complaint: ' . $e->getMessage());
@@ -305,6 +345,13 @@ class ResidentController extends Controller
                     'leave_date' => $ldate,
                     'expectedReturn' => $return,
                     'dateLog' => $ldate,
+                ]);
+                $notification = Notification::create([
+                    'sender_id' => Auth::user()->id,
+                    'senderName' => Auth::user()->name,
+                    'receiver_id' => 1,
+                    'notification_type' => "Resident Logs",
+                    'message' => Auth::user()->name." make a Leave"
                 ]);
 
             }else{
@@ -415,10 +462,20 @@ class ResidentController extends Controller
 
     }
 
+    // public function myReservations()
+    // {
+    //     try {
+    //         $myReservations = Reservation::with('room')->where('user_id', Auth::user()->id)->get();
+    //         return response()->json($myReservations);
+    //     } catch (\Exception $e) {
+    //         return response()->json(['message' => 'Failed to fetch logs', 'error' => $e->getMessage()], 500);
+    //     }
+    // }
+
     public function myReservations()
     {
         try {
-            $myReservations = Reservation::with('room')->where('user_id', Auth::user()->id)->get();
+            $myReservations = Reservation::with('room')->where('email', Auth::user()->email)->get();
             return response()->json($myReservations);
         } catch (\Exception $e) {
             return response()->json(['message' => 'Failed to fetch logs', 'error' => $e->getMessage()], 500);
@@ -451,6 +508,33 @@ class ResidentController extends Controller
             ]);
 
             return response()->json(['residentlog' => $residentlog], 200);
+            
+        } catch (\Exception $e) {
+            \Log::error('Error creating Logs: ' . $e->getMessage());
+            return response()->json(['error' => 'Internal Server Error'], 500);
+        }
+    }
+
+    public function sendRating(Request $request)
+    {
+        $ldate = date('Y-m-d H:i:s');
+        try {
+           $review = $request->input('reviewMessage');
+           $rating = $request->input('rating');
+           $resId = $request->input('reservationId');
+           $reservation = Reservation::findOrFail($resId);
+           $reservation->review = "Yes";
+           $reservation->save();
+
+           $revRate = Hostelreview::create([
+                'room_id' => $reservation->room_ids,
+                'name' => Auth::user()->name,
+                'review' => $rating,
+                'rating' => $review
+           ]);
+            
+
+            return response()->json(['review' => $review], 200);
             
         } catch (\Exception $e) {
             \Log::error('Error creating Logs: ' . $e->getMessage());

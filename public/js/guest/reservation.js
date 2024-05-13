@@ -6,9 +6,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     checkinDateInput.addEventListener('change', recalculatePayment);
     checkoutDateInput.addEventListener('change', recalculatePayment);
-    
+    document.getElementById('apply-dates').addEventListener('click', function() {
+        fetchHostelRooms();
+    });
 });
-
+let reservationModalData
 function fetchHostelRooms() {
     fetch('/api/getHostelrooms', {
         method: 'GET',
@@ -26,27 +28,43 @@ function fetchHostelRooms() {
         roomContainer.innerHTML = '';
 
         if (data && Array.isArray(data)) {
+            const startDate = document.getElementById('start-date').value;
+            const endDate = document.getElementById('end-date').value;
+
             data.forEach((room) => {
                 const cardContainer = document.createElement('div');
                 cardContainer.classList.add('col-sm-12', 'col-md-4');
-                const statusColor = getStatusColor(room.status);
 
-                // Check room status and conditionally render the "Reserve Now" button
-                const reserveButton = room.status !== 'Reserved' && room.status !== 'Occupied'
-                    ? `<button class="btn btn-primary" onclick="showReservationModal(event,${room.id},'${room.name}', '${room.description}', '${room.type}', '${room.pax}', '${room.price}')">Reserve Now</button>`
-                    : '';
+                let reserveButton = '';
+                let statusText = '';
+                if (room.reservations.length === 0) {
+                    statusText = '<span class="text-success">Vacant</span>';
+                    reserveButton = `<button class="btn btn-primary" onclick="showReservationModal(event,${room.id},'${room.name}', '${room.description}', '${room.bedtype}', '${room.pax}', '${room.price}','${room.reservations}')">Reserve Now</button>`;
+                } else {
+                    const hasReservation = room.reservations.some(reservation => {
+                        return (reservation.checkin_date <= endDate && reservation.checkout_date >= startDate);
+                    });
+
+                    if (hasReservation) {
+                        statusText = '<span class="text-warning">Reserved</span>';
+                    } else {
+                        statusText = '<span class="text-success">Vacant</span>';
+                        reserveButton = `<button class="btn btn-primary" onclick="showReservationModal(event,${room.id},'${room.name}', '${room.description}', '${room.bedtype}', '${room.pax}', '${room.price}','${room.reservations}')">Reserve Now</button>`;
+                    }
+                }
 
                 const cardContent = `
-                    <div class="card h-100" style="cursor: pointer;" onclick="showRoomDetails('${room.name}', '${room.description}', '${room.type}', '${room.pax}', '${room.price}','${room.status}', '${room.img_paths.join(',')}')">
+                    <div class="card h-100" style="cursor: pointer;" onclick="showRoomDetails('${room.name}', '${room.description}', '${room.bedtype}', '${room.pax}', '${room.price}','${room.status}', '${room.img_paths.join(',')}', '${room.reservations}')">
                         <img src="${room.img_paths[0]}" class="card-img-top" alt="Room Image">
                         <div class="card-body">
                             <h5 class="card-title">${room.name}</h5>
                             <p class="card-text">${room.description}</p>
-                            <p class="card-text">Type: ${room.type}</p>
+                            <p class="card-text">Type: ${room.bedtype}</p>
                             <p class="card-text">Pax: ${room.pax}</p>
                             <p class="card-text">Price: ₱${room.price}/day</p>
+                            <p class="card-text">Status: ${statusText}</p>
                             <div class="d-flex align-items-center justify-content-between mb-2">
-                                ${reserveButton}                     
+                                ${reserveButton}                          
                             </div>
                         </div>
                     </div>
@@ -61,6 +79,31 @@ function fetchHostelRooms() {
     })
     .catch(error => console.error('Error fetching hostel rooms:', error));
 }
+function showReservationModal(event, roomId, name, description, bedtype, pax, price) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    // Set the room details in the reservation modal
+    const reservationModalTitle = document.getElementById('reservationModalTitle');
+    const reservationModalPax = document.getElementById('reservationModalPax');
+    const reservationModalType = document.getElementById('reservationModalType');
+    const reservationModalPrice = document.getElementById('reservationModalPrice');
+    const reservationModalDescription = document.getElementById('reservationModalDescription');
+
+    const roomIdInput = document.getElementById('room_id');
+    roomIdInput.value = roomId;
+    reservationModalTitle.textContent = `Reserve ${name}`;
+    reservationModalDescription.textContent = `${description}`;
+
+    reservationModalPax.textContent = `Pax: ${pax}`;
+    reservationModalType.textContent = `Type: ${bedtype}`;
+    reservationModalPrice.textContent = `Price: ₱${price}/day`;
+
+    // Show the reservation modal
+    $('#reservationModal').modal('show');
+    console.log
+    // Handle reservations data
+}
 
 function showRoomDetails(name, description, type, pax, price,status, imgPaths ) {
     const imgPathsArray = imgPaths.split(',');
@@ -69,7 +112,6 @@ function showRoomDetails(name, description, type, pax, price,status, imgPaths ) 
     const modalRoomType = document.getElementById('modalRoomType');
     const modalRoomPax = document.getElementById('modalRoomPax');
     const modalRoomPrice = document.getElementById('modalRoomPrice');
-    const roomStatus = document.getElementById('roomStatus'); 
 
     modalRoomName.textContent = name;
     modalRoomDescription.textContent = description;
@@ -77,9 +119,7 @@ function showRoomDetails(name, description, type, pax, price,status, imgPaths ) 
     modalRoomPax.textContent = "Pax: " + pax;
     modalRoomPrice.textContent = "Price: ₱" + price;
 
-    // Set status text and color
-    roomStatus.textContent = `Status: ${status}`;
-    roomStatus.style.color = getStatusColor(status);
+  
 
     // Clear existing carousel items
     const roomImageCarousel = document.querySelector('#roomImageCarousel .carousel-inner');
@@ -143,29 +183,52 @@ function getStatusColor(status) {
     }
 }
 
-function showReservationModal(event, room_id, name,description, type, pax, price) {
-    event.preventDefault();
-    event.stopPropagation();
+// function showReservationModal(event, room_id, name, description, bedtype, pax, price, reservations) {
+//     event.preventDefault();
+//     event.stopPropagation();
+//     const reservationModalTitle = document.getElementById('reservationModalTitle');
+//     const reservationModalPax = document.getElementById('reservationModalPax');
+//     const reservationModalType = document.getElementById('reservationModalType');
+//     const reservationModalPrice = document.getElementById('reservationModalPrice');
+//     const reservationModalDescription = document.getElementById('reservationModalDescription');
 
-    // Set the room details in the reservation modal
-    const reservationModalTitle = document.getElementById('reservationModalTitle');
-    const reservationModalPax = document.getElementById('reservationModalPax');
-    const reservationModalType = document.getElementById('reservationModalType');
-    const reservationModalPrice = document.getElementById('reservationModalPrice');
-    const reservationModalDescription = document.getElementById('reservationModalDescription');
+//     const roomId = document.getElementById('room_id');
+//     roomId.value = room_id;
+//     reservationModalTitle.textContent = `Reserve ${name}`;
+//     reservationModalDescription.textContent = `${description}`;
 
-    const roomId =document.getElementById('room_id');
-    roomId.value = room_id;
-    reservationModalTitle.textContent = `Reserve ${name}`;
-    reservationModalDescription.textContent = `${description}`;
+//     reservationModalPax.textContent = `Pax: ${pax}`;
+//     reservationModalType.textContent = `Type: ${bedtype}`;
+//     reservationModalPrice.textContent = `Price: ₱${price}/day`;
 
-    reservationModalPax.textContent = `Pax: ${pax}`;
-    reservationModalType.textContent = `Type: ${type}`;
-    reservationModalPrice.textContent = `Price: ₱${price}/day`;
+//     // Get checkinDate and checkoutDate elements
+//     const checkinDateInput = document.getElementById('checkinDate');
+//     const checkoutDateInput = document.getElementById('checkoutDate');
 
-    // Show the reservation modal
-    $('#reservationModal').modal('show');
-}
+//     // Disable past dates in checkinDate and checkoutDate
+//     const today = new Date().toISOString().split('T')[0];
+//     checkinDateInput.setAttribute('min', today);
+//     checkoutDateInput.setAttribute('min', today);
+
+    
+//     reservations.forEach(reservation => {
+//         const startDate = new Date(reservation.checkin_date);
+//         const endDate = new Date(reservation.checkout_date);
+
+//         let currentDate = startDate;
+//         while (currentDate <= endDate) {
+//             const dateString = currentDate.toISOString().split('T')[0];
+//             const dateInput = document.querySelector(`input[type="date"][value="${dateString}"]`);
+//             if (dateInput) {
+//                 dateInput.setAttribute('disabled', true);
+//             }
+//             currentDate.setDate(currentDate.getDate() + 1); // Move to the next day
+//         }
+//     });
+
+//     // Show the reservation modal
+//     $('#reservationModal').modal('show');
+// }
 
 
 const createReservationForm = document.getElementById('createReservationForm');
@@ -177,6 +240,7 @@ createReservationForm.addEventListener('submit', function (event) {
     const name = document.getElementById('residentName').value;
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
+
     const sex = document.getElementById('residentSex').value;
     const address = document.getElementById('address').value;
     const contacts = document.getElementById('phone').value;
@@ -195,6 +259,7 @@ createReservationForm.addEventListener('submit', function (event) {
     formData.append('name', name);
     formData.append('email', email);
     formData.append('password', password);
+
     formData.append('sex', sex);
     formData.append('address', address);
     formData.append('contacts', contacts);

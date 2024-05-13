@@ -5,12 +5,13 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Models\BillingReport;
+use App\Models\Maintenance;
 
+use App\Models\BillingReport;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Log;
-use Dompdf\Dompdf;
-use Dompdf\Options;
+
 class ReportController extends Controller
 {
     //
@@ -53,17 +54,47 @@ class ReportController extends Controller
     
 
     
-    public function printResidentsReport()
-    {   
-        
-        $html = view('pdf.residents', compact('residents', 'residentChartData'))->render();
-        $options = new Options();
-        $options->set('isHtml5ParserEnabled', true);
-        $options->set('isRemoteEnabled', true);
-        $dompdf = new Dompdf($options);
-        $dompdf->loadHtml($html);
-        $dompdf->setPaper('A4', 'portrait');
-        $dompdf->render();
-        return $dompdf->stream('ResidentsReport.pdf');
+    
+ // Assuming your User model is in the App\Models namespace
+
+    // public function generateUsersReport()
+    // {
+    //     $users = User::select('name', 'email', 'type', 'birthdate', 'sex', 'contactNumber')
+    //         ->where('branch', 'Dormitory')
+    //         ->where('status', 'Active')
+    //         ->where('role', 'Resident')
+    //         ->get();
+
+
+    //     $html = view('admin.reports.residents', compact('users'))->render();
+    //     $options = new Options();
+    //     $options->set('isHtml5ParserEnabled', true);
+    //     $options->set('isRemoteEnabled', true);
+    //     $dompdf = new Dompdf($options);
+    //     $dompdf->loadHtml($html);
+    //     $dompdf->setPaper('A4', 'portrait');
+    //     $dompdf->render();
+    //     return $dompdf->stream('users_report.pdf');
+    // }
+    public function generateUsersReport()
+    {
+        $users = User::select('name', 'email', 'type', 'birthdate', 'sex', 'contactNumber')
+            ->where('branch', 'Dormitory')
+            ->where('status', 'Active')
+            ->where('role', 'Resident')
+            ->get();
+    
+        $pdf = Pdf::loadView('admin.reports.residents', $users);
+        return $pdf->download('users.pdf');
+    
+    }
+
+    public function generateMaintenanceReport()
+    {
+        $maintenance = Maintenance::all();
+    
+        $pdf = Pdf::loadView('admin.reports.maintenance', $maintenance);
+        return $pdf->download('users.pdf');
+    
     }
 }
