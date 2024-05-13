@@ -31,7 +31,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 data.rooms.forEach(room => {
                     const option = document.createElement('option');
                     option.value = room.id;
-                    option.textContent = room.name;
+                    option.textContent = room.name +" - "+room.type +" - "+ room.category;
+
                     roomDropdown.appendChild(option);
                 });
             })

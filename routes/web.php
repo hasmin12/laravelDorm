@@ -130,9 +130,12 @@ Route::middleware(['adminbranch:Dormitory'])->group(function () {
         Route::get('/lostandfound', function () {
             return view('admin.dorm.lostandfound');
         });
+        Route::get('/reservations', function () {
+            return view('admin.dorm.reservations');
+        });
 
         Route::get('/user/profile/{id}', function () {
-            return view('admin.dorm.residentprofile');
+            return view('admin.dorm.reservations');
         });
 
         Route::get('/beds', function () {
@@ -149,10 +152,6 @@ Route::middleware(['adminbranch:Dormitory'])->group(function () {
 
         Route::get('/reports', function () {
             return view('admin.dorm.reports');
-        });
-
-        Route::get('/inactive', function () {
-            return view('admin.dorm.inactive');
         });
 
 

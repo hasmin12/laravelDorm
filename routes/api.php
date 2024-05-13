@@ -29,6 +29,12 @@ Route::post('/registerDorm', 'GuestController@addVisitor');
 Route::post('/createReservation', 'GuestController@createReservation');
 Route::post('/createRegistration', 'GuestController@createRegistration');
 Route::get('/getReservations', 'GuestController@getReservations');
+Route::get('/getReservations', 'AdminController@getReservations');
+Route::get('/updateReservationStatus', 'AdminController@updateReservationStatus');
+Route::get('/checkoutReservation', 'AdminController@checkoutReservation');
+
+
+
 Route::post('/getHostelrooms', 'GuestController@getHostelrooms');
 
 Route::get('/getReviews/{id}', 'GuestController@getReviews');
@@ -43,7 +49,6 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     
     Route::get('/getDashboardData', 'AdminController@getDashboardData');
     Route::get('/getResidents', 'AdminController@getResidents');
-    Route::get('/getInactive', 'AdminController@getInactive');
     Route::get('/getResident/{id}', 'AdminController@getResident');
     Route::get('/getLogs/{id}', 'AdminController@getLogs');
     Route::get('/getSleepLogs/{id}', 'AdminController@getSleepLogs');
@@ -65,7 +70,9 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::post('/assignResident', 'AdminController@assignResident');
     Route::post('/passContract', 'ResidentController@passContract');
     Route::post('/createResident', 'AdminController@createResident');
+    Route::get('/generateUsersReport', 'ReportController@generateUsersReport');
 
+    
     Route::post('createLaundrySchedule', 'ResidentController@createLaundrySchedule');
 
    
@@ -119,7 +126,7 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
 
 
     Route::get('/getTechnicians', 'AdminController@getTechnicians');
-    Route::get('/getTechnicians', 'AdminController@getTechnicians');
+
     // Get maintenance changes
     Route::get('/getMaintenanceChanges','AdminController@getMaintenanceChanges');
 
@@ -134,20 +141,18 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::post('/api/addViolationuser', 'AdminController@addViolationuser');
     Route::get('/notifyViolations', 'AdminController@notifyResidents');
     Route::get('/dischargeResident/{id}', 'AdminController@dischargeResident');
-    Route::get('/ReActivate/{id}', 'AdminController@ReActivate');
     Route::post('/addComment', 'ResidentController@addComment');
     Route::get('/notificationRead', 'AuthController@notificationRead');
 
+    
 
 
     Route::post('/acceptMaintenance', 'TechnicianController@acceptMaintenance');
     Route::post('/resident/acceptMaintenance', 'ResidentController@acceptMaintenance');
     Route::get('/getMaintenanceStatus', 'TechnicianController@getMaintenanceStatus');
-   
+    
+    Route::post('/addMaintenanceStatus', 'TechnicianController@addMaintenanceStatus');
     Route::get('/technician/getMaintenance', 'TechnicianController@getMaintenance');
-
-    Route::post('/technician/acceptMaintenance', 'TechnicianController@acceptMaintenance');
-    Route::post('/addMaintenanceStatus','TechnicianController@addMaintenanceStatus');
 
     Route::get('/getNotifications', 'AuthController@getNotifications');
 
@@ -157,6 +162,8 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::post('/updateLogs', 'ResidentController@updateLogs');
     Route::get('/myLogs', 'ResidentController@myLogs');
     Route::get('/myReservations', 'ResidentController@myReservations');
+    Route::get('/sendRating', 'ResidentController@sendRating');
+
     Route::get('/cancelReservation/{id}', 'ResidentController@cancelReservation');
 
     Route::get('/sendSleep', 'ResidentController@sendSleep');
@@ -177,6 +184,7 @@ Route::get('/residentTypeChart', 'ChartController@residentTypeChart');
 Route::get('/residentsReport', 'ReportController@residentsReport');
     
 });
+Route::post('/googleSigninMobile', 'GoogleSocialiteController@googleSigninMobile');
 
 Route::post('signin', 'AuthController@signin');
 Route::post('signout', 'AuthController@signout');
