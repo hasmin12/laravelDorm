@@ -98,7 +98,7 @@
 <!-- Navbar End -->
 
 <div class="full-width-container">
-    <section class="hero-section" style="background-image: url('{{ secure_asset('/img/tt.jpg')}}')">
+    <section class="hero-section" style="background-image: url('{{ secure_asset('/img/bsad.png')}}')">
         <div class="container">
             <div class="row">
                 <div class="col-lg-6">                 
