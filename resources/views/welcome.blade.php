@@ -133,7 +133,7 @@
                 <div class="d-inline-block bg-dark-radial text-center pt-4 px-5 mb-5">
                     <ul class="list-inline mb-0" id="portfolio-flters">
                         <li class="btn btn-outline-primary bg-white p-2 active mx-2 mb-4" data-filter="*">
-                            <img src="/img/dormgallery1.jpg" style="width: 150px; height: 100px;">
+                            <img src="/img/overlook.jpg" style="width: 150px; height: 100px;">
                             <div class="position-absolute top-0 start-0 end-0 bottom-0 m-2 d-flex align-items-center justify-content-center" style="background: rgba(4, 15, 40, .3);">
                                 <h6 class="text-white text-uppercase m-0">All</h6>
                             </div>
@@ -141,13 +141,13 @@
                         <li class="btn btn-outline-primary bg-white p-2 mx-2 mb-4" data-filter=".first">
                             <img src="img/dormgallery2.jpg" style="width: 150px; height: 100px;">
                             <div class="position-absolute top-0 start-0 end-0 bottom-0 m-2 d-flex align-items-center justify-content-center" style="background: rgba(4, 15, 40, .3);">
-                                <h6 class="text-white text-uppercase m-0">Construction</h6>
+                                <h6 class="text-white text-uppercase m-0">First Floor</h6>
                             </div>
                         </li>
                         <li class="btn btn-outline-primary bg-white p-2 mx-2 mb-4" data-filter=".second">
                             <img src="img/land.jpg" style="width: 150px; height: 100px;">
                             <div class="position-absolute top-0 start-0 end-0 bottom-0 m-2 d-flex align-items-center justify-content-center" style="background: rgba(4, 15, 40, .3);">
-                                <h6 class="text-white text-uppercase m-0">Renovation</h6>
+                                <h6 class="text-white text-uppercase m-0">Second Floor</h6>
                             </div>
                         </li>
                     </ul>
@@ -157,10 +157,10 @@
         <div class="row g-5 portfolio-container">
             <div class="col-xl-4 col-lg-6 col-md-6 portfolio-item first">
                 <div class="position-relative portfolio-box">
-                    <img class="img-fluid w-100" src="img/dormgallery1.jpg" style="height: 337px; width: 281px;" alt="">
+                    <img class="img-fluid w-100" src="img/facility1.jpg" style="height: 337px; width: 281px;" alt="">
                     <a class="portfolio-title shadow-sm" href="">
-                        <p class="h4 text-uppercase">Project Name</p>
-                        <span class="text-body"><i class="fa fa-map-marker-alt text-primary me-2"></i>123 Street, New York, USA</span>
+                        <p class="h4 text-uppercase">Building</p>
+                        <span class="text-body"><i class="fa fa-map-marker-alt text-primary me-2"></i></span>
                     </a>
                     <a class="portfolio-btn" href="css1" data-lightbox="portfolio">
                         <i class="bi bi-plus text-white"></i>
@@ -169,60 +169,60 @@
             </div>
             <div class="col-xl-4 col-lg-6 col-md-6 portfolio-item second">
                 <div class="position-relative portfolio-box">
-                    <img class="img-fluid w-100" src="img/dormgallery2.jpg" style="height: 337px; width: 281px;" alt="">
+                    <img class="img-fluid w-100" src="img/overlook2.jpg" style="height: 337px; width: 281px;" alt="">
                     <a class="portfolio-title shadow-sm" href="">
-                        <p class="h4 text-uppercase">Project Name</p>
-                        <span class="text-body"><i class="fa fa-map-marker-alt text-primary me-2"></i>123 Street, New York, USA</span>
+                        <p class="h4 text-uppercase">View</p>
+                        <span class="text-body"><i class="fa fa-map-marker-alt text-primary me-2"></i></span>
                     </a>
-                    <a class="portfolio-btn" href="img/portfolio-2.jpg" style="height: 337px; width: 281px;" data-lightbox="portfolio">
+                    <a class="portfolio-btn" href="img/overlook2.jpg" style="height: 337px; width: 281px;" data-lightbox="portfolio">
                         <i class="bi bi-plus text-white"></i>
                     </a>
                 </div>
             </div>
             <div class="col-xl-4 col-lg-6 col-md-6 portfolio-item first">
                 <div class="position-relative portfolio-box">
-                    <img class="img-fluid w-100" src="img/dormgallery3.jpg" style="height: 337px; width: 281px;" alt="">
+                    <img class="img-fluid w-100" src="img/dorm1.png" style="height: 337px; width: 281px;" alt="">
                     <a class="portfolio-title shadow-sm" href="">
-                        <p class="h4 text-uppercase">Project Name</p>
-                        <span class="text-body"><i class="fa fa-map-marker-alt text-primary me-2"></i>123 Street, New York, USA</span>
+                        <p class="h4 text-uppercase">Hallway</p>
+                        <span class="text-body"><i class="fa fa-map-marker-alt text-primary me-2"></i></span>
                     </a>
-                    <a class="portfolio-btn" href="img/dormgallery3.jpg" style="height: 337px; width: 281px;" data-lightbox="portfolio">
+                    <a class="portfolio-btn" href="img/dorm1.png" style="height: 337px; width: 281px;" data-lightbox="portfolio">
                         <i class="bi bi-plus text-white"></i>
                     </a>
                 </div>
             </div>
             <div class="col-xl-4 col-lg-6 col-md-6 portfolio-item second">
                 <div class="position-relative portfolio-box">
-                    <img class="img-fluid w-100" src="img/dormgallery4.jpg" style="height: 337px; width: 281px;" alt="">
+                    <img class="img-fluid w-100" src="img/dorm2.2.png" style="height: 337px; width: 281px;" alt="">
                     <a class="portfolio-title shadow-sm" href="">
                         <p class="h4 text-uppercase">Project Name</p>
-                        <span class="text-body"><i class="fa fa-map-marker-alt text-primary me-2"></i>123 Street, New York, USA</span>
+                        <span class="text-body"><i class="fa fa-map-marker-alt text-primary me-2"></i></span>
                     </a>
-                    <a class="portfolio-btn" href="img/dormgallery4.jpg" style="height: 337px; width: 281px;" data-lightbox="portfolio">
+                    <a class="portfolio-btn" href="img/dorm2.2.png" style="height: 337px; width: 281px;" data-lightbox="portfolio">
                         <i class="bi bi-plus text-white"></i>
                     </a>
                 </div>
             </div>
             <div class="col-xl-4 col-lg-6 col-md-6 portfolio-item first">
                 <div class="position-relative portfolio-box">
-                    <img class="img-fluid w-100" src="img/dormgallery5.jpg" style="height: 337px; width: 281px;" alt="">
+                    <img class="img-fluid w-100" src="img/kitchen.png" style="height: 337px; width: 281px;" alt="">
                     <a class="portfolio-title shadow-sm" href="">
-                        <p class="h4 text-uppercase">Project Name</p>
-                        <span class="text-body"><i class="fa fa-map-marker-alt text-primary me-2"></i>123 Street, New York, USA</span>
+                        <p class="h4 text-uppercase">Kitchen / Laundry</p>
+                        <span class="text-body"><i class="fa fa-map-marker-alt text-primary me-2"></i></span>
                     </a>
-                    <a class="portfolio-btn" href="img/dormgallery5.jpg" style="height: 337px; width: 281px;" data-lightbox="portfolio">
+                    <a class="portfolio-btn" href="img/kitchen.png" style="height: 337px; width: 281px;" data-lightbox="portfolio">
                         <i class="bi bi-plus text-white"></i>
                     </a>
                 </div>
             </div>
             <div class="col-xl-4 col-lg-6 col-md-6 portfolio-item second">
                 <div class="position-relative portfolio-box">
-                    <img class="img-fluid w-100" src="img/dormgallery6.jpg" style="height: 337px; width: 281px;">
+                    <img class="img-fluid w-100" src="img/dorm2nd.png" style="height: 337px; width: 281px;">
                     <a class="portfolio-title shadow-sm" href="">
-                        <p class="h4 text-uppercase">Project Name</p>
-                        <span class="text-body"><i class="fa fa-map-marker-alt text-primary me-2"></i>123 Street, New York, USA</span>
+                        <p class="h4 text-uppercase">Living Room</p>
+                        <span class="text-body"><i class="fa fa-map-marker-alt text-primary me-2"></i></span>
                     </a>
-                    <a class="portfolio-btn" href="img/dormgallery6.jpg" style="height: 337px; width: 281px;" data-lightbox="portfolio">
+                    <a class="portfolio-btn" href="img/dorm2nd.png" style="height: 337px; width: 281px;" data-lightbox="portfolio">
                         <i class="bi bi-plus text-white"></i>
                     </a>
                 </div>
