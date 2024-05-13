@@ -40,11 +40,12 @@ function fetchmaintenances() {
             }
 
             const cardContent = `
-                <div class="card h-100" style="cursor: pointer;" onclick="showItemDetails('${maintenance.id}','${maintenance.status}', '${maintenance.itemName}','${maintenance.description}', '${maintenance.technicianName}','${maintenance.completionPercentage}')">
+                <div class="card h-100" style="cursor: pointer;" onclick="showItemDetails('${maintenance.id}', '${maintenance.status}', '${maintenance.type}','${maintenance.description}', '${maintenance.technicianName}','${maintenance.completionPercentage}')">
                     <div class="card-body">
                         <div class="d-flex align-items-center justify-content-between mb-2">
-                            <h5 class="card-title">${maintenance.itemName}</h5>
-                            <small class="${statusColorClass}">${maintenance.status}</small>
+                            <h5 class="card-title">${maintenance.type}</h5><br>
+                            
+                            <small class="text-warning">${maintenance.status}<br><small class="text-dark">${maintenance.request_date}</small></small>
                         </div>
                         <img src="${maintenance.img_path}" alt="Maintenance Item Image" class="card-img-top" style="max-height: 150px;">
                     </div>
@@ -132,14 +133,14 @@ createMaintenanceForm.submit(function (event) {
     });
 });
 
-function showItemDetails(id, status, itemName, description, technicianName, completionPercentage) {
+function showItemDetails(id, status, type, description, technicianName, completionPercentage) {
     maintenance_id = id;
-    if (status === "PENDING") {
+    if (status == "PENDING") {
         const maintenanceDetails = document.getElementById('pendingMaintenanceDetails');
-
+        console.log(type)
         let details = `
-            <b>Item Name:</b> ${itemName}<br>
-            <b>Description:</b> ${description}<br>
+            <b>Maintenance Type</b> ${type}<br>
+            <b>Problem Description:</b> ${description}<br>
             <b>Status:</b> ${status}<br>
         `;
         maintenanceDetails.innerHTML = details;
@@ -148,7 +149,7 @@ function showItemDetails(id, status, itemName, description, technicianName, comp
         const maintenanceDetails = document.getElementById('inprogressMaintenanceDetails');
 
         let details = `
-            <b>Item Name:</b> ${itemName}<br>
+            <b>Maintenance Type:</b> ${itemName}<br>
             <b>Description:</b> ${description}<br>
             <b>Status:</b> ${status}<br>
             <b>Completion Percentage:</b>

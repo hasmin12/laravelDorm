@@ -42,7 +42,7 @@
                         
                 
                     <div class="mb-3">
-                        <label for="type" class="col-md-4 col-form-label text-md-right">{{ __('type') }}</label>
+                        <label for="type" class="col-md-4 col-form-label text-md-right">{{ __('Choose Maintenance') }}</label>
                                     <div class="col-md-6">
                                         <select id="type" class="form-control @error('type') is-invalid @enderror" name="type" required>
                                             <option value="General Maintenance">General Maintenance</option>
@@ -58,11 +58,11 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="description" class="form-label">Description</label>
+                        <label for="description" class="form-label">Problem Description</label>
                         <textarea class="form-control" id="description" rows="4" required></textarea>
                     </div>
                     <div class="mb-3">
-                        <label for="img_path" class="form-label">Image</label>
+                        <label for="img_path" class="form-label">Image </label>
                         <input type="file" class="form-control" id="img_path" name="img_path">
                     </div>
 
@@ -102,7 +102,7 @@
             <div class="progress" style="height: 20px;">
                 {{-- <div class="progress-bar bg-success" role="progressbar" style="width: ${completionPercentage}%" aria-valuenow="${completionPercentage}" aria-valuemin="0" aria-valuemax="100">${completionPercentage}%</div> --}}
             </div><br>
-            <b>Assigned Technician:</b>s<br>
+            <b>Assigned Technician:</b><br>
             <b>Maintenance Changes:</b><br>
             <table class="table" id="maintenanceChangesTable">
             </table>
@@ -113,7 +113,7 @@
 
 
   
-    <!-- @include('layouts.footer') -->
+    {{-- <!-- @include('layouts.footer') --> --}}
 
 </div>
 <!-- Content End -->

@@ -88,7 +88,7 @@
 <!-- ... (your existing HTML code) ... -->
 
 
-@include('layouts.footer')
+{{-- @include('layouts.footer') --}}
 
 @endsection
 @extends('layouts.base')
@@ -181,6 +181,6 @@
 <!-- ... (your existing HTML code) ... -->
 
 
-@include('layouts.footer')
+{{-- @include('layouts.footer') --}}
 
 @endsection

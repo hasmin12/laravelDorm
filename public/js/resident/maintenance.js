@@ -41,20 +41,53 @@ function fetchmaintenances() {
                     default:
                         statusColorClass = 'text-dark'; // Default color
                 }
-
+                if (maintenance.status == "PENDING") {
                 const cardContent = `
-                    <div class="card h-100" style="cursor: pointer;" onclick="showItemDetails('${maintenance.id}','${maintenance.status}', '${maintenance.type}','${maintenance.description}', '${maintenance.technicianName}','${maintenance.completionPercentage}','${maintenance.branch}','${maintenance.room_number}')">
+                    <div class="card h-100" style="cursor: pointer;" onclick="showItemDetails('${maintenance.id}','${maintenance.status}','${maintenance.type}','${maintenance.description}','${maintenance.technicianName}','${maintenance.completionPercentage}','${maintenance.branch}','${maintenance.room_number}','${maintenance.request_date}')">
                         <div class="card-body">
                             <div class="d-flex align-items-center justify-content-between mb-2">
                                 <h5 class="card-title">${maintenance.type}</h5>
-                                <small class="${statusColorClass}">${maintenance.status}</small>
+                                <small class="text-warning">${maintenance.status}<br><small class="text-dark">${maintenance.request_date}</small></small>
                             </div>
                             <img src="${maintenance.img_path}" alt="Maintenance Item Image" class="card-img-top" style="max-height: 150px;">
                         </div>
                     </div>
                 `;
-
                 cardContainer.innerHTML = cardContent;
+
+                } else if (maintenance.status == "In Progress") {
+                    const cardContent = `
+                    <div class="card h-100" style="cursor: pointer;" onclick="showItemDetails('${maintenance.id}','${maintenance.status}','${maintenance.type}','${maintenance.description}','${maintenance.technicianName}','${maintenance.completionPercentage}','${maintenance.branch}','${maintenance.room_number}','${maintenance.request_date}')">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                <h5 class="card-title">${maintenance.type}</h5>
+                                <small class="text-info">${maintenance.status}<br><small class="text-dark">${maintenance.request_date}</small></small>
+                            </div>
+                            <img src="${maintenance.img_path}" alt="Maintenance Item Image" class="card-img-top" style="max-height: 150px;">
+                        </div>
+                    </div>
+                `;
+                cardContainer.innerHTML = cardContent;
+     
+                } else{
+
+                    const cardContent = `
+                    <div class="card h-100" style="cursor: pointer;" onclick="showItemDetails('${maintenance.id}','${maintenance.status}','${maintenance.type}','${maintenance.description}','${maintenance.technicianName}','${maintenance.completionPercentage}','${maintenance.branch}','${maintenance.room_number}','${maintenance.request_date}')">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                <h5 class="card-title">${maintenance.type}</h5>
+                                <small class="text-success">${maintenance.status}<br><small class="text-dark">${maintenance.request_date}</small></small>
+                            </div>
+                            <img src="${maintenance.img_path}" alt="Maintenance Item Image" class="card-img-top" style="max-height: 150px;">
+                        </div>
+                    </div>
+                `;
+                cardContainer.innerHTML = cardContent;
+
+                }
+
+             
+
                 maintenancesContainer.appendChild(cardContainer);
             });
         })
@@ -120,20 +153,19 @@ const createMaintenanceForm = $('#createMaintenanceForm');
     });
 });
 
-function showItemDetails(id, status, type, description, technicianName, completionPercentage,branch,room_number) {
+function showItemDetails(id, status, type, description, technicianName, completionPercentage,branch,room_number,request_date) {
 
 
     let modalContent = `
-        <b>Item Name:</b> ${type}<br>
-        <b>Description:</b> ${branch}: Room ${room_number}<br>
-        <b>Room Details:</b> ${status}<br>
-
-        <b>Status:</b> ${status}<br>
-        
+     <ul class="list-group list-group-flush">
+     <li class="list-group-item bg-transparent"><b>Maintenance Type:</b> ${type}</li>
+     <li class="list-group-item bg-transparent"><b>Description:</b> ${description}</li>
+     <li class="list-group-item bg-transparent"><b>Room Details:</b> ${branch}: ${room_number}</li>
+     <li class="list-group-item bg-transparent"><b>Request Date:</b> ${request_date}</li>    
     `;
 
     if (status === "PENDING" || status === "Cancelled") {
-        modalContent += `<b>Status:</b> Waiting for approval`;
+        modalContent += `<li class="list-group-item bg-transparent"><b>Status:</b> Waiting for approval<li> </ul> `;
     const modalBody = document.getElementById('pendingMaintenanceBody');
 
     modalBody.innerHTML = modalContent;

@@ -2,7 +2,9 @@ document.addEventListener('DOMContentLoaded', function () {
     fetchTechnicians();
     fetchmaintenances();
 });
+
 let maintenance_id;
+
 function fetchmaintenances() {
     const token = localStorage.getItem('token');
     fetch('/api/technician/getMaintenance', {
@@ -39,19 +41,49 @@ function fetchmaintenances() {
                     statusColorClass = 'text-dark'; // Default color
             }
 
-            const cardContent = `
-                <div class="card h-100" style="cursor: pointer;" onclick="showItemDetails('${maintenance.id}','${maintenance.status}', '${maintenance.itemName}','${maintenance.description}', '${maintenance.technicianName}','${maintenance.completionPercentage}')">
-                    <div class="card-body">
-                        <div class="d-flex align-items-center justify-content-between mb-2">
-                            <h5 class="card-title">${maintenance.itemName}</h5>
-                            <small class="${statusColorClass}">${maintenance.status}</small>
+            if (maintenance.status == "PENDING") {
+                const cardContent = `
+                    <div class="card h-100" style="cursor: pointer;" onclick="showItemDetails('${maintenance.id}','${maintenance.status}','${maintenance.type}','${maintenance.description}','${maintenance.technicianName}','${maintenance.completionPercentage}','${maintenance.branch}','${maintenance.room_number}','${maintenance.request_date}')">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                <h5 class="card-title">${maintenance.type}</h5>
+                                <small class="text-warning">${maintenance.status}<br><small class="text-dark">${maintenance.request_date}</small></small>
+                            </div>
+                            <img src="${maintenance.img_path}" alt="Maintenance Item Image" class="card-img-top" style="max-height: 150px;">
                         </div>
-                        <img src="${maintenance.img_path}" alt="Maintenance Item Image" class="card-img-top" style="max-height: 150px;">
                     </div>
-                </div>
-            `;
+                `;
+                cardContainer.innerHTML = cardContent;
 
-            cardContainer.innerHTML = cardContent;
+            } else if (maintenance.status == "In Progress") {
+                const cardContent = `
+                    <div class="card h-100" style="cursor: pointer;" onclick="showItemDetails('${maintenance.id}','${maintenance.status}','${maintenance.type}','${maintenance.description}','${maintenance.technicianName}','${maintenance.completionPercentage}','${maintenance.branch}','${maintenance.room_number}','${maintenance.request_date}')">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                <h5 class="card-title">${maintenance.type}</h5>
+                                <small class="text-warning">${maintenance.status}<br><small class="text-dark">${maintenance.request_date}</small></small>
+                            </div>
+                            <img src="${maintenance.img_path}" alt="Maintenance Item Image" class="card-img-top" style="max-height: 150px;">
+                        </div>
+                    </div>
+                `;
+                cardContainer.innerHTML = cardContent;
+
+            } else {
+                const cardContent = `
+                    <div class="card h-100" style="cursor: pointer;" onclick="showItemDetails('${maintenance.id}','${maintenance.status}','${maintenance.type}','${maintenance.description}','${maintenance.technicianName}','${maintenance.completionPercentage}','${maintenance.branch}','${maintenance.room_number}','${maintenance.request_date}')">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                <h5 class="card-title">${maintenance.type}</h5>
+                                <small class="text-success">${maintenance.status}<br><small class="text-dark">${maintenance.request_date}</small></small>
+                            </div>
+                            <img src="${maintenance.img_path}" alt="Maintenance Item Image" class="card-img-top" style="max-height: 150px;">
+                        </div>
+                    </div>
+                `;
+                cardContainer.innerHTML = cardContent;
+
+            }
             maintenancesContainer.appendChild(cardContainer);
         });
     })
@@ -60,7 +92,7 @@ function fetchmaintenances() {
 
 function fetchTechnicians() {
     const technicianDropdown = document.getElementById('technicianDropdown');
-
+    const token = localStorage.getItem('token');
     fetch(`/api/getTechnicians`, {
         method: 'GET',
         headers: {
@@ -69,18 +101,17 @@ function fetchTechnicians() {
             'Authorization': `Bearer ${token}`,
         },
         credentials: 'include',
-    }) 
-        .then(response => response.json())
-        .then(data => {
-           
-            data.forEach(technician => {
-                const option = document.createElement('option');
-                option.value = technician.id;
-                option.textContent = technician.name;
-                technicianDropdown.appendChild(option);
-            });
-        })
-        .catch(error => console.error('Error fetching technicians:', error));
+    })
+    .then(response => response.json())
+    .then(data => {
+        data.forEach(technician => {
+            const option = document.createElement('option');
+            option.value = technician.id;
+            option.textContent = technician.name;
+            technicianDropdown.appendChild(option);
+        });
+    })
+    .catch(error => console.error('Error fetching technicians:', error));
 }
 
 const createMaintenanceForm = $('#createMaintenanceForm');
@@ -103,6 +134,7 @@ createMaintenanceForm.submit(function (event) {
         type: 'POST',
         headers: {
             'Authorization': 'Bearer ' + token,
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         data: formData,
         processData: false,  
@@ -143,7 +175,7 @@ function showItemDetails(id, status, itemName, description, technicianName, comp
         `;
         maintenanceDetails.innerHTML = details;
         $('#pendingMaintenanceModal').modal('show');
-    } else{ 
+    } else { 
         const maintenanceDetails = document.getElementById('inprogressMaintenanceDetails');
 
         let details = `
@@ -152,9 +184,10 @@ function showItemDetails(id, status, itemName, description, technicianName, comp
             <b>Status:</b> ${status}<br>
             <b>Completion Percentage:</b>
             <div class="progress" style="height: 20px;">
-                <div class="progress-bar bg-success" role="progressbar" style="width: ${completionPercentage}%" aria-valuenow="${completionPercentage}" aria-valuemin="0" aria-valuemax="100">${completionPercentage}%</div>
+                <div class="progress-bar progress-bar-striped bg-info" role="progressbar" style="width: ${completionPercentage}%" aria-valuenow="${completionPercentage}" aria-valuemin="0" aria-valuemax="100">${completionPercentage}%</div>
             </div><br>
             <b>Assigned Technician:</b> ${technicianName}<br>
+          
         `;
         maintenanceDetails.innerHTML = details;
         fetchMaintenanceChanges(id);
@@ -164,7 +197,6 @@ function showItemDetails(id, status, itemName, description, technicianName, comp
 
 // Function to fetch and populate maintenance changes for in-progress requests
 function fetchMaintenanceChanges(maintenanceId) {
-    console.log(maintenanceId)
     const token = localStorage.getItem('token');
     fetch(`/api/getMaintenanceChanges?maintenance_id=${maintenanceId}`, {
         method: 'GET',
@@ -198,7 +230,6 @@ function fetchMaintenanceChanges(maintenanceId) {
     .catch(error => console.error('Error fetching maintenance changes:', error));
 }
 
-
 const assignTechnicianForm = $('#assignTechnicianForm');
 assignTechnicianForm.submit(function (event) {
     event.preventDefault();
@@ -206,19 +237,19 @@ assignTechnicianForm.submit(function (event) {
     const formData = new FormData();
     formData.append('technician_id', technician_id);
     formData.append('maintenance_id', maintenance_id);
-    
+    const token = localStorage.getItem('token');
     $.ajax({
         url: '/api/assignTechnician',
         type: 'POST',
         headers: {
             'Authorization': 'Bearer ' + token,
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         data: formData,
         processData: false,  
         contentType: false,
         success: function (data) {
             $('#pendingMaintenanceModal').modal('hide');
-            
             fetchmaintenances(); // Update the function name to match your lost items
             Swal.fire({
                 icon: 'success',
@@ -235,4 +266,143 @@ assignTechnicianForm.submit(function (event) {
             });
         }
     });
+});
+
+// Function to show the completion days modal
+function showCompletionDaysModal() {
+    $('#completionDaysModal').modal('show');
+}
+
+// Function to handle submitting the completion days form
+$('#completionDaysForm').submit(function (event) {
+    event.preventDefault();
+    const completionDays = $('#completionDays').val();
+    const maintenanceId = maintenance_id; // Assuming you have the maintenance_id stored
+    acceptMaintenance(maintenanceId, completionDays);
+});
+
+// Function to accept maintenance
+function acceptMaintenance(maintenanceId, completionDays) {
+    const token = localStorage.getItem('token');
+    fetch('/api/technician/acceptMaintenance', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': 'Bearer ' + token,
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        credentials: 'include',
+        body: JSON.stringify({
+            maintenance_id: maintenanceId,
+            completionDays: completionDays
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Maintenance accepted:', data);
+        $('#completionDaysModal').modal('hide');
+        // Show success message
+        Swal.fire({
+            icon: 'success',
+            title: 'Maintenance Accepted',
+            text: 'The maintenance has been accepted and saved in the database.'
+        });
+    })
+    .catch(error => {
+        console.error('Error accepting maintenance:', error);
+        // Show error message
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'An error occurred while accepting the maintenance. Please try again.'
+        });
+    });
+}
+
+function addMaintenanceStatus(maintenanceId, description, changePercentage) {
+    const token = localStorage.getItem('token');
+    console.log(description)
+    fetch('/api/addMaintenanceStatus', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': 'Bearer ' + token,
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        credentials: 'include',
+        body: JSON.stringify({
+            maintenance_id: maintenanceId,
+            description: description,
+            changePercentage: changePercentage
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+    fetchmaintenances();
+
+        console.log('Maintenance status added:', data);
+        Swal.fire({
+            icon: 'success',
+            title: 'Maintenance Updated',
+            text: 'Maintenance status has been updated successfully.',
+        });
+    })
+    .catch(error => {
+        console.error('Error adding maintenance status:', error);
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'An error occurred while updating the maintenance status. Please try again.',
+        });
+    });
+}
+
+// Function to show the Accept Maintenance modal
+function showAcceptModal() {
+    $('#acceptModal').modal('show');
+}
+
+// Function to show the Update Maintenance modal
+function showUpdateModal() {
+    $('#updateModal').modal('show');
+}
+
+
+// Function to handle form submission for accepting maintenance
+$('#acceptForm').submit(function(event) {
+    event.preventDefault();
+    const completionDays = $('#completionDays').val();
+    acceptMaintenance(maintenance_id, completionDays);
+    $('#acceptModal').modal('hide');
+});
+
+
+// Function to mark maintenance as done
+function markAsDone() {
+    const completionPercentage = 100;
+    const description = "Maintenance completed.";
+    Swal.fire({
+        icon: 'warning',
+        title: 'Are you sure?',
+        text: 'This will mark the maintenance as done.',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, mark it as done',
+        cancelButtonText: 'No, keep it',
+        reverseButtons: true
+    }).then((result) => {
+        if (result.isConfirmed) {
+            addMaintenanceStatus(maintenance_id, description, completionPercentage);
+        }
+    });
+}
+
+// Function to handle form submission for updating maintenance
+$('#updateForm').submit(function(event) {
+    event.preventDefault();
+    const completionPercentage = $('#completionPercentage').val();
+    const description = $('#statusdescription').val();
+    addMaintenanceStatus(maintenance_id, description, completionPercentage);
+    $('#updateModal').modal('hide');
 });
