@@ -279,6 +279,7 @@ createReservationForm.addEventListener('submit', function (event) {
         method: 'POST',
         headers: {         
             'Accept': 'application/json',
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         credentials: 'include',
         body: formData,
