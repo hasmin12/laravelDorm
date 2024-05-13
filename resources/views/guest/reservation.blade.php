@@ -250,7 +250,7 @@
     </div>
 </div>
 
-<script src="{{ secure_asset('js/guest/reservation.js') }}"></script>
+<script src="{{ secure_asset('js/guest/reservations.js') }}"></script>
 
 @include('layouts.footer')
 @endsection
