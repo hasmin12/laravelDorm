@@ -159,8 +159,7 @@
                 <div class="position-relative portfolio-box">
                     <img class="img-fluid w-100" src="img/facility1.jpg" style="height: 337px; width: 281px;" alt="">
                     <a class="portfolio-title shadow-sm" href="">
-                        <p class="h4 text-uppercase">Building</p>
-                        <span class="text-body"><i class="fa fa-map-marker-alt text-primary me-2"></i></span>
+                        <p class="h4 text-center text-uppercase"><i class="fa fa-map-marker-alt text-primary me-2"></i>Building</p>
                     </a>
                     <a class="portfolio-btn" href="css1" data-lightbox="portfolio">
                         <i class="bi bi-plus text-white"></i>
@@ -171,8 +170,7 @@
                 <div class="position-relative portfolio-box">
                     <img class="img-fluid w-100" src="img/overlook2.jpg" style="height: 337px; width: 281px;" alt="">
                     <a class="portfolio-title shadow-sm" href="">
-                        <p class="h4 text-uppercase">View</p>
-                        <span class="text-body"><i class="fa fa-map-marker-alt text-primary me-2"></i></span>
+                        <p class="h4 text-center text-uppercase"><i class="fa fa-map-marker-alt text-primary me-2"></i>View</p>
                     </a>
                     <a class="portfolio-btn" href="img/overlook2.jpg" style="height: 337px; width: 281px;" data-lightbox="portfolio">
                         <i class="bi bi-plus text-white"></i>
@@ -183,8 +181,8 @@
                 <div class="position-relative portfolio-box">
                     <img class="img-fluid w-100" src="img/dorm1.png" style="height: 337px; width: 281px;" alt="">
                     <a class="portfolio-title shadow-sm" href="">
-                        <p class="h4 text-uppercase">Hallway</p>
-                        <span class="text-body"><i class="fa fa-map-marker-alt text-primary me-2"></i></span>
+                        <p class="h4 text-center text-uppercase"><i class="fa fa-map-marker-alt text-primary me-2"></i>Hallway</p>
+                       
                     </a>
                     <a class="portfolio-btn" href="img/dorm1.png" style="height: 337px; width: 281px;" data-lightbox="portfolio">
                         <i class="bi bi-plus text-white"></i>
@@ -195,11 +193,10 @@
                 <div class="position-relative portfolio-box">
                     <img class="img-fluid w-100" src="img/dorm2.2.png" style="height: 337px; width: 281px;" alt="">
                     <a class="portfolio-title shadow-sm" href="">
-                        <p class="h4 text-uppercase">Project Name</p>
-                        <span class="text-body"><i class="fa fa-map-marker-alt text-primary me-2"></i></span>
+                        <p class="h4 text-center text-uppercase"><i class="fa fa-map-marker-alt text-primary me-2"></i>Project Name</p>
                     </a>
                     <a class="portfolio-btn" href="img/dorm2.2.png" style="height: 337px; width: 281px;" data-lightbox="portfolio">
-                        <i class="bi bi-plus text-white"></i>
+                   
                     </a>
                 </div>
             </div>
@@ -207,8 +204,8 @@
                 <div class="position-relative portfolio-box">
                     <img class="img-fluid w-100" src="img/kitchen.png" style="height: 337px; width: 281px;" alt="">
                     <a class="portfolio-title shadow-sm" href="">
-                        <p class="h4 text-uppercase">Kitchen / Laundry</p>
-                        <span class="text-body"><i class="fa fa-map-marker-alt text-primary me-2"></i></span>
+                        <p class="h4 text-center text-uppercase"><i class="fa fa-map-marker-alt text-primary me-2"></i>Kitchen / Laundry</p>
+                
                     </a>
                     <a class="portfolio-btn" href="img/kitchen.png" style="height: 337px; width: 281px;" data-lightbox="portfolio">
                         <i class="bi bi-plus text-white"></i>
@@ -219,8 +216,8 @@
                 <div class="position-relative portfolio-box">
                     <img class="img-fluid w-100" src="img/dorm2nd.png" style="height: 337px; width: 281px;">
                     <a class="portfolio-title shadow-sm" href="">
-                        <p class="h4 text-uppercase">Living Room</p>
-                        <span class="text-body"><i class="fa fa-map-marker-alt text-primary me-2"></i></span>
+                        <p class="h4 text-center text-uppercase"><i class="fa fa-map-marker-alt text-primary me-2"></i>Living Room</p>
+            
                     </a>
                     <a class="portfolio-btn" href="img/dorm2nd.png" style="height: 337px; width: 281px;" data-lightbox="portfolio">
                         <i class="bi bi-plus text-white"></i>
