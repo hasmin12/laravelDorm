@@ -221,16 +221,30 @@ class AdminController extends Controller
 
     public function assignTechnician(Request $request)
     {
-        
-
+        // Find the maintenance record
         $maintenance = Maintenance::findOrFail($request->input('maintenance_id'));
-        $maintenance->technician_id = $request->input('technician_id');
-        $maintenance->status = 'In Progress';
-        $maintenance->save();
-
-        return response()->json($maintenance);
+        
+        // Find the technician by their ID from the request
+        $technician = User::select('id', 'name')
+                            ->where('role', 'Technician')
+                            ->where('id', $request->input('technician_id'))
+                            ->first();
+    
+        // If technician with the given ID and role "Technician" is found, proceed
+        if ($technician) {
+            // Assign the technician's ID and name to the maintenance record
+            $maintenance->technician_id = $technician->id;
+            $maintenance->technicianName = $technician->name; // Adding technician's name to maintenance
+            $maintenance->status = 'In Progress';
+            $maintenance->save();
+    
+            return response()->json($maintenance);
+        } else {
+            // If no technician is found with the given ID and role "Technician"
+            return response()->json(['error' => 'Technician not found or invalid'], 404);
+        }
     }
-
+    
 
 // Method to fetch resident details with payment history
 public function getResident($id)
@@ -1127,7 +1141,7 @@ public function getResident($id)
     public function notifyResidents()
     {
         try {
-            $residents = User::where('is_paid', 0)->where('branch', "Dormitory")->where('role', "Resident")->where('status', "Active")->get();
+            $residents = User::where('branch', "Dormitory")->where('role', "Resident")->where('status', "Active")->get();
             $currentMonth = now()->format('F Y');
             $ldate = date('Y-m-d');
 
@@ -1145,7 +1159,7 @@ public function getResident($id)
 
                 $dormitoryPayment = Dormitorypayment::create([
                     'user_id' => $resident->id,
-                    'roomdetails' => $resident->roomdetails,
+                    'roomdetails' => $resident->room .':' .$resident->bed,
                     'laptop' => $resident->laptop,
                     'electricfan' => $resident->electricfan,
                     'totalAmount' => $totalAmount,
@@ -1175,7 +1189,7 @@ public function getResident($id)
                     'message' => "This is a friendly reminder to pay your monthly fees for $currentMonth.Please ensure your payment is submitted by the end of the month.Thank you for your cooperation."
                 ]);
                 $data = [
-                    'email' =>  $resident->email,
+                    '   ' =>  $resident->email,
                     'notification_type' => "Monthly Payment",
                 ];
                 
@@ -1308,41 +1322,51 @@ public function getResident($id)
     }
 
     public function assignResident(Request $request)
-    {
+{
+    try {
         $bedId = $request->input('bedId');
         $residentId = $request->input('residentId');
+        
+        // Find the bed and user
+        $bed = Dormitorybed::findOrFail($bedId);
+        $user = User::findOrFail($residentId);
 
-        $bed = Dormitorybed::find($bedId);
-        $user = User::find($residentId);
+        // Update bed details
         $bed->update([
             'user_id' => $residentId,
             'user_image' => $user->img_path,
             'status' => "Occupied"
         ]);
 
-        $room = Dormitoryroom::find($bed->room_id);
-
+        // Find and update room details
+        $room = Dormitoryroom::findOrFail($bed->room_id);
         $room->update([
             'occupiedBeds' => $room->occupiedBeds + 1,
         ]);
 
+        // Update user details
         $user->update([
             'room' => "Room " . $bed->room_id,
             'bed' => $bed->name,
-
             'status' => "Active"
         ]);
 
-        $newUser = Notification::create([
+        // Create notification for the user
+        Notification::create([
             'sender_id' => Auth::user()->id,
+            'senderName' => Auth::user()->name,
             'receiver_id' => $residentId,
             'notification_type' => "Registration Complete",
-            // 'target_id' => $dormitoryPayment->id,
-            'message' => "Hello $user->name, Your registration is now complete. You are assigned to $user->room - $user->bed "
+            'message' => "Hello $user->name, Your registration is now complete. You are assigned to Room $bed->room_id - $bed->name "
         ]);
 
         return response()->json(['bed' => $bed], 200);
+    } catch (\Exception $e) {
+        // Log and handle any exceptions
+        Log::error($e->getMessage());
+        return response()->json(['error' => 'An error occurred while processing the request.'], 500);
     }
+}
 
     public function getLogs(Request $request)
     {

@@ -101,7 +101,8 @@
     </div>
 </div>
 
-<div class="modal fade" id="inprogressMaintenanceModal" tabindex="-1" aria-labelledby="inprogressMaintenanceLabel" aria-hidden="true">
+<!-- In Progress Maintenance Modal -->
+<div class="modal fade" id="inprogressMaintenanceModal" tabindex="-1" aria-labelledby="inprogressMaintenanceModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -110,20 +111,73 @@
             </div>
             <div class="modal-body" id="inprogressMaintenanceBody">
                 <div id="inprogressMaintenanceDetails" class="mb-3">
+                    <!-- Maintenance details will be populated here -->
                 </div>
-                
-            
-            <b>Maintenance Changes:</b><br>
-            <table class="table" id="maintenanceChangesTbody">
-                <thead>
-                    <tr>
-                        <th>Description</th>
-                        <th>Change Percentage</th>
-                    </tr>
-                </thead>
-                <tbody id="maintenanceChangesTbody">
-                </tbody>
-            </table>
+                <!-- Check if completionDays has a value -->
+                @if(isset($completionDays))
+                <!-- Accept Button -->
+                <div class="text-end">
+                    <button type="button" class="btn btn-primary" onclick="showAcceptModal()">Accept</button>
+                </div>
+                @else
+                <!-- Update Button -->
+                <div class="text-end">
+                    <button type="button" class="btn btn-primary" onclick="showUpdateModal()">Update</button>
+                </div>
+                @endif
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Accept Maintenance Modal -->
+<div class="modal fade" id="acceptModal" tabindex="-1" aria-labelledby="acceptModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="acceptModalLabel">Accept Maintenance</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="acceptForm">
+                    <div class="mb-3">
+                        <label for="completionDays" class="form-label">Completion Days</label>
+                        <input type="number" class="form-control" id="completionDays" name="completionDays" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Accept</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Update Maintenance Modal -->
+<div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="updateModalLabel">Update Maintenance</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="updateForm">
+                    <div class="mb-3">
+                        <label for="completionPercentage" class="form-label">Completion Percentage</label>
+                        <input type="number" class="form-control" id="completionPercentage" name="completionPercentage" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="statusdescription" class="form-label">Description</label>
+                        <textarea class="form-control" id="statusdescription" name="statusdescription" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" onclick="markAsDone()">Done</button>
             </div>
         </div>
     </div>
@@ -131,9 +185,8 @@
 
 
 
-
   
-    @include('layouts.footer')
+    {{-- @include('layouts.footer') --}}
 
 </div>
 <!-- Content End -->

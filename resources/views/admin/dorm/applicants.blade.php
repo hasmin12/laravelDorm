@@ -41,7 +41,7 @@
          <!-- Toggle Button for View -->
          <div class="form-check form-switch ms-3">
             <input class="form-check-input form-switch-lg" type="checkbox" id="viewToggle">
-            <label class="form-check-label" for="viewToggle">Grid View</label>
+            <label class="form-check-label" for="viewToggle">Toggle View</label>
         </div>
        
 
@@ -131,20 +131,23 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body" id="residentAssignModalBody">
-                        <form id="AssignResidentForm">
-                            @csrf
+                        <form id="assignResidentForm">
+                            
                         <select id="roomDropdown" name="Select Room" class="form-select"></select>
                         <div id="bedsCard"></div>
-
-                        </form>
+        
+                        <!-- Insert the bedRadio button here -->
+                        <input type="radio" id="bedRadio" name="bedRadio" value="" hidden>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
                     </div>
                     <div class="modal-footer">
-                        
+                        <!-- Your footer content -->
                     </div>
                 </div>
             </div>
         </div>
-
+        
 
         
 

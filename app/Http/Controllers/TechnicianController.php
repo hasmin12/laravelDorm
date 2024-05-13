@@ -35,8 +35,7 @@ class TechnicianController extends Controller
             return response()->json(['error' => 'Internal Server Error'], 500);
         }
     }
-
-    
+ 
     public function getMaintenanceStatus(Request $request)
     {
  
@@ -53,6 +52,7 @@ class TechnicianController extends Controller
     }
     public function addMaintenanceStatus(Request $request)
     {
+
         try {
             $ldate = date('Y-m-d H:i:s');
             $description = $request->input('description');
@@ -65,7 +65,7 @@ class TechnicianController extends Controller
             ]);
 
             $maintenance = Maintenance::find($id);
-            $newPercentage = $maintenance->completionPercentage + $changePercentage;
+            $newPercentage = $changePercentage;
             Log::info($maintenance->completionPercentage );
             Log::info($changePercentage );
             Log::info($newPercentage);
@@ -90,3 +90,4 @@ class TechnicianController extends Controller
         }
     }
 }
+

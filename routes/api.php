@@ -119,7 +119,7 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
 
 
     Route::get('/getTechnicians', 'AdminController@getTechnicians');
-
+    Route::get('/getTechnicians', 'AdminController@getTechnicians');
     // Get maintenance changes
     Route::get('/getMaintenanceChanges','AdminController@getMaintenanceChanges');
 
@@ -143,9 +143,11 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::post('/acceptMaintenance', 'TechnicianController@acceptMaintenance');
     Route::post('/resident/acceptMaintenance', 'ResidentController@acceptMaintenance');
     Route::get('/getMaintenanceStatus', 'TechnicianController@getMaintenanceStatus');
-    
-    Route::post('/addMaintenanceStatus', 'TechnicianController@addMaintenanceStatus');
+   
     Route::get('/technician/getMaintenance', 'TechnicianController@getMaintenance');
+
+    Route::post('/technician/acceptMaintenance', 'TechnicianController@acceptMaintenance');
+    Route::post('/addMaintenanceStatus','TechnicianController@addMaintenanceStatus');
 
     Route::get('/getNotifications', 'AuthController@getNotifications');
 

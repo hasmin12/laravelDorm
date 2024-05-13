@@ -9,11 +9,34 @@ document.addEventListener('DOMContentLoaded', function () {
     const roomDropdown = document.getElementById('roomDropdown');
     const bedsCard = document.getElementById('bedsCard');
     let selectedResident;
-    let selectedBed;
-
 
     // Set the initial view to 'tiles'
-    
+    function fetchRooms() {
+        fetch(`/api/getRooms`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            },
+            credentials: 'include',
+        }) // Replace '/getRooms' with the actual route to fetch rooms
+            .then(response => response.json())
+            .then(data => {
+                
+                const option = document.createElement('option');
+                    option.value = "";
+                    option.textContent = "";
+                    roomDropdown.appendChild(option);
+                data.rooms.forEach(room => {
+                    const option = document.createElement('option');
+                    option.value = room.id;
+                    option.textContent = room.name;
+                    roomDropdown.appendChild(option);
+                });
+            })
+            .catch(error => console.error('Error fetching rooms:', error));
+    }
 
     function displayBedDetails(roomId) {
         fetch(`/api/getBeds/${roomId}`, {
@@ -27,10 +50,8 @@ document.addEventListener('DOMContentLoaded', function () {
         })
         .then(response => response.json())
         .then(data => {
-            // Clear previous content
             bedsCard.innerHTML = '';
-    
-            let row; // Variable to hold the current row
+            let row; 
     
             data.beds.forEach((bed, index) => {
                 if (index % 2 === 0) {
@@ -40,20 +61,20 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
                 
                 const cardDiv = document.createElement('div');
-                cardDiv.classList.add('col-md-6', 'mb-3'); // Each card takes 6 columns in Bootstrap grid system
-        
+                cardDiv.classList.add('col-md-6', 'mb-3');
+    
                 const card = document.createElement('div');
                 card.classList.add('card', 'custom-border-red');
                 card.style.width = '100%';
-        
+    
                 const bedImage = document.createElement('img');
                 bedImage.classList.add('card-img-top');
                 bedImage.style.width = '100%';
                 bedImage.style.height = '300px';
-        
+    
                 const cardBody = document.createElement('div');
                 cardBody.classList.add('card-body', 'text-center');
-        
+    
                 const bedName = document.createElement('h5');
                 bedName.classList.add('card-title');
                 bedName.textContent = `Bed ${bed.name}`;
@@ -66,24 +87,32 @@ document.addEventListener('DOMContentLoaded', function () {
                 bedStatus.classList.add('card-title');
                 bedStatus.textContent = `${bed.status}`;
     
-                if (bed.status !== 'Occupied') {
-                    const assignForm = document.createElement('form');
-                    assignForm.addEventListener('submit', function(event) {
-                        event.preventDefault();
-                        assignBed(bed.id); 
-                    });
-                    const assignButton = document.createElement('button');
-                    assignButton.setAttribute('type', 'submit');
-                    assignButton.classList.add('btn', 'btn-sm', 'btn-primary');
-                    assignButton.textContent = 'Assign';
-                    assignForm.appendChild(assignButton);
-                    cardBody.appendChild(assignForm);
-                }
-        
                 cardBody.appendChild(bedName);
                 cardBody.appendChild(bedType);
                 cardBody.appendChild(bedStatus);
                 
+                // Add event listener to each card
+                card.addEventListener('click', () => {
+                    // Check if the bed status is "Occupied"
+                    if (bed.status === "Occupied") {
+                        return; // Exit early if bed is occupied
+                    }
+    
+                    // Remove highlight from previously selected card
+                    const highlightedCard = document.querySelector('.custom-border-red.selected');
+                    if (highlightedCard) {
+                        highlightedCard.style.border = 'none'; // Remove border style from previously selected card
+                        highlightedCard.classList.remove('selected');
+                    }
+                    // Highlight the clicked card
+                    card.style.border = '2px solid red'; // Add border style to the clicked card
+                    card.classList.add('selected');
+    
+                    // Set the value of the radio button to bedId
+                    // Replace 'bedRadio' with the actual ID of your radio button
+                    document.getElementById('bedRadio').value = bed.id;
+                });
+    
                 card.appendChild(bedImage); 
                 card.appendChild(cardBody);
                 cardDiv.appendChild(card);
@@ -92,6 +121,8 @@ document.addEventListener('DOMContentLoaded', function () {
         })
         .catch(error => console.error('Error fetching beds:', error));
     }
+    
+    
     
     
     
@@ -166,7 +197,6 @@ updateResidentForm.addEventListener('submit', function (event) {
             type: 'POST',
             headers: {
                 'Authorization': 'Bearer ' + token,
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             data: formData,
             processData: false,  
@@ -202,32 +232,59 @@ updateResidentForm.addEventListener('submit', function (event) {
 });
 });
 
-function fetchRooms() {
-    fetch(`/api/getRooms`, {
-        method: 'GET',
+
+const assignResidentForm = document.getElementById('assignResidentForm');
+assignResidentForm.addEventListener('submit', function (event) {
+    event.preventDefault();
+
+    const bedId = document.getElementById('bedRadio').value;
+    const formData = new FormData();
+    formData.append('bedId', bedId);
+    formData.append('residentId', selectedResident);
+
+    console.log('Form Data:', formData);
+
+    const token = localStorage.getItem('token');
+
+    $.ajax({
+        url: `/api/assignResident`,
+        type: 'POST', 
         headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-            'Authorization': `Bearer ${token}`,
+            'Authorization': 'Bearer ' + token,
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') 
         },
-        credentials: 'include',
-    }) // Replace '/getRooms' with the actual route to fetch rooms
-        .then(response => response.json())
-        .then(data => {
-            
-            const option = document.createElement('option');
-                option.value = "";
-                option.textContent = "";
-                roomDropdown.appendChild(option);
-            data.rooms.forEach(room => {
-                const option = document.createElement('option');
-                option.value = room.id;
-                option.textContent = room.name;
-                roomDropdown.appendChild(option);
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (data) {
+            console.log('Resident Assigned successfully:', data);
+
+            $('#residentAssignModal').modal('hide');
+            roomDropdown.selectedIndex = 0; 
+            bedsCard.innerHTML = '';
+            selectedResident = null;
+
+            fetchResidents(currentView);
+           
+            Swal.fire({
+                icon: 'success',
+                title: 'Resident Assigned',
+                text: 'Your resident has been successfully Assigned.',
             });
-        })
-        .catch(error => console.error('Error fetching rooms:', error));
-}
+        },
+        error: function (error) {
+            console.error('Error updating resident:', error);
+
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'An error occurred while updating the resident. Please try again.',
+            });
+        }
+    });
+});
+
+
 const styleElement = document.createElement('style');
 
 // Define the CSS rules with maroon color
@@ -320,43 +377,97 @@ function fetchResidents(viewType = 'tiles') {
     });
 }
 
-function assignBed(bedId) {
 
-    const formData = {
-        bedId: bedId,
-        residentId: selectedResident,
+    // function assignBed(bedId) {
+    //     console.log(selectedResident)
+    //     const residentId = updateResidentForm.dataset.residentId; // Add a data attribute to store resident ID
+    
+    //     // const formData = new FormData();
+    //     // formData.append('bedId', bedId);
+    //     // formData.append('residentId', selectedResident);
+    //     const formData = {
+    //         bedId: bedId,
+    //         residentId: selectedResident,
+        
+    //     };
+    //     const token = localStorage.getItem('token');
+    //     fetch(`/api/assignResident`, {
+    //         method: 'POST',
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //             'Accept': 'application/json',
+    //             'Authorization': `Bearer ${token}`,
+    //         },
+    //         credentials: 'include',
+    //         body: JSON.stringify({
+    //             formData
+    //         })
+    //     })
+    //     .then(response => response.json())
+    //     .then(data => {
+    //         $('#residentAssignModal').modal('hide');
+    //         roomDropdown.selectedIndex = 0; 
+    //         bedsCard.innerHTML = '';
+    //         selectedResident = null;
 
-    };
-    const token = localStorage.getItem('token');
-    fetch(`/api/assignResident`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-            'Authorization': `Bearer ${token}`,
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    //         fetchResidents(currentView);
+    //         fetchRooms();
+           
+    //         Swal.fire({
+    //             icon: 'success',
+    //             title: 'Resident Assigned',
+    //             text: 'Your resident has been successfully updated.',
+    //         });
+    //     })
+    // }
+    
+// function assignBed(bedId) {
+//     console.log(selectedResident)
+//     const residentId = updateResidentForm.dataset.residentId; // Add a data attribute to store resident ID
 
-        },
-        credentials: 'include',
-        body: JSON.stringify({formData})
-    })
-    .then(response => response.json())
-    .then(data => {
-        $('#residentAssignModal').modal('hide');
-        roomDropdown.selectedIndex = 0; 
-        bedsCard.innerHTML = '';
-        selectedResident = null;
+//     const formData = new FormData();
+//     formData.append('bedId', bedId);
+//     formData.append('residentId', selectedResident);
 
-        fetchResidents(currentView);
-        fetchRooms();
-        console.log(data)
-        Swal.fire({
-            icon: 'success',
-            title: 'Resident Assigned',
-            text: 'Your resident has been successfully updated.',
-        });
-    })
-}
+//     const token = localStorage.getItem('token');
+
+//         $.ajax({
+//             url: `/api/assignResident/`,
+//             type: 'POST',
+//             headers: {
+//                 'Authorization': 'Bearer ' + token,
+//             },
+//             data: formData,
+//             processData: false,  
+//             contentType: false,
+//             success: function (data) {
+        
+//             $('#residentAssignModal').modal('hide');
+//             roomDropdown.selectedIndex = 0; 
+//             bedsCard.innerHTML = '';
+//             selectedResident = null;
+
+//             fetchResidents(currentView);
+//             fetchRooms();
+           
+//             Swal.fire({
+//                 icon: 'success',
+//                 title: 'Resident Assigned',
+//                 text: 'Your resident has been successfully updated.',
+//             });
+//         },
+//         error: function (error) {
+//             console.error('Error updating resident:', error);
+
+//             Swal.fire({
+//                 icon: 'error',
+//                 title: 'Error',
+//                 text: 'An error occurred while updating the resident. Please try again.',
+//             });
+//         }
+//     });
+// }
+
 
 // Function to show resident details in modal
 function showResidentDetails(residentId) {
