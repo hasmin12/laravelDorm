@@ -28,6 +28,8 @@
                     <a href="element.html" class="dropdown-item">Staff</a>
                 </div>
             </div> --}}
+            <a href="/admin/dorm/reservations" class="nav-item nav-link"><i class="fa fa-person-booth me-2"></i>Reservations</a>
+
             <a href="/admin/dorm/applicants" class="nav-item nav-link"><i class="fa fa-solid fa-user-plus me-2"></i>Applicants</a>
             <div class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-user me-2"></i>Residents</a>
@@ -38,6 +40,7 @@
             </div>
 
             <a href="/admin/dorm/rooms" class="nav-item nav-link"><i class="fa fa-person-booth me-2"></i>Rooms</a>
+
             <a href="/admin/dorm/announcements" class="nav-item nav-link"><i class="fa fa-bullhorn me-2"></i>Announcements</a>
             <a href="/admin/dorm/transactions" class="nav-item nav-link"><i class="fa fa-file-invoice-dollar me-2"></i>Payments</a>
             <a href="/admin/dorm/maintenance" class="nav-item nav-link"><i class="fa fa-solid fa-wrench me-2"></i></i>Maintenance</a>
@@ -46,6 +49,8 @@
             <a href="/admin/dorm/laundry" class="nav-item nav-link"><i class="fa fa-calendar me-2"></i>Laundry</a>
             <a href="/admin/dorm/lostandfound" class="nav-item nav-link"><i class="fa fa-box-open me-2"></i>Lost and Found</a>
             <a href="/admin/dorm/logs" class="nav-item nav-link"><i class="fa fa-list me-2"></i>Logs</a>
+            <a href="/admin/dorm/visitors" class="nav-item nav-link"><i class="fa fa-person-booth me-2"></i>Visitors</a>
+
             <a href="/admin/dorm/reports" class="nav-item nav-link"><i class="fa fa-file-export me-2"></i></i>Reports</a>
             
         </div>

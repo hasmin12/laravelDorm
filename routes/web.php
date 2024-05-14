@@ -154,6 +154,9 @@ Route::middleware(['adminbranch:Dormitory'])->group(function () {
             return view('admin.dorm.reports');
         });
 
+        Route::get('/visitors', function () {
+            return view('admin.dorm.visitors');
+        });
 
     });
 });
