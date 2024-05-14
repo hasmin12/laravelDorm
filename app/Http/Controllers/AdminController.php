@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Visitor;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Laundryschedule;
@@ -21,6 +22,8 @@ use App\Models\Complaint;
 use App\Models\Violation;
 use App\Models\Residentlog;
 use App\Models\Maintenancechange;
+use App\Models\Reservation;
+
 
 
 
@@ -117,37 +120,6 @@ class AdminController extends Controller
         }
     }
 
-    public function getInactive(Request $request)
-    {
-        try {
-            if (Auth::check()) {
-                $branch = $request->input('branch');
-                $searchQuery = $request->input('search_query');
-                $residentType = $request->input('resident_type');
-                if ($branch && $branch !== '') {
-                    $query = User::where('branch', $branch)->where('role', "Resident")->where('status', "Inactive");
-                } else {
-                    $query = User::where('role', "Resident")->where('status', "Inactive");
-                }
-
-                if ($residentType && $residentType !== 'All') {
-                    $query->where('type', $residentType);
-                }
-                if ($searchQuery) {
-                    $query->where('name', 'LIKE', '%' . $searchQuery . '%');
-                }
-                $residents = $query->get();
-                Log::info($residents);
-                return response()->json(['residents' => $residents]);
-            } else {
-                return response()->json(['error' => 'Unauthorized'], 401);
-            }
-        } catch (\Exception $e) {
-            Log::error('Error in getResidents: ' . $e->getMessage());
-            return response()->json(['error' => 'Internal Server Error'], 500);
-        }
-    }
-
     public function getApplicants(Request $request)
     {
         try {
@@ -221,30 +193,23 @@ class AdminController extends Controller
 
     public function assignTechnician(Request $request)
     {
-        // Find the maintenance record
-        $maintenance = Maintenance::findOrFail($request->input('maintenance_id'));
         
-        // Find the technician by their ID from the request
-        $technician = User::select('id', 'name')
-                            ->where('role', 'Technician')
-                            ->where('id', $request->input('technician_id'))
-                            ->first();
-    
-        // If technician with the given ID and role "Technician" is found, proceed
-        if ($technician) {
-            // Assign the technician's ID and name to the maintenance record
-            $maintenance->technician_id = $technician->id;
-            $maintenance->technicianName = $technician->name; // Adding technician's name to maintenance
-            $maintenance->status = 'In Progress';
-            $maintenance->save();
-    
-            return response()->json($maintenance);
-        } else {
-            // If no technician is found with the given ID and role "Technician"
-            return response()->json(['error' => 'Technician not found or invalid'], 404);
-        }
+
+        $maintenance = Maintenance::findOrFail($request->input('maintenance_id'));
+        $maintenance->technician_id = $request->input('technician_id');
+        $maintenance->status = 'In Progress';
+        $maintenance->save();
+        $notification = Notification::create([
+            'sender_id' => Auth::user()->id,
+            'senderName' => Auth::user()->name,
+            'receiver_id' => $request->input('technician_id'),
+            'notification_type' => "Maintenance",
+            'message' => Auth::user()->name." assigned you to a maintenance request"
+        ]);
+
+        return response()->json($maintenance);
     }
-    
+
 
 // Method to fetch resident details with payment history
 public function getResident($id)
@@ -672,25 +637,6 @@ public function getResident($id)
             return response()->json(['error' => 'Internal Server Error'], 500);
         }
     }
-
-    public function ReActivate($id)
-    {
-        try {
-           $user = User::find($id);
-           $user->update([
-                'status' => "Active"
-           ]);
-           $bed = Dormitorybed::where('user_id',$id);
-           $bed->update([
-            'user_id' => "",
-            'user_image' => "",
-            'status' => "vacant"
-        ]);
-        } catch (\Exception $e) {
-            Log::error('Error in Re-Activate Resident: ' . $e->getMessage());
-            return response()->json(['error' => 'Internal Server Error'], 500);
-        }
-    }
     
     public function updateRoom(Request $request, $id)
     {
@@ -902,9 +848,19 @@ public function getResident($id)
                 'postedBy' => $user->name,
                 'img_path' => $img_path,
                 'locked' => $locked,
-
-
             ]);
+            $residents = User::where('role',"Resident")->where('status', "Active")->where('branch', $branch)->get();
+            foreach($residents as $resident){
+                $notifs = Notification::create([
+                    'sender_id' => Auth::user()->id,
+                    'senderName' => Auth::user()->name,
+                    'receiver_id' => $resident->id,
+                    'notification_type' => "Monthly Payment",
+                    'target_id' => $announcement->id,
+                    'message' => "New Announcement."
+                ]);
+            }
+            
 
             // $announcement->update([
             // ]);
@@ -1141,7 +1097,7 @@ public function getResident($id)
     public function notifyResidents()
     {
         try {
-            $residents = User::where('branch', "Dormitory")->where('role', "Resident")->where('status', "Active")->get();
+            $residents = User::where('is_paid', 0)->where('branch', "Dormitory")->where('role', "Resident")->where('status', "Active")->get();
             $currentMonth = now()->format('F Y');
             $ldate = date('Y-m-d');
 
@@ -1159,7 +1115,7 @@ public function getResident($id)
 
                 $dormitoryPayment = Dormitorypayment::create([
                     'user_id' => $resident->id,
-                    'roomdetails' => $resident->room .':' .$resident->bed,
+                    'roomdetails' => $resident->roomdetails,
                     'laptop' => $resident->laptop,
                     'electricfan' => $resident->electricfan,
                     'totalAmount' => $totalAmount,
@@ -1189,7 +1145,7 @@ public function getResident($id)
                     'message' => "This is a friendly reminder to pay your monthly fees for $currentMonth.Please ensure your payment is submitted by the end of the month.Thank you for your cooperation."
                 ]);
                 $data = [
-                    '   ' =>  $resident->email,
+                    'email' =>  $resident->email,
                     'notification_type' => "Monthly Payment",
                 ];
                 
@@ -1248,7 +1204,18 @@ public function getResident($id)
             return response()->json(['error' => 'Violations not found'], 404);
         }
     }
+    public function getVisitors()
+    {
+        try {
+            
+       $visitors = Visitor::all();
 
+
+            return response()->json(['visitors' => $visitors]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Violations not found'], 404);
+        }
+    }
 
 
     public function createViolation(Request $request)
@@ -1368,6 +1335,7 @@ public function getResident($id)
     }
 }
 
+
     public function getLogs(Request $request)
     {
         $logs = Residentlog::where('user_id', $request->input('residentId'))->where('purpose', "Leave")->get();
@@ -1476,6 +1444,56 @@ public function getResident($id)
         ], 500);
     }
 }
+
+    public function getReservations()
+    {
+        $reservations = Reservation::orderByDesc('id')->get();
+
+        return response()->json($reservations);
+    }
+
+    public function updateReservationStatus(Request $request)
+    {
+        $reservation = Reservation::findOrFail($request->input('reservationId'));
+        $reservation->status = $request->input('newStatus');
+        $reservation->save();
+        if($reservation->status=="Check-In"){
+            User::create([
+                'name' => $reservation->name,
+                'email' => $reservation->email,
+                'password' => $reservation->password,
+                'sex' => $reservation-> sex,
+                'address' => $reservation->address,
+                'contactNumber' => $reservation->contacts,
+                'birthdate' => $reservation->birthdate,
+                'validId' => $reservation->validId,
+                'role' => 'Resident',
+                'branch' => 'Hostel',
+                'type' => 'Hostel Resident',
+            ]);
+        }
+        return response()->json($reservation);
+    }
+    // public function sendRating(Request $request)
+    // {
+    //     $reservations = Reservation::findOrFail($request->input('reservationId'));
+        
+    //     $reservations->status = $request->input('newStatus');
+    //     $reservations->save();
+
+    //     $room = Hostelroom::findOrFail($reservations->room_id);
+    //     $room->rating 
+    //     return response()->json($reservations);
+    // }
+    public function checkoutReservation(Request $request)
+    {
+        $reservations = Reservation::findOrFail($request->input('reservationId'));
+        $reservations->status = "Check-Out";
+        $reservations->save();
+        return response()->json($reservations);
+    }
+    
+
 
 public function lockComments(Request $request, $id)
     {

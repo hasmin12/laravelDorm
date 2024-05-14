@@ -7,6 +7,7 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="Free HTML Templates" name="keywords">
     <meta content="Free HTML Templates" name="description">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Favicon -->
     <link href="img/favicon.ico" rel="icon">
@@ -67,7 +68,7 @@
 <!-- Navbar Start -->
 <div class="container-fluid sticky-top bg-dark bg-light-radial shadow-sm px-5 pe-lg-0">
     <nav class="navbar navbar-expand-lg bg-dark bg-light-radial navbar-dark py-3 py-lg-0">
-        <a href="/" class="navbar-brand">
+        <a href="" class="navbar-brand">
             <h1 class="m-0 display-4 text-uppercase text-white">DORMXTEND</h1>
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
@@ -83,19 +84,34 @@
 <!-- Navbar End -->
 
 <div class="container-xxl position-relative bg-white d-flex p-0">
-  
     <div class="bg-light rounded p-4">
-
         <div class="d-flex align-items-center justify-content-between mb-2">
             <h3 class="mb-0">Hostel Rooms</h3>
         </div>
-    
+        <div class="row mb-3">
+            <div class="col-md-5">
+                <label for="start-date" class="form-label">Start Date:</label>
+                <div class="input-group">
+                    <input type="date" class="form-control" id="start-date">
+                </div>
+            </div>
+            <div class="col-md-5">
+                <label for="end-date" class="form-label">End Date:</label>
+                <div class="input-group">
+                    <input type="date" class="form-control" id="end-date">
+                </div>
+            </div>
+            <div class="col-md-2 d-flex align-items-end">
+                <button class="btn btn-primary" id="apply-dates">Submit</button>
+            </div>
+        </div>
+       
         <div class="row" id="room-container">
             <!-- Room cards will be dynamically added here -->
         </div>
     </div>
-
 </div>
+
 
 <div class="modal fade" id="roomModal" tabindex="-1" role="dialog" aria-labelledby="roomModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
@@ -110,16 +126,8 @@
                         
                         <div id="roomImageCarousel" class="carousel slide" data-ride="carousel">
                             <div class="carousel-inner">
-                                <!-- Images will be dynamically added here -->
                             </div>
-                            {{-- <a class="carousel-control-prev" href="#roomImageCarousel" role="button" data-slide="prev">
-                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                <span class="sr-only">Previous</span>
-                            </a>
-                            <a class="carousel-control-next" href="#roomImageCarousel" role="button" data-slide="next">
-                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                <span class="sr-only">Next</span>
-                            </a> --}}
+                       
                         </div>
                         <div id="roomImageContainer"></div>
                     </div>
@@ -161,12 +169,13 @@
                             
                             <div class="mb-3">
                                 <label for="checkinDate" class="form-label">Check-in Date</label>
-                                <input type="date" class="form-control" id="checkinDate" name="checkinDate" required>
+                                <input type="date" class="form-control" id="checkinDate" name="checkinDate" required min="{{ date('Y-m-d') }}">
                             </div>
                             <div class="mb-3">
                                 <label for="checkoutDate" class="form-label">Check-out Date</label>
-                                <input type="date" class="form-control" id="checkoutDate" name="checkoutDate" required>
+                                <input type="date" class="form-control" id="checkoutDate" name="checkoutDate" required min="{{ date('Y-m-d') }}">
                             </div>
+                            
 
                             <div class="card" style="cursor: pointer;" >
                                 <div class="card-body">
@@ -237,14 +246,11 @@
                     </div>
                 </form>
             </div>
-            {{-- <div class="modal-footer">
-                <button type="button" class="btn btn-primary" onclick="submitReservation()">Submit Reservation</button>
-            </div> --}}
         </div>
     </div>
 </div>
 
-<script src="{{ secure_asset('js/guest/reservation.js') }}"></script>
+<script src="{{ secure_asset('js/guest/reservations.js') }}"></script>
 
 @include('layouts.footer')
 @endsection

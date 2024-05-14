@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Users Report</title>
+    <title>Maintenances Report</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -71,28 +71,30 @@
 
     <!-- Main content -->
     <main>
-        <h2>Users Report</h2>
+        <h2>Maintenances Report</h2>
         <table>
             <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Email</th>
+                    <th>ID</th>
+
                     <th>Type</th>
-                    <th>Birth Date</th>
-                    <th>Sex</th>
-                    <th>Phone Number</th>
+                    <th>Room Number</th>
+                    <th>Tech Name</th>
+                    <th>Resident Name</th>
+                    <th>Status</th>
 
                 </tr>
             </thead>
             <tbody>
-                @foreach($users as $user)
+                @foreach($maintenance as $maintenance)
                     <tr>
-                        <td>{{ $user->name }}</td>
-                        <td>{{ $user->email }}</td>
-                        <td>{{ $user->type }}</td>
-                        <td>{{ $user->birthdate }}</td>
-                        <td>{{ $user->sex }}</td>
-                        <td>{{ $user->contactNumber }}</td>
+                        <td>{{ $maintenance->id }}</td>
+
+                        <td>{{ $maintenance->type }}</td>
+                        <td>{{ $maintenance->room_number }}</td>
+                        <td>{{ $maintenance->technicianName }}</td>
+                        <td>{{ $maintenance->residentName }}</td>
+                        <td>{{ $maintenance->status }}</td>
                         
                        
                     </tr>

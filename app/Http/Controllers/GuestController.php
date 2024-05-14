@@ -14,26 +14,23 @@ use App\Models\Hostelreview;
 use App\Models\Guardian;
 
 use Log;
-
+use Endroid\QrCode\Builder\Builder;
+use Endroid\QrCode\Encoding\Encoding;
+use Endroid\QrCode\ErrorCorrectionLevel\ErrorCorrectionLevelHigh;
+use Endroid\QrCode\Label\Label;
+use Endroid\QrCode\Logo\Logo;
+use Endroid\QrCode\Response\QrCodeResponse;
+use Endroid\QrCode\Writer\PngWriter;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ReservationConfirmation;
+use Storage;
+use Illuminate\Support\Str;
 class GuestController extends Controller
 {
     //
     public function getHostelRooms(Request $request)
     {
-        // $startDate = $request->input('start_date');
-        // $endDate = $request->input('end_date');
-
-        //     $query = HostelRoom::query();
-
-        //     if ($startDate && $endDate) {
-        //     $query->whereDoesntHave('reservations', function ($query) use ($startDate, $endDate) {
-        //         $query->where(function ($query) use ($startDate, $endDate) {
-        //             $query->where('checkout_date', '>=', $endDate)
-        //                 ->where('checkin_date', '<=', $startDate)
-        //                 ->where('status', '=', 'Pending');
-        //         });
-        //     });
-        // }
+        
 
             $hostelRooms = HostelRoom::all();
 
@@ -56,49 +53,6 @@ class GuestController extends Controller
             return response()->json($rooms);
     }
 
-    // public function getHostelRooms(Request $request)
-    // {
-    //     $startDate = $request->input('start_date');
-    //     $endDate = $request->input('end_date');
-
-    //     $query = HostelRoom::query();
-
-    //     if ($startDate && $endDate) {
-    //         $query->whereDoesntHave('reservations', function ($query) use ($startDate, $endDate) {
-    //             $query->where(function ($query) use ($startDate, $endDate) {
-    //                 $query->where('checkout_date', '>=', $endDate)
-    //                     ->where('checkin_date', '<=', $startDate);
-    //             });
-    //         });
-    //     }
-
-    //     $hostelRooms = $query->get();
-
-    //     // Filter rooms with pending reservations
-    //     $filteredRooms = $hostelRooms->filter(function ($room) {
-    //         return $room->reservations->where('status', 'Pending')->isNotEmpty();
-    //     });
-
-    //     $rooms = $filteredRooms->map(function ($room) {
-    //         return [
-    //             'id' => $room->id,
-    //             'name' => $room->name,
-    //             'description' => $room->description,
-    //             'bedtype' => $room->bedtype,
-    //             'pax' => $room->pax,
-    //             'price' => $room->price,
-    //             'status' => $room->status,
-    //             'rating' => $room->rating,
-    //             'img_path' => $room->img_path,
-    //             'img_paths' => $room->images()->pluck('path')->toArray(),
-    //             'reservations' => $room->reservations,
-    //         ];
-    //     });
-
-    //     return response()->json($rooms);
-    // }
-
-
     public function createReservation(Request $request)
     {
         try {
@@ -113,30 +67,15 @@ class GuestController extends Controller
             $path = $request->file('img_path')->storeAs('reserve', $fileName, 'public');
             $img_path = '/storage/' . $path;
 
-            $newHostelUser = User::create([
-                'name' => $request->input('name'),
-                'email' => $request->input('email'),
-                'password' => bcrypt($request->input('password')),
-                'sex' => $request->input('sex'),
-                'address' => $request->input('address'),
-                'contactNumber' => $request->input('contacts'),
-                'birthdate' => $request->input('birthdate'),
-                'validId' => $request->input('validId'),
-                'role' => 'Resident',
-                'branch' => 'Hostel',
-                'type' => 'Hostel Resident',
-            ]);
+           
             $hostelRoom = Hostelroom::find($request->input('room_id'));
-            // $hostelRoom->update([
-            //     'status' => "Reserved",
-            // ]);
 
             $reservation = Reservation::create([
-                'user_id' => $newHostelUser->id,
                 'room_id' => $request->input('room_id'),
                 'name' => $request->input('name'),
                 'email' => $request->input('email'),
-                'password' => $request->input('password'),
+                'password' => bcrypt($request->input('password')),
+
                 'sex' => $request->input('sex'),
                 'address' => $request->input('address'),
                 'contacts' => $request->input('contacts'),
@@ -150,17 +89,42 @@ class GuestController extends Controller
                 'downreceipt' => $payments,
                 'reservation_date' => $ldate,
                 'roomName' => $hostelRoom->name,
-                'status' => "Pending", 
+                'status' => "Pending",
+                'qrcode' => "",
+                'qrcodeImage' => "",
+
             ]);
 
+            $qrCodeText = Str::random(10);
+            $qrCode = Builder::create()
+                ->writer(new PngWriter())
+                ->writerOptions([])
+                ->data($qrCodeText)
+                ->encoding(new Encoding('UTF-8'))
+                ->size(250)
+                ->margin(10)
+                ->build();
 
+            $qrCodePath = 'qrcodes/' . time() . '_qrcode.png'; 
+            Storage::put($qrCodePath, $qrCode->getString());
 
-            return response()->json(['message' => 'Reservation created successfully', 'reservation' => $reservation]);
-        } catch (\Exception $e) {
-            Log::error('Error creating room: ' . $e->getMessage());
-            return response()->json(['error' => 'Internal Server Error'], 500);
-        }
+            $reservation->update([
+                'qrcode' => $qrCodeText,
+                'qrcodeImage' => $qrCodePath,
+            ]);
+
+        Mail::to($request->input('email'))->send(new ReservationConfirmation($reservation));
+
+        return response()->json(['message' => 'Reservation created successfully', 'reservation' => $reservation]);
+    } catch (\Exception $e) {
+        Log::error('Error creating reservation: ' . $e->getMessage());
+        return response()->json(['error' => 'Internal Server Error'], 500);
     }
+}
+
+
+
+   
 
     public function createRegistration(Request $request)
     {
@@ -238,7 +202,7 @@ class GuestController extends Controller
             'name' => $request->input('name'),
             'phone' => $request->input('phone'),
             'visit_date' => $request->input('visit_date'),
-            // 'user_id' => $request->input('resident_id'),
+            'residentName' => $request->input('residentName'),
             'relationship' => $request->input('relationship'),
             'purpose' => $request->input('purpose'),
             'validId' => $validId

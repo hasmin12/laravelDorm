@@ -12,8 +12,15 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        $schedule->command('logs:update-status')->everyMinute();
-        $schedule->command('app:update-pending-payments')->everyMinute();
+        // $schedule->command('logs:update-status')->everyMinute();
+        // $schedule->command('app:update-pending-payments')->everyMinute();
+
+        $schedule->command('logs:update-status')->daily();
+        // $schedule->command('app:update-pending-payments')->everyMinute();
+
+        $schedule->command('app:update-pending-payments')->monthlyOn(5, '00:00');;
+
+        $schedule->command('app:update-laundry-schedule')->daily();
 
     }
 

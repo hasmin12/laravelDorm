@@ -36,8 +36,11 @@ return new class extends Migration
             $table->text('contacts');
             $table->text('receipt')->nullable();
             $table->text('downreceipt');
+            $table->string('review')->default("No");
 
             $table->string('status')->default('Pending');
+            $table->text('qrcode')->nullable();
+            $table->text('qrcodeImage')->nullable();
             $table->timestamps();
         });
     }
