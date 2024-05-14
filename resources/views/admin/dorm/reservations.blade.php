@@ -21,7 +21,9 @@
                 
                 {{-- <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createReservationModal">Create Lost Item</button> --}}
             </div>
-          
+            <form class="d-none d-md-flex ms-4">
+                <input class="form-control border-0" type="search" placeholder="Search" id="searchInput">
+            </form>
             <br>
             <div class="btn-group" role="group">
                 <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked value="Pending">

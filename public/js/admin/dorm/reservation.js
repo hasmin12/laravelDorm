@@ -1,17 +1,24 @@
 document.addEventListener('DOMContentLoaded', function () {
     fetchReservations();
+    const searchInput = document.querySelector('#searchInput');
+    searchInput.addEventListener('input', () => fetchReservations());
+
     const statusButtons = document.querySelectorAll('input[name="btnradio"]');
     statusButtons.forEach(button => button.addEventListener('change', () => fetchReservations()));
     document.getElementById('updateStatus').addEventListener('click', updateStatus);
+    
 });
 
 
 
 function fetchReservations() {
     const token = localStorage.getItem('token');
-    const status = document.querySelector('input[name="btnradio"]:checked').value;
+    const searchInput = document.querySelector('#searchInput');
 
-    fetch('/api/getReservations', {
+    const status = document.querySelector('input[name="btnradio"]:checked').value;
+    const searchQuery = searchInput.value;
+
+    fetch(`/api/getReservations?search_query=${searchQuery}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',

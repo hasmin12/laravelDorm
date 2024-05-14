@@ -1445,12 +1445,16 @@ public function getResident($id)
     }
 }
 
-    public function getReservations()
-    {
-        $reservations = Reservation::orderByDesc('id')->get();
+public function getReservations(Request $request)
+{
+    $search = $request->input('search_query');
+    $reservations = Reservation::orderByDesc('id')
+                               ->where('qrcode', 'LIKE', "%$search%")
+                               ->get();
 
-        return response()->json($reservations);
-    }
+    return response()->json($reservations);
+}
+
 
     public function updateReservationStatus(Request $request)
     {
