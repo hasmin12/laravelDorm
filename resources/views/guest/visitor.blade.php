@@ -138,8 +138,8 @@
                     <option value="3">asd</option>
                 </select> --}}
 
-                <label for="residentDropdown" class="form-label">Resident</label>
-                <input type="text" class="form-control" id="residentDropdown" name="residentDropdown" required>
+                <label for="residentName" class="form-label">Resident</label>
+                <input type="text" class="form-control" id="residentName" name="residentName" required>
             </div>
             
             
