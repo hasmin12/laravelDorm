@@ -21,7 +21,7 @@ function fetchVisitors() {
         const visitorTableBody = document.querySelector('#visitorTableBody');
         visitorTableBody.innerHTML = '';
 
-        data.forEach(visitor => {
+        data.visitors.forEach(visitor => {
           
                 const row = `
                     <td>${visitor.id}</td>
