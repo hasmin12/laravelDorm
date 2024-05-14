@@ -85,6 +85,7 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::get('/getViolations', 'AdminController@getViolations');
     Route::post('/createViolation', 'AdminController@createViolation');
 
+    Route::get('/getVisitors', 'AdminController@getVisitors');
 
     
 
