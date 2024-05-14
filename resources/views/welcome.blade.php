@@ -193,7 +193,7 @@
                 <div class="position-relative portfolio-box">
                     <img class="img-fluid w-100" src="img/dorm2.jpg" style="height: 337px; width: 281px;" alt="">
                     <a class="portfolio-title shadow-sm" href="">
-                        <p class="h4 text-center text-uppercase"><i class="fa fa-map-marker-alt text-primary me-2"></i>Project Name</p>
+                        <p class="h4 text-center text-uppercase"><i class="fa fa-map-marker-alt text-primary me-2"></i>Study Area</p>
                     </a>
                     <a class="portfolio-btn" href="img/dorm2.jpg" style="height: 337px; width: 281px;" data-lightbox="portfolio">
                    
@@ -226,6 +226,17 @@
             </div>
         </div>
     </div>
+
+    <div class="container-fluid py-6 px-5">
+        <div class="mb-4">
+            <h1 class="display-5 text-center text-uppercase mb-4">Dormitory <span class="text-primary">Video</span> Tour</h1>
+        </div>
+        <video autoplay muted loop width="100%" height="auto">
+            <source src="img/vid1.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
 
     <div class="container-fluid bg-light py-6 px-5">
         <div class="text-center mx-auto mb-5" style="max-width: 600px;">
