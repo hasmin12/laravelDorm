@@ -17,7 +17,7 @@
         <div class="bg-light rounded p-4">
             <div class="d-flex align-items-center justify-content-between mb-2">
                 <h3 class="mb-0">Resident Logs</h3>
-                
+                <h4>Current Month: {{ date('F Y') }}</h4>
             </div>
             <div class="d-flex align-items-center justify-content-between mb-2">
                 <div class="btn-group" role="group">
