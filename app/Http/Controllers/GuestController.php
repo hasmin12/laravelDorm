@@ -202,7 +202,7 @@ class GuestController extends Controller
             'name' => $request->input('name'),
             'phone' => $request->input('phone'),
             'visit_date' => $request->input('visit_date'),
-            'user_id' => $request->input('resident_id'),
+            'residentName' => $request->input('residentName'),
             'relationship' => $request->input('relationship'),
             'purpose' => $request->input('purpose'),
             'validId' => $validId

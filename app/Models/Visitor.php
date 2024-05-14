@@ -12,7 +12,7 @@ class Visitor extends Model
         'name',
         'phone',
         'visit_date',
-        'user_id',
+        'residentName',
         'relationship',
         'purpose',
         'validId',

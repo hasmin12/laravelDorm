@@ -9,7 +9,6 @@ class Reservation extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'user_id',
         'room_id',
         'reservation_date',
         'checkin_date',
@@ -19,6 +18,7 @@ class Reservation extends Model
         'name',
         'email',
         'password',
+        'review',
         'role',
         'branch',
         'img_path',
@@ -30,7 +30,9 @@ class Reservation extends Model
         'status',
         'downreceipt',
         'receipt',
-        'roomName'
+        'roomName',
+        'qrcode',
+        'qrcodeImage',
     ];
 
     public function room()

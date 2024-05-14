@@ -7,9 +7,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const formData = new FormData(visitorForm);
 
-        // Make an AJAX request to submit the form data
         fetch('/api/visitor', {
             method: 'POST',
+            headers: {         
+                'Accept': 'application/json',
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            credentials: 'include',
             body: formData,
         })
         .then(response => response.json())
@@ -28,32 +32,31 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Fetch residents and populate the dropdown
-    fetchResidents();
+    // fetchResidents();
 });
 
-function fetchResidents() {
-    fetch(`/api/visitor/getResidents`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-        },
-        credentials: 'include',
-    })
+// function fetchResidents() {
+//     fetch(`/api/visitor/getResidents`, {
+//         method: 'GET',
+//         headers: {
+//             'Content-Type': 'application/json',
+//             'Accept': 'application/json',
+//         },
+//         credentials: 'include',
+//     })
    
-    .then(response => response.json())
-    .then(data => {
-        console.log(data);
-        const residentDropdown = document.getElementById('residentDropdown');
-
-        // Populate the dropdown with residents
-        data.residents.forEach(resident => {
-            var option = document.createElement('option');
-            option.value = resident.id;
-            option.text = resident.name;
-            residentDropdown.add(option);
-            console.log(resident)
-        });
-    })
-    .catch(error => console.error('Error fetching residents:', error));
-}
+//     .then(response => response.json())
+//     .then(data => {
+//         console.log(data);
+//         const residentDropdown = document.getElementById('residentDropdown');
+//         resi
+//         data.residents.forEach(resident => {
+//             var option = document.createElement('option');
+//             option.value = resident.id;
+//             option.text = resident.name;
+//             residentDropdown.add(option);
+//             console.log(resident)
+//         });
+//     })
+//     .catch(error => console.error('Error fetching residents:', error));
+// }
