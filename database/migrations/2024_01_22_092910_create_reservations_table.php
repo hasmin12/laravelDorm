@@ -13,8 +13,7 @@ return new class extends Migration
     {
         Schema::create('reservations', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            
             $table->unsignedBigInteger('room_id');
             $table->foreign('room_id')->references('id')->on('hostelrooms')->onDelete('cascade');
             $table->date('reservation_date');
@@ -22,10 +21,10 @@ return new class extends Migration
             $table->date('checkout_date');
             $table->float('downPayment');
             $table->float('totalPayment');
+            $table->string('password');
 
             $table->string('name');
             $table->string('email');
-            $table->string('password');
             $table->text('roomName')->nullable();
             $table->string('role')->default('Resident');
             $table->text('img_path')->nullable();
@@ -41,6 +40,7 @@ return new class extends Migration
             $table->string('status')->default('Pending');
             $table->text('qrcode')->nullable();
             $table->text('qrcodeImage')->nullable();
+
             $table->timestamps();
         });
     }
