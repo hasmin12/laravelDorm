@@ -1,18 +1,50 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const reportBranch = document.getElementById('reportBranch');
     const changeButtons = document.querySelectorAll('input[name="btnradio"]');
+    const reportBranch = document.querySelectorAll('input[name="branchbtnradio"]');
+    const report = document.getElementById('report');
+    const maintenanceDiv = document.getElementById('maintenance-reports');
+    const visitorDiv = document.getElementById('visitors-reports');
+    maintenanceDiv.style.display = 'none';
+        visitorDiv.style.display = 'none';
+    report.addEventListener('change', changeDiv); // Corrected event name
 
-    reportBranch.addEventListener('change', fetchResidentsReport);
+    reportBranch.forEach(button => button.addEventListener('change', () => fetchResidentsReport()));
     changeButtons.forEach(button => button.addEventListener('change', () => fetchResidentsReport()));
-    document.getElementById('downloadPdfBtn').addEventListener('click', downloadPdf);
+    document.getElementById('downloadPdfBtn').addEventListener('click', downloadResidentsReport);
 
     fetchResidentsReport();
 });
 
+function changeDiv() {
+    const reportValue = document.getElementById('report').value;
 
+    // Get the div elements
+    const residentDiv = document.getElementById('resident-reports');
+    const maintenanceDiv = document.getElementById('maintenance-reports');
+    const visitorDiv = document.getElementById('visitors-reports');
+    const branchDiv = document.getElementById('branchDiv');
+
+    if (reportValue === "Residents") {
+        residentDiv.style.display = 'block';
+        branchDiv.style.display = 'block';
+        maintenanceDiv.style.display = 'none';
+        visitorDiv.style.display = 'none';
+    } else if (reportValue === "Maintenance") {
+        residentDiv.style.display = 'none';
+        branchDiv.style.display = 'block';
+        maintenanceDiv.style.display = 'block';
+        visitorDiv.style.display = 'none';
+    } else {
+        residentDiv.style.display = 'none';
+        branchDiv.style.display = 'none';
+        maintenanceDiv.style.display = 'none';
+        visitorDiv.style.display = 'block';
+    }
+}
 function fetchResidentsReport() {
     const token = localStorage.getItem('token');
-    const selectedBranch = document.getElementById('reportBranch').value;
+    const selectedBranch = document.querySelector('input[name="branchbtnradio"]:checked').value;
+
     const changeValue = document.querySelector('input[name="btnradio"]:checked').value;
 
     const formData = new FormData();
@@ -32,11 +64,24 @@ function fetchResidentsReport() {
         return response.json();
     })
     .then(data => {
-        document.getElementById('notPaidCount').innerText = data.notPaid;
-        document.getElementById('paidCount').innerText = data.Paid;
-        document.getElementById('lateFeeCount').innerText = data.lateFee;
-        billingTable(data.report);
-        billingChart(data.report);
+        const residentTableBody = document.querySelector('#residentReportBody');
+        residentTableBody.innerHTML = '';
+
+            data.forEach(resident => {
+                const createdAtDate = new Date(resident.created_at);
+                const formattedCreatedAt = `${createdAtDate.getMonth() + 1}/${createdAtDate.getDate()}/${createdAtDate.getFullYear()}`;
+                const row = `
+                        <td>${resident.name}</td>
+                        <td>${resident.email}</td>
+                        <td>${resident.type}</td>
+                        <td>${resident.birthdate}</td>
+                        <td>${resident.sex}</td>
+                        <td>${resident.contactNumber}</td>
+                        <td>${formattedCreatedAt}</td>
+                `;
+                residentTableBody.innerHTML += row;
+            });
+    
     })
     .catch(error => {
         console.error('Error fetching residents report:', error);
@@ -48,95 +93,218 @@ function fetchResidentsReport() {
     });
 }
 
+function fetchMaintenanceReport() {
+    const token = localStorage.getItem('token');
+    const selectedBranch = document.querySelector('input[name="branchbtnradio"]:checked').value;
 
-function billingTable(data) {
-    const residentReportBody = document.querySelector('#residentReportBody');
+    const changeValue = document.querySelector('input[name="btnradio"]:checked').value;
 
-    residentReportBody.innerHTML = '';
+    const formData = new FormData();
+    formData.append('branch', selectedBranch);
+    formData.append('change', changeValue);
 
-    data.forEach(residentReport => {
-        const row = `
-            
-                <td>${residentReport.billingId}</td>
-                <td>${residentReport.residentName}</td>
-                <td>${residentReport.roomdetails}</td>
-                <td>${residentReport.totalAmount}</td>
-                <td>${residentReport.updated_at}</td>
-
-                <td>${residentReport.status}</td>
-
-        `;
-        residentReportBody.innerHTML += row;
-    });
-
-}
-
-function billingChart(data) {
-    var ctx = document.getElementById('billingChart').getContext('2d');
-    if (window.billingChartInstance !== undefined) {
-        window.billingChartInstance.destroy();
-    }
-
-    window.billingChartInstance = new Chart(ctx, {
-        type: 'bar', 
-        data: {
-            labels: data.map(function(billing) { return billing.residentName; }),
-            datasets: [{
-                label: 'Total Amount',
-                data: data.map(function(billing) { return billing.totalAmount; }),
-                backgroundColor: 'rgba(54, 162, 235, 0.2)', 
-                borderColor: 'rgba(54, 162, 235, 1)',
-                borderWidth: 1
-            }]
+    fetch(`/api/maintenanceReport?branch=${selectedBranch}&change=${changeValue}`, {
+        method: 'GET',
+        headers: {
+            'Authorization': 'Bearer ' + token,
         },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
         }
+        return response.json();
+    })
+    .then(data => {
+        const maintenanceReportBody = document.querySelector('#maintenanceReportBody');
+        maintenanceReportBody.innerHTML = '';
+
+            data.forEach(maintenance => {
+                const requestDate = new Date(resident.request_date);
+                const formattedRequestDate = `${requestDate.getMonth() + 1}/${requestDate.getDate()}/${requestDate.getFullYear()}`;
+                const completedDate = new Date(resident.completed_date);
+                const formattedCompletedDate = `${completedDate.getMonth() + 1}/${completedDate.getDate()}/${completedDate.getFullYear()}`;
+                const row = `
+                        <td>${maintenance.residentName}</td>
+                        <td>${maintenance.room_number}</td>
+                        <td>${maintenance.technicianName}</td>
+                        <td>${maintenance.type}</td>
+                        <td>${formattedRequestDate}</td>
+                        <td>${formattedCompletedDate}</td>
+                        <td>${resident.status}</td>
+
+                `;
+                maintenanceReportBody.innerHTML += row;
+            });
+    
+    })
+    .catch(error => {
+        console.error('Error fetching residents report:', error);
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'An error occurred while fetching the residents report. Please try again.',
+        });
     });
 }
 
-// Function to download content as PDF
-function downloadPdf() {
-    const pdfContent = document.getElementById('resident-reports');
+function fetchVisitorsReport() {
+    const token = localStorage.getItem('token');
+    const selectedBranch = document.querySelector('input[name="branchbtnradio"]:checked').value;
 
-    html2canvas(pdfContent).then(canvas => {
-        const imgData = canvas.toDataURL('image/png');
+    const changeValue = document.querySelector('input[name="btnradio"]:checked').value;
 
-        const pdf = new jsPDF();
-        const pdfWidth = pdf.internal.pageSize.width;
-        const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+    const formData = new FormData();
+    formData.append('change', changeValue);
 
-        const logoImg = new Image();
-        logoImg.onload = function() {
-            const logoHeight = 10; // Adjust logo height as needed
-            const logoWidth = (this.width * logoHeight) / this.height;
-            pdf.addImage(this, 'PNG', 10, 10, logoWidth, logoHeight);
-        
-            // Add header text
-            const headerText = 'Resident Report'; // Modify header text as needed
-            const headerHeight = 15; // Adjust header height as needed
-            const headerX = (pdfWidth - pdf.getStringUnitWidth(headerText) * pdf.internal.getFontSize()) / 2;
-            pdf.setFontSize(18);
-            pdf.text(headerText, headerX, 10, { align: 'center' });
-        
-            // Add main content
-            pdf.addImage(imgData, 'PNG', 0, headerHeight + logoHeight, pdfWidth, pdfHeight - headerHeight - logoHeight);
-        
-            pdf.save('resident_report.pdf');
-        };
-        logoImg.onerror = function(error) {
-            console.error('Error loading logo:', error);
-        };
-        logoImg.src = '/img/dxtlogo.png'; 
-    }).catch(error => {
-        console.error('Error generating PDF:', error);
+    fetch(`/api/visitorsReport?change=${changeValue}`, {
+        method: 'GET',
+        headers: {
+            'Authorization': 'Bearer ' + token,
+        },
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        const visitorReportBody = document.querySelector('#visitorReportBody');
+        visitorReportBody.innerHTML = '';
+
+            data.forEach(visitor => {
+                const createdAtDate = new Date(resident.visit_date);
+                const formattedCreatedAt = `${createdAtDate.getMonth() + 1}/${createdAtDate.getDate()}/${createdAtDate.getFullYear()}`;
+                const row = `
+                        <td>${visitor.name}</td>
+                        <td>${visitor.phone}</td>
+                        <td>${formattedCreatedAt}</td>
+                        <td>${visitor.residentName}</td>
+                        <td>${visitor.relationship}</td>
+                        <td>${visitor.purpose}</td>
+                `;
+                visitorReportBody.innerHTML += row;
+            });
+    
+    })
+    .catch(error => {
+        console.error('Error fetching residents report:', error);
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'An error occurred while fetching the residents report. Please try again.',
+        });
     });
+}
+
+function downloadResidentsReport() {
+    const token = localStorage.getItem('token');
+    const selectedBranch = document.querySelector('input[name="branchbtnradio"]:checked').value;
+    const reportValue = document.getElementById('report').value;
+
+    const changeValue = document.querySelector('input[name="btnradio"]:checked').value;
+    if (reportValue === "Residents") {
+        fetch(`/api/generateResidentsReport?branch=${selectedBranch}&change=${changeValue}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + token,
+            },
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.blob();
+        })
+        .then(blob => {
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.style.display = 'none';
+            a.href = url;
+            a.download = 'residents_report.pdf';
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+        })
+        .catch(error => {
+            console.error('Error fetching residents report:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'An error occurred while fetching the residents report. Please try again.',
+            });
+        });
+
+    } else if (reportValue === "Maintenance") {
+        fetch(`/api/generateMaintenanceReport?branch=${selectedBranch}&change=${changeValue}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + token,
+            },
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.blob(); // Get the response as a Blob (binary data)
+        })
+        .then(blob => {
+            // Create a link element, use it to download the PDF
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.style.display = 'none';
+            a.href = url;
+            a.download = 'residents_report.pdf';
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+        })
+        .catch(error => {
+            console.error('Error fetching residents report:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'An error occurred while fetching the residents report. Please try again.',
+            });
+        });
+
+    }else{
+        fetch(`/api/generateVisitorsReport?change=${changeValue}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + token,
+            },
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.blob(); 
+        })
+        .then(blob => {
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.style.display = 'none';
+            a.href = url;
+            a.download = 'residents_report.pdf';
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+        })
+        .catch(error => {
+            console.error('Error fetching residents report:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'An error occurred while fetching the residents report. Please try again.',
+            });
+        });
+
+    }
+    
 }
 
 
 
-// Attach click event listener to the download button
+

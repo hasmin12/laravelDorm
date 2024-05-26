@@ -70,7 +70,6 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::post('/assignResident', 'AdminController@assignResident');
     Route::post('/passContract', 'ResidentController@passContract');
     Route::post('/createResident', 'AdminController@createResident');
-    Route::get('/generateUsersReport', 'ReportController@generateUsersReport');
 
     
     Route::post('createLaundrySchedule', 'ResidentController@createLaundrySchedule');
@@ -183,6 +182,14 @@ Route::get('/residentTypeChart', 'ChartController@residentTypeChart');
 
 //reports
 Route::get('/residentsReport', 'ReportController@residentsReport');
+Route::get('/generateResidentsReport', 'ReportController@generateResidentsReport');
+
+Route::get('/maintenanceReport', 'ReportController@maintenanceReport');
+Route::get('/generateMaintenanceReport', 'ReportController@generateMaintenanceReport');
+
+Route::get('/visitorsReport', 'ReportController@visitorsReport');
+Route::get('/generateVisitorsReport', 'ReportController@generateVisitorsReport');
+
     
 });
 Route::post('/googleSigninMobile', 'GoogleSocialiteController@googleSigninMobile');
