@@ -22,7 +22,7 @@
         </div>
         <div class="nav-item dropdown">
             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                {{-- <img class="rounded-circle me-lg-2" src="{{secure_asset('img/user.jpg')}}" alt="" style="width: 40px; height: 40px;"> --}}
+                {{-- <img class="rounded-circle me-lg-2" src="{{asset('img/user.jpg')}}" alt="" style="width: 40px; height: 40px;"> --}}
                 <i class="fas fa-user"></i>
                 <span class="d-none d-lg-inline-flex" style="color: white; cursor: pointer;" onmouseover="this.style.color='red'" onmouseout="this.style.color='white'">{{ auth()->user()->name }}</span>
             </a>
@@ -36,4 +36,4 @@
     </div>
 </nav>
 <!-- Navbar End -->
-<script src="{{ secure_asset('js/auth.js') }}"></script>
+<script src="{{ asset('js/auth.js') }}"></script>

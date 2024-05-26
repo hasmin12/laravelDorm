@@ -20,7 +20,7 @@
         </div>
         <div class="row mb-2">
             <select id="reportBranch" class="form-control" name="reportBranch">
-                <option value="Dormitory">Dormitory</option>
+                <option value="Dormitory">Dormitory.</option>
                 <option value="Hostel">Hostel</option>
             </select>
         </div>
@@ -104,6 +104,6 @@
 <!-- Back to Top -->
 <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
 </div>
-<script src="{{ secure_asset('js/admin/dorm/reports.js') }}"></script>
+<script src="{{ asset('js/admin/dorm/reports.js') }}"></script>
 
 @endsection
