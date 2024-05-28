@@ -89,11 +89,6 @@ class AuthController extends Controller
 
     public function signout()
     {
-        // Invalidate the current user's token
-        $user = Auth::user();
-        $accessToken = $user->token;
-        $response = Http::withToken($accessToken)->get('https://oauth2.googleapis.com/revoke');
-        // Log the user out
         Auth::logout();
         return response()->json(['message' => 'Successfully logged out']);
     }
