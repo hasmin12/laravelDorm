@@ -98,7 +98,7 @@
 <!-- Navbar End -->
 
 <div class="full-width-container">
-    <section class="hero-section" style="background-image: url('{{ asset('/img/bsad.png')}}');background-size: cover; background-position: center; background-repeat: no-repeat;">        <div class="container">
+    <section class="hero-section" style="background-image: url('{{ secure_asset('/img/bsad.png')}}');background-size: cover; background-position: center; background-repeat: no-repeat;">        <div class="container">
             <div class="row">
                 <div class="col-lg-6">                 
                     <div class="hero-text">
