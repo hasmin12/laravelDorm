@@ -89,7 +89,7 @@
                         <a href="detail.html" class="dropdown-item">Blog Detail</a>
                     </div>
                 </div> --}}
-                <a href="http://localhost:8000/visitor" class="nav-item nav-link bg-primary text-white px-5 ms-3 d-none d-lg-block">Book a Visit <i class="bi bi-arrow-right"></i></a>
+                <a href="{{ route('visitor') }}" class="nav-item nav-link bg-primary text-white px-5 ms-3 d-none d-lg-block">Book a Visit <i class="bi bi-arrow-right"></i></a>
 
             </div>
         </div>

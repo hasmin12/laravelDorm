@@ -79,7 +79,7 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav ms-auto py-0">
-                    <a href="http://localhost:8000/login" class="nav-item nav-link bg-primary text-white px-5 ms-3 d-none d-lg-block">Login</a>
+                    <a href="{{ route('login') }}" class="nav-item nav-link bg-primary text-white px-5 ms-3 d-none d-lg-block">Login</a>
     
                 </div>
             </div>
