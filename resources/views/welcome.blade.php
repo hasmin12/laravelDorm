@@ -78,7 +78,10 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
-           
+                <div class="navbar-nav ms-auto py-0">
+                    <a href="http://localhost:8000/login" class="nav-item nav-link bg-primary text-white px-5 ms-3 d-none d-lg-block">Login</a>
+    
+                </div>
             </div>
         </nav>
     </div>
@@ -105,7 +108,7 @@
                         <div class="p-3" style="max-width: 900px;">
                             <i class="fa fa-building fa-4x text-primary mb-4 d-none d-sm-block"></i>
                             <h1 class="display-2 text-uppercase text-white mb-md-4">DORMITORY</h1>
-                            <a href="{{ route('login') }}" class="btn btn-primary py-md-3 px-md-5 mt-2">Apply</a>
+                            <a href="{{ route('register') }}" class="btn btn-primary py-md-3 px-md-5 mt-2">Apply</a>
                         </div>
                     </div>
                 </div>
