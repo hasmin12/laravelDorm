@@ -23,6 +23,8 @@
                 <option value="Residents">Residents</option>
                 <option value="Maintenance">Maintenance</option>
                 <option value="Visitors">Visitors</option>
+                <option value="Laundry">Laundry Schedules</option>
+
                 {{-- <option value="Announcements">Announcements</option> --}}
 
 
@@ -131,6 +133,32 @@
                 </div>
             </div>
         </div>
+
+        <div id="laundry-reports">
+            <div class="bg-light text-center rounded p-4">
+                <div class="d-flex align-items-center justify-content-between mb-4">
+                    <h6 class="mb-0">Laundry Schedule Report</h6>
+                </div>
+                <div class="table-responsive">
+                    <table class="table text-start align-middle table-bordered table-hover mb-0" class="table table-dark">
+                        <thead>
+                            <tr class="text-dark">
+                                <th>Resident Name</th>
+
+                                <th>Laundry Date</th>
+                                <th>Laundry Time</th>
+                                <th>Status</th>
+                                <th>Created At</th>
+
+                            </tr>
+                        </thead>
+                        <tbody id="laundryReportBody">
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
       
         {{-- <div id="announcements-reports">
             <div class="bg-light text-center rounded p-4">
@@ -165,6 +193,6 @@
 <!-- Back to Top -->
 <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
 </div>
-<script src="{{ secure_asset('js/admin/dorm/reports.js') }}"></script>
+<script src="{{ asset('js/admin/dorm/reports.js') }}"></script>
 
 @endsection

@@ -130,6 +130,23 @@
     </div>
 </div>
 
+<div class="modal fade" id="doneMaintenanceModal" tabindex="-1" aria-labelledby="doneMaintenanceModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="doneMaintenanceTitle">Maintenance Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="doneMaintenanceBody">
+                <div id="doneMaintenanceDetails" class="mb-3">
+                    <!-- Maintenance details will be populated here -->
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Accept Maintenance Modal -->
 <div class="modal fade" id="acceptModal" tabindex="-1" aria-labelledby="acceptModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -165,8 +182,57 @@
             <div class="modal-body">
                 <form id="updateForm">
                     <div class="mb-3">
-                        <label for="completionPercentage" class="form-label">Completion Percentage</label>
-                        <input type="number" class="form-control" id="completionPercentage" name="completionPercentage" required>
+                        <label class="form-label">Maintenance Steps</label>
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="10" id="step1" name="maintenanceSteps">
+                                    <label class="form-check-label" for="step1">
+                                        Check - 10%
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="10" id="step2" name="maintenanceSteps" disabled>
+                                    <label class="form-check-label" for="step2">
+                                        Plan - 10%
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="10" id="step3" name="maintenanceSteps" disabled>
+                                    <label class="form-check-label" for="step3">
+                                        Prepare Tools - 10%
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="50" id="step4" name="maintenanceSteps" disabled>
+                                    <label class="form-check-label" for="step4">
+                                        Execute - 50%
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="20" id="step5" name="maintenanceSteps" disabled>
+                                    <label class="form-check-label" for="step5">
+                                        Finalize - 20%
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="mb-3">
                         <label for="statusdescription" class="form-label">Description</label>
@@ -175,14 +241,9 @@
                     <button type="submit" class="btn btn-primary">Update</button>
                 </form>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary" onclick="markAsDone()">Done</button>
-            </div>
         </div>
     </div>
 </div>
-
 
 
   
@@ -197,5 +258,5 @@
 </div>
 
 
-<script src="{{ secure_asset('js/technician/maintenance.js') }}"></script>
+<script src="{{ asset('js/technician/maintenance.js') }}"></script>
 @endsection

@@ -158,6 +158,11 @@ Route::middleware(['adminbranch:Dormitory'])->group(function () {
             return view('admin.dorm.visitors');
         });
 
+        Route::get('/inactive', function () {
+            return view('admin.dorm.inactive');
+        });
+
+
     });
 });
     

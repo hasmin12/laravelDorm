@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Maintenance Report</title>
+    <title>Laundry Schedule Report</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -76,32 +76,30 @@
 
     <!-- Main content -->
     <main>
-        <h2>Maintenance Report</h2>
+        <h2>Laundry Schedule Report</h2>
         <table>
             <thead>
                 <tr>
-                    <th>Resident Name</th>
-                    <th>Room Number</th>
-                    <th>Technician</th>
+                    <th>Visitor Name</th>
+                    <th>Contact Number</th>
+                    <th>Visit Date</th>
 
-                    <th>Type</th>
-                    <th>Date Requested</th>
-                    <th>Date Finished</th>
-                    <th>Status</th>
+                    <th>Resident Name</th>
+                    <th>Relationship</th>
+                    <th>Purpose</th>
+                 
                 </tr>
             </thead>
             <tbody>
-                @foreach($maintenance as $maintenance)
+                @foreach($visitors as $visitor)
                     <tr>
-                        <td>{{ $maintenance->residentName }}</td>
-                        <td>{{ $maintenance->room_number }}</td>
-                        <td>{{ $maintenance->technicianName }}</td>
-                        <td>{{ $maintenance->type }}</td>
-                        <td>{{ $maintenance->request_date }}</td>
-                        <td>{{ \Carbon\Carbon::parse($maintenance->completed_date)->format('Y-m-d H:i:s') }}</td>
+                        <td>{{ $visitor->name }}</td>
+                        <td>{{ $visitor->phone }}</td>
+                        <td>{{ \Carbon\Carbon::parse($visitor->visit_date)->format('Y-m-d H:i:s') }}</td>
 
-                        <td>{{ $maintenance->status }}</td>
-
+                        <td>{{ $visitor->residentName }}</td>
+                        <td>{{ $visitor->relationship }}</td>
+                        <td>{{ $visitor->purpose }}</td>
                         <!-- Format the created_at field using Carbon's format() method -->
                     </tr>
                 @endforeach

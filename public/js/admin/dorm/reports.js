@@ -4,6 +4,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const report = document.getElementById('report');
     const maintenanceDiv = document.getElementById('maintenance-reports');
     const visitorDiv = document.getElementById('visitors-reports');
+    const laundryDiv = document.getElementById('laundry-reports');
+    laundryDiv.style.display = 'none';
+
     maintenanceDiv.style.display = 'none';
         visitorDiv.style.display = 'none';
     report.addEventListener('change', changeDiv); // Corrected event name
@@ -13,6 +16,9 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('downloadPdfBtn').addEventListener('click', downloadResidentsReport);
 
     fetchResidentsReport();
+    fetchLaundryReport();
+    fetchMaintenanceReport();
+    fetchVisitorsReport();
 });
 
 function changeDiv() {
@@ -22,6 +28,8 @@ function changeDiv() {
     const residentDiv = document.getElementById('resident-reports');
     const maintenanceDiv = document.getElementById('maintenance-reports');
     const visitorDiv = document.getElementById('visitors-reports');
+    const laundryDiv = document.getElementById('laundry-reports');
+
     const branchDiv = document.getElementById('branchDiv');
 
     if (reportValue === "Residents") {
@@ -29,16 +37,28 @@ function changeDiv() {
         branchDiv.style.display = 'block';
         maintenanceDiv.style.display = 'none';
         visitorDiv.style.display = 'none';
+        laundryDiv.style.display = 'none';
+
     } else if (reportValue === "Maintenance") {
         residentDiv.style.display = 'none';
         branchDiv.style.display = 'block';
         maintenanceDiv.style.display = 'block';
         visitorDiv.style.display = 'none';
-    } else {
+        laundryDiv.style.display = 'none';
+
+    } else if (reportValue === "Visitors") {
         residentDiv.style.display = 'none';
         branchDiv.style.display = 'none';
         maintenanceDiv.style.display = 'none';
         visitorDiv.style.display = 'block';
+        laundryDiv.style.display = 'none';
+
+    }else{
+        residentDiv.style.display = 'none';
+        branchDiv.style.display = 'none';
+        maintenanceDiv.style.display = 'none';
+        visitorDiv.style.display = 'none';
+        laundryDiv.style.display = 'block';
     }
 }
 function fetchResidentsReport() {
@@ -120,9 +140,9 @@ function fetchMaintenanceReport() {
         maintenanceReportBody.innerHTML = '';
 
             data.forEach(maintenance => {
-                const requestDate = new Date(resident.request_date);
+                const requestDate = new Date(maintenance.request_date);
                 const formattedRequestDate = `${requestDate.getMonth() + 1}/${requestDate.getDate()}/${requestDate.getFullYear()}`;
-                const completedDate = new Date(resident.completed_date);
+                const completedDate = new Date(maintenance.completed_date);
                 const formattedCompletedDate = `${completedDate.getMonth() + 1}/${completedDate.getDate()}/${completedDate.getFullYear()}`;
                 const row = `
                         <td>${maintenance.residentName}</td>
@@ -131,7 +151,7 @@ function fetchMaintenanceReport() {
                         <td>${maintenance.type}</td>
                         <td>${formattedRequestDate}</td>
                         <td>${formattedCompletedDate}</td>
-                        <td>${resident.status}</td>
+                        <td>${maintenance.status}</td>
 
                 `;
                 maintenanceReportBody.innerHTML += row;
@@ -170,11 +190,12 @@ function fetchVisitorsReport() {
         return response.json();
     })
     .then(data => {
+
         const visitorReportBody = document.querySelector('#visitorReportBody');
         visitorReportBody.innerHTML = '';
 
             data.forEach(visitor => {
-                const createdAtDate = new Date(resident.visit_date);
+                const createdAtDate = new Date(visitor.visit_date);
                 const formattedCreatedAt = `${createdAtDate.getMonth() + 1}/${createdAtDate.getDate()}/${createdAtDate.getFullYear()}`;
                 const row = `
                         <td>${visitor.name}</td>
@@ -185,6 +206,58 @@ function fetchVisitorsReport() {
                         <td>${visitor.purpose}</td>
                 `;
                 visitorReportBody.innerHTML += row;
+            });
+    
+    })
+    .catch(error => {
+        console.error('Error fetching residents report:', error);
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'An error occurred while fetching the residents report. Please try again.',
+        });
+    });
+}
+
+
+function fetchLaundryReport() {
+    const token = localStorage.getItem('token');
+    const selectedBranch = document.querySelector('input[name="branchbtnradio"]:checked').value;
+
+    const changeValue = document.querySelector('input[name="btnradio"]:checked').value;
+
+    const formData = new FormData();
+    formData.append('change', changeValue);
+
+    fetch(`/api/laundryReport?branch=${selectedBranch}&change=${changeValue}`, {
+        method: 'GET',
+        headers: {
+            'Authorization': 'Bearer ' + token,
+        },
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log(data);
+        const laundryReportBody = document.querySelector('#laundryReportBody');
+        laundryReportBody.innerHTML = '';
+
+            data.forEach(laundry => {
+                const createdAtDate = new Date(laundry.created_at);
+                const formattedCreatedAt = `${createdAtDate.getFullYear()}-${createdAtDate.getMonth() + 1}-${createdAtDate.getDate()}`;
+                const row = `
+                        <td>${laundry.name}</td>
+                        <td>${laundry.laundrydate}</td>
+                        <td>${laundry.laundrytime}</td>
+                        <td>${laundry.status}</td>
+                        <td>${formattedCreatedAt}</td>
+
+                `;
+                laundryReportBody.innerHTML += row;
             });
     
     })

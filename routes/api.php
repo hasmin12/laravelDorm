@@ -92,7 +92,7 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::get('/getAnnouncement/{id}', 'AdminController@getAnnouncement');
     Route::post('/announcement', 'AdminController@createAnnouncement');
     Route::post('updateAnnouncement/{id}', 'AdminController@updateAnnouncement');
-    Route::post('/update_announcement/{id}', [AdminController::class, 'lockComments']);
+    Route::post('/update_announcement/{id}', 'AdminController@lockComments');
     Route::delete('deleteAnnouncement/{id}', 'AdminController@deleteAnnouncement');
 
     Route::get('/getRooms', 'AdminController@getRooms');
@@ -189,6 +189,9 @@ Route::get('/generateMaintenanceReport', 'ReportController@generateMaintenanceRe
 
 Route::get('/visitorsReport', 'ReportController@visitorsReport');
 Route::get('/generateVisitorsReport', 'ReportController@generateVisitorsReport');
+
+Route::get('/laundryReport', 'ReportController@laundryReport');
+Route::get('/generateLaundryReport', 'ReportController@generateLaundryReport');
 
     
 });

@@ -39,15 +39,15 @@ class TechnicianController extends Controller
     public function getMaintenanceStatus(Request $request)
     {
  
-        $maintenanceStatus = Maintenancechange::where('maintenance_id', $request->input('maintenance_id'))->get();
-     
-        return response()->json($maintenanceStatus, 200);
+        $maintenanceStatus = Maintenance::findOrFail($request->input('maintenance_id'));
+        Log::info($maintenanceStatus->completionPercentage);
+        return response()->json($maintenanceStatus->completionPercentage, 200);
     }
     public function getMaintenance(Request $request)
     {
  
         $maintenance = Maintenance::where('technician_id', Auth::user()->id)->get();
-     
+
         return response()->json($maintenance, 200);
     }
     public function addMaintenanceStatus(Request $request)
@@ -56,19 +56,17 @@ class TechnicianController extends Controller
         try {
             $ldate = date('Y-m-d H:i:s');
             $description = $request->input('description');
-            $changePercentage = $request->input('changePercentage');
+            $completionPercentage = $request->input('completionPercentage');
             $id = $request->input('maintenance_id');
             $maintenanceStatus = Maintenancechange::create([
                 'maintenance_id' => $id ,
-                'changePercentage' => $changePercentage,
+                'changePercentage' => $completionPercentage,
                 'description' => $description,
             ]);
 
             $maintenance = Maintenance::find($id);
-            $newPercentage = $changePercentage;
-            Log::info($maintenance->completionPercentage );
-            Log::info($changePercentage );
-            Log::info($newPercentage);
+            $newPercentage = $completionPercentage;
+            
 
             if($newPercentage === 100){
                 $maintenance->update([
