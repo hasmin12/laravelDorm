@@ -111,7 +111,6 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::get('/getLaundry', 'AdminController@getLaundry');
     Route::post('/laundryschedule', 'AdminController@createLaundryschedule');
 
-    // Route::get('/resident/getLaundry', 'ResidentController@getLaundry');
     // Route::get('/resident/getAnnouncements', 'ResidentController@getAnnouncements');
     Route::post('/updateEquipment', 'ResidentController@updateEquipment');
 
