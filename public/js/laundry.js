@@ -13,16 +13,14 @@ document.addEventListener('DOMContentLoaded', function () {
         })
         .then(response => response.json())
         .then(data => {
-            // Initialize FullCalendar
-            $('#calendar').fullCalendar({
-                events: data, // Assuming your controller returns laundry schedules in the required format
-                header: {
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'month,agendaWeek,agendaDay'
-                },
-                // Add other FullCalendar configurations as needed
-            });
+            const events = data.map(schedule => ({
+                title: schedule.title,
+                start: schedule.laundrydate + 'T' + mapLaundryTimeToTimeRange(schedule.laundrytime),
+                allDay: false, 
+            }));
+            $('#calendar').fullCalendar('removeEvents');
+            $('#calendar').fullCalendar('addEventSource', events);
+            $('#calendar').fullCalendar('refetchEvents');
         })
     .catch(error => console.error('Error fetching laundry schedules:', error))
     .finally(() => {
