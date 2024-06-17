@@ -147,7 +147,7 @@ function displaycreateForm(){
         </div>
 
         <div class="mb-3">
-            <label for="roomName" class="form-label">Bed Type</label>
+            <label for="roomName" class="form-label">Beds</label>
             <input type="text" class="form-control" id="bedtype" autocomplete="off" required>
         </div>
         
@@ -207,7 +207,7 @@ function fetchRooms() {
                     <th scope="col">Name</th>
                     <th scope="col">Description</th>
                     <th scope="col">Floor Number</th>
-                    <th scope="col">Bed Type</th>
+                    <th scope="col">Beds</th>
                     <th scope="col">Price</th>
                     <th scope="col">Pax</th>
                     <th scope="col">Rating</th>

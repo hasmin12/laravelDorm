@@ -63,7 +63,7 @@ function fetchHostelRooms(searchQuery = '') {
 
                     const cardContent = `
                         <div class="card h-100" style="cursor: pointer;" onclick="showRoomDetails('${room.name}', '${room.description}', '${room.bedtype}', '${room.pax}', '${room.price}', '${room.status}', '${room.img_paths.join(',')}', '${room.wifi}', '${room.air_conditioning}', '${room.kettle}', '${room.tv_with_cable}', '${room.hot_shower}', '${room.refrigerator}', '${room.kitchen}', '${room.hair_dryer}')">
-                            <img src="${room.img_path[0]}" class="card-img-top" alt="Room Image">
+                            <img src="${room.img_path}" class="card-img-top" alt="Room Image">
                             <div class="card-body">
                                 <h5 class="card-title">${room.name}</h5>
                                 <p class="card-text">${room.description}</p>
@@ -91,19 +91,19 @@ function fetchHostelRooms(searchQuery = '') {
 
 
 function matchesSearchQuery(room, query) {
-    const amenities = ['wifi', 'air_conditioning', 'kettle', 'tv_with_cable', 'hot_shower', 'refrigerator', 'kitchen', 'hair_dryer'];
+    const amenities = ['wifi', 'airConditioning', 'kettle', 'tvWithCable', 'hotShower', 'refrigerator', 'kitchen', 'hairDryer'];
     const roomDetails = `${room.name} ${room.description} ${room.bedtype} ${room.pax} ${room.price}`.toLowerCase();
-    
+
     const amenitiesDetails = amenities
-        .filter(amenity => room[amenity])
+        .filter(amenity => room.amenities[amenity])
         .map(amenity => amenity.replace('_', ' '))
         .join(' ')
         .toLowerCase();
 
-    return roomDetails.includes(query) || amenitiesDetails.includes(query);
+    return roomDetails.includes(query.toLowerCase()) || amenitiesDetails.includes(query.toLowerCase());
 }
 
-function showRoomDetails(name, description, type, pax, price, status, imgPaths, wifi, airConditioning, kettle, tvWithCable, hotShower, refrigerator, kitchen, hairDryer) {
+function showRoomDetails(name, description, type, pax, price, status, imgPaths, amenities) {
     const imgPathsArray = imgPaths.split(',');
     const modalRoomName = document.getElementById('modalRoomName');
     const modalRoomDescription = document.getElementById('modalRoomDescription');
@@ -155,26 +155,21 @@ function showRoomDetails(name, description, type, pax, price, status, imgPaths, 
     });
 
     // Populate amenities
-    const amenities = [];
-    if (wifi) amenities.push('<i class="fas fa-wifi"></i> WiFi');
-    if (airConditioning) amenities.push('<i class="fas fa-snowflake"></i> Air Conditioning');
-    if (kettle) amenities.push('<i class="fas fa-coffee"></i> Kettle');
-    if (tvWithCable) amenities.push('<i class="fas fa-tv"></i> TV with Cable');
-    if (hotShower) amenities.push('<i class="fas fa-shower"></i> Hot Shower');
-    if (refrigerator) amenities.push('<i class="fas fa-icicles"></i> Refrigerator');
-    if (kitchen) amenities.push('<i class="fas fa-utensils"></i> Kitchen');
-    if (hairDryer) amenities.push('<i class="fas fa-wind"></i> Hair Dryer');
+    const amenitiesList = [];
+    if (amenities.wifi) amenitiesList.push('<i class="fas fa-wifi"></i> WiFi');
+    if (amenities.air_conditioning) amenitiesList.push('<i class="fas fa-snowflake"></i> Air Conditioning');
+    if (amenities.kettle) amenitiesList.push('<i class="fas fa-coffee"></i> Kettle');
+    if (amenities.tv_with_cable) amenitiesList.push('<i class="fas fa-tv"></i> TV with Cable');
+    if (amenities.hot_shower) amenitiesList.push('<i class="fas fa-shower"></i> Hot Shower');
+    if (amenities.refrigerator) amenitiesList.push('<i class="fas fa-icicles"></i> Refrigerator');
+    if (amenities.kitchen) amenitiesList.push('<i class="fas fa-utensils"></i> Kitchen');
+    if (amenities.hair_dryer) amenitiesList.push('<i class="fas fa-wind"></i> Hair Dryer');
 
-    modalRoomAmenities.innerHTML = amenities.join('<br>');
+    modalRoomAmenities.innerHTML = amenitiesList.join('<br>');
 
     $('#roomModal').modal('show'); // Show Bootstrap modal using jQuery
 }
 
-
-
-
-
-// Function to highlight the selected image
 function showSelectedImage(index) {
     const roomImageCarousel = new bootstrap.Carousel(document.getElementById('roomImageCarousel'), {
         interval: false
@@ -222,52 +217,6 @@ function getStatusColor(status) {
     }
 }
 
-// function showReservationModal(event, room_id, name, description, bedtype, pax, price, reservations) {
-//     event.preventDefault();
-//     event.stopPropagation();
-//     const reservationModalTitle = document.getElementById('reservationModalTitle');
-//     const reservationModalPax = document.getElementById('reservationModalPax');
-//     const reservationModalType = document.getElementById('reservationModalType');
-//     const reservationModalPrice = document.getElementById('reservationModalPrice');
-//     const reservationModalDescription = document.getElementById('reservationModalDescription');
-
-//     const roomId = document.getElementById('room_id');
-//     roomId.value = room_id;
-//     reservationModalTitle.textContent = `Reserve ${name}`;
-//     reservationModalDescription.textContent = `${description}`;
-
-//     reservationModalPax.textContent = `Pax: ${pax}`;
-//     reservationModalType.textContent = `Type: ${bedtype}`;
-//     reservationModalPrice.textContent = `Price: ₱${price}/day`;
-
-//     // Get checkinDate and checkoutDate elements
-//     const checkinDateInput = document.getElementById('checkinDate');
-//     const checkoutDateInput = document.getElementById('checkoutDate');
-
-//     // Disable past dates in checkinDate and checkoutDate
-//     const today = new Date().toISOString().split('T')[0];
-//     checkinDateInput.setAttribute('min', today);
-//     checkoutDateInput.setAttribute('min', today);
-
-    
-//     reservations.forEach(reservation => {
-//         const startDate = new Date(reservation.checkin_date);
-//         const endDate = new Date(reservation.checkout_date);
-
-//         let currentDate = startDate;
-//         while (currentDate <= endDate) {
-//             const dateString = currentDate.toISOString().split('T')[0];
-//             const dateInput = document.querySelector(`input[type="date"][value="${dateString}"]`);
-//             if (dateInput) {
-//                 dateInput.setAttribute('disabled', true);
-//             }
-//             currentDate.setDate(currentDate.getDate() + 1); // Move to the next day
-//         }
-//     });
-
-//     // Show the reservation modal
-//     $('#reservationModal').modal('show');
-// }
 
 
 const createReservationForm = document.getElementById('createReservationForm');

@@ -24,7 +24,7 @@ Route::post('/visitor', 'GuestController@addVisitor');
 
 Route::post('/registerDorm', 'GuestController@addVisitor');
 
-
+Route::get('/getHostelRoomDetails/{id}', 'GuestController@getHostelRoomDetails');
 
 Route::post('/createReservation', 'GuestController@createReservation');
 Route::post('/createRegistration', 'GuestController@createRegistration');
@@ -35,7 +35,6 @@ Route::get('/checkoutReservation', 'AdminController@checkoutReservation');
 
 
 
-Route::post('/getHostelrooms', 'GuestController@getHostelrooms');
 
 Route::get('/getReviews/{id}', 'GuestController@getReviews');
 

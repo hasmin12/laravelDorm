@@ -30,14 +30,8 @@ class Hostelroom extends Model
         'status',
         'img_path',
         'user_id',
-        'wifi',
-        'air_conditioning',
-        'kettle',
-        'tv_with_Cable',
-        'hot_shower',
-        'refrigirator',
-        'kitchen',
-        'hair_dryer',  
+                
+
     ];
     public function beds()
     {

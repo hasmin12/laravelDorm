@@ -32,6 +32,7 @@ class GuestController extends Controller
     {
         $query = HostelRoom::query();
 
+        // Handle search if provided
         if ($request->has('search')) {
             $search = $request->input('search');
             $query->where(function ($q) use ($search) {
@@ -44,8 +45,10 @@ class GuestController extends Controller
             });
         }
 
+        // Fetch hostel rooms with amenities
         $hostelRooms = $query->get();
 
+        // Map rooms to desired format
         $rooms = $hostelRooms->map(function ($room) {
             return [
                 'id' => $room->id,
@@ -56,23 +59,28 @@ class GuestController extends Controller
                 'price' => $room->price,
                 'status' => $room->status,
                 'rating' => $room->rating,
-                'img_path' => $room->img_path, // Ensure this is correctly set
-                'img_paths' => $room->images()->pluck('path')->toArray(), // Ensure this returns an array of paths
-                'reservations' => $room->reservations,
-                'wifi' => $room->wifi,
-                'air_conditioning' => $room->air_conditioning,
-                'kettle' => $room->kettle,
-                'tv_with_cable' => $room->tv_with_cable,
-                'hot_shower' => $room->hot_shower,
-                'refrigerator' => $room->refrigerator,
-                'kitchen' => $room->kitchen,
-                'hair_dryer' => $room->hair_dryer,
+                'img_path' => $room->img_path, // Assuming this is a single image path
+                'img_paths' => $room->images()->pluck('path')->toArray(), // Assuming this returns an array of image paths
+                'reservations' => $room->reservations, // Assuming this is related reservations
+                'amenities' => [
+                    'wifi' => (bool) $room->wifi, // Cast to boolean if it's stored as integer or string
+                    'air_conditioning' => (bool) $room->air_conditioning,
+                    'kettle' => (bool) $room->kettle,
+                    'tv_with_cable' => (bool) $room->tv_with_cable,
+                    'hot_shower' => (bool) $room->hot_shower,
+                    'refrigerator' => (bool) $room->refrigerator,
+                    'kitchen' => (bool) $room->kitchen,
+                    'hair_dryer' => (bool) $room->hair_dryer,
+                ],
             ];
         });
 
+        // Return rooms as JSON response
         return response()->json($rooms);
     }
-
+    
+    
+    
 
     public function createReservation(Request $request)
     {

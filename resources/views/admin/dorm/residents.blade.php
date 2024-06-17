@@ -203,6 +203,4 @@
 
 
 
-@include('layouts.footer')
-
 @endsection
