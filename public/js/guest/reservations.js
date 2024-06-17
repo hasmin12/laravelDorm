@@ -103,7 +103,7 @@ function matchesSearchQuery(room, query) {
     return roomDetails.includes(query.toLowerCase()) || amenitiesDetails.includes(query.toLowerCase());
 }
 
-function showRoomDetails(name, description, type, pax, price, status, imgPaths, amenities) {
+function showRoomDetails(name, description, type, pax, price, status, imgPaths, wifi, airConditioning, kettle, tvWithCable, hotShower, refrigerator, kitchen, hairDryer ) {
     const imgPathsArray = imgPaths.split(',');
     const modalRoomName = document.getElementById('modalRoomName');
     const modalRoomDescription = document.getElementById('modalRoomDescription');
@@ -155,19 +155,19 @@ function showRoomDetails(name, description, type, pax, price, status, imgPaths, 
     });
 
     // Populate amenities
-    const amenitiesList = [];
-    if (amenities.wifi) amenitiesList.push('<i class="fas fa-wifi"></i> WiFi');
-    if (amenities.air_conditioning) amenitiesList.push('<i class="fas fa-snowflake"></i> Air Conditioning');
-    if (amenities.kettle) amenitiesList.push('<i class="fas fa-coffee"></i> Kettle');
-    if (amenities.tv_with_cable) amenitiesList.push('<i class="fas fa-tv"></i> TV with Cable');
-    if (amenities.hot_shower) amenitiesList.push('<i class="fas fa-shower"></i> Hot Shower');
-    if (amenities.refrigerator) amenitiesList.push('<i class="fas fa-icicles"></i> Refrigerator');
-    if (amenities.kitchen) amenitiesList.push('<i class="fas fa-utensils"></i> Kitchen');
-    if (amenities.hair_dryer) amenitiesList.push('<i class="fas fa-wind"></i> Hair Dryer');
+    const amenities = [];
+    if (wifi) amenities.push('<i class="fas fa-wifi"></i> WiFi');
+    if (airConditioning) amenities.push('<i class="fas fa-snowflake"></i> Air Conditioning');
+    if (kettle) amenities.push('<i class="fas fa-coffee"></i> Kettle');
+    if (tvWithCable) amenities.push('<i class="fas fa-tv"></i> TV with Cable');
+    if (hotShower) amenities.push('<i class="fas fa-shower"></i> Hot Shower');
+    if (refrigerator) amenities.push('<i class="fas fa-icicles"></i> Refrigerator');
+    if (kitchen) amenities.push('<i class="fas fa-utensils"></i> Kitchen');
+    if (hairDryer) amenities.push('<i class="fas fa-wind"></i> Hair Dryer');
 
-    modalRoomAmenities.innerHTML = amenitiesList.join('<br>');
+    modalRoomAmenities.innerHTML = amenities.join('<br>');
 
-    $('#roomModal').modal('show'); // Show Bootstrap modal using jQuery
+  $('#roomModal').modal('show'); // Show Bootstrap modal using jQuery
 }
 
 function showSelectedImage(index) {
