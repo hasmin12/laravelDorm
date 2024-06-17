@@ -31,9 +31,12 @@
     <!-- Template Stylesheet -->
     <link href="css1/style.css" rel="stylesheet">
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
 
-   <!-- Topbar Start -->
-   <div class="container-fluid px-5 d-none d-lg-block">
+<body>
+<!-- Topbar Start -->
+<div class="container-fluid px-5 d-none d-lg-block">
     <div class="row gx-5">
         <div class="col-lg-4 text-center py-3">
             <div class="d-inline-flex align-items-center">
@@ -76,15 +79,16 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto py-0">
-
+                <!-- Add any additional navbar items here -->
             </div>
         </div>
     </nav>
 </div>
 <!-- Navbar End -->
 
-<div class="container-xxl position-relative bg-white d-flex p-0">
-    <div class="bg-light rounded p-4">
+<!-- Search and Filter Container -->
+<div class="container-xxl bg-white d-flex p-4">
+    <div class="bg-light rounded p-4 w-100">
         <div class="d-flex align-items-center justify-content-between mb-2">
             <h3 class="mb-0">Hostel Rooms</h3>
         </div>
@@ -105,7 +109,14 @@
                 <button class="btn btn-primary" id="apply-dates">Submit</button>
             </div>
         </div>
-       
+        <div class="form-group mb-3">
+            <input type="text" id="search-bar" class="form-control" placeholder="Search by room name, description, or amenities...">
+        </div>
+    </div>
+</div>
+
+<div class="container-xxl position-relative bg-white d-flex p-0">
+    <div class="bg-light rounded p-4 w-100">
         <div class="row" id="room-container">
             <!-- Room cards will be dynamically added here -->
         </div>
@@ -113,6 +124,7 @@
 </div>
 
 
+<!-- Room Details Modal -->
 <div class="modal fade" id="roomModal" tabindex="-1" role="dialog" aria-labelledby="roomModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
         <div class="modal-content">
@@ -123,11 +135,10 @@
                 <div class="row">
                     <!-- Carousel for Room Images -->
                     <div class="col-md-6">
-                        
                         <div id="roomImageCarousel" class="carousel slide" data-ride="carousel">
                             <div class="carousel-inner">
+                                <!-- Carousel items will be added here dynamically -->
                             </div>
-                       
                         </div>
                         <div id="roomImageContainer"></div>
                     </div>
@@ -138,7 +149,7 @@
                         <p id="modalRoomPax"></p>
                         <p id="modalRoomPrice"></p>
                         <p id="roomStatus"></p>
-
+                        <p id="modalRoomAmenities"></p>
                     </div>
                 </div>
             </div>
@@ -146,6 +157,7 @@
     </div>
 </div>
 
+<!-- Reservation Modal -->
 <div class="modal fade" id="reservationModal" tabindex="-1" role="dialog" aria-labelledby="reservationModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -153,20 +165,15 @@
                 <h5 class="modal-title" id="reservationModalLabel">Reservation</h5>
             </div>
             <div class="modal-body">
-                
                 <form id="createReservationForm" enctype="multipart/form-data">
                     <div class="row">
                         <div class="col-md-6">
-                            {{-- <h4>Reserve Room</h4> --}}
-                            <input type="text"  id="room_id" name="room_id"  hidden>
+                            <input type="text" id="room_id" name="room_id" hidden>
                             <h4 id="reservationModalTitle"></h4>
                             <p id="reservationModalDescription"></p>
-
                             <p id="reservationModalType"></p>
                             <p id="reservationModalPax"></p>
                             <p id="reservationModalPrice"></p>
-                            
-                            
                             <div class="mb-3">
                                 <label for="checkinDate" class="form-label">Check-in Date</label>
                                 <input type="date" class="form-control" id="checkinDate" name="checkinDate" required min="{{ date('Y-m-d') }}">
@@ -175,25 +182,20 @@
                                 <label for="checkoutDate" class="form-label">Check-out Date</label>
                                 <input type="date" class="form-control" id="checkoutDate" name="checkoutDate" required min="{{ date('Y-m-d') }}">
                             </div>
-                            
-
-                            <div class="card" style="cursor: pointer;" >
+                            <div class="card">
                                 <div class="card-body">
                                     <h5 class="card-title">Payment Information</h5>
                                     <p id="paymentInfo" class="card-text"></p>
+                                   
                                     <p id="downPaymentInfo" class="card-text"></p>
                                 </div>
                             </div>
-
                             <div class="mb-3">
                                 <label for="payments" class="form-label">Payment</label>
                                 <input type="file" class="form-control" id="payments" name="payments" required>
                             </div>
-                    
-
                         </div>
                         <div class="col-md-6">
-
                             <h4>Personal Information</h4>
                             <div class="mb-3">
                                 <label for="residentName" class="form-label">Name</label>
@@ -201,18 +203,16 @@
                             </div>
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email</label>
-                                <input type="text" class="form-control" id="email" name="email" required>
+                                <input type="email" class="form-control" id="email" name="email" required>
                             </div>
                             <div class="mb-3">
                                 <label for="password" class="form-label">Password</label>
                                 <input type="password" class="form-control" id="password" name="password" required>
                             </div>
-
                             <div class="mb-3">
                                 <label for="address" class="form-label">Address</label>
                                 <input type="text" class="form-control" id="address" name="address" required>
                             </div>
-                            
                             <div class="mb-3">
                                 <label for="residentSex" class="form-label">Sex</label>
                                 <select class="form-select" id="residentSex" name="residentSex" required>
@@ -225,32 +225,28 @@
                                 <label for="birthdate" class="form-label">Birthdate</label>
                                 <input type="date" class="form-control" id="birthdate" name="birthdate" required>
                             </div>
-                    
                             <div class="mb-3">
                                 <label for="phone" class="form-label">Phone</label>
                                 <input type="text" class="form-control" id="phone" name="phone" required>
                             </div>
-            
                             <div class="mb-3">
                                 <label for="validId" class="form-label">Valid ID</label>
                                 <input type="file" class="form-control" id="validId" name="validId" required>
                             </div>
-                            
                             <div class="mb-3">
                                 <label for="img_path" class="form-label">Image</label>
                                 <input type="file" class="form-control" id="img_path" name="img_path" required>
                             </div>
-                            
                         </div>
-                        <button type="submit" class="btn btn-primary">Create Reservation</button>
                     </div>
+                    <button type="submit" class="btn btn-primary">Create Reservation</button>
                 </form>
             </div>
         </div>
     </div>
 </div>
 
-<script src="{{ secure_asset('js/guest/reservations.js') }}"></script>
+<script src="{{ asset('js/guest/reservations.js') }}"></script>
 
 @include('layouts.footer')
 @endsection

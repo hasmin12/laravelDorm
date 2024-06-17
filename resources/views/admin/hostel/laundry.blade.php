@@ -36,5 +36,5 @@
 </div>
 
 
-<script src="{{ secure_asset('js/laundry.js') }}"></script>
+<script src="{{ asset('js/laundry.js') }}"></script>
 @endsection

@@ -20,35 +20,6 @@ class RoomSeeder extends Seeder
         $faker = Faker::create();
         foreach (range(1, 8) as $index) {
             $room =  'Room ' . $index;
-            $type = $faker->randomElement($array = array ('Single', 'Double', 'Triple', 'Quad'));
-            if($type == "Single"){
-                $pax = 1;
-                $price = 500;
-            }elseif($type == "Double"){
-                $pax = 2;
-                $price = 800;
-            }elseif($type == "Triple"){
-                $pax = 3;
-                $price = 1000;
-            }else{
-                $pax = 4;
-                $price = 1200;
-            }
-            $roomHostel = Hostelroom::create([
-                'name' => $room,
-                'description' => "Nice room",
-                'bedtype' => $type,
-                'pax' => $pax,
-                'price' => $price,
-            ]);
-
-            foreach (range(1, 4) as $index) {
-                Hostelimage::create([
-                    'room_id' => $roomHostel->id,
-                    'path' => "/img/room1.jpg",
-                ]);
-            }
-
             $roomDorm  = Dormitoryroom::create([
                 'name' => $room,
                 'type' => $faker->randomElement($array = array ('Student', 'Faculty', 'Staff')),
@@ -57,5 +28,157 @@ class RoomSeeder extends Seeder
                 'totalBeds' => 4,
             ]);  
         }
+
+        $roomHostel = Hostelroom::create([
+            'name' => 'Single Room',
+            'description' => 'Best Suit for 1 pax',
+            'floorNum' => '1',
+            'bedtype' => 'Single',
+            'pax' => '1',  
+            'price' => '500',
+            'status' => 'Vacant',
+            'img_path' => '/storage/hostel/room1.jpg',
+            'wifi' => '0',
+            'air_conditioning' => '0',
+            'kettle' => '0', 
+            'tv_with_cable' => '0',
+            'hot_shower' => '0',
+            'refrigerator' => '0',
+            'kitchen' => '0',
+            'hair_dryer' => '0',
+        ]);
+
+        $roomHostel = Hostelroom::create([
+            'name' => 'Double Room',
+            'description' => 'Comes with 1 double bed',
+            'floorNum' => '1',
+            'bedtype' => 'Double Bed',
+            'pax' => '2',  
+            'price' => '1000',
+            'status' => 'Vacant',
+            'img_path' => '/storage/hostel/room1.jpg',
+            'wifi' => '0',
+            'air_conditioning' => '0',
+            'kettle' => '0', 
+            'tv_with_cable' => '0',
+            'hot_shower' => '0',
+            'refrigerator' => '0',
+            'kitchen' => '0',
+            'hair_dryer' => '0',
+        ]);
+
+        $roomHostel = Hostelroom::create([
+            'name' => 'Family Room',
+            'description' => '29m2, accomodates 2 guests and 1-2 children',
+            'floorNum' => '1',
+            'bedtype' => '2 double bed',
+            'pax' => '4',  
+            'price' => '1500',
+            'status' => 'Vacant',
+            'img_path' => '/storage/hostel/room1.jpg',
+            'wifi' => '0',
+            'air_conditioning' => '0',
+            'kettle' => '0', 
+            'tv_with_cable' => '0',
+            'hot_shower' => '0',
+            'refrigerator' => '0',
+            'kitchen' => '0',
+            'hair_dryer' => '0',
+        ]);
+
+        $roomHostel = Hostelroom::create([
+            'name' => 'Deluxe Room',
+            'description' => '29m2, accomodates 2 guests',
+            'floorNum' => '1',
+            'bedtype' => 'King Size Bed',
+            'pax' => '2',  
+            'price' => '2000',
+            'status' => 'Vacant',
+            'img_path' => '/storage/hostel/room1.jpg',
+            'wifi' => '0',
+            'air_conditioning' => '0',
+            'kettle' => '0', 
+            'tv_with_cable' => '0',
+            'hot_shower' => '0',
+            'refrigerator' => '0',
+            'kitchen' => '0',
+            'hair_dryer' => '0',
+        ]);
+
+        $roomHostel = Hostelroom::create([
+            'name' => 'Executive Room',
+            'description' => '29m2, accomodates 2 guests',
+            'floorNum' => '2',
+            'bedtype' => 'King Size & Sofa Bed',
+            'pax' => '2',  
+            'price' => '3000',
+            'status' => 'Vacant',
+            'img_path' => '/storage/hostel/room1.jpg',
+              'wifi' => '0',
+            'air_conditioning' => '0',
+            'kettle' => '0', 
+            'tv_with_cable' => '0',
+            'hot_shower' => '0',
+            'refrigerator' => '0',
+            'kitchen' => '0',
+            'hair_dryer' => '0',
+        ]);
+
+        $roomHostel = Hostelroom::create([
+            'name' => 'Double Room',
+            'description' => 'Comes with 1 double bed',
+            'floorNum' => '1',
+            'bedtype' => 'Double Bed',
+            'pax' => '2',  
+            'price' => '1000',
+            'status' => 'Vacant',
+            'img_path' => '/storage/hostel/room1.jpg',
+            'wifi' => '0',
+            'air_conditioning' => '0',
+            'kettle' => '0', 
+            'tv_with_cable' => '0',
+            'hot_shower' => '0',
+            'refrigerator' => '0',
+            'kitchen' => '0',
+            'hair_dryer' => '0',
+        ]);
+
+        $roomHostel = Hostelroom::create([
+          'name' => 'Single Room',
+            'description' => '29m2, accomodates 2 guests',
+            'floorNum' => '1',
+            'bedtype' => 'Single',
+            'pax' => '1',  
+            'price' => '500',
+            'status' => 'Vacant',
+            'img_path' => '/storage/hostel/room1.jpg',
+              'wifi' => '0',
+            'air_conditioning' => '0',
+            'kettle' => '0', 
+            'tv_with_cable' => '0',
+            'hot_shower' => '0',
+            'refrigerator' => '0',
+            'kitchen' => '0',
+            'hair_dryer' => '0',
+        ]);
+
+        $roomHostel = Hostelroom::create([
+            'name' => 'Executive Room',
+            'description' => '29m2, accomodates 2 guests',
+            'floorNum' => '2',
+            'bedtype' => 'King Size & Sofa Bed',
+            'pax' => '2',  
+            'price' => '3000',
+            'status' => 'Vacant',
+            'img_path' => '/storage/hostel/room1.jpg',
+              'wifi' => '0',
+            'air_conditioning' => '0',
+            'kettle' => '0', 
+            'tv_with_cable' => '0',
+            'hot_shower' => '0',
+            'refrigerator' => '0',
+            'kitchen' => '0',
+            'hair_dryer' => '0',
+        ]);
     }
 }

@@ -123,6 +123,6 @@ function getAuthUser() {
 }
 </script>
 
-<script src="{{ secure_asset('/js/admin/dorm/dashboard.js') }}"></script>
+<script src="{{ asset('/js/admin/dorm/dashboard.js') }}"></script>
 
 @endsection

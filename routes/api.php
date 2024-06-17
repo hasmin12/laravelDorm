@@ -49,6 +49,7 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     
     Route::get('/getDashboardData', 'AdminController@getDashboardData');
     Route::get('/getResidents', 'AdminController@getResidents');
+    Route::get('/getInactive', 'AdminController@getInactiveResidents');
     Route::get('/getResident/{id}', 'AdminController@getResident');
     Route::get('/getLogs/{id}', 'AdminController@getLogs');
     Route::get('/getSleepLogs/{id}', 'AdminController@getSleepLogs');
@@ -142,6 +143,7 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::post('/api/addViolationuser', 'AdminController@addViolationuser');
     Route::get('/notifyViolations', 'AdminController@notifyResidents');
     Route::get('/dischargeResident/{id}', 'AdminController@dischargeResident');
+    Route::get('/ReActivateResident/{id}', 'AdminController@ReActivateResident');
     Route::post('/addComment', 'ResidentController@addComment');
     Route::get('/notificationRead', 'AuthController@notificationRead');
 

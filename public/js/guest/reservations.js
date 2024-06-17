@@ -1,4 +1,11 @@
 document.addEventListener('DOMContentLoaded', function () {
+    const searchBar = document.getElementById('search-bar');
+
+    searchBar.addEventListener('input', function() {
+        const searchQuery = searchBar.value.trim().toLowerCase();
+        fetchHostelRooms(searchQuery);
+    });
+
     fetchHostelRooms();
 
     const checkinDateInput = document.getElementById('checkinDate');
@@ -10,8 +17,8 @@ document.addEventListener('DOMContentLoaded', function () {
         fetchHostelRooms();
     });
 });
-let reservationModalData
-function fetchHostelRooms() {
+
+function fetchHostelRooms(searchQuery = '') {
     fetch('/api/getHostelrooms', {
         method: 'GET',
         headers: {
@@ -32,46 +39,48 @@ function fetchHostelRooms() {
             const endDate = document.getElementById('end-date').value;
 
             data.forEach((room) => {
-                const cardContainer = document.createElement('div');
-                cardContainer.classList.add('col-sm-12', 'col-md-4');
+                if (matchesSearchQuery(room, searchQuery)) {
+                    const cardContainer = document.createElement('div');
+                    cardContainer.classList.add('col-12', 'col-md-4', 'mb-4');
 
-                let reserveButton = '';
-                let statusText = '';
-                if (room.reservations.length === 0) {
-                    statusText = '<span class="text-success">Vacant</span>';
-                    reserveButton = `<button class="btn btn-primary" onclick="showReservationModal(event,${room.id},'${room.name}', '${room.description}', '${room.bedtype}', '${room.pax}', '${room.price}','${room.reservations}')">Reserve Now</button>`;
-                } else {
-                    const hasReservation = room.reservations.some(reservation => {
-                        return (reservation.checkin_date <= endDate && reservation.checkout_date >= startDate);
-                    });
-
-                    if (hasReservation) {
-                        statusText = '<span class="text-warning">Reserved</span>';
-                    } else {
+                    let reserveButton = '';
+                    let statusText = '';
+                    if (room.reservations.length === 0) {
                         statusText = '<span class="text-success">Vacant</span>';
-                        reserveButton = `<button class="btn btn-primary" onclick="showReservationModal(event,${room.id},'${room.name}', '${room.description}', '${room.bedtype}', '${room.pax}', '${room.price}','${room.reservations}')">Reserve Now</button>`;
-                    }
-                }
+                        reserveButton = `<button class="btn btn-primary" onclick="showReservationModal(event, ${room.id}, '${room.name}', '${room.description}', '${room.bedtype}', '${room.pax}', '${room.price}', '${room.reservations}', '${room.wifi}', '${room.air_conditioning}', '${room.kettle}', '${room.tv_with_cable}', '${room.hot_shower}', '${room.refrigerator}', '${room.kitchen}', '${room.hair_dryer}')">Reserve Now</button>`;
+                    } else {
+                        const hasReservation = room.reservations.some(reservation => {
+                            return (reservation.checkin_date <= endDate && reservation.checkout_date >= startDate);
+                        });
 
-                const cardContent = `
-                    <div class="card h-100" style="cursor: pointer;" onclick="showRoomDetails('${room.name}', '${room.description}', '${room.bedtype}', '${room.pax}', '${room.price}','${room.status}', '${room.img_paths.join(',')}', '${room.reservations}')">
-                        <img src="${room.img_paths[0]}" class="card-img-top" alt="Room Image">
-                        <div class="card-body">
-                            <h5 class="card-title">${room.name}</h5>
-                            <p class="card-text">${room.description}</p>
-                            <p class="card-text">Type: ${room.bedtype}</p>
-                            <p class="card-text">Pax: ${room.pax}</p>
-                            <p class="card-text">Price: ₱${room.price}/day</p>
-                            <p class="card-text">Status: ${statusText}</p>
-                            <div class="d-flex align-items-center justify-content-between mb-2">
-                                ${reserveButton}                          
+                        if (hasReservation) {
+                            statusText = '<span class="text-warning">Reserved</span>';
+                        } else {
+                            statusText = '<span class="text-success">Vacant</span>';
+                            reserveButton = `<button class="btn btn-primary" onclick="showReservationModal(event, ${room.id}, '${room.name}', '${room.description}', '${room.bedtype}', '${room.pax}', '${room.price}', '${room.reservations}', '${room.wifi}', '${room.air_conditioning}', '${room.kettle}', '${room.tv_with_cable}', '${room.hot_shower}', '${room.refrigerator}', '${room.kitchen}', '${room.hair_dryer}')">Reserve Now</button>`;
+                        }
+                    }
+
+                    const cardContent = `
+                        <div class="card h-100" style="cursor: pointer;" onclick="showRoomDetails('${room.name}', '${room.description}', '${room.bedtype}', '${room.pax}', '${room.price}', '${room.status}', '${room.img_paths.join(',')}', '${room.wifi}', '${room.air_conditioning}', '${room.kettle}', '${room.tv_with_cable}', '${room.hot_shower}', '${room.refrigerator}', '${room.kitchen}', '${room.hair_dryer}')">
+                            <img src="${room.img_path[0]}" class="card-img-top" alt="Room Image">
+                            <div class="card-body">
+                                <h5 class="card-title">${room.name}</h5>
+                                <p class="card-text">${room.description}</p>
+                                <p class="card-text"><i class="fas fa-bed"></i> ${room.bedtype}</p>
+                                <p class="card-text"><i class="fas fa-users"></i> up to ${room.pax} guests</p>
+                                <p class="card-text">Price <b>₱${room.price}/day</b></p>
+                                <p class="card-text">Status: ${statusText}</p>
+                                <div class="d-flex align-items-center justify-content-between mb-2">
+                                    ${reserveButton}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                `;
+                    `;
 
-                cardContainer.innerHTML = cardContent;
-                roomContainer.appendChild(cardContainer);
+                    cardContainer.innerHTML = cardContent;
+                    roomContainer.appendChild(cardContainer);
+                }
             });
         } else {
             console.error('Invalid or missing data:', data);
@@ -79,6 +88,100 @@ function fetchHostelRooms() {
     })
     .catch(error => console.error('Error fetching hostel rooms:', error));
 }
+
+
+function matchesSearchQuery(room, query) {
+    const amenities = ['wifi', 'air_conditioning', 'kettle', 'tv_with_cable', 'hot_shower', 'refrigerator', 'kitchen', 'hair_dryer'];
+    const roomDetails = `${room.name} ${room.description} ${room.bedtype} ${room.pax} ${room.price}`.toLowerCase();
+    
+    const amenitiesDetails = amenities
+        .filter(amenity => room[amenity])
+        .map(amenity => amenity.replace('_', ' '))
+        .join(' ')
+        .toLowerCase();
+
+    return roomDetails.includes(query) || amenitiesDetails.includes(query);
+}
+
+function showRoomDetails(name, description, type, pax, price, status, imgPaths, wifi, airConditioning, kettle, tvWithCable, hotShower, refrigerator, kitchen, hairDryer) {
+    const imgPathsArray = imgPaths.split(',');
+    const modalRoomName = document.getElementById('modalRoomName');
+    const modalRoomDescription = document.getElementById('modalRoomDescription');
+    const modalRoomType = document.getElementById('modalRoomType');
+    const modalRoomPax = document.getElementById('modalRoomPax');
+    const modalRoomPrice = document.getElementById('modalRoomPrice');
+    const modalRoomAmenities = document.getElementById('modalRoomAmenities');
+
+    modalRoomName.textContent = name;
+    modalRoomDescription.textContent = description;
+    modalRoomType.textContent = "Type: " + type;
+    modalRoomPax.textContent = "Pax: " + pax;
+    modalRoomPrice.textContent = "Price: ₱" + price;
+
+    // Clear existing carousel items
+    const roomImageCarousel = document.querySelector('#roomImageCarousel .carousel-inner');
+    roomImageCarousel.innerHTML = '';
+
+    // Populate carousel with images
+    imgPathsArray.forEach((imgPath, index) => {
+        const carouselItem = document.createElement('div');
+        carouselItem.classList.add('carousel-item');
+
+        const imgElement = document.createElement('img');
+        imgElement.src = imgPath.trim(); // Ensure imgPath is correctly formatted
+        imgElement.classList.add('d-block', 'w-100');
+        imgElement.style.width = '500px'; // Adjust dimensions as needed
+        imgElement.style.height = '300px';
+
+        if (index === 0) {
+            carouselItem.classList.add('active');
+        }
+
+        carouselItem.appendChild(imgElement);
+        roomImageCarousel.appendChild(carouselItem);
+    });
+
+    const roomImageContainer = document.getElementById('roomImageContainer');
+    roomImageContainer.innerHTML = '';
+
+    // Populate thumbnails
+    imgPathsArray.forEach((imgPath, index) => {
+        const thumbnail = document.createElement('img');
+        thumbnail.src = imgPath.trim(); // Ensure imgPath is correctly formatted
+        thumbnail.classList.add('thumbnail-img');
+        thumbnail.addEventListener('click', () => showSelectedImage(index)); // Implement showSelectedImage function as needed
+
+        roomImageContainer.appendChild(thumbnail);
+    });
+
+    // Populate amenities
+    const amenities = [];
+    if (wifi) amenities.push('<i class="fas fa-wifi"></i> WiFi');
+    if (airConditioning) amenities.push('<i class="fas fa-snowflake"></i> Air Conditioning');
+    if (kettle) amenities.push('<i class="fas fa-coffee"></i> Kettle');
+    if (tvWithCable) amenities.push('<i class="fas fa-tv"></i> TV with Cable');
+    if (hotShower) amenities.push('<i class="fas fa-shower"></i> Hot Shower');
+    if (refrigerator) amenities.push('<i class="fas fa-icicles"></i> Refrigerator');
+    if (kitchen) amenities.push('<i class="fas fa-utensils"></i> Kitchen');
+    if (hairDryer) amenities.push('<i class="fas fa-wind"></i> Hair Dryer');
+
+    modalRoomAmenities.innerHTML = amenities.join('<br>');
+
+    $('#roomModal').modal('show'); // Show Bootstrap modal using jQuery
+}
+
+
+
+
+
+// Function to highlight the selected image
+function showSelectedImage(index) {
+    const roomImageCarousel = new bootstrap.Carousel(document.getElementById('roomImageCarousel'), {
+        interval: false
+    });
+    roomImageCarousel.to(index);
+}
+
 function showReservationModal(event, roomId, name, description, bedtype, pax, price) {
     event.preventDefault();
     event.stopPropagation();
@@ -104,70 +207,6 @@ function showReservationModal(event, roomId, name, description, bedtype, pax, pr
     console.log
     // Handle reservations data
 }
-
-function showRoomDetails(name, description, type, pax, price,status, imgPaths ) {
-    const imgPathsArray = imgPaths.split(',');
-    const modalRoomName = document.getElementById('modalRoomName');
-    const modalRoomDescription = document.getElementById('modalRoomDescription');
-    const modalRoomType = document.getElementById('modalRoomType');
-    const modalRoomPax = document.getElementById('modalRoomPax');
-    const modalRoomPrice = document.getElementById('modalRoomPrice');
-
-    modalRoomName.textContent = name;
-    modalRoomDescription.textContent = description;
-    modalRoomType.textContent = "Type: " + type;
-    modalRoomPax.textContent = "Pax: " + pax;
-    modalRoomPrice.textContent = "Price: ₱" + price;
-
-  
-
-    // Clear existing carousel items
-    const roomImageCarousel = document.querySelector('#roomImageCarousel .carousel-inner');
-    roomImageCarousel.innerHTML = '';
-
-    // Populate carousel with images
-    imgPathsArray.forEach((imgPath, index) => {
-        const carouselItem = document.createElement('div');
-        carouselItem.classList.add('carousel-item');
-
-        const imgElement = document.createElement('img');
-        imgElement.src = imgPath;
-        imgElement.classList.add('d-block', 'w-100');
-        imgElement.style.width = '500px'; 
-        imgElement.style.height = '300px';
-        // Highlight the first image
-        if (index === 0) {
-            carouselItem.classList.add('active');
-        }
-
-        carouselItem.appendChild(imgElement);
-        roomImageCarousel.appendChild(carouselItem);
-    });
-
-    // Create a row of thumbnail images at the bottom
-    const roomImageContainer = document.getElementById('roomImageContainer');
-    roomImageContainer.innerHTML = '';
-    imgPathsArray.forEach((imgPath, index) => {
-        const thumbnail = document.createElement('img');
-        thumbnail.src = imgPath;
-        thumbnail.classList.add('thumbnail-img');
-        thumbnail.addEventListener('click', () => showSelectedImage(index));
-
-        roomImageContainer.appendChild(thumbnail);
-    });
-
-    // Show the modal
-    $('#roomModal').modal('show');
-}
-
-// Function to highlight the selected image
-function showSelectedImage(index) {
-    const roomImageCarousel = new bootstrap.Carousel(document.getElementById('roomImageCarousel'), {
-        interval: false
-    });
-    roomImageCarousel.to(index);
-}
-
 
 // Function to get status color
 function getStatusColor(status) {

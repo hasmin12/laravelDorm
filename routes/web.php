@@ -58,10 +58,7 @@ use App\Http\Controllers\GoogleSocialiteController;
         return view('guest.register');
     })->name('register');
 
-    Route::get('/example', function () {
-        return view('guest.example');
-    })->name('example');
-    
+   
     // Route::post('signin', 'AuthController@signin');
     Route::post('signin', 'AuthController@signin');
 
@@ -89,6 +86,11 @@ Route::middleware(['adminbranch:Dormitory'])->group(function () {
         Route::get('/residents', function () {
             return view('admin.dorm.residents');
         });
+
+        Route::get('/inactive', function () {
+            return view('admin.dorm.inactive');
+        });
+        
 
         Route::get('/applicants', function () {
             return view('admin.dorm.applicants');

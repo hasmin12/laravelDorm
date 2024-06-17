@@ -83,7 +83,7 @@
 
 
 
-<script src="{{ secure_asset('js/admin/dorm/payment.js') }}"></script>
+<script src="{{ asset('js/admin/dorm/payment.js') }}"></script>
 
 <!-- ... (your existing HTML code) ... -->
 
@@ -176,7 +176,7 @@
 
 
 
-<script src="{{ secure_asset('js/admin/dorm/payment.js') }}"></script>
+<script src="{{ asset('js/admin/dorm/payment.js') }}"></script>
 
 <!-- ... (your existing HTML code) ... -->
 

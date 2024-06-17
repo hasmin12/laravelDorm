@@ -120,6 +120,37 @@ class AdminController extends Controller
         }
     }
 
+    public function getInactiveResidents(Request $request)
+    {
+        try {
+            if (Auth::check()) {
+                $branch = $request->input('branch');
+                $searchQuery = $request->input('search_query');
+                $residentType = $request->input('resident_type');
+                if ($branch && $branch !== '') {
+                    $query = User::where('branch', $branch)->where('role', "Resident")->where('status', "Inactive");
+                } else {
+                    $query = User::where('role', "Resident")->where('status', "Inactive");
+                }
+
+                if ($residentType && $residentType !== 'All') {
+                    $query->where('type', $residentType);
+                }
+                if ($searchQuery) {
+                    $query->where('name', 'LIKE', '%' . $searchQuery . '%');
+                }
+                $residents = $query->get();
+                Log::info($residents);
+                return response()->json(['residents' => $residents]);
+            } else {
+                return response()->json(['error' => 'Unauthorized'], 401);
+            }
+        } catch (\Exception $e) {
+            Log::error('Error in getResidents: ' . $e->getMessage());
+            return response()->json(['error' => 'Internal Server Error'], 500);
+        }
+    }
+
     public function getApplicants(Request $request)
     {
         try {
@@ -658,6 +689,25 @@ public function getResident($id)
            $user = User::find($id);
            $user->update([
                 'status' => "Inactive"
+           ]);
+           $bed = Dormitorybed::where('user_id',$id);
+           $bed->update([
+            'user_id' => "",
+            'user_image' => "",
+            'status' => "vacant"
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Error in discharge Resident: ' . $e->getMessage());
+            return response()->json(['error' => 'Internal Server Error'], 500);
+        }
+    }
+
+    public function ReActivateResident($id)
+    {
+        try {
+           $user = User::find($id);
+           $user->update([
+                'status' => "Active"
            ]);
            $bed = Dormitorybed::where('user_id',$id);
            $bed->update([

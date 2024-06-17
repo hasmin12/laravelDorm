@@ -30,11 +30,23 @@ class GuestController extends Controller
     //
     public function getHostelRooms(Request $request)
     {
-        
+        $query = HostelRoom::query();
 
-            $hostelRooms = HostelRoom::all();
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', '%' . $search . '%')
+                    ->orWhere('description', 'like', '%' . $search . '%')
+                    ->orWhere('bedtype', 'like', '%' . $search . '%')
+                    ->orWhere('pax', 'like', '%' . $search . '%')
+                    ->orWhere('price', 'like', '%' . $search . '%')
+                    ->orWhere('rating', 'like', '%' . $search . '%');
+            });
+        }
 
-            $rooms = $hostelRooms->map(function ($room) {
+        $hostelRooms = $query->get();
+
+        $rooms = $hostelRooms->map(function ($room) {
             return [
                 'id' => $room->id,
                 'name' => $room->name,
@@ -44,14 +56,23 @@ class GuestController extends Controller
                 'price' => $room->price,
                 'status' => $room->status,
                 'rating' => $room->rating,
-                'img_path' => $room->img_path,
-                'img_paths' => $room->images()->pluck('path')->toArray(),
-                'reservations' => $room->reservations, 
+                'img_path' => $room->img_path, // Ensure this is correctly set
+                'img_paths' => $room->images()->pluck('path')->toArray(), // Ensure this returns an array of paths
+                'reservations' => $room->reservations,
+                'wifi' => $room->wifi,
+                'air_conditioning' => $room->air_conditioning,
+                'kettle' => $room->kettle,
+                'tv_with_cable' => $room->tv_with_cable,
+                'hot_shower' => $room->hot_shower,
+                'refrigerator' => $room->refrigerator,
+                'kitchen' => $room->kitchen,
+                'hair_dryer' => $room->hair_dryer,
             ];
         });
 
-            return response()->json($rooms);
+        return response()->json($rooms);
     }
+
 
     public function createReservation(Request $request)
     {

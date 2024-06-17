@@ -73,5 +73,5 @@ function getAuthUser() {
 }
 </script>
 
-<script src="{{ secure_asset('js/resident/announcement.js') }}"></script>
+<script src="{{ asset('js/resident/announcement.js') }}"></script>
 @endsection

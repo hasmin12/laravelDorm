@@ -18,7 +18,7 @@
         @include('layouts.navbar')
         <div class="bg-light rounded p-4">
             <div class="d-flex align-items-center justify-content-between mb-2">
-                <h3 class="mb-0">Residents</h3>
+                <h3 class="mb-0">Inactive Residents</h3>
                 <a href='/admin/dorm/newresident' class="btn btn-primary">Add Resident</a>
             </div>
             <form class="d-none d-md-flex ms-4">
@@ -163,7 +163,7 @@
 </div>
 
 
-<script src="{{ secure_asset('js/admin/dorm/inactive.js') }}"></script>
+<script src="{{ asset('js/admin/dorm/inactive.js') }}"></script>
 
 <!-- ... (your existing HTML code) ... -->
 

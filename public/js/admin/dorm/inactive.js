@@ -148,10 +148,10 @@ function fetchResidents(viewType = 'tiles') {
                                 View Details
                             </button>
                             <button class="btn btn-sm btn-warning" onclick="updateResident(${resident.id})">Update</button>
-                            <button class="btn btn-sm btn-info" onclick="ReActivateResident(${resident.id})">Re-Activate</button>
+                            <button class="btn btn-sm btn-dark" onclick="ReActivateResident(${resident.id})">Re-Activate</button>
                         </div>
                     </div>
-                </div>
+                </div>P
         
             `;
 
@@ -172,7 +172,7 @@ function fetchResidents(viewType = 'tiles') {
                          View Details
                      </button>                      
                         <button class="btn btn-sm btn-warning" onclick="updateResident(${resident.id})">Update</button>
-                        <button class="btn btn-sm btn-danger" onclick="dischargeResident(${resident.id})">Discharge</button>
+                        <button class="btn btn-sm btn-dark" onclick="ReActivateResident(${resident.id})">Re-Activate</button>
                     </td>
                 </tr>
             `;
