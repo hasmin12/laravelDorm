@@ -46,6 +46,19 @@ function fetchAndUpdateLaundrySchedules() {
     .catch(error => console.error('Error fetching and updating laundry schedules:', error));
 }
 
+function mapLaundryTimeToTimeRange(laundrytime) {
+    // Map laundrytime text to time range
+    switch (laundrytime.toLowerCase()) {
+        case 'morning':
+            return '09:00:00'; // Assuming morning starts at 9:00 AM
+        case 'afternoon':
+            return '14:00:00'; // Assuming afternoon starts at 2:00 PM
+        case 'evening':
+            return '18:00:00'; // Assuming evening starts at 6:00 PM
+        default:
+            return '00:00:00'; // Default to midnight
+    }
+}
 
 
 });
