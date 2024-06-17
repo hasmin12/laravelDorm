@@ -18,8 +18,7 @@ document.addEventListener('DOMContentLoaded', function () {
         
     });
 
-});
-
+    
 function fetchAndUpdateLaundrySchedules() {
     fetch(`/api/getLaundry`, {
         method: 'GET',
@@ -47,3 +46,6 @@ function fetchAndUpdateLaundrySchedules() {
     .catch(error => console.error('Error fetching and updating laundry schedules:', error));
 }
 
+
+
+});
