@@ -134,6 +134,8 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
 
     // Assign technician to maintenance request
     Route::post('/assignTechnician', 'AdminController@assignTechnician');
+    Route::post('/getInactive', 'AdminController@getInactive');
+
     
 
     Route::get('/api/getViolations', 'AdminController@getViolations');

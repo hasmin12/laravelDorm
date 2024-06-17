@@ -135,6 +135,21 @@ class AdminController extends Controller
         }
     }
 
+    public function getInactive(Request $request)
+    {
+        try {
+            if (Auth::check()) {
+                $residents = User::where('branch', "Dormitory")->where('role', "Resident")->where('status', "Inactive")->get();
+                return response()->json(['residents' => $residents]);
+            } else {
+                return response()->json(['error' => 'Unauthorized'], 401);
+            }
+        } catch (\Exception $e) {
+            Log::error('Error in getInactive: ' . $e->getMessage());
+            return response()->json(['error' => 'Internal Server Error'], 500);
+        }
+    }
+
     public function getDormPayments(){
         try {
             if (Auth::check()) {
