@@ -62,16 +62,14 @@ class GuestController extends Controller
                 'img_path' => $room->img_path, // Assuming this is a single image path
                 'img_paths' => $room->images()->pluck('path')->toArray(), // Assuming this returns an array of image paths
                 'reservations' => $room->reservations, // Assuming this is related reservations
-                'amenities' => [
-                    'wifi' => (bool) $room->wifi, // Cast to boolean if it's stored as integer or string
-                    'air_conditioning' => (bool) $room->air_conditioning,
-                    'kettle' => (bool) $room->kettle,
-                    'tv_with_cable' => (bool) $room->tv_with_cable,
-                    'hot_shower' => (bool) $room->hot_shower,
-                    'refrigerator' => (bool) $room->refrigerator,
-                    'kitchen' => (bool) $room->kitchen,
-                    'hair_dryer' => (bool) $room->hair_dryer,
-                ],
+                'wifi' => $room->wifi, // Cast to boolean if it's stored as integer or string
+                'air_conditioning' => $room->air_conditioning,
+                'kettle' => $room->kettle,
+                'tv_with_cable' => $room->tv_with_cable,
+                'hot_shower' => $room->hot_shower,
+                'refrigerator' => $room->refrigerator,
+                'kitchen' => $room->kitchen,
+                'hair_dryer' => $room->hair_dryer,     
             ];
         });
 

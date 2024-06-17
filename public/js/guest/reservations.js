@@ -60,7 +60,7 @@ function fetchHostelRooms(searchQuery = '') {
                             reserveButton = `<button class="btn btn-primary" onclick="showReservationModal(event, ${room.id}, '${room.name}', '${room.description}', '${room.bedtype}', '${room.pax}', '${room.price}', '${room.reservations}', '${room.wifi}', '${room.air_conditioning}', '${room.kettle}', '${room.tv_with_cable}', '${room.hot_shower}', '${room.refrigerator}', '${room.kitchen}', '${room.hair_dryer}')">Reserve Now</button>`;
                         }
                     }
-
+                    console.log(room.wifi)
                     const cardContent = `
                         <div class="card h-100" style="cursor: pointer;" onclick="showRoomDetails('${room.name}', '${room.description}', '${room.bedtype}', '${room.pax}', '${room.price}', '${room.status}', '${room.img_paths.join(',')}', '${room.wifi}', '${room.air_conditioning}', '${room.kettle}', '${room.tv_with_cable}', '${room.hot_shower}', '${room.refrigerator}', '${room.kitchen}', '${room.hair_dryer}')">
                             <img src="${room.img_path}" class="card-img-top" alt="Room Image">
@@ -77,7 +77,6 @@ function fetchHostelRooms(searchQuery = '') {
                             </div>
                         </div>
                     `;
-
                     cardContainer.innerHTML = cardContent;
                     roomContainer.appendChild(cardContainer);
                 }
@@ -156,14 +155,14 @@ function showRoomDetails(name, description, type, pax, price, status, imgPaths, 
 
     // Populate amenities
     const amenities = [];
-    if (wifi) amenities.push('<i class="fas fa-wifi"></i> WiFi');
-    if (airConditioning) amenities.push('<i class="fas fa-snowflake"></i> Air Conditioning');
-    if (kettle) amenities.push('<i class="fas fa-coffee"></i> Kettle');
-    if (tvWithCable) amenities.push('<i class="fas fa-tv"></i> TV with Cable');
-    if (hotShower) amenities.push('<i class="fas fa-shower"></i> Hot Shower');
-    if (refrigerator) amenities.push('<i class="fas fa-icicles"></i> Refrigerator');
-    if (kitchen) amenities.push('<i class="fas fa-utensils"></i> Kitchen');
-    if (hairDryer) amenities.push('<i class="fas fa-wind"></i> Hair Dryer');
+    if (wifi == 1) amenities.push('<i class="fas fa-wifi"></i> WiFi');
+    if (airConditioning == 1) amenities.push('<i class="fas fa-snowflake"></i> Air Conditioning');
+    if (kettle == 1) amenities.push('<i class="fas fa-coffee"></i> Kettle');
+    if (tvWithCable == 1) amenities.push('<i class="fas fa-tv"></i> TV with Cable');
+    if (hotShower == 1) amenities.push('<i class="fas fa-shower"></i> Hot Shower');
+    if (refrigerator == 1) amenities.push('<i class="fas fa-icicles"></i> Refrigerator');
+    if (kitchen == 1) amenities.push('<i class="fas fa-utensils"></i> Kitchen');
+    if (hairDryer == 1) amenities.push('<i class="fas fa-wind"></i> Hair Dryer');
 
     modalRoomAmenities.innerHTML = amenities.join('<br>');
 
