@@ -139,7 +139,25 @@ class AdminController extends Controller
     {
         try {
             if (Auth::check()) {
-                $residents = User::where('branch', "Dormitory")->where('role', "Resident")->where('status', "Inactive")->get();
+                $branch = $request->input('branch');
+                $searchQuery = $request->input('search_query');
+                $residentType = $request->input('resident_type');
+                if ($branch && $branch !== '') {
+                    $query = User::where('branch', $branch)->where('role', "Resident")->where('status', "Inactive");
+                } else {
+                    $query = User::where('role', "Resident")->where('status', "Inactive");
+                }
+
+                if ($residentType && $residentType !== 'All') {
+                    $query->where('type', $residentType);
+                }
+                if ($searchQuery) {
+                    $query->where('name', 'LIKE', '%' . $searchQuery . '%');
+                }
+                $residents = $query->get();
+                
+                
+                
                 return response()->json(['residents' => $residents]);
             } else {
                 return response()->json(['error' => 'Unauthorized'], 401);
