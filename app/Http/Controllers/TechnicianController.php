@@ -43,6 +43,14 @@ class TechnicianController extends Controller
         Log::info($maintenanceStatus->completionPercentage);
         return response()->json($maintenanceStatus->completionPercentage, 200);
     }
+
+    public function getStatus(Request $request)
+    {
+ 
+        $maintenanceStatus = Maintenancechange::where('maintenance_id',$request->input('maintenance_id'));
+        Log::info($maintenanceStatus);
+        return response()->json($maintenanceStatus, 200);
+    }
     public function getMaintenance(Request $request)
     {
  

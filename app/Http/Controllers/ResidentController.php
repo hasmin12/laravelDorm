@@ -34,7 +34,8 @@ class ResidentController extends Controller
         if($user->role === "Resident"){
             $maintenances = Maintenance::where('user_id', $user->id)->get();
         }elseif($user->role === "Technician"){
-            $maintenances = Maintenance::where('itemName', $user->specialization)->get();
+            $maintenances = Maintenance::where('technician_id', $user->id)->get();
+
         }else{
             $maintenances = Maintenance::all();
         }
@@ -59,17 +60,17 @@ class ResidentController extends Controller
                 'residentName' => $user->name,
                 'user_id' =>$user->id,
             ]);
-
             $imgpath = $request->file('img_path');
             if ($imgpath && $imgpath !== '') {
                 $fileName = time() . $request->file('img_path')->getClientOriginalName();
                 $path = $request->file('img_path')->storeAs('maintenance', $fileName, 'public');
-                $img_path = '/storage/' . $path;
-
+                $img_path = '/storage/' . $path; // This line is incorrect
+                Log::info($img_path);
                 $maintenance->update([
-                    'img_path' => $img_path,
+                    'img_path' => $img_path, // Update to use $img_path instead of $path
                 ]);
             }
+            
 
             $maintenancereport = MaintenanceReport::create([
                 'maintenanceId' => $maintenance->id,

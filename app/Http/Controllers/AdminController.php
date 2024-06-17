@@ -172,7 +172,7 @@ class AdminController extends Controller
     public function createMaintenance(Request $request)
     {
         $validatedData = $request->validate([
-            'itemName' => 'required|string',
+            'type' => 'required|string',
             'description' => 'required|string',
             'img_path' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
@@ -182,7 +182,7 @@ class AdminController extends Controller
         $request->img_path->move(public_path('images'), $imageName);
 
         $maintenance = new Maintenance();
-        $maintenance->itemName = $validatedData['itemName'];
+        $maintenance->type = $validatedData['type'];
         $maintenance->description = $validatedData['description'];
         $maintenance->img_path = $imageName;
         $maintenance->status = 'Pending';
