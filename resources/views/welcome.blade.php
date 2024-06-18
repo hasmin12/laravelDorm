@@ -235,7 +235,7 @@
             <h1 class="display-5 text-center text-uppercase mb-4">Dormitory <span class="text-primary">Video</span> Tour</h1>
         </div>
         <video autoplay muted loop width="100%" height="auto">
-            <source src="img/vid1.mp4" type="video/mp4">
+            <source src="img/DormXtend.mp4" type="video/mp4">
             Your browser does not support the video tag.
         </video>
     </div>
