@@ -32,24 +32,39 @@ class GuestController extends Controller
     {
         $query = HostelRoom::query();
 
-        // Handle search if provided
-        if ($request->has('search')) {
-            $search = $request->input('search');
-            $query->where(function ($q) use ($search) {
-                $q->where('name', 'like', '%' . $search . '%')
-                    ->orWhere('description', 'like', '%' . $search . '%')
-                    ->orWhere('bedtype', 'like', '%' . $search . '%')
-                    ->orWhere('pax', 'like', '%' . $search . '%')
-                    ->orWhere('price', 'like', '%' . $search . '%')
-                    ->orWhere('rating', 'like', '%' . $search . '%');
-            });
+        if ($request->has('features')) {
+            $features = $request->input('features');
+            if (in_array('wifi', $features)) {
+                $query->where('wifi', true);
+            }
+            if (in_array('air_conditioning', $features)) {
+                $query->where('air_conditioning', true);
+            }
+            if (in_array('kettle', $features)) {
+                $query->where('kettle', true);
+            }
+            if (in_array('tv_with_cable', $features)) {
+                $query->where('tv_with_cable', true);
+            }
+            if (in_array('hot_shower', $features)) {
+                $query->where('hot_shower', true);
+            }
+            if (in_array('refrigerator', $features)) {
+                $query->where('refrigerator', true);
+            }
+            if (in_array('kitchen', $features)) {
+                $query->where('kitchen', true);
+            }
+            if (in_array('hair_dryer', $features)) {
+                $query->where('hair_dryer', true);
+            }
         }
 
-        // Fetch hostel rooms with amenities
         $hostelRooms = $query->get();
 
-        // Map rooms to desired format
         $rooms = $hostelRooms->map(function ($room) {
+            Log::info($room);
+
             return [
                 'id' => $room->id,
                 'name' => $room->name,
@@ -59,10 +74,10 @@ class GuestController extends Controller
                 'price' => $room->price,
                 'status' => $room->status,
                 'rating' => $room->rating,
-                'img_path' => $room->img_path, // Assuming this is a single image path
-                'img_paths' => $room->images()->pluck('path')->toArray(), // Assuming this returns an array of image paths
-                'reservations' => $room->reservations, // Assuming this is related reservations
-                'wifi' => $room->wifi, // Cast to boolean if it's stored as integer or string
+                'img_path' => $room->img_path, 
+                'img_paths' => $room->images()->pluck('path')->toArray(), 
+                'reservations' => $room->reservations,
+                'wifi' => $room->wifi, 
                 'air_conditioning' => $room->air_conditioning,
                 'kettle' => $room->kettle,
                 'tv_with_cable' => $room->tv_with_cable,
@@ -73,9 +88,9 @@ class GuestController extends Controller
             ];
         });
 
-        // Return rooms as JSON response
         return response()->json($rooms);
     }
+
     
     
     

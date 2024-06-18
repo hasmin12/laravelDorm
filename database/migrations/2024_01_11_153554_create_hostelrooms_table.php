@@ -25,7 +25,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->unsignedBigInteger('rating')->nullable();
-            $table->boolean('wifi')->default(0);
+            $table->string('wifi')->default('0');
             $table->boolean('air_conditioning')->default(0);
             $table->boolean('kettle')->default(0);
             $table->boolean('tv_with_cable')->default(0);

@@ -16,10 +16,24 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('apply-dates').addEventListener('click', function() {
         fetchHostelRooms();
     });
-});
 
-function fetchHostelRooms(searchQuery = '') {
-    fetch('/api/getHostelrooms', {
+    const checkboxes = document.querySelectorAll('#filters input[type="checkbox"]');
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', fetchHostelRooms);
+    });
+
+        
+});
+function fetchHostelRooms() {
+    // Get selected checkboxes
+    const checkboxes = document.querySelectorAll('#filters input[type="checkbox"]:checked');
+    const selectedFeatures = Array.from(checkboxes).map(checkbox => checkbox.value);
+
+    // Construct query parameters
+    const params = new URLSearchParams();
+    selectedFeatures.forEach(feature => params.append('features[]', feature));
+
+    fetch(`/api/getHostelrooms?${params.toString()}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -29,8 +43,6 @@ function fetchHostelRooms(searchQuery = '') {
     })
     .then(response => response.json())
     .then(data => {
-        console.log('Response data:', data);
-
         const roomContainer = document.getElementById('room-container');
         roomContainer.innerHTML = '';
 
@@ -39,47 +51,44 @@ function fetchHostelRooms(searchQuery = '') {
             const endDate = document.getElementById('end-date').value;
 
             data.forEach((room) => {
-                if (matchesSearchQuery(room, searchQuery)) {
-                    const cardContainer = document.createElement('div');
-                    cardContainer.classList.add('col-12', 'col-md-4', 'mb-4');
+                const cardContainer = document.createElement('div');
+                cardContainer.classList.add('col-12', 'col-md-4', 'mb-4');
 
-                    let reserveButton = '';
-                    let statusText = '';
-                    if (room.reservations.length === 0) {
+                let reserveButton = '';
+                let statusText = '';
+                if (room.reservations.length === 0) {
+                    statusText = '<span class="text-success">Vacant</span>';
+                    reserveButton = `<button class="btn btn-primary" onclick="showReservationModal(event, ${room.id}, '${room.name}', '${room.description}', '${room.bedtype}', '${room.pax}', '${room.price}', '${room.reservations}', '${room.wifi}', '${room.air_conditioning}', '${room.kettle}', '${room.tv_with_cable}', '${room.hot_shower}', '${room.refrigerator}', '${room.kitchen}', '${room.hair_dryer}')">Reserve Now</button>`;
+                } else {
+                    const hasReservation = room.reservations.some(reservation => {
+                        return (reservation.checkin_date <= endDate && reservation.checkout_date >= startDate);
+                    });
+
+                    if (hasReservation) {
+                        statusText = '<span class="text-warning">Reserved</span>';
+                    } else {
                         statusText = '<span class="text-success">Vacant</span>';
                         reserveButton = `<button class="btn btn-primary" onclick="showReservationModal(event, ${room.id}, '${room.name}', '${room.description}', '${room.bedtype}', '${room.pax}', '${room.price}', '${room.reservations}', '${room.wifi}', '${room.air_conditioning}', '${room.kettle}', '${room.tv_with_cable}', '${room.hot_shower}', '${room.refrigerator}', '${room.kitchen}', '${room.hair_dryer}')">Reserve Now</button>`;
-                    } else {
-                        const hasReservation = room.reservations.some(reservation => {
-                            return (reservation.checkin_date <= endDate && reservation.checkout_date >= startDate);
-                        });
-
-                        if (hasReservation) {
-                            statusText = '<span class="text-warning">Reserved</span>';
-                        } else {
-                            statusText = '<span class="text-success">Vacant</span>';
-                            reserveButton = `<button class="btn btn-primary" onclick="showReservationModal(event, ${room.id}, '${room.name}', '${room.description}', '${room.bedtype}', '${room.pax}', '${room.price}', '${room.reservations}', '${room.wifi}', '${room.air_conditioning}', '${room.kettle}', '${room.tv_with_cable}', '${room.hot_shower}', '${room.refrigerator}', '${room.kitchen}', '${room.hair_dryer}')">Reserve Now</button>`;
-                        }
                     }
-                    console.log(room.wifi)
-                    const cardContent = `
-                        <div class="card h-100" style="cursor: pointer;" onclick="showRoomDetails('${room.name}', '${room.description}', '${room.bedtype}', '${room.pax}', '${room.price}', '${room.status}', '${room.img_paths.join(',')}', '${room.wifi}', '${room.air_conditioning}', '${room.kettle}', '${room.tv_with_cable}', '${room.hot_shower}', '${room.refrigerator}', '${room.kitchen}', '${room.hair_dryer}')">
-                            <img src="${room.img_path}" class="card-img-top" alt="Room Image">
-                            <div class="card-body">
-                                <h5 class="card-title">${room.name}</h5>
-                                <p class="card-text">${room.description}</p>
-                                <p class="card-text"><i class="fas fa-bed"></i> ${room.bedtype}</p>
-                                <p class="card-text"><i class="fas fa-users"></i> up to ${room.pax} guests</p>
-                                <p class="card-text">Price <b>₱${room.price}/day</b></p>
-                                <p class="card-text">Status: ${statusText}</p>
-                                <div class="d-flex align-items-center justify-content-between mb-2">
-                                    ${reserveButton}
-                                </div>
+                }
+                const cardContent = `
+                    <div class="card h-100" style="cursor: pointer;" onclick="showRoomDetails('${room.name}', '${room.description}', '${room.bedtype}', '${room.pax}', '${room.price}', '${room.status}', '${room.img_paths.join(',')}', '${room.wifi}', '${room.air_conditioning}', '${room.kettle}', '${room.tv_with_cable}', '${room.hot_shower}', '${room.refrigerator}', '${room.kitchen}', '${room.hair_dryer}')">
+                        <img src="${room.img_path}" class="card-img-top" alt="Room Image">
+                        <div class="card-body">
+                            <h5 class="card-title">${room.name}</h5>
+                            <p class="card-text">${room.description}</p>
+                            <p class="card-text"><i class="fas fa-bed"></i> ${room.bedtype}</p>
+                            <p class="card-text"><i class="fas fa-users"></i> up to ${room.pax} guests</p>
+                            <p class="card-text">Price <b>₱${room.price}/day</b></p>
+                            <p class="card-text">Status: ${statusText}</p>
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                ${reserveButton}
                             </div>
                         </div>
-                    `;
-                    cardContainer.innerHTML = cardContent;
-                    roomContainer.appendChild(cardContainer);
-                }
+                    </div>
+                `;
+                cardContainer.innerHTML = cardContent;
+                roomContainer.appendChild(cardContainer);
             });
         } else {
             console.error('Invalid or missing data:', data);
@@ -90,16 +99,26 @@ function fetchHostelRooms(searchQuery = '') {
 
 
 function matchesSearchQuery(room, query) {
+    console.log(room)
+    console.log(query)
+
+ 
     const amenities = ['wifi', 'airConditioning', 'kettle', 'tvWithCable', 'hotShower', 'refrigerator', 'kitchen', 'hairDryer'];
     const roomDetails = `${room.name} ${room.description} ${room.bedtype} ${room.pax} ${room.price}`.toLowerCase();
+  
 
     const amenitiesDetails = amenities
         .filter(amenity => room.amenities[amenity])
         .map(amenity => amenity.replace('_', ' '))
         .join(' ')
         .toLowerCase();
+    console.log(amenitiesDetails)
 
-    return roomDetails.includes(query.toLowerCase()) || amenitiesDetails.includes(query.toLowerCase());
+    const data = {
+        roomDetails: roomDetails.includes(query.toLowerCase()), 
+        amenitiesDetails: amenitiesDetails.includes(query.toLowerCase())
+    };
+    return data
 }
 
 function showRoomDetails(name, description, type, pax, price, status, imgPaths, wifi, airConditioning, kettle, tvWithCable, hotShower, refrigerator, kitchen, hairDryer ) {
