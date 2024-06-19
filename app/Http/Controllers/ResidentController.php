@@ -389,7 +389,7 @@ class ResidentController extends Controller
     public function myLogs()
     {
         try {
-            $myLogs = Residentlog::where('user_id', 2)->get();
+            $myLogs = Residentlog::where('user_id', 2)->where('name',"Leave")->get();
             Log::info($myLogs);
             return response()->json($myLogs, 200);
         } catch (\Exception $e) {
