@@ -92,7 +92,7 @@ class AdminController extends Controller
     public function getResidents(Request $request)
     {
         try {
-            if (Auth::check()) {
+           
                 $branch = $request->input('branch');
                 $searchQuery = $request->input('search_query');
                 $residentType = $request->input('resident_type');
@@ -111,9 +111,7 @@ class AdminController extends Controller
                 $residents = $query->get();
                 Log::info($residents);
                 return response()->json(['residents' => $residents]);
-            } else {
-                return response()->json(['error' => 'Unauthorized'], 401);
-            }
+         
         } catch (\Exception $e) {
             Log::error('Error in getResidents: ' . $e->getMessage());
             return response()->json(['error' => 'Internal Server Error'], 500);
@@ -123,7 +121,6 @@ class AdminController extends Controller
     public function getInactiveResidents(Request $request)
     {
         try {
-            if (Auth::check()) {
                 $branch = $request->input('branch');
                 $searchQuery = $request->input('search_query');
                 $residentType = $request->input('resident_type');
@@ -142,9 +139,7 @@ class AdminController extends Controller
                 $residents = $query->get();
                 Log::info($residents);
                 return response()->json(['residents' => $residents]);
-            } else {
-                return response()->json(['error' => 'Unauthorized'], 401);
-            }
+       
         } catch (\Exception $e) {
             Log::error('Error in getResidents: ' . $e->getMessage());
             return response()->json(['error' => 'Internal Server Error'], 500);
@@ -154,12 +149,9 @@ class AdminController extends Controller
     public function getApplicants(Request $request)
     {
         try {
-            if (Auth::check()) {
                 $applicants = User::where('branch', "Dormitory")->where('role', "Resident")->where('status', "Applicant")->get();
                 return response()->json(['applicants' => $applicants]);
-            } else {
-                return response()->json(['error' => 'Unauthorized'], 401);
-            }
+        
         } catch (\Exception $e) {
             Log::error('Error in getApplicants: ' . $e->getMessage());
             return response()->json(['error' => 'Internal Server Error'], 500);
@@ -556,38 +548,18 @@ public function getResident($id)
     public function getLaundry()
     {
 
-        if (Auth::user()->branch === "Dormitory") {
-            $schedules = Laundryschedule::where('branch', 'Dormitory')->get();
+        $schedules = Laundryschedule::where('branch', 'Dormitory')->get();
 
-            $events = [];
+        $events = [];
 
-            foreach ($schedules as $schedule) {
-                // Customize the event data based on your Schedule model fields
-                $user = $schedule->user;
-                $events[] = [
-                    'title' => $user->Tuptnum,
-                    // 'start' => $schedule->laundrydate,
-                    'laundrydate' => $schedule->laundrydate,
-                    'laundrytime' => $schedule->laundrytime,
-                ];
-            }
-        } else {
-            $schedules = Laundryschedule::where('branch', 'Hostel')->get();
-
-            $events = [];
-
-            foreach ($schedules as $schedule) {
-                // Customize the event data based on your Schedule model fields
-                $user = $schedule->user;
-                Log::info($user->roomdetails);
-                $events[] = [
-                    'title' => $user->roomdetails,
-                    'start' => $schedule->laundrydate, // Assuming your Schedule model has a 'scheduled_date' field
-                    // Add other relevant fields as needed
-                ];
-            }
+        foreach ($schedules as $schedule) {
+            $user = $schedule->user;
+            $events[] = [
+                'title' => $user->Tuptnum,
+                'laundrydate' => $schedule->laundrydate,
+                'laundrytime' => $schedule->laundrytime,
+            ];
         }
-
 
         return response()->json($events);
     }
@@ -1262,17 +1234,12 @@ public function getResident($id)
 
     public function getComplaints()
     {
-        try {
-            if (Auth::user()->branch === "Dormitory") {
-                $complaints = Complaint::where('branch', "Dormitory")->get();
-            } else {
-                $complaints = Complaint::where('branch', "Hostel")->get();
-            }
 
-            return response()->json(['complaints' => $complaints]);
-        } catch (\Exception $e) {
-            return response()->json(['error' => 'Complaints not found'], 404);
-        }
+        $complaints = Complaint::all();
+
+
+        return response()->json(['complaints' => $complaints]);
+  
     }
 
     public function getViolations()
@@ -1434,7 +1401,6 @@ public function getResident($id)
     public function getAllSleepLogs(Request $request)
 {
     $users = User::where('role', "Resident")->where('status', "Active")->pluck('name', 'id')->toArray();
-    Log::info($users);
     $months = Residentlog::selectRaw("DATE_FORMAT(dateLog, '%M') as month")->where('name', "Sleep")
         ->distinct()
         ->orderByRaw("MONTH(dateLog)")
@@ -1449,7 +1415,7 @@ public function getResident($id)
         foreach ($months as $month) {
             $sleepLogs = Residentlog::where('user_id', $userId)
                 ->where('name', "Sleep")
-                ->whereMonth('dateLog', Carbon::parse($month)->month) // Use Carbon to parse month
+                ->whereMonth('dateLog', Carbon::parse($month)->month) 
                 ->get();
 
             $attendance = [];

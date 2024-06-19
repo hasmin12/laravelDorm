@@ -32,11 +32,24 @@ Route::get('/getReservations', 'GuestController@getReservations');
 Route::get('/getReservations', 'AdminController@getReservations');
 Route::get('/updateReservationStatus', 'AdminController@updateReservationStatus');
 Route::get('/checkoutReservation', 'AdminController@checkoutReservation');
-
-
-
-
 Route::get('/getReviews/{id}', 'GuestController@getReviews');
+Route::get('/getLogs/{id}', 'AdminController@getLogs');
+
+
+Route::post('/createComplaint', 'ResidentController@createComplaint');
+Route::post('/sendLogs', 'ResidentController@sendLogs');
+Route::post('/updateLogs', 'ResidentController@updateLogs');
+Route::get('/myLogs', 'ResidentController@myLogs');
+Route::get('/myReservations', 'ResidentController@myReservations');
+Route::post('createLaundrySchedule', 'ResidentController@createLaundrySchedule');
+Route::get('/getLaundry', 'AdminController@getLaundry');
+Route::get('/sendSleep', 'ResidentController@sendSleep');
+Route::get('/getComplaints', 'AdminController@getComplaints');
+Route::get('/getAllLogs', 'AdminController@getAllLogs');
+Route::get('/getAllSleepLogs', 'AdminController@getAllSleepLogs');
+Route::get('/getRooms', 'AdminController@getRooms');
+Route::get('/getResidents', 'AdminController@getResidents');
+Route::get('/getApplicants', 'AdminController@getApplicants');
 
 Route::group(['middleware' => ['auth:sanctum']], function(){
     
@@ -47,13 +60,10 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
 
     
     Route::get('/getDashboardData', 'AdminController@getDashboardData');
-    Route::get('/getResidents', 'AdminController@getResidents');
     Route::get('/getInactive', 'AdminController@getInactiveResidents');
     Route::get('/getResident/{id}', 'AdminController@getResident');
-    Route::get('/getLogs/{id}', 'AdminController@getLogs');
     Route::get('/getSleepLogs/{id}', 'AdminController@getSleepLogs');
     Route::get('/admin/logs', 'AdminController@getResidentLogs');
-    Route::get('/getApplicants', 'AdminController@getApplicants');
     Route::get('/getDormPayments', 'AdminController@getDormPayments');
     
 
@@ -72,7 +82,6 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::post('/createResident', 'AdminController@createResident');
 
     
-    Route::post('createLaundrySchedule', 'ResidentController@createLaundrySchedule');
 
    
     
@@ -95,7 +104,6 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::post('/update_announcement/{id}', 'AdminController@lockComments');
     Route::delete('deleteAnnouncement/{id}', 'AdminController@deleteAnnouncement');
 
-    Route::get('/getRooms', 'AdminController@getRooms');
     Route::get('/getRoom/{id}', 'AdminController@getRoom');
     Route::post('/createRoom', 'AdminController@createRoom');
     Route::post('updateRoom/{id}', 'AdminController@updateRoom');
@@ -108,7 +116,6 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::delete('deleteLostitem/{id}', 'AdminController@deleteLostitem');
 
     
-    Route::get('/getLaundry', 'AdminController@getLaundry');
     Route::post('/laundryschedule', 'AdminController@createLaundryschedule');
 
     // Route::get('/resident/getAnnouncements', 'ResidentController@getAnnouncements');
@@ -119,8 +126,7 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::get('/getMaintenances', 'ResidentController@getMaintenances');
     Route::get('/admin/getMaintenances', 'AdminController@getMaintenances');
     Route::post('/approveMaintenance/{id}', 'ResidentController@approveMaintenance');
-    Route::get('/getAllLogs', 'AdminController@getAllLogs');
-    Route::get('/getAllSleepLogs', 'AdminController@getAllSleepLogs');
+ 
 
 
 
@@ -159,20 +165,14 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::get('/getNotifications', 'AuthController@getNotifications');
 
     
-    Route::post('/createComplaint', 'ResidentController@createComplaint');
-    Route::post('/sendLogs', 'ResidentController@sendLogs');
-    Route::post('/updateLogs', 'ResidentController@updateLogs');
-    Route::get('/myLogs', 'ResidentController@myLogs');
-    Route::get('/myReservations', 'ResidentController@myReservations');
+
     Route::get('/sendRating', 'ResidentController@sendRating');
 
     Route::get('/cancelReservation/{id}', 'ResidentController@cancelReservation');
 
-    Route::get('/sendSleep', 'ResidentController@sendSleep');
 
     Route::get('/getLogs', 'AdminController@getLogs');
    
-    Route::get('/getComplaints', 'AdminController@getComplaints');
     Route::get('/getMaintenanceList', 'AuthController@getMaintenanceList');
 
 

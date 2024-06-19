@@ -241,7 +241,7 @@ class ResidentController extends Controller
     public function createLaundrySchedule(Request $request)
 {
     try {
-        $user = Auth::user();
+        $user = User::find(2);
 
         if ($user->is_scheduled === 0) {
             $input = $request->all();
@@ -307,12 +307,12 @@ class ResidentController extends Controller
                 'name' =>  $request->input('name'),
 
                 'complaint' =>  $request->input('complaint'),
-                'branch' =>  Auth::user()->branch
+                'branch' =>  'Dormitory'
 
             ]);
 
             $notification = Notification::create([
-                'sender_id' => Auth::user()->id,
+                'sender_id' => 2,
                 'receiver_id' => 1,
                 'notification_type' => "Complaint",
                 'message' => $request->input('name')." makes a complaint"
@@ -339,7 +339,7 @@ class ResidentController extends Controller
             $path = $request->file('gatePass')->storeAs('gatePass', $fileName, 'public');
             $img_path = '/storage/' . $path;
                 $residentlog = Residentlog::create([
-                    'user_id' =>  Auth::user()->id,
+                    'user_id' =>  2,
                     'name' =>  'Leave',
                     'gatepass' =>  $img_path,
                     'purpose' =>  $purpose,
@@ -348,11 +348,11 @@ class ResidentController extends Controller
                     'dateLog' => $ldate,
                 ]);
                 $notification = Notification::create([
-                    'sender_id' => Auth::user()->id,
-                    'senderName' => Auth::user()->name,
+                    'sender_id' => 2,
+                    'senderName' => 'Dormitory Resident',
                     'receiver_id' => 1,
                     'notification_type' => "Resident Logs",
-                    'message' => Auth::user()->name." make a Leave"
+                    'message' => "Dormitory Resident make a Leave"
                 ]);
 
             }else{
@@ -389,7 +389,7 @@ class ResidentController extends Controller
     public function myLogs()
     {
         try {
-            $myLogs = Residentlog::where('user_id', Auth::user()->id)->get();
+            $myLogs = Residentlog::where('user_id', 2)->get();
             Log::info($myLogs);
             return response()->json($myLogs, 200);
         } catch (\Exception $e) {
@@ -476,7 +476,7 @@ class ResidentController extends Controller
     public function myReservations()
     {
         try {
-            $myReservations = Reservation::with('room')->where('email', Auth::user()->email)->get();
+            $myReservations = Reservation::with('room')->where('email', 'dormitory@resident.com')->get();
             return response()->json($myReservations);
         } catch (\Exception $e) {
             return response()->json(['message' => 'Failed to fetch logs', 'error' => $e->getMessage()], 500);
@@ -503,7 +503,7 @@ class ResidentController extends Controller
         try {
            
             $residentlog = Residentlog::create([
-                'user_id' =>  Auth::user()->id,
+                'user_id' =>  2,
                 'name' =>  'Sleep',
                 'dateLog' => $ldate,
             ]);
