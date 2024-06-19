@@ -882,7 +882,7 @@ public function getResident($id)
     public function createAnnouncement(Request $request)
     {
         try {
-            $user = Auth::user();
+            $user = User::find(1);
             Log::info($user);
             $title = $request->input('title');
 
@@ -989,9 +989,8 @@ public function getResident($id)
 
     public function getLostitems()
     {
-        $branch = Auth::user()->branch;
 
-        $lostitems = Lostitem::where('branch', $branch)->get();
+        $lostitems = Lostitem::all();
 
         return response()->json(['lostitems' => $lostitems]);
     }
@@ -1014,7 +1013,7 @@ public function getResident($id)
             $itemName = $request->input('itemName');
             $locationLost = $request->input('locationLost');
             $dateLost = $ldate;
-            $branch = Auth::user()->branch;
+            $branch = 'Dormitory';
             Log::info($branch);
             $findersName = $request->input('findersName');
 
@@ -1191,8 +1190,8 @@ public function getResident($id)
                 ]);
 
                 $notifs = Notification::create([
-                    'sender_id' => Auth::user()->id,
-                    'senderName' => Auth::user()->name,
+                    'sender_id' => 2,
+                    'senderName' => 'Admin Account',
 
                     'receiver_id' => $resident->id,
                     'notification_type' => "Monthly Payment",
@@ -1220,11 +1219,8 @@ public function getResident($id)
     public function getMaintenances()
     {
         try {
-            if (Auth::user()->branch === "Dormitory") {
-                $maintenances = Maintenance::where('branch', "Dormitory")->get();
-            } else {
-                $maintenances = Maintenance::where('branch', "Hostel")->get();
-            }
+       
+                $maintenances = Maintenance::all();
             Log::info($maintenances);
             return response()->json(['maintenances' => $maintenances]);
         } catch (\Exception $e) {
@@ -1368,14 +1364,14 @@ public function getResident($id)
             'status' => "Active"
         ]);
 
-        // Create notification for the user
-        Notification::create([
-            'sender_id' => Auth::user()->id,
-            'senderName' => Auth::user()->name,
-            'receiver_id' => $residentId,
-            'notification_type' => "Registration Complete",
-            'message' => "Hello $user->name, Your registration is now complete. You are assigned to Room $bed->room_id - $bed->name "
-        ]);
+        // // Create notification for the user
+        // Notification::create([
+        //     'sender_id' => Auth::user()->id,
+        //     'senderName' => Auth::user()->name,
+        //     'receiver_id' => $residentId,
+        //     'notification_type' => "Registration Complete",
+        //     'message' => "Hello $user->name, Your registration is now complete. You are assigned to Room $bed->room_id - $bed->name "
+        // ]);
 
         return response()->json(['bed' => $bed], 200);
     } catch (\Exception $e) {
