@@ -188,7 +188,7 @@
 </div>
 
 
-<script src="{{ asset('js/admin/dorm/applicant.js') }}"></script>
+<script src="{{ secure_asset('js/admin/dorm/applicant.js') }}"></script>
 
 <!-- ... (your existing HTML code) ... -->
 

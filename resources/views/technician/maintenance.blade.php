@@ -258,5 +258,5 @@
 </div>
 
 
-<script src="{{ asset('js/technician/maintenance.js') }}"></script>
+<script src="{{ secure_asset('js/technician/maintenance.js') }}"></script>
 @endsection

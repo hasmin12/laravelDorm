@@ -90,8 +90,8 @@ class UserSeeder extends Seeder
         // ]);
 
         User::create([
-            'name' => 'Maintenance User1',
-            'email' => 'dormitory@technician1.com',
+            'name' => 'Plumber',
+            'email' => 'maintenance1@dormitory.com',
             'password' => bcrypt("password"),
             'role' => 'Technician',
             'branch' => 'Dormitory',
@@ -112,8 +112,29 @@ class UserSeeder extends Seeder
         ]);
 
         User::create([
-            'name' => 'Maintenance User2',
-            'email' => 'dormitory@technician2.com',
+            'name' => 'Electrician',
+            'email' => 'maintenance2@dormitory.com',
+            'password' => bcrypt("password"),
+            'role' => 'Technician',
+            'branch' => 'Dormitory',
+            'Tuptnum' => $tupt_temp . "" . $TechnicianTuptnum,
+            'contactNumber' => $faker->phoneNumber(),
+            'address' => $faker->address(),
+            'sex' => $faker->randomElement($array = array ('Male', 'Female')), // 'b'
+            'birthdate' => $faker-> dateTimeBetween($startDate = '-30 years', $endDate = '-20 years', $timezone = null),
+            'type' => 'Technician',
+            'specialization' => 'Appliance Repair',
+            // 'roomdetails' => 'RoomBed'
+            'room' => "Room 1",
+            'bed' => "A",
+            'status' => "Active",
+            'img_path' => "/storage/residents/resident.png"
+
+        ]);
+
+        User::create([
+            'name' => 'Housekeeper',
+            'email' => 'maintenance3@dormitory.com',
             'password' => bcrypt("password"),
             'role' => 'Technician',
             'branch' => 'Dormitory',

@@ -72,7 +72,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 bedImage.classList.add('card-img-top');
                 bedImage.style.width = '100%';
                 bedImage.style.height = '300px';
-    
+
+                if (bed.user_image) {
+                    bedImage.src = bed.user_image;
+                } else {
+                    bedImage.src = '/img/vacant.png';
+                }
+                    
                 const cardBody = document.createElement('div');
                 cardBody.classList.add('card-body', 'text-center');
     
@@ -88,6 +94,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 bedStatus.classList.add('card-title');
                 bedStatus.textContent = `${bed.status}`;
     
+                cardBody.appendChild(bedImage);
                 cardBody.appendChild(bedName);
                 cardBody.appendChild(bedType);
                 cardBody.appendChild(bedStatus);

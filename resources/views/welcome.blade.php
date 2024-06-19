@@ -256,7 +256,7 @@
                         <h4 class="text-uppercase mb-3">Facility</h4>
                         <p>Duo dolore et diam sed ipsum stet amet duo diam. Rebum amet ut amet sed erat sed sed amet magna elitr amet kasd diam duo</p>
                     </div>
-                </div>OP
+                </div>
             </div>
             <div class="col-lg-4 col-md-6">
                 <div class="service-item bg-white rounded d-flex flex-column align-items-center text-center">
@@ -292,19 +292,19 @@
 
     <!-- JavaScript Libraries -->
      <!-- JavaScript Libraries -->
-     <script src="{{ asset('https://code.jquery.com/jquery-3.4.1.min.js')}}"></script>
-     <script src="{{ asset('https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js')}}"></script>
-     <script src="{{ asset('css1/lib/easing/easing.min.js')}}"></script>
-     <script src="{{ asset('css1/lib/waypoints/waypoints.min.js')}}"></script>
-     <script src="{{ asset('css1/lib/owlcarousel/owl.carousel.min.js')}}"></script>
-     <script src="{{ asset('css1/lib/tempusdominus/js/moment.min.js')}}"></script>
-     <script src="{{ asset('css1/lib/tempusdominus/js/moment-timezone.min.js')}}"></script>
-     <script src="{{ asset('css1/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js')}}"></script>
-     <script src="{{ asset('css1/lib/isotope/isotope.pkgd.min.js')}}"></script>
-     <script src="{{ asset('css1/lib/lightbox/js/lightbox.min.js')}}"></script>
+     <script src="{{ secure_asset('https://code.jquery.com/jquery-3.4.1.min.js')}}"></script>
+     <script src="{{ secure_asset('https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js')}}"></script>
+     <script src="{{ secure_asset('css1/lib/easing/easing.min.js')}}"></script>
+     <script src="{{ secure_asset('css1/lib/waypoints/waypoints.min.js')}}"></script>
+     <script src="{{ secure_asset('css1/lib/owlcarousel/owl.carousel.min.js')}}"></script>
+     <script src="{{ secure_asset('css1/lib/tempusdominus/js/moment.min.js')}}"></script>
+     <script src="{{ secure_asset('css1/lib/tempusdominus/js/moment-timezone.min.js')}}"></script>
+     <script src="{{ secure_asset('css1/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js')}}"></script>
+     <script src="{{ secure_asset('css1/lib/isotope/isotope.pkgd.min.js')}}"></script>
+     <script src="{{ secure_asset('css1/lib/lightbox/js/lightbox.min.js')}}"></script>
  
      <!-- Template Javascript -->
-     <script src="{{ asset('css1/js/main.js')}}"></script>
+     <script src="{{ secure_asset('css1/js/main.js')}}"></script>
 
 
 @include('layouts.footer')

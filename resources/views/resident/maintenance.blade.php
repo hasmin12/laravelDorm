@@ -45,9 +45,9 @@
                         <label for="type" class="col-md-4 col-form-label text-md-right">{{ __('Choose Maintenance') }}</label>
                                     <div class="col-md-6">
                                         <select id="type" class="form-control @error('type') is-invalid @enderror" name="type" required>
-                                            <option value="General Maintenance">General Maintenance</option>
-                                            <option value="Technician">Technician</option>
-                                            <option value="Handy Man">Handy Man</option>
+                                            <option value="General Maintenance">Plumber</option>
+                                            <option value="Technician">House Keeping </option>
+                                            <option value="Handy Man">Electrician</option>
                                         </select>
                                         @error('type')
                                             <span class="invalid-feedback" role="alert">
@@ -124,5 +124,5 @@
 </div>
 
 
-<script src="{{ asset('js/resident/maintenance.js') }}"></script>
+<script src="{{ secure_asset('js/resident/maintenance.js') }}"></script>
 @endsection
