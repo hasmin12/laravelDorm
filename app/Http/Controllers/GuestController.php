@@ -31,7 +31,17 @@ class GuestController extends Controller
     public function getHostelRooms(Request $request)
     {
         $query = HostelRoom::query();
-
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', '%' . $search . '%')
+                    ->orWhere('description', 'like', '%' . $search . '%')
+                    ->orWhere('bedtype', 'like', '%' . $search . '%')
+                    ->orWhere('pax', 'like', '%' . $search . '%')
+                    ->orWhere('price', 'like', '%' . $search . '%')
+                    ->orWhere('rating', 'like', '%' . $search . '%');
+            });
+        }
         if ($request->has('features')) {
             $features = $request->input('features');
             if (in_array('wifi', $features)) {
@@ -91,9 +101,6 @@ class GuestController extends Controller
         return response()->json($rooms);
     }
 
-    
-    
-    
 
     public function createReservation(Request $request)
     {

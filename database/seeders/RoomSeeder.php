@@ -29,6 +29,9 @@ class RoomSeeder extends Seeder
             ]);  
         }
 
+       
+
+
         $roomHostel = Hostelroom::create([
             'name' => 'Single Room',
             'description' => 'Best Suit for 1 pax',
@@ -37,7 +40,7 @@ class RoomSeeder extends Seeder
             'pax' => '1',  
             'price' => '500',
             'status' => 'Vacant',
-            'img_path' => '/storage/hostel/room1.jpg',
+            'img_path' => '/img/room1.jpg',
             'wifi' => $faker->numberBetween(0,1),
             'air_conditioning' => $faker->numberBetween(0,1),
             'kettle' => $faker->numberBetween(0,1),
@@ -57,7 +60,7 @@ class RoomSeeder extends Seeder
             'pax' => '2',  
             'price' => '1000',
             'status' => 'Vacant',
-            'img_path' => '/storage/hostel/room1.jpg',
+            'img_path' => '/img/room1.jpg',
            'wifi' => $faker->numberBetween(0,1),
             'air_conditioning' => $faker->numberBetween(0,1),
             'kettle' => $faker->numberBetween(0,1),
@@ -76,7 +79,7 @@ class RoomSeeder extends Seeder
             'pax' => '4',  
             'price' => '1500',
             'status' => 'Vacant',
-            'img_path' => '/storage/hostel/room1.jpg',
+            'img_path' => '/img/room1.jpg',
               'wifi' => $faker->numberBetween(0,1),
             'air_conditioning' => $faker->numberBetween(0,1),
             'kettle' => $faker->numberBetween(0,1),
@@ -95,7 +98,7 @@ class RoomSeeder extends Seeder
             'pax' => '2',  
             'price' => '2000',
             'status' => 'Vacant',
-            'img_path' => '/storage/hostel/room1.jpg',
+            'img_path' => '/img/room1.jpg',
               'wifi' => $faker->numberBetween(0,1),
             'air_conditioning' => $faker->numberBetween(0,1),
             'kettle' => $faker->numberBetween(0,1),
@@ -114,7 +117,7 @@ class RoomSeeder extends Seeder
             'pax' => '2',  
             'price' => '3000',
             'status' => 'Vacant',
-            'img_path' => '/storage/hostel/room1.jpg',
+            'img_path' => '/img/room1.jpg',
               'wifi' => $faker->numberBetween(0,1),
             'air_conditioning' => $faker->numberBetween(0,1),
             'kettle' => $faker->numberBetween(0,1),
@@ -133,7 +136,7 @@ class RoomSeeder extends Seeder
             'pax' => '2',  
             'price' => '1000',
             'status' => 'Vacant',
-            'img_path' => '/storage/hostel/room1.jpg',
+            'img_path' => '/img/room1.jpg',
               'wifi' => $faker->numberBetween(0,1),
             'air_conditioning' => $faker->numberBetween(0,1),
             'kettle' => $faker->numberBetween(0,1),
@@ -152,7 +155,7 @@ class RoomSeeder extends Seeder
             'pax' => '1',  
             'price' => '500',
             'status' => 'Vacant',
-            'img_path' => '/storage/hostel/room1.jpg',
+            'img_path' => '/img/room1.jpg',
              'wifi' => $faker->numberBetween(0,1),
             'air_conditioning' => $faker->numberBetween(0,1),
             'kettle' => $faker->numberBetween(0,1),
@@ -171,7 +174,7 @@ class RoomSeeder extends Seeder
             'pax' => '2',  
             'price' => '3000',
             'status' => 'Vacant',
-            'img_path' => '/storage/hostel/room1.jpg',
+            'img_path' => '/img/room1.jpg',
               'wifi' => $faker->numberBetween(0,1),
             'air_conditioning' => $faker->numberBetween(0,1),
             'kettle' => $faker->numberBetween(0,1),

@@ -35,6 +35,11 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     </head>
 
+    <style>
+        .row {
+            --bs-gutter-x: -0.5rem;
+        }
+    </style>
     <body>
         <!-- Topbar Start -->
         <div class="container-fluid px-5 d-none d-lg-block">
@@ -106,7 +111,7 @@
                             <input type="date" class="form-control" id="end-date">
                         </div>
                     </div>
-                    <div class="col-md-2 d-flex align-items-end">
+                    <div class="col-md-2 d-flex align-items-end" style="padding: 10px;">
                         <button class="btn btn-primary" id="apply-dates">Submit</button>
                     </div>
                 </div>
@@ -115,23 +120,23 @@
                         placeholder="Search by room name, description, or amenities...">
                 </div>
                 <div id="filters">
-                    <label><input type="checkbox" id="wifi" name="features" value="wifi"> WiFi</label>
-                    <label><input type="checkbox" id="air_conditioning" name="features" value="air_conditioning"> Air
+                    <label class="pr-2"><input type="checkbox" id="wifi" name="features" value="wifi"> WiFi</label>
+                    <label class="pr-2"><input type="checkbox" id="air_conditioning" name="features" value="air_conditioning"> Air
                         Conditioning</label>
-                    <label><input type="checkbox" id="kettle" name="features" value="kettle"> Kettle</label>
-                    <label><input type="checkbox" id="tv_with_cable" name="features" value="tv_with_cable"> TV with
+                    <label class="pr-2"><input type="checkbox" id="kettle" name="features" value="kettle"> Kettle</label>
+                    <label class="pr-2"><input type="checkbox" id="tv_with_cable" name="features" value="tv_with_cable"> TV with
                         Cable</label>
-                    <label><input type="checkbox" id="hot_shower" name="features" value="hot_shower"> Hot Shower</label>
-                    <label><input type="checkbox" id="refrigerator" name="features" value="refrigerator">
+                    <label class="pr-2"><input type="checkbox" id="hot_shower" name="features" value="hot_shower"> Hot Shower</label>
+                    <label class="pr-2"><input type="checkbox" id="refrigerator" name="features" value="refrigerator">
                         Refrigerator</label>
-                    <label><input type="checkbox" id="kitchen" name="features" value="kitchen"> Kitchen</label>
-                    <label><input type="checkbox" id="hair_dryer" name="features" value="hair_dryer"> Hair Dryer</label>
+                    <label class="pr-2"><input type="checkbox" id="kitchen" name="features" value="kitchen"> Kitchen</label>
+                    <label class="pr-2"><input type="checkbox" id="hair_dryer" name="features" value="hair_dryer"> Hair Dryer</label>
                 </div>
             </div>
         </div>
 
         <div class="container-xxl position-relative bg-white d-flex p-0">
-            <div class="bg-light rounded p-4 w-100">
+            <div class="bg-light rounded p-4 mb-4 w-100">
                 <div class="row" id="room-container">
                     <!-- Room cards will be dynamically added here -->
                 </div>

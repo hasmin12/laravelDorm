@@ -30,7 +30,8 @@ function fetchHostelRooms() {
     const selectedFeatures = Array.from(checkboxes).map(checkbox => checkbox.value);
 
     // Construct query parameters
-    const params = new URLSearchParams();
+    const searchInput = document.getElementById('search-bar').value;
+    const params = new URLSearchParams({ search: searchInput });
     selectedFeatures.forEach(feature => params.append('features[]', feature));
 
     fetch(`/api/getHostelrooms?${params.toString()}`, {
@@ -52,7 +53,7 @@ function fetchHostelRooms() {
 
             data.forEach((room) => {
                 const cardContainer = document.createElement('div');
-                cardContainer.classList.add('col-12', 'col-md-4', 'mb-4');
+                cardContainer.classList.add('col-12', 'col-md-4', 'mb-4', 'shadow');
 
                 let reserveButton = '';
                 let statusText = '';
