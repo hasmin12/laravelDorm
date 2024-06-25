@@ -45,9 +45,9 @@
                         <label for="type" class="col-md-4 col-form-label text-md-right">{{ __('Choose Maintenance') }}</label>
                                     <div class="col-md-6">
                                         <select id="type" class="form-control @error('type') is-invalid @enderror" name="type" required>
-                                            <option value="General Maintenance">Plumber</option>
-                                            <option value="Technician">House Keeping </option>
-                                            <option value="Handy Man">Electrician</option>
+                                            <option value="Plumber">Plumber</option>
+                                            <option value="House Keeping">House Keeping </option>
+                                            <option value="Electrician">Electrician</option>
                                         </select>
                                         @error('type')
                                             <span class="invalid-feedback" role="alert">

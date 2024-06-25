@@ -58,7 +58,7 @@
         <div id="resident-reports">
             <div class="bg-light text-center rounded p-4">
                 <div class="d-flex align-items-center justify-content-between mb-4">
-                    <h6 class="mb-0">Residents Report</h6>
+                    <h6 class="mb-0">Residents Information Report</h6>
                 </div>
                 <div class="table-responsive">
                     <table class="table text-start align-middle table-bordered table-hover mb-0" class="table table-dark">

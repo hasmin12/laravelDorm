@@ -21,6 +21,8 @@ function fetchmaintenances() {
         data.forEach(maintenance => {
             const cardContainer = document.createElement('div');
             cardContainer.classList.add('col-sm-12', 'col-md-4');
+            const createdAt = new Date(maintenance.created_at);
+            const timeOnly = createdAt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
             let statusColorClass;
             switch (maintenance.status) {
                 case 'Pending':
@@ -45,7 +47,7 @@ function fetchmaintenances() {
                         <div class="d-flex align-items-center justify-content-between mb-2">
                             <h5 class="card-title">${maintenance.type}</h5><br>
                             
-                            <small class="text-warning">${maintenance.status}<br><small class="text-dark">${maintenance.request_date}</small></small>
+                        <small class="text-warning">${maintenance.status}<br><small class="text-dark">${maintenance.request_date}<br>${timeOnly}</small></small>
                         </div>
                         <img src="${maintenance.img_path}" alt="Maintenance Item Image" class="card-img-top" style="max-height: 150px;">
                     </div>
@@ -138,6 +140,7 @@ function showItemDetails(id, status, type, description, technicianName, completi
     if (status == "PENDING") {
         const maintenanceDetails = document.getElementById('pendingMaintenanceDetails');
         console.log(type)
+        
         let details = `
             <b>Maintenance Type</b> ${type}<br>
             <b>Problem Description:</b> ${description}<br>
@@ -149,7 +152,7 @@ function showItemDetails(id, status, type, description, technicianName, completi
         const maintenanceDetails = document.getElementById('inprogressMaintenanceDetails');
 
         let details = `
-            <b>Maintenance Type:</b> ${itemName}<br>
+            <b>Maintenance Type:</b> ${type}<br>
             <b>Description:</b> ${description}<br>
             <b>Status:</b> ${status}<br>
             <b>Completion Percentage:</b>
@@ -158,6 +161,7 @@ function showItemDetails(id, status, type, description, technicianName, completi
             </div><br>
             <b>Assigned Technician:</b> ${technicianName}<br>
         `;
+        console.log(technicianName)
         maintenanceDetails.innerHTML = details;
         fetchMaintenanceChanges(id);
         $('#inprogressMaintenanceModal').modal('show');

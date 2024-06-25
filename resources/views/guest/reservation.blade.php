@@ -189,7 +189,7 @@
                     <div class="modal-body">
                         <form id="createReservationForm" enctype="multipart/form-data">
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-6 p-3">
                                     <input type="text" id="room_id" name="room_id" hidden>
                                     <h4 id="reservationModalTitle"></h4>
                                     <p id="reservationModalDescription"></p>
@@ -220,7 +220,7 @@
                                             required>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-6 p-2">
                                     <h4>Personal Information</h4>
                                     <div class="mb-3">
                                         <label for="residentName" class="form-label">Name</label>

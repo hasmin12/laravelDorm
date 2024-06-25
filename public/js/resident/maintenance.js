@@ -22,7 +22,8 @@ function fetchmaintenances() {
             data.forEach(maintenance => {
                 const cardContainer = document.createElement('div');
                 cardContainer.classList.add('col-sm-12', 'col-md-4');
-                
+                const createdAt = new Date(maintenance.created_at);
+                const timeOnly = createdAt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
                 // Set color based on status
                 let statusColorClass;
                 switch (maintenance.status) {
@@ -47,7 +48,7 @@ function fetchmaintenances() {
                         <div class="card-body">
                             <div class="d-flex align-items-center justify-content-between mb-2">
                                 <h5 class="card-title">${maintenance.type}</h5>
-                                <small class="text-warning">${maintenance.status}<br><small class="text-dark">${maintenance.request_date}</small></small>
+                                <small class="text-warning">${maintenance.status}<br><small class="text-dark">${maintenance.request_date}<br>${timeOnly}</small></small>
                             </div>
                             <img src="${maintenance.img_path}" alt="Maintenance Item Image" class="card-img-top" style="max-height: 150px;">
                         </div>
@@ -61,7 +62,7 @@ function fetchmaintenances() {
                         <div class="card-body">
                             <div class="d-flex align-items-center justify-content-between mb-2">
                                 <h5 class="card-title">${maintenance.type}</h5>
-                                <small class="text-info">${maintenance.status}<br><small class="text-dark">${maintenance.request_date}</small></small>
+                                <small class="text-warning">${maintenance.status}<br><small class="text-dark">${maintenance.request_date}<br>${timeOnly}</small></small>
                             </div>
                             <img src="${maintenance.img_path}" alt="Maintenance Item Image" class="card-img-top" style="max-height: 150px;">
                         </div>
@@ -76,7 +77,7 @@ function fetchmaintenances() {
                         <div class="card-body">
                             <div class="d-flex align-items-center justify-content-between mb-2">
                                 <h5 class="card-title">${maintenance.type}</h5>
-                                <small class="text-success">${maintenance.status}<br><small class="text-dark">${maintenance.request_date}</small></small>
+                                <small class="text-warning">${maintenance.status}<br><small class="text-dark">${maintenance.request_date}<br>${timeOnly}</small></small>
                             </div>
                             <img src="${maintenance.img_path}" alt="Maintenance Item Image" class="card-img-top" style="max-height: 150px;">
                         </div>

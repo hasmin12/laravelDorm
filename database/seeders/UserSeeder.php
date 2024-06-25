@@ -91,7 +91,7 @@ class UserSeeder extends Seeder
 
         User::create([
             'name' => 'Plumber',
-            'email' => 'maintenance1@dormitory.com',
+            'email' => 'dormitory@maintenance1.com',
             'password' => bcrypt("password"),
             'role' => 'Technician',
             'branch' => 'Dormitory',
@@ -113,7 +113,7 @@ class UserSeeder extends Seeder
 
         User::create([
             'name' => 'Electrician',
-            'email' => 'maintenance2@dormitory.com',
+            'email' => 'dormitory@maintenance2.com',
             'password' => bcrypt("password"),
             'role' => 'Technician',
             'branch' => 'Dormitory',
@@ -134,7 +134,7 @@ class UserSeeder extends Seeder
 
         User::create([
             'name' => 'Housekeeper',
-            'email' => 'maintenance3@dormitory.com',
+            'email' => 'dormitory@maintenance3.com',
             'password' => bcrypt("password"),
             'role' => 'Technician',
             'branch' => 'Dormitory',

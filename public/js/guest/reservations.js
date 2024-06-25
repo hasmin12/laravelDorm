@@ -79,8 +79,7 @@ function fetchHostelRooms() {
                             <h5 class="card-title">${room.name}</h5>
                             <p class="card-text">${room.description}</p>
                             <p class="card-text"><i class="fas fa-bed"></i> ${room.bedtype}</p>
-                            <p class="card-text"><i class="fas fa-users"></i> up to ${room.pax} guests</p>
-                            <p class="card-text">Price <b>₱${room.price}/day</b></p>
+                            <p class="card-text"><i class="fas fa-users"></i> ${room.pax} ${room.pax === 1 ? 'guest' : 'guests'}</p>                            <p class="card-text">Price <b>₱${room.price}/day</b></p>
                             <p class="card-text">Status: ${statusText}</p>
                             <div class="d-flex align-items-center justify-content-between mb-2">
                                 ${reserveButton}
