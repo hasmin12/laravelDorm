@@ -83,24 +83,23 @@
         <table>
             <thead>
                 <tr>
+                    <th>User ID</th>
                     <th>Name</th>
                     <th>Laundry Date</th>
                     <th>Laundry Time</th>
-
                     <th>Status</th>
-
-
+                    <th>Created At</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($laundryschedules as $laundryschedule)
+                @foreach ($laundryschedules as $schedule)
                     <tr>
-                        <td>{{ $laundryschedule->name }}</td>
-                        <td>{{ $laundryschedule->laundrydate }}</td>
-
-                        <td>{{ $laundryschedule->laundrytime }}</td>
-                        <td>{{ $laundryschedule->status }}</td>
-                        <!-- Format the created_at field using Carbon's format() method -->
+                        <td>{{ $schedule->user_id }}</td>
+                        <td>{{ $schedule->name }}</td>
+                        <td>{{ $schedule->laundrydate }}</td>
+                        <td>{{ $schedule->laundrytime }}</td>
+                        <td>{{ $schedule->status }}</td>
+                        <td>{{ $schedule->created_at }}</td>
                     </tr>
                 @endforeach
             </tbody>

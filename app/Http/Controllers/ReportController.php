@@ -279,10 +279,17 @@ class ReportController extends Controller
         }
         $laundryschedules = $query->get();
 
+        // Log the data to ensure it's being retrieved correctly
+        Log::info('Laundryschedules Data: ', $laundryschedules->toArray());
+
+        if ($laundryschedules->isEmpty()) {
+            return response()->json(['message' => 'No data found for the given criteria'], 404);
+        }
+
         $pdfOptions = new Options();
         $pdfOptions->set('isRemoteEnabled', true);
 
-        $pdf = Pdf::loadView('admin.reports.laundry', compact('laundryschedules'));
+        $pdf = Pdf::loadView('admin.reports.laundry', compact('laundryschedules'))->setOptions($pdfOptions);
 
         return $pdf->download('laundry_schedule_report.pdf');
     }
