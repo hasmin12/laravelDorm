@@ -13,10 +13,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
     maintenanceDiv.style.display = 'none';
         visitorDiv.style.display = 'none';
-    report.addEventListener('change', changeDiv); // Corrected event name
+    report.addEventListener('change', changeDiv); 
 
-    reportBranch.forEach(button => button.addEventListener('change', () => fetchResidentsReport()));
-    changeButtons.forEach(button => button.addEventListener('change', () => fetchResidentsReport()));
+    
+
+    reportBranch.forEach(button => button.addEventListener('change', () => changeBranch()));
+    changeButtons.forEach(button => button.addEventListener('change', () => changeFilter()));
     document.getElementById('downloadPdfBtn').addEventListener('click', downloadResidentsReport);
 
     fetchResidentsReport();
@@ -83,6 +85,45 @@ function changeDiv() {
         laundryDiv.style.display = 'block';
         hosteldiv.style.display = 'none';
 
+    }
+}
+
+function changeBranch() {
+    const reportValue = document.getElementById('report').value;
+    const selectedBranch = document.querySelector('input[name="branchbtnradio"]:checked').value;
+
+
+    if (reportValue === "Residents") {
+         fetchResidentsReport();
+       
+        
+
+    } else if (reportValue === "Maintenance") {
+      
+        fetchMaintenanceReport();
+        
+
+    } else if (reportValue === "Visitors") {
+        fetchVisitorsReport();
+
+    }else{
+       
+ fetchLaundryReport();
+
+    }
+}
+
+function changeFilter() {
+     if (reportValue === "Residents") {
+         fetchResidentsReport();
+    } else if (reportValue === "Maintenance") {
+        fetchMaintenanceReport();
+
+    } else if (reportValue === "Visitors") {
+        fetchVisitorsReport();
+
+    }else{
+        fetchLaundryReport();
     }
 }
 function fetchResidentsReport() {
