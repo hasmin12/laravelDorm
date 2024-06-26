@@ -89,6 +89,7 @@ function changeDiv() {
 }
 
 function changeBranch() {
+    
     const reportValue = document.getElementById('report').value;
     const selectedBranch = document.querySelector('input[name="branchbtnradio"]:checked').value;
 
@@ -99,8 +100,8 @@ function changeBranch() {
 
     const maintenanceDiv = document.getElementById('maintenance-reports');
     const visitorDiv = document.getElementById('visitors-reports');
-    const laundryDiv = document.getElementById('laundry-reports');
-
+    const laundryDiv = document.getElementById('laundry-reports');  
+    fetchResidentsReport()
     const branchDiv = document.getElementById('branchDiv');
     if (reportValue === "Residents") {
         if(selectedBranch  === "Dormitory"){
