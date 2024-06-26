@@ -62,7 +62,7 @@ function changeDiv() {
 
     } else if (reportValue === "Maintenance") {
         residentDiv.style.display = 'none';
-        branchDiv.style.display = 'block';
+        branchDiv.style.display = 'none';
         maintenanceDiv.style.display = 'block';
         visitorDiv.style.display = 'none';
         laundryDiv.style.display = 'none';
@@ -94,23 +94,26 @@ function changeBranch() {
 
 
     if (reportValue === "Residents") {
-         fetchResidentsReport();
+        if(selectedBranch  === "Dormitory"){
+            residentDiv.style.display = 'block';
+            branchDiv.style.display = 'block';
+            maintenanceDiv.style.display = 'none';
+            visitorDiv.style.display = 'none';
+            laundryDiv.style.display = 'none';
+            hosteldiv.style.display = 'none';
+
+        }else{
+            residentDiv.style.display = 'none';
+            branchDiv.style.display = 'block';
+            maintenanceDiv.style.display = 'none';
+            visitorDiv.style.display = 'none';
+            laundryDiv.style.display = 'none';
+            hosteldiv.style.display = 'block';
+        }
        
         
 
-    } else if (reportValue === "Maintenance") {
-      
-        fetchMaintenanceReport();
-        
-
-    } else if (reportValue === "Visitors") {
-        fetchVisitorsReport();
-
-    }else{
-       
- fetchLaundryReport();
-
-    }
+    } 
 }
 
 function changeFilter() {
