@@ -93,7 +93,7 @@
         <!-- Navbar End -->
 
         <!-- Search and Filter Container -->
-        <div class="container-xxl bg-white d-flex p-4">
+        <div class="container-fluid bg-white d-flex p-4">
             <div class="bg-light rounded p-4 w-100">
                 <div class="d-flex align-items-center justify-content-between mb-2">
                     <h3 class="mb-0">Hostel Rooms</h3>
@@ -135,7 +135,7 @@
             </div>
         </div>
 
-        <div class="container-xxl position-relative bg-white d-flex p-0">
+        <div class="container-fluid position-relative bg-white d-flex p-0">
             <div class="bg-light rounded p-4 mb-4 w-100">
                 <div class="row" id="room-container">
                     <!-- Room cards will be dynamically added here -->

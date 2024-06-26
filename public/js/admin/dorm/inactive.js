@@ -139,19 +139,19 @@ function fetchResidents(viewType = 'tiles') {
             // Card HTML structure
             
             const card = `
-                    <div class="col-md-4 mb-3">
-                    <div class="card custom-border-red" style="width: 18rem;">
-                        <img class="card-img-top" style="width: 285px; height: 285px;" src="${resident.img_path}" alt="Card image cap">
+                   <div class="col-md-4 mb-3">
+                    <div class="card shadow custom-border-red" style="width: 22rem;">
+                        <img class="card-img-top" style="width: 345px; height: 290px;" src="${resident.img_path}" alt="Card image cap">
                         <div class="card-body text-center">
                             <h5 class="card-title">${resident.name}</h5>
                             <button class="btn btn-sm btn-success" onclick="showResidentDetails(${resident.id})" data-bs-toggle="modal" data-bs-target="#residentDetailsModal">
                                 View Details
                             </button>
                             <button class="btn btn-sm btn-warning" onclick="updateResident(${resident.id})">Update</button>
-                            <button class="btn btn-sm btn-dark" onclick="ReActivateResident(${resident.id})">Re-Activate</button>
+                            <button class="btn btn-sm btn-info" onclick="assignResident(${resident.id})">Assign</button>
                         </div>
                     </div>
-                </div>P
+                </div>
         
             `;
 

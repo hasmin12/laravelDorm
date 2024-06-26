@@ -2,7 +2,7 @@
 @section('content')
 
 
-<div class="container-xxl position-relative bg-white d-flex p-0">
+<div class="container-fluid position-relative bg-white d-flex p-0">
     <!-- Spinner Start -->
     <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
         <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
@@ -46,7 +46,7 @@
        
 
   <!-- Tile View Start -->
-<div class="container-fluid pt-4 px-4" id="residentTilesContainer">
+<div class="container-fluid pt-4 px-4" style="padding-left: 9.5rem !important;" id="residentTilesContainer">
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4">
         <!-- Resident tiles will be dynamically added here -->
     </div>

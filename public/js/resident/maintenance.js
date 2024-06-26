@@ -21,7 +21,9 @@ function fetchmaintenances() {
            
             data.forEach(maintenance => {
                 const cardContainer = document.createElement('div');
-                cardContainer.classList.add('col-sm-12', 'col-md-4');
+                cardContainer.classList.add('col-sm-12', 'col-md-4', 'pt-4', 'px-4');
+    
+                cardContainer.style.setProperty('padding-left', '9.5rem', 'important');
                 const createdAt = new Date(maintenance.created_at);
                 const timeOnly = createdAt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
                 // Set color based on status
@@ -44,13 +46,13 @@ function fetchmaintenances() {
                 }
                 if (maintenance.status == "PENDING") {
                 const cardContent = `
-                    <div class="card h-100" style="cursor: pointer;" onclick="showItemDetails('${maintenance.id}','${maintenance.status}','${maintenance.type}','${maintenance.description}','${maintenance.technicianName}','${maintenance.completionPercentage}','${maintenance.branch}','${maintenance.room_number}','${maintenance.request_date}')">
+                    <div class="card shadow h-100" style="cursor: pointer; width: 100.333%;" onclick="showItemDetails('${maintenance.id}','${maintenance.status}','${maintenance.type}','${maintenance.description}','${maintenance.technicianName}','${maintenance.completionPercentage}','${maintenance.branch}','${maintenance.room_number}','${maintenance.request_date}')">
                         <div class="card-body">
                             <div class="d-flex align-items-center justify-content-between mb-2">
                                 <h5 class="card-title">${maintenance.type}</h5>
                                 <small class="text-warning">${maintenance.status}<br><small class="text-dark">${maintenance.request_date}<br>${timeOnly}</small></small>
                             </div>
-                            <img src="${maintenance.img_path}" alt="Maintenance Item Image" class="card-img-top" style="max-height: 150px;">
+                            <img src="${maintenance.img_path}" alt="Maintenance Item Image" class="card-img-top" style="width: 345px; height: 290px;">
                         </div>
                     </div>
                 `;
@@ -58,7 +60,7 @@ function fetchmaintenances() {
 
                 } else if (maintenance.status == "In Progress") {
                     const cardContent = `
-                    <div class="card h-100" style="cursor: pointer;" onclick="showItemDetails('${maintenance.id}','${maintenance.status}','${maintenance.type}','${maintenance.description}','${maintenance.technicianName}','${maintenance.completionPercentage}','${maintenance.branch}','${maintenance.room_number}','${maintenance.request_date}')">
+                    <div class="card shadow h-100" style="cursor: pointer; width: 100.333%;" onclick="showItemDetails('${maintenance.id}','${maintenance.status}','${maintenance.type}','${maintenance.description}','${maintenance.technicianName}','${maintenance.completionPercentage}','${maintenance.branch}','${maintenance.room_number}','${maintenance.request_date}')">
                         <div class="card-body">
                             <div class="d-flex align-items-center justify-content-between mb-2">
                                 <h5 class="card-title">${maintenance.type}</h5>
@@ -73,7 +75,7 @@ function fetchmaintenances() {
                 } else{
 
                     const cardContent = `
-                    <div class="card h-100" style="cursor: pointer;" onclick="showItemDetails('${maintenance.id}','${maintenance.status}','${maintenance.type}','${maintenance.description}','${maintenance.technicianName}','${maintenance.completionPercentage}','${maintenance.branch}','${maintenance.room_number}','${maintenance.request_date}')">
+                    <div class="card shadow h-100" style="cursor: pointer; width: 100.333%;" onclick="showItemDetails('${maintenance.id}','${maintenance.status}','${maintenance.type}','${maintenance.description}','${maintenance.technicianName}','${maintenance.completionPercentage}','${maintenance.branch}','${maintenance.room_number}','${maintenance.request_date}')">
                         <div class="card-body">
                             <div class="d-flex align-items-center justify-content-between mb-2">
                                 <h5 class="card-title">${maintenance.type}</h5>

@@ -43,7 +43,7 @@ class UserSeeder extends Seeder
             'room' => "Room 1",
             'bed' => "A",
             // 'roomdetails' => 'RoomBed'
-            'img_path' => "/storage/residents/resident.png",
+            'img_path' => '/img/admin.png',
             'status' => "Active"
         ]);
         
@@ -64,7 +64,7 @@ class UserSeeder extends Seeder
             'civil_status' => 'Single',
             'room' => 1,
             'bed' => "A",
-            'img_path' => "/storage/residents/resident.png",
+            'img_path' => '/img/student.png',
 
             'address' => $faker->address(),
             'contactNumber' => $faker->phoneNumber(),
@@ -73,21 +73,6 @@ class UserSeeder extends Seeder
             'status' => "Active"
 
         ]);
-
-        // User::create([
-        //     'name' => 'Hostel Admin',
-        //     'email' => 'hostel@admin.com',
-        //     'password' => bcrypt("password"),
-        //     'role' => 'Admin',
-        //     'branch' => 'Hostel',
-        //     'Tuptnum' => $tupt_temp . "" . $tupt_num,
-        //     'contacts' => $faker->phoneNumber(),
-        //     'address' => $faker->address(),
-        //     'sex' => $faker->randomElement($array = array ('Male', 'Female')), // 'b'
-        //     'birthdate' => $faker-> dateTimeBetween($startDate = '-30 years', $endDate = '-20 years', $timezone = null),
-        //     'type' => 'Admin',
-        //     'roomdetails' => 'Room'
-        // ]);
 
         User::create([
             'name' => 'Plumber',
@@ -105,7 +90,7 @@ class UserSeeder extends Seeder
             // 'roomdetails' => 'RoomBed'
             'room' => "Room 1",
             'bed' => "A",
-            'img_path' => "/storage/residents/resident.png",
+            'img_path' => '/img/plumber.png',
 
             'status' => "Active"
 
@@ -128,7 +113,7 @@ class UserSeeder extends Seeder
             'room' => "Room 1",
             'bed' => "A",
             'status' => "Active",
-            'img_path' => "/storage/residents/resident.png"
+            'img_path' => '/img/electrician.png'
 
         ]);
 
@@ -149,7 +134,7 @@ class UserSeeder extends Seeder
             'room' => "Room 1",
             'bed' => "A",
             'status' => "Active",
-            'img_path' => "/storage/residents/resident.png"
+            'img_path' => '/img/housekeeping.png'
 
         ]);
         
@@ -172,7 +157,7 @@ class UserSeeder extends Seeder
             'contactNumber' => $faker->phoneNumber(),
             'Tuptnum' => $tupt_temp . "" . $Admintupt_num,
             // 'roomdetails' => 'RoomBed'
-            'img_path' => "/storage/residents/resident.png",
+            'img_path' => '/img/student.png',
             'room' => "Room 1",
             'bed' => "A",
             'status' => "Applicant"
