@@ -127,6 +127,8 @@ function changeBranch() {
 }
 
 function changeFilter() {
+    const reportValue = document.getElementById('report').value;
+
      if (reportValue === "Residents") {
          fetchResidentsReport();
     } else if (reportValue === "Maintenance") {
