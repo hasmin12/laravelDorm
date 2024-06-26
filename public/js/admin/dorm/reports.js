@@ -36,21 +36,21 @@ function changeDiv() {
     const branchDiv = document.getElementById('branchDiv');
 
     if (reportValue === "Residents") {
-        if(selectedBranch  === "Dormitory"){
-            residentDiv.style.display = 'block';
-            branchDiv.style.display = 'block';
-            maintenanceDiv.style.display = 'none';
-            visitorDiv.style.display = 'none';
-            laundryDiv.style.display = 'none';
-            hosteldiv.style.display = 'none';
-
-        }else{
+        if(selectedBranch  === "Hostel"){
             residentDiv.style.display = 'none';
             branchDiv.style.display = 'block';
             maintenanceDiv.style.display = 'none';
             visitorDiv.style.display = 'none';
             laundryDiv.style.display = 'none';
             hosteldiv.style.display = 'block';
+
+        }else{
+            residentDiv.style.display = 'block';
+            branchDiv.style.display = 'block';
+            maintenanceDiv.style.display = 'none';
+            visitorDiv.style.display = 'none';
+            laundryDiv.style.display = 'none';
+            hosteldiv.style.display = 'none';
         }
         
 
