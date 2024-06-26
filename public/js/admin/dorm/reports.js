@@ -92,7 +92,16 @@ function changeBranch() {
     const reportValue = document.getElementById('report').value;
     const selectedBranch = document.querySelector('input[name="branchbtnradio"]:checked').value;
 
+    const residentDiv = document.getElementById('resident-reports');
+    const hosteldiv = document.getElementById('hostel-reports');
 
+
+
+    const maintenanceDiv = document.getElementById('maintenance-reports');
+    const visitorDiv = document.getElementById('visitors-reports');
+    const laundryDiv = document.getElementById('laundry-reports');
+
+    const branchDiv = document.getElementById('branchDiv');
     if (reportValue === "Residents") {
         if(selectedBranch  === "Dormitory"){
             residentDiv.style.display = 'block';
