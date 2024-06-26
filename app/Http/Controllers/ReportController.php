@@ -284,7 +284,7 @@ class ReportController extends Controller
 
         $pdf = Pdf::loadView('admin.reports.laundry', compact('laundryschedules'));
 
-        return $pdf->download('visitors_report.pdf');
+        return $pdf->download('laundry_schedule_report.pdf');
     }
 
 
