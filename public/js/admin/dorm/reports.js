@@ -124,7 +124,7 @@ function fetchResidentsReport() {
             });
         }else{
             const hostelReportBody = document.querySelector('#hostelReportBody');
-            residentTableBody.innerHTML = '';
+            hostelReportBody.innerHTML = '';
 
             data.forEach(reservation => {
                 const reservation_date = new Date(reservation.reservation_date);
