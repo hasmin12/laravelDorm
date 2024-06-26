@@ -5,7 +5,11 @@ document.addEventListener('DOMContentLoaded', function () {
     const maintenanceDiv = document.getElementById('maintenance-reports');
     const visitorDiv = document.getElementById('visitors-reports');
     const laundryDiv = document.getElementById('laundry-reports');
+    const hosteldiv = document.getElementById('hostel-reports');
+
     laundryDiv.style.display = 'none';
+    hosteldiv.style.display = 'none';
+
 
     maintenanceDiv.style.display = 'none';
         visitorDiv.style.display = 'none';
@@ -36,21 +40,21 @@ function changeDiv() {
     const branchDiv = document.getElementById('branchDiv');
 
     if (reportValue === "Residents") {
-        if(selectedBranch  === "Hostel"){
-            residentDiv.style.display = 'none';
-            branchDiv.style.display = 'block';
-            maintenanceDiv.style.display = 'none';
-            visitorDiv.style.display = 'none';
-            laundryDiv.style.display = 'none';
-            hosteldiv.style.display = 'block';
-
-        }else{
+        if(selectedBranch  === "Dormitory"){
             residentDiv.style.display = 'block';
             branchDiv.style.display = 'block';
             maintenanceDiv.style.display = 'none';
             visitorDiv.style.display = 'none';
             laundryDiv.style.display = 'none';
             hosteldiv.style.display = 'none';
+
+        }else{
+            residentDiv.style.display = 'none';
+            branchDiv.style.display = 'block';
+            maintenanceDiv.style.display = 'none';
+            visitorDiv.style.display = 'none';
+            laundryDiv.style.display = 'none';
+            hosteldiv.style.display = 'block';
         }
         
 
