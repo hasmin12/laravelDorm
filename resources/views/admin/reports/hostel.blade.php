@@ -3,7 +3,7 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Visitors Report</title>
+    <title>Users Report</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -52,7 +52,6 @@
             color: #333;
         }
 
-        /* Set font size to 11 for <td> elements */
         td {
             font-size: 11px;
         }
@@ -70,47 +69,52 @@
 </head>
 
 <body>
-    <!-- Header -->
     <header>
         <img src="{{ public_path('/img/dormnames.png') }}" alt="Logo">
-
         <h1>Technological University of the Philippines</h1>
     </header>
 
-    <!-- Main content -->
     <main>
-        <h2>Visitors Information Report</h2>
+        <h2>Hostel Reservations Report</h2>
         <table>
             <thead>
                 <tr>
-                    <th>Visitor Name</th>
-                    <th>Contact Number</th>
-                    <th>Visit Date</th>
-
-                    <th>Resident Name</th>
-                    <th>Relationship</th>
-                    <th>Purpose</th>
-
+                    <th>Name</th>
+                    <th>Room</th>
+                    <th>Total Payment</th>
+                    <th>Reservation Date</th>
+                    <th>Check-In Date</th>
+                    <th>Check-In Time</th>
+                    <th>Check-Out Date</th>
+                    <th>Status</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($visitors as $visitor)
+                @foreach ($users as $user)
                     <tr>
-                        <td>{{ $visitor->name }}</td>
-                        <td>{{ $visitor->phone }}</td>
-                        <td>{{ \Carbon\Carbon::parse($visitor->visit_date)->format('Y-m-d H:i:s') }}</td>
-
-                        <td>{{ $visitor->residentName }}</td>
-                        <td>{{ $visitor->relationship }}</td>
-                        <td>{{ $visitor->purpose }}</td>
-                        <!-- Format the created_at field using Carbon's format() method -->
+                        <td>{{ $user->name }}</td>
+                        <td>{{ $user->roomName }}</td>
+                        <td>{{ $user->totalPayment }}</td>
+                        <td>{{ $user->reservation_date }}</td>
+                        <td>{{ \Carbon\Carbon::parse($user->checkin_date)->format('Y-m-d') }}</td>
+                        <td>
+                            {{ \Carbon\Carbon::parse($user->checkin_date)->format('H:i') }}
+                        </td>
+                        {{-- <td>
+                            @if ($user->status == 'Pending')
+                                -
+                            @else
+                                {{ \Carbon\Carbon::parse($user->checkin_date)->format('H:i') }}
+                            @endif
+                        </td> --}}
+                        <td>{{ $user->checkout_date }}</td>
+                        <td>{{ $user->status }}</td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
     </main>
 
-    <!-- Footer -->
     <footer>
         &copy; {{ date('Y') }} Technological University of the Philippines
     </footer>

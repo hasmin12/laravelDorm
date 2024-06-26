@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Laundry Schedule Report</title>
     <style>
         body {
@@ -38,7 +39,8 @@
             border-collapse: collapse;
         }
 
-        th, td {
+        th,
+        td {
             border: 1px solid #ddd;
             padding: 2px;
             text-align: left;
@@ -66,6 +68,7 @@
         }
     </style>
 </head>
+
 <body>
     <!-- Header -->
     <header>
@@ -76,30 +79,27 @@
 
     <!-- Main content -->
     <main>
-        <h2>Laundry Schedule Report</h2>
+        <h2>Laundry Schedules Report</h2>
         <table>
             <thead>
                 <tr>
-                    <th>Visitor Name</th>
-                    <th>Contact Number</th>
-                    <th>Visit Date</th>
+                    <th>Name</th>
+                    <th>Laundry Date</th>
+                    <th>Laundry Time</th>
 
-                    <th>Resident Name</th>
-                    <th>Relationship</th>
-                    <th>Purpose</th>
-                 
+                    <th>Status</th>
+
+
                 </tr>
             </thead>
             <tbody>
-                @foreach($visitors as $visitor)
+                @foreach ($laundryschedules as $laundryschedule)
                     <tr>
-                        <td>{{ $visitor->name }}</td>
-                        <td>{{ $visitor->phone }}</td>
-                        <td>{{ \Carbon\Carbon::parse($visitor->visit_date)->format('Y-m-d H:i:s') }}</td>
+                        <td>{{ $laundryschedule->name }}</td>
+                        <td>{{ $laundryschedule->laundrydate }}</td>
 
-                        <td>{{ $visitor->residentName }}</td>
-                        <td>{{ $visitor->relationship }}</td>
-                        <td>{{ $visitor->purpose }}</td>
+                        <td>{{ $laundryschedule->laundrytime }}</td>
+                        <td>{{ $laundryschedule->status }}</td>
                         <!-- Format the created_at field using Carbon's format() method -->
                     </tr>
                 @endforeach
@@ -112,4 +112,5 @@
         &copy; {{ date('Y') }} Technological University of the Philippines
     </footer>
 </body>
+
 </html>

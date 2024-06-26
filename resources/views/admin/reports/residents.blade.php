@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Users Report</title>
     <style>
         body {
@@ -38,7 +39,8 @@
             border-collapse: collapse;
         }
 
-        th, td {
+        th,
+        td {
             border: 1px solid #ddd;
             padding: 2px;
             text-align: left;
@@ -66,6 +68,7 @@
         }
     </style>
 </head>
+
 <body>
     <!-- Header -->
     <header>
@@ -76,7 +79,7 @@
 
     <!-- Main content -->
     <main>
-        <h2>Residents Report</h2>
+        <h2>Dormitory Residents Information Report</h2>
         <table>
             <thead>
                 <tr>
@@ -90,7 +93,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($users as $user)
+                @foreach ($users as $user)
                     <tr>
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->email }}</td>
@@ -111,4 +114,5 @@
         &copy; {{ date('Y') }} Technological University of the Philippines
     </footer>
 </body>
+
 </html>

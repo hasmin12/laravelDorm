@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Visitor;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Reservation;
+
 use App\Models\Maintenance;
 use App\Models\Laundryschedule;
 
@@ -23,10 +25,14 @@ class ReportController extends Controller
     {
         $branch = $request->input('branch');
         $change = $request->input('change');
-        $query = User::select('name', 'email', 'type', 'birthdate', 'sex', 'contactNumber','created_at')
-            ->where('status', 'Active')
-            ->where('role', 'Resident')
-            ->where('branch', $branch);
+        if ($branch == 'Hostel') {
+            $query =  Reservation::select('name', 'roomName', 'totalPayment', 'reservation_date', 'checkin_date', 'checkout_date','status');	
+        }else{
+            $query = User::select('name', 'email', 'type', 'birthdate', 'sex', 'contactNumber','created_at')
+                ->where('status', 'Active')
+                ->where('role', 'Resident');
+        };
+
         switch ($change) {
             case 'Daily':
                 $query->whereDate('created_at', today()->format('Y-m-d'));
@@ -139,11 +145,13 @@ class ReportController extends Controller
         set_time_limit(300); 
         $branch = $request->input('branch');
         $change = $request->input('change');
-        $query = User::select('name', 'email', 'type', 'birthdate', 'sex', 'contactNumber', 'created_at')
-            ->where('branch', 'Dormitory')
-            ->where('status', 'Active')
-            ->where('role', 'Resident')
-            ->where('branch', $branch);
+        if ($branch == 'Hostel') {
+            $query =  Reservation::select('name', 'roomName', 'totalPayment', 'reservation_date', 'checkin_date', 'checkout_date','status');	
+        }else{
+            $query = User::select('name', 'email', 'type', 'birthdate', 'sex', 'contactNumber','created_at')
+                ->where('status', 'Active')
+                ->where('role', 'Resident');
+        };
 
         switch ($change) {
             case 'Daily':
@@ -166,8 +174,11 @@ class ReportController extends Controller
 
         $pdfOptions = new Options();
         $pdfOptions->set('isRemoteEnabled', true);
-
-        $pdf = Pdf::loadView('admin.reports.residents', compact('users'));
+        if ($branch == 'Hostel') {
+            $pdf = Pdf::loadView('admin.reports.hostel', compact('users'));
+        }else{
+            $pdf = Pdf::loadView('admin.reports.residents', compact('users'));
+        }
 
         return $pdf->download('residents_report.pdf');
     }

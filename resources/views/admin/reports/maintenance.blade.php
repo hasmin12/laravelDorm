@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Maintenance Report</title>
     <style>
         body {
@@ -38,7 +39,8 @@
             border-collapse: collapse;
         }
 
-        th, td {
+        th,
+        td {
             border: 1px solid #ddd;
             padding: 2px;
             text-align: left;
@@ -66,6 +68,7 @@
         }
     </style>
 </head>
+
 <body>
     <!-- Header -->
     <header>
@@ -76,7 +79,7 @@
 
     <!-- Main content -->
     <main>
-        <h2>Maintenance Report</h2>
+        <h2>Maintenance Requests Report</h2>
         <table>
             <thead>
                 <tr>
@@ -91,7 +94,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($maintenance as $maintenance)
+                @foreach ($maintenance as $maintenance)
                     <tr>
                         <td>{{ $maintenance->residentName }}</td>
                         <td>{{ $maintenance->room_number }}</td>
@@ -114,4 +117,5 @@
         &copy; {{ date('Y') }} Technological University of the Philippines
     </footer>
 </body>
+
 </html>
