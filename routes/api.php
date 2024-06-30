@@ -99,7 +99,7 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
 
     Route::get('/getAnnouncements', 'AuthController@getAnnouncements');
     Route::get('/getAnnouncement/{id}', 'AdminController@getAnnouncement');
-    Route::post('/announcement', 'AdminController@createAnnouncement');
+    Route::post('/createAnnouncement', 'AdminController@createAnnouncement');
     Route::post('updateAnnouncement/{id}', 'AdminController@updateAnnouncement');
     Route::post('/update_announcement/{id}', 'AdminController@lockComments');
     Route::delete('deleteAnnouncement/{id}', 'AdminController@deleteAnnouncement');

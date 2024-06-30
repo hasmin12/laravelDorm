@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const token = localStorage.getItem('token');
 
         $.ajax({
-            url: '/api/announcement',
+            url: '/api/createAnnouncement',
             type: 'POST',
              headers: {
                 'Content-Type': 'application/json',

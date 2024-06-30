@@ -86,7 +86,7 @@
                     </div>
                     <div class="modal-body">
                         <!-- Add your form fields for updating an announcement -->
-                        <form id="updateAnnouncementForm">
+                        <form id="updateAnnouncementForm"  enctype="multipart/form-data">
                             <div class="mb-3">
                                 <label for="updateTitleInput" class="form-label">Title</label>
                                 <input type="text" class="form-control" id="updateTitleInput" name="title" required>
