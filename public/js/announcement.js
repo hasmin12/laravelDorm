@@ -5,8 +5,8 @@ document.addEventListener('DOMContentLoaded', function () {
     createAnnouncementForm.addEventListener('submit', function (event) {
         event.preventDefault();
 
-        const titleInput = document.getElementById('announcementTitle');
-        const contentInput = document.getElementById('announcementContent');
+        const titleInput = document.getElementById('title');
+        const contentInput = document.getElementById('content');
         const branchInput = document.getElementById('branch');
         const lockedInput = document.getElementById('locked');
         const imageInput = $('#img_path')[0].files[0];
@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', function () {
             Swal.fire({
                 icon: 'error',
                 title: 'Error',
-                text: 'An error occurred while creating the lost item. Please try again.',
+                text: error,
             });
         }
     });

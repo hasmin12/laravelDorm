@@ -64,7 +64,6 @@ class AuthController extends Controller
 
     } catch (\Exception $e) {
         // Log any other exceptions that may occur
-        Log::error('Error during login: ' . $e->getMessage());
 
         return response()->json([
             'success' => false,
