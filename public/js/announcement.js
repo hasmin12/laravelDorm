@@ -90,7 +90,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 locked.value ="";
              
                 $('#img_path').val('');
-                createAnnouncementForm.reset();
 
 
                 fetchAnnouncements(); // Update the function name to match your lost items
