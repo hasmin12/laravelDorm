@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
         $.ajax({
-            url: '/api/lostitem',
+            url: '/api/createAnnouncement',
             type: 'POST',
             headers: {
                 'Authorization': 'Bearer ' + token,
