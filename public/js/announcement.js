@@ -39,11 +39,14 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    const createAnnouncementForm = document.getElementById('createAnnouncementForm');
-    createAnnouncementForm.addEventListener('submit', function (event) {
+   
+
+    const createAnnouncementForm = $('#createAnnouncementForm');
+
+    createAnnouncementForm.submit(function (event) {
         event.preventDefault();
 
-        const titleInput = document.getElementById('title');
+       const titleInput = document.getElementById('title');
         const contentInput = document.getElementById('content');
         const branchInput = document.getElementById('branch');
         const lockedInput = document.getElementById('locked');
@@ -66,45 +69,44 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const token = localStorage.getItem('token');
 
+
         $.ajax({
-            url: '/api/createAnnouncement',
+            url: '/api/lostitem',
             type: 'POST',
-             headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                'Authorization': `Bearer ${token}`,
+            headers: {
+                'Authorization': 'Bearer ' + token,
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             data: formData,
             processData: false,  
             contentType: false,
             success: function (data) {
-            console.log('Announcement created successfully:', data);
+                console.log('Announcement created successfully:', data);
 
-            $('#createAnnouncementModal').modal('hide');
+                $('#createAnnouncementModal').modal('hide');
+                createAnnouncementForm.reset();
 
-            titleInput.value = '';
-            contentInput.value = '';
 
-            fetchAnnouncements();
+                fetchAnnouncements(); // Update the function name to match your lost items
 
-            Swal.fire({
-                icon: 'success',
-                title: 'Announcement Created',
-                text: 'Your announcement has been successfully created.',
-            });
-        },
-        error: function (error) {
-            console.error('Error creating lost item:', error);
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Announcement Created',
+                    text: 'New Announcement',
+                });
+            },
+            error: function (error) {
+                console.error('Error creating Announcement:', error);
 
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: error,
-            });
-        }
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'An error occurred while creating the Announcement. Please try again.',
+                });
+            }
+        });
     });
-});
+
     const announcementsContainer = document.getElementById('announcements-container');
     announcementsContainer.addEventListener('click', function (event) {
         const target = event.target;

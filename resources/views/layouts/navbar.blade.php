@@ -6,17 +6,20 @@
     <a href="#" class="sidebar-toggler flex-shrink-0">
         <i class="fa fa-bars"></i>
     </a>
-    
+
     <div class="navbar-nav align-items-center ms-auto">
         <div class="nav-item dropdown" id="notificationsRead">
             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                <i class="fa fa-bell me-lg-2" style="position: relative;"> 
-                    <span id="notification-count" class="badge bg-danger" style="position: absolute; bottom: 0; right: 0;"></span>
+                <i class="fa fa-bell me-lg-2" style="position: relative;">
+                    <span id="notification-count" class="badge bg-danger"
+                        style="position: absolute; bottom: 0; right: 0;"></span>
                 </i>
-                
-                <span class="d-none d-lg-inline-flex" style="color: white; cursor: pointer;" onmouseover="this.style.color='red'" onmouseout="this.style.color='white'">Notifications</span>
+
+                <span class="d-none d-lg-inline-flex" style="color: white; cursor: pointer;"
+                    onmouseover="this.style.color='red'" onmouseout="this.style.color='white'">Notifications</span>
             </a>
-            <div id="notifications" class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0 w-5">
+            <div id="notifications"
+                class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0 w-5">
                 <!-- Notifications will be dynamically inserted here -->
             </div>
         </div>
@@ -24,7 +27,9 @@
             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                 {{-- <img class="rounded-circle me-lg-2" src="{{asset('img/user.jpg')}}" alt="" style="width: 40px; height: 40px;"> --}}
                 <i class="fas fa-user"></i>
-                <span class="d-none d-lg-inline-flex" style="color: white; cursor: pointer;" onmouseover="this.style.color='red'" onmouseout="this.style.color='white'">{{ auth()->user()->name }}</span>
+                <span class="d-none d-lg-inline-flex" style="color: white; cursor: pointer;"
+                    onmouseover="this.style.color='red'"
+                    onmouseout="this.style.color='white'">{{ auth()->user()->name }}</span>
             </a>
             <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
                 <a href="#" class="dropdown-item">My Profile</a>
@@ -36,4 +41,4 @@
     </div>
 </nav>
 <!-- Navbar End -->
-<script src="{{ secure_asset('js/auth.js') }}"></script>
+<script src="{{ asset('js/auth.js') }}"></script>
