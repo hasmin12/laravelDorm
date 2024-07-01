@@ -5,15 +5,12 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Auth;
-use Log;
 use App\Models\Laundryschedule;
 use App\Models\Announcement;
 use App\Models\Notification;
 use App\Models\Maintenancelist;
 use App\Models\User;
-use Illuminate\Support\Facades\Http;
 
-use Socialite;
 class AuthController extends Controller
 {
     public function signin(Request $request)
@@ -40,7 +37,6 @@ class AuthController extends Controller
             // Attempt authentication
             if (Auth::attempt($credentials)) {
                 $user = Auth::user(); 
-                Log::info('User successfully logged in:', ['user' => $user]);
 
                 $token = $user->createToken('remember_token')->plainTextToken;
                 $user->remember_token = $token;
@@ -53,8 +49,6 @@ class AuthController extends Controller
                     'email' => $user->email,
                 ]);
             } else {
-                // Log an error if authentication fails
-                Log::error('Authentication failed: Wrong credentials');
 
                 return response()->json([
                     'success' => false,
