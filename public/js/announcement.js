@@ -1,6 +1,44 @@
 document.addEventListener('DOMContentLoaded', function () {
     fetchAnnouncements();
 
+    const lockCommentsButtons = document.querySelectorAll('.lock-comments-button');
+
+    lockCommentsButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            console.log('Lock comment button clicked');
+            const announcementId = this.dataset.announcementId;
+            const locked = this.dataset.locked === 'true' ? 'No' : 'Yes'; // Toggle the locked status
+            const token = localStorage.getItem('token');
+
+            // Send AJAX request to update the announcement's locked status
+            fetch(`/update_announcement/${announcementId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                body: JSON.stringify({
+                    locked: locked
+                })
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log('Announcement updated successfully.');
+                    // Update the button's data-locked attribute
+                    this.dataset.locked = locked === 'Yes' ? 'true' : 'false';
+                    // Update button text based on locked status
+                    this.innerText = locked === 'Yes' ? 'Unlock Comments' : 'Lock Comments';
+                } else {
+                    console.error('Failed to update announcement.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    });
+
     const createAnnouncementForm = document.getElementById('createAnnouncementForm');
     createAnnouncementForm.addEventListener('submit', function (event) {
         event.preventDefault();
@@ -9,9 +47,9 @@ document.addEventListener('DOMContentLoaded', function () {
         const contentInput = document.getElementById('content');
         const branchInput = document.getElementById('branch');
         const lockedInput = document.getElementById('locked');
-        const imageInput = $('#img_path')[0].files[0];
+        const imageInput = document.getElementById('img_path').files[0];
 
-
+ 
         const title = titleInput.value;
         const content = contentInput.value;
         const branch = branchInput.value;
@@ -240,50 +278,6 @@ function deleteAnnouncement(announcementId) {
         });
     });
 }
-
-document.addEventListener('DOMContentLoaded', function() {
-    const lockCommentsButtons = document.querySelectorAll('.lock-comments-button');
-
-    lockCommentsButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            console.log('Lock comment button clicked');
-            const announcementId = this.dataset.announcementId;
-            const locked = this.dataset.locked === 'true' ? 'No' : 'Yes'; // Toggle the locked status
-            const token = localStorage.getItem('token');
-
-            // Send AJAX request to update the announcement's locked status
-            fetch(`/update_announcement/${announcementId}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`,
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                body: JSON.stringify({
-                    locked: locked
-                })
-            })
-            .then(response => {
-                if (response.ok) {
-                    console.log('Announcement updated successfully.');
-                    // Update the button's data-locked attribute
-                    this.dataset.locked = locked === 'Yes' ? 'true' : 'false';
-                    // Update button text based on locked status
-                    this.innerText = locked === 'Yes' ? 'Unlock Comments' : 'Lock Comments';
-                } else {
-                    console.error('Failed to update announcement.');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-        });
-    });
-    // Call fetchAnnouncements to load initial announcements
-    fetchAnnouncements();
-
-});
-
 
 function fetchAnnouncements() {
     const token = localStorage.getItem('token');
