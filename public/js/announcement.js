@@ -84,6 +84,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 console.log('Announcement created successfully:', data);
 
                 $('#createAnnouncementModal').modal('hide');
+                title.value ="";
+                content.value ="";
+                branch.value ="";
+                locked.value ="";
+             
+                $('#img_path').val('');
                 createAnnouncementForm.reset();
 
 
