@@ -92,7 +92,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 $('#img_path').val('');
 
 
-                fetchAnnouncements(); // Update the function name to match your lost items
+                fetchAnnouncements(); 
 
                 Swal.fire({
                     icon: 'success',
@@ -139,56 +139,57 @@ updateAnnouncementForm.addEventListener('submit', function (event) {
 
     const announcementId = updateAnnouncementForm.dataset.announcementId; // Add a data attribute to store announcement ID
 
-    const updatedFormData = {
-        title: updateTitleInput.value,
-        content: updateContentInput.value,
-        branch: updateBranchInput.value,
-        locked: updateLockedInput.value,
-        img_path: updateImageInput.files[0]
-    };
+   
+    const formData = new FormData();
+
+    formData.append('title', updateTitleInput.value);
+    formData.append('content', updateContentInput.value);
+    formData.append('branch', updateBranchInput.value);
+    formData.append('locked', updateLockedInput.value);
+    formData.append('img_path', updateImageInput.files[0]);
 
     const token = localStorage.getItem('token');
 
-    fetch(`/api/updateAnnouncement/${announcementId}`, {
-        method: 'POST',
+    $.ajax({
+        url: `/api/updateAnnouncement/${announcementId}`,
+        type: 'POST',
         headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-            'Authorization': `Bearer ${token}`,
+            'Authorization': 'Bearer ' + token,
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
-        credentials: 'include',
-        body: JSON.stringify(updatedFormData),
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log('Announcement updated successfully:', data);
+        data: formData,
+        processData: false,  
+        contentType: false,
+        success: function (data) {
+            console.log('Announcement updated successfully:', data);
 
-        $('#updateAnnouncementModal').modal('hide');
+            $('#updateAnnouncementModal').modal('hide');
 
-        updateTitleInput.value = '';
-        updateContentInput.value = '';
-        updateBranchInput.value = '';
-        updateLockedInput.value = '';
+            updateTitleInput.value = '';
+            updateContentInput.value = '';
+            updateBranchInput.value = '';
+            updateLockedInput.value = '';
 
-        fetchAnnouncements();
+            fetchAnnouncements();
 
-        Swal.fire({
-            icon: 'success',
-            title: 'Announcement Updated',
-            text: 'Your announcement has been successfully updated.',
-        });
-    })
-    .catch(error => {
-        console.error('Error updating announcement:', error);
+            Swal.fire({
+                icon: 'success',
+                title: 'Announcement Updated',
+                text: 'Your announcement has been successfully updated.',
+            });
+        },
+        error: function (error) {
+            console.error('Error creating Announcement:', error);
 
-        Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: 'An error occurred while updating the announcement. Please try again.',
-        });
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'An error occurred while creating the Announcement. Please try again.',
+            });
+        }
     });
-});
+})
+
 
 
 function openUpdateModal(announcementId) {
