@@ -255,12 +255,10 @@ class ReportController extends Controller
     public function generateLaundryReport(Request $request)
     {
         set_time_limit(300); 
-        $branch = $request->input('branch');
         $change = $request->input('change');
         
         $query = Laundryschedule::select('laundryschedules.user_id', 'users.name', 'laundryschedules.laundrydate', 'laundryschedules.laundrytime', 'laundryschedules.status', 'laundryschedules.created_at')
-            ->join('users', 'laundryschedules.user_id', '=', 'users.id')
-            ->where('laundryschedules.branch', $branch);
+            ->join('users', 'laundryschedules.user_id', '=', 'users.id');
         switch ($change) {
             case 'Daily':
                 $query->whereDate('laundryschedules.created_at', today()->format('Y-m-d'));
