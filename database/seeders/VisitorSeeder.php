@@ -117,7 +117,7 @@ class VisitorSeeder extends Seeder
         foreach ($selectedEntries as $relation) {
             Visitor::create([
                 'name' => $relation['parentName'],
-                'phone' => $faker->phoneNumber,
+                'phone' => $relation['phone'],
                 'visit_date' => $faker->dateTimeBetween('-1 year', '+1 year')->format('Y-m-d H:i:s'),
                 'residentName' => $relation['residentName'],
                 'relationship' => $relation['relationship'],
