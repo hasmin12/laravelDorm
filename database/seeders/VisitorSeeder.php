@@ -121,7 +121,7 @@ class VisitorSeeder extends Seeder
                 'visit_date' => $faker->dateTimeBetween('-1 year', '+1 year')->format('Y-m-d H:i:s'),
                 'residentName' => $relation['residentName'],
                 'relationship' => $relation['relationship'],
-                'purpose' => $faker->sentence,
+                'purpose' => "Visit",
                 'validId' => $faker->randomElement([true, false]),
             ]);
         }
