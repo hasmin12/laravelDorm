@@ -20,66 +20,91 @@ class VisitorSeeder extends Seeder
                 'parentName' => 'Martha Strange',
                 'residentName' => 'Steven Strange',
                 'relationship' => 'Mother',
+                'phone' =>  '09323894542'  
             ],
             [
                 'parentName' => 'Jonathan Gorczany',
                 'residentName' => 'Melisa Gorczany',
                 'relationship' => 'Father',
+                'phone' => '09324782911',
+
             ],
             [
                 'parentName' => 'Jessica Mayert',
                 'residentName' => 'Macey Mayert',
                 'relationship' => 'Mother',
+                'phone' => '09438580796',
+                
             ],
             [
                 'parentName' => 'David Murray',
                 'residentName' => 'Kaitlin Murray',
                 'relationship' => 'Father',
+                'phone' => '09448964501',
+
             ],
             [
                 'parentName' => 'Sarah Hagenes',
                 'residentName' => 'Ezekiel Hagenes',
                 'relationship' => 'Mother',
+                'phone' => '09434700331',
+
             ],
             [
                 'parentName' => 'Kimberly Bergnaum',
                 'residentName' => 'Brendon Bergnaum',
                 'relationship' => 'Mother',
+                'phone' => '09331359456',
+
             ],
             [
                 'parentName' => 'Michael Farrell',
                 'residentName' => 'Sarai Farrell',
                 'relationship' => 'Father',
+                'phone' => '09547883457',
+
             ],
             [
                 'parentName' => 'Jennifer West',
                 'residentName' => 'Cristian West',
                 'relationship' => 'Mother',
+                'phone' => '09489947218',
+
             ],
             [
                 'parentName' => 'Nicholas Mayert',
                 'residentName' => 'Vella Mayert',
                 'relationship' => 'Father',
+                'phone' => '09947727492',
+
             ],
             [
                 'parentName' => 'Patricia Turner',
                 'residentName' => 'Jermain Turner',
                 'relationship' => 'Mother',
+                'phone' => '09486884927',
+
             ],
             [
                 'parentName' => 'Timothy Carter',
                 'residentName' => 'Linnie Carter',
                 'relationship' => 'Father',
+                'phone' => '09547829384',
+
             ],
             [
                 'parentName' => 'Amanda Wisoky',
                 'residentName' => 'Josie Wisoky',
                 'relationship' => 'Mother',
+                'phone' => '09544819384',
+
             ],
             [
                 'parentName' => 'Christopher Hegmann',
                 'residentName' => 'Izabella Hegmann',
                 'relationship' => 'Father',
+                'phone' => '09919727462',
+
             ],
         ];
 
