@@ -107,6 +107,13 @@ class VisitorSeeder extends Seeder
 
             ],
         ];
+        $visitPurposes = [
+            'Medical check-up',
+            'Social visit',
+            'Delivery of goods',
+            'Education consultation',
+            'Meeting with resident',
+        ];
 
         // Shuffle the array to randomize the order
         shuffle($residentParentRelationships);
@@ -121,7 +128,7 @@ class VisitorSeeder extends Seeder
                 'visit_date' => $faker->dateTimeBetween('-1 year', '+1 year')->format('Y-m-d H:i:s'),
                 'residentName' => $relation['residentName'],
                 'relationship' => $relation['relationship'],
-                'purpose' => "Visit",
+                'purpose' => $visitPurposes[array_rand($visitPurposes)],
                 'validId' => $faker->randomElement([true, false]),
             ]);
         }
