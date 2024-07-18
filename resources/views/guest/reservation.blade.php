@@ -155,7 +155,7 @@
                     <div class="modal-body">
                         <div class="row">
                             <!-- Carousel for Room Images -->
-                            <div class="col-md-6">
+                            <div class="col-md-6 mx-2">
                                 <div id="roomImageCarousel" class="carousel slide" data-ride="carousel">
                                     <div class="carousel-inner">
                                         <!-- Carousel items will be added here dynamically -->
@@ -163,7 +163,7 @@
                                 </div>
                                 <div id="roomImageContainer"></div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6 mx-2">
                                 <h5 id="modalRoomName"></h5>
                                 <p id="modalRoomDescription"></p>
                                 <p id="modalRoomType"></p>
