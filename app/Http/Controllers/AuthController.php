@@ -88,9 +88,8 @@ class AuthController extends Controller
 
     public function getAnnouncements()
     {
-        $branch = Auth::user()->branch;
 
-        $announcements = Announcement::with('comments')->where('branch', $branch)->get();
+        $announcements = Announcement::with('comments')->where('branch', 'Dormitory')->get();
 
         return response()->json(['announcements' => $announcements]);
     }

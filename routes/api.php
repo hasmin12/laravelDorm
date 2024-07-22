@@ -51,6 +51,8 @@ Route::get('/getRooms', 'AdminController@getRooms');
 Route::get('/getResidents', 'AdminController@getResidents');
 Route::get('/getApplicants', 'AdminController@getApplicants');
 
+Route::get('/getAnnouncements', 'AuthController@getAnnouncements');
+
 Route::group(['middleware' => ['auth:sanctum']], function(){
     
     Route::get('/getResidentDataByType', 'ChartController@getResidentDataByType');
@@ -97,7 +99,6 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
 
     
 
-    Route::get('/getAnnouncements', 'AuthController@getAnnouncements');
     Route::get('/getAnnouncement/{id}', 'AdminController@getAnnouncement');
     Route::post('/createAnnouncement', 'AdminController@createAnnouncement');
     Route::post('updateAnnouncement/{id}', 'AdminController@updateAnnouncement');
