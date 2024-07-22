@@ -10,6 +10,8 @@ use App\Models\Announcement;
 use App\Models\Notification;
 use App\Models\Maintenancelist;
 use App\Models\User;
+use App\Models\Comment;
+
 
 class AuthController extends Controller
 {
@@ -92,6 +94,14 @@ class AuthController extends Controller
         $announcements = Announcement::with('comments')->where('branch', 'Dormitory')->get();
 
         return response()->json(['announcements' => $announcements]);
+    }
+
+    public function getComments(Request $request)
+    {
+
+        $comments = Comment::where('announcement_id', $request->input('announcement_id'))->get();
+
+        return response()->json(['comments' => $comments]);
     }
 
     public function notificationRead()

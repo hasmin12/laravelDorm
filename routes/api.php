@@ -52,6 +52,8 @@ Route::get('/getResidents', 'AdminController@getResidents');
 Route::get('/getApplicants', 'AdminController@getApplicants');
 Route::get('/getLostitems', 'AdminController@getLostitems');
     Route::post('/addComment', 'ResidentController@addComment');
+    Route::get('/getComments', 'AuthController@getComments');
+
 
 Route::get('/getAnnouncements', 'AuthController@getAnnouncements');
 
