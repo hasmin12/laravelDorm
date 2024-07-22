@@ -50,6 +50,7 @@ Route::get('/getAllSleepLogs', 'AdminController@getAllSleepLogs');
 Route::get('/getRooms', 'AdminController@getRooms');
 Route::get('/getResidents', 'AdminController@getResidents');
 Route::get('/getApplicants', 'AdminController@getApplicants');
+Route::get('/getLostitems', 'AdminController@getLostitems');
 
 Route::get('/getAnnouncements', 'AuthController@getAnnouncements');
 
@@ -110,7 +111,6 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::post('updateRoom/{id}', 'AdminController@updateRoom');
     Route::delete('deleteRoom/{id}', 'AdminController@deleteRoom');
 
-    Route::get('/getLostitems', 'AdminController@getLostitems');
     Route::get('/getLostitem/{id}', 'AdminController@getLostitem');
     Route::post('/lostitem', 'AdminController@createLostitem');
     Route::post('updateLostitem/{id}', 'AdminController@updateLostitem');
