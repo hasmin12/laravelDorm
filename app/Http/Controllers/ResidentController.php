@@ -103,16 +103,16 @@ class ResidentController extends Controller
             $comment = Comment::create([
                 'content' =>  $request->input('content'),
                 'announcement_id' =>  $request->input('announcement_id'),
-                'user_id' =>  Auth::user()->id,
-                'username' =>  Auth::user()->name,
-                'userImage' =>  Auth::user()->img_path,
+                'user_id' =>  2,
+                'username' =>  'Dormitory Resident',
+                'userImage' =>  '/images/1714569792.png',
             ]);
             $notification = Notification::create([
-                'sender_id' => Auth::user()->id,
-                'senderName' => Auth::user()->name,
+                'sender_id' => 2,
+                'senderName' => 'Dormitory Resident',
                 'receiver_id' => 1,
                 'notification_type' => "Announcement Comment",
-                'message' => Auth::user()->name." add a comment"
+                'message' => "Dormitory Resident' add a comment"
             ]);
             return response()->json(['comment' => $comment], 201);
         } catch (\Exception $e) {
