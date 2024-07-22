@@ -51,6 +51,7 @@ Route::get('/getRooms', 'AdminController@getRooms');
 Route::get('/getResidents', 'AdminController@getResidents');
 Route::get('/getApplicants', 'AdminController@getApplicants');
 Route::get('/getLostitems', 'AdminController@getLostitems');
+    Route::post('/addComment', 'ResidentController@addComment');
 
 Route::get('/getAnnouncements', 'AuthController@getAnnouncements');
 
@@ -150,7 +151,6 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::get('/notifyViolations', 'AdminController@notifyResidents');
     Route::get('/dischargeResident/{id}', 'AdminController@dischargeResident');
     Route::get('/ReActivateResident/{id}', 'AdminController@ReActivateResident');
-    Route::post('/addComment', 'ResidentController@addComment');
     Route::get('/notificationRead', 'AuthController@notificationRead');
 
     
