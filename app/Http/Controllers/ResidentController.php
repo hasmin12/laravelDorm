@@ -241,7 +241,7 @@ class ResidentController extends Controller
     public function createLaundrySchedule(Request $request)
 {
     try {
-        $user = User::find(2);
+        $user = Auth::user();
 
         if ($user->is_scheduled === 0) {
             $input = $request->all();
@@ -312,7 +312,7 @@ class ResidentController extends Controller
             ]);
 
             $notification = Notification::create([
-                'sender_id' => 2,
+                'sender_id' => Auth::user()->id,
                 'receiver_id' => 1,
                 'notification_type' => "Complaint",
                 'message' => $request->input('name')." makes a complaint"
@@ -348,7 +348,7 @@ class ResidentController extends Controller
                     'dateLog' => $ldate,
                 ]);
                 $notification = Notification::create([
-                    'sender_id' => 2,
+                    'sender_id' => Auth::user()->id,
                     'senderName' => 'Dormitory Resident',
                     'receiver_id' => 1,
                     'notification_type' => "Resident Logs",

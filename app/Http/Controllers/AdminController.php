@@ -883,7 +883,6 @@ public function getResident($id)
     {
         try {
             $user = User::find(1);
-            Log::info($user);
             $title = $request->input('title');
 
             $content = $request->input('content');
@@ -1190,7 +1189,7 @@ public function getResident($id)
                 ]);
 
                 $notifs = Notification::create([
-                    'sender_id' => 2,
+                    'sender_id' => Auth::user()->id,
                     'senderName' => 'Admin Account',
 
                     'receiver_id' => $resident->id,
