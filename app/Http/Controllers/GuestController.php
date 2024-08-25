@@ -145,24 +145,24 @@ class GuestController extends Controller
             ]);
 
             $qrCodeText = Str::random(10);
-            $qrCode = Builder::create()
-                ->writer(new PngWriter())
-                ->writerOptions([])
-                ->data($qrCodeText)
-                ->encoding(new Encoding('UTF-8'))
-                ->size(250)
-                ->margin(10)
-                ->build();
+            // $qrCode = Builder::create()
+            //     ->writer(new PngWriter())
+            //     ->writerOptions([])
+            //     ->data($qrCodeText)
+            //     ->encoding(new Encoding('UTF-8'))
+            //     ->size(250)
+            //     ->margin(10)
+            //     ->build();
 
-            $qrCodePath = 'qrcodes/' . time() . '_qrcode.png'; 
-            Storage::put($qrCodePath, $qrCode->getString());
+            // $qrCodePath = 'qrcodes/' . time() . '_qrcode.png'; 
+            // Storage::put($qrCodePath, $qrCode->getString());
 
             $reservation->update([
                 'qrcode' => $qrCodeText,
-                'qrcodeImage' => $qrCodePath,
+                // 'qrcodeImage' => $qrCodePath,
             ]);
 
-        Mail::to($request->input('email'))->send(new ReservationConfirmation($reservation));
+        // Mail::to($request->input('email'))->send(new ReservationConfirmation($reservation));
 
         return response()->json(['message' => 'Reservation created successfully', 'reservation' => $reservation]);
     } catch (\Exception $e) {
