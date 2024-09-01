@@ -16,63 +16,63 @@ use App\Models\Comment;
 class AuthController extends Controller
 {
     public function signin(Request $request)
-    {
-        try {
-            $credentials = $request->validate([
-                'email' => 'required|email',
-                'password' => 'required',
-            ]);
+{
+    try {
+        // Validate request input
+        $credentials = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
 
-            // Retrieve the user by email
-            $user = User::where('email', $credentials['email'])->first();
+        // Retrieve the user by email
+        $user = User::where('email', $credentials['email'])->first();
 
-            // Check if the user exists
-            if ($user) {
-                // Check if the user is active
-                if ($user->status == "Applicant") {
-                    return response()->json([
-                        'success' => false,
-                        'message' => 'Please wait for confirmation of your Application'
-                    ], 401);
-                }
+        // Check if the user exists
+        if ($user) {
+            // Check if the user is active
+            if ($user->status === "Applicant") {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Please wait for confirmation of your Application'
+                ], 401);
+            }
 
-                // Attempt authentication
-                if (Auth::attempt($credentials)) {
-                    $user = Auth::user(); 
+            // Attempt authentication
+            if (Auth::attempt($credentials)) {
+                $user = Auth::user(); 
 
-                    $token = $user->createToken('remember_token')->plainTextToken;
-                    $user->remember_token = $token;
-                    $user->save();
-                    return response()->json([
-                        'success' => true,
-                        'token' => $token,
-                        'Type' => 'Bearer',
-                        'user' => $user,
-                        'email' => $user->email,
-                    ]);
-                } else {
+                // Create a Personal Access Token
+                $token = $user->createToken('Personal Access Token')->plainTextToken;
 
-                    return response()->json([
-                        'success' => false,
-                        'message' => 'Wrong credentials'
-                    ], 401);
-                }
+                return response()->json([
+                    'success' => true,
+                    'token' => $token,
+                    'Type' => 'Bearer',
+                    'user' => $user,
+                    'email' => $user->email,
+                ]);
             } else {
                 return response()->json([
                     'success' => false,
-                    'message' => 'User not found'
-                ], 404);
+                    'message' => 'Wrong credentials'
+                ], 401);
             }
-
-        } catch (\Exception $e) {
-            // Log any other exceptions that may occur
-
+        } else {
             return response()->json([
                 'success' => false,
-                'message' => 'An error occurred during login.'
-            ], 500);
+                'message' => 'User not found'
+            ], 404);
         }
+
+    } catch (\Exception $e) {
+        // Log any other exceptions that may occur
+        return response()->json([
+            'success' => false,
+            'message' => 'An error occurred during login.'
+        ], 500);
     }
+}
+
     public function getAuthUser()
     {
         $user = Auth::user();
