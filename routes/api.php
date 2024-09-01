@@ -49,6 +49,7 @@ Route::post('/mobile/createMaintenance/{id}', 'MobileResidentController@createMa
 
 Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::get('signout', 'AuthController@signout');
+    Route::get('/myPaymentHistory', 'ResidentController@myPaymentHistory');
 
     Route::get('/getLogs/{id}', 'AdminController@getLogs');
     Route::get('/getReservations', 'AdminController@getReservations');
