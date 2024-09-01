@@ -85,21 +85,11 @@ class AuthController extends Controller
     public function signout(Request $request)
     {
         try {
-            $user = $request->user(); // Get the currently authenticated user
-
-            // Ensure the user has a current access token
-            $currentToken = $user->currentAccessToken();
+            auth()->user()->tokens()->delete();
             
-            if ($currentToken) {
-                // Delete the current access token
-                $currentToken->delete();
-            }
-            
-            // Optionally, log out from the web guard and invalidate the session
             Auth::guard('web')->logout();
             $request->session()->invalidate();
 
-            // Return a successful response
             return response()->json([
                 'success' => true,
                 'message' => 'Successfully logged out',
