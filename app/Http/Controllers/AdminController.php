@@ -1156,7 +1156,7 @@ public function getResident($id)
 
 
             foreach ($residents as $resident) {
-                // Mail::to($resident->email)->send(new NotifyMail($currentMonth));
+                Mail::to($resident->email)->send(new NotifyMail($currentMonth));
                 $totalAmount = 1000;
                 if ($resident->laptop === 1) {
                     $totalAmount = $totalAmount + 150;
