@@ -15,64 +15,64 @@ use App\Models\Comment;
 
 class AuthController extends Controller
 {
-    public function signin(Request $request)
-{
-    try {
-        $credentials = $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
+        public function signin(Request $request)
+    {
+        try {
+            $credentials = $request->validate([
+                'email' => 'required|email',
+                'password' => 'required',
+            ]);
 
-        // Retrieve the user by email
-        $user = User::where('email', $credentials['email'])->first();
+            // Retrieve the user by email
+            $user = User::where('email', $credentials['email'])->first();
 
-        // Check if the user exists
-        if ($user) {
-            // Check if the user is active
-            if ($user->status == "Applicant") {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Please wait for confirmation of your Application'
-                ], 401);
-            }
+            // Check if the user exists
+            if ($user) {
+                // Check if the user is active
+                if ($user->status == "Applicant") {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Please wait for confirmation of your Application'
+                    ], 401);
+                }
 
-            // Attempt authentication
-            if (Auth::attempt($credentials)) {
-                $user = Auth::user(); 
+                // Attempt authentication
+                if (Auth::attempt($credentials)) {
+                    $user = Auth::user(); 
 
-                $token = $user->createToken('remember_token')->plainTextToken;
-                $user->remember_token = $token;
-                $user->save();
-                return response()->json([
-                    'success' => true,
-                    'token' => $token,
-                    'Type' => 'Bearer',
-                    'user' => $user,
-                    'email' => $user->email,
-                ]);
+                    $token = $user->createToken('remember_token')->plainTextToken;
+                    $user->remember_token = $token;
+                    $user->save();
+                    return response()->json([
+                        'success' => true,
+                        'token' => $token,
+                        'Type' => 'Bearer',
+                        'user' => $user,
+                        'email' => $user->email,
+                    ]);
+                } else {
+
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Wrong credentials'
+                    ], 401);
+                }
             } else {
-
                 return response()->json([
                     'success' => false,
-                    'message' => 'Wrong credentials'
-                ], 401);
+                    'message' => 'User not found'
+                ], 404);
             }
-        } else {
+
+        } catch (\Exception $e) {
+            // Log any other exceptions that may occur
+
             return response()->json([
                 'success' => false,
-                'message' => 'User not found'
-            ], 404);
+                'message' => 'An error occurred during login.'
+            ], 500);
         }
-
-    } catch (\Exception $e) {
-        // Log any other exceptions that may occur
-
-        return response()->json([
-            'success' => false,
-            'message' => 'An error occurred during login.'
-        ], 500);
     }
-}
     public function getAuthUser()
     {
         $user = Auth::user();
@@ -84,11 +84,34 @@ class AuthController extends Controller
 
     public function signout(Request $request)
     {
-        $request->user()->currentAccessToken()->delete();
-        Auth::guard('web')->logout();
-        $request->session()->invalidate();
-        return response()->json(['message' => 'Successfully logged out']);
+        try {
+            $user = $request->user();
+
+            // Ensure a token is associated with the user
+            if ($user && $user->currentAccessToken()) {
+                $user->currentAccessToken()->delete(); // Revoke the current token
+            }
+
+            // Log out the user from the guard
+            Auth::guard('web')->logout();
+
+            // Invalidate the session
+            $request->session()->invalidate();
+
+            // Return a success response
+            return response()->json([
+                'success' => true,
+                'message' => 'Successfully logged out',
+            ]);
+        } catch (\Exception $e) {
+            // Log any exceptions that may occur
+            return response()->json([
+                'success' => false,
+                'message' => 'An error occurred during logout.',
+            ], 500);
+        }
     }
+
 
     public function getAnnouncements()
     {
