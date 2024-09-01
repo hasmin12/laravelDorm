@@ -15,7 +15,7 @@ use App\Models\Comment;
 
 class AuthController extends Controller
 {
-        public function signin(Request $request)
+    public function signin(Request $request)
     {
         try {
             $credentials = $request->validate([
@@ -85,32 +85,34 @@ class AuthController extends Controller
     public function signout(Request $request)
     {
         try {
-            $user = $request->user();
+            $user = $request->user(); // Get the currently authenticated user
 
-            // Ensure a token is associated with the user
-            if ($user && $user->currentAccessToken()) {
-                $user->currentAccessToken()->delete(); // Revoke the current token
+            // Ensure the user has a current access token
+            $currentToken = $user->currentAccessToken();
+            
+            if ($currentToken) {
+                // Delete the current access token
+                $currentToken->delete();
             }
-
-            // Log out the user from the guard
+            
+            // Optionally, log out from the web guard and invalidate the session
             Auth::guard('web')->logout();
-
-            // Invalidate the session
             $request->session()->invalidate();
 
-            // Return a success response
+            // Return a successful response
             return response()->json([
                 'success' => true,
                 'message' => 'Successfully logged out',
             ]);
         } catch (\Exception $e) {
-            // Log any exceptions that may occur
+            // Handle any exceptions that may occur
             return response()->json([
                 'success' => false,
                 'message' => 'An error occurred during logout.',
             ], 500);
         }
     }
+
 
 
     public function getAnnouncements()
