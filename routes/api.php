@@ -48,6 +48,8 @@ Route::post('/mobile/createMaintenance/{id}', 'MobileResidentController@createMa
 
 
 Route::group(['middleware' => ['auth:sanctum']], function(){
+    Route::get('signout', 'AuthController@signout');
+
     Route::get('/getLogs/{id}', 'AdminController@getLogs');
     Route::get('/getReservations', 'AdminController@getReservations');
     Route::get('/updateReservationStatus', 'AdminController@updateReservationStatus');

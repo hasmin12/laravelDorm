@@ -75,23 +75,23 @@ $(document).ready(function() {
 
     $("#logoutButton").on("click", function (e) {
         e.preventDefault();
-
+        const token = localStorage.getItem('token');
+    
         $.ajax({
             type: "GET",
-            url: "/signout",
+            url: "/api/signout",
             data: null,
             contentType: false,
             processData: false,
             headers: {
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+                "Authorization": `Bearer ${token}` 
             },
-            
             dataType: "json",
             success: function (data) {
-              
                 localStorage.removeItem("token");
                 localStorage.removeItem("email");
-
+    
                 Swal.fire({
                     icon: 'success',
                     text: 'Logout Successful.',
@@ -103,6 +103,7 @@ $(document).ready(function() {
             },
         });
     });
+    
 
     function getAuthUser() {
         fetch('/getAuthUser', {
