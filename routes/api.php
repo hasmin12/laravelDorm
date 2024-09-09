@@ -50,6 +50,7 @@ Route::post('/mobile/createMaintenance/{id}', 'MobileResidentController@createMa
 Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::get('signout', 'AuthController@signout');
     Route::get('/myPaymentHistory', 'ResidentController@myPaymentHistory');
+    Route::post('/createPayment', 'ResidentController@createPayment');
 
     Route::get('/getLogs/{id}', 'AdminController@getLogs');
     Route::get('/getReservations', 'AdminController@getReservations');
@@ -114,7 +115,7 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::get('/notifyViolations', 'AdminController@notifyResidents');
     Route::get('/dischargeResident/{id}', 'AdminController@dischargeResident');
     Route::get('/ReActivateResident/{id}', 'AdminController@ReActivateResident');
-    
+
     Route::get('/myReservations', 'ResidentController@myReservations');
     Route::post('createLaundrySchedule', 'ResidentController@createLaundrySchedule');
     Route::get('/sendSleep', 'ResidentController@sendSleep');
@@ -141,28 +142,28 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::get('/generatePdf', 'ChartController@generatePdf');
 
 
-    
- 
-    
 
-   
 
-    
+
+
+
+
+
 
     // Route::get('/resident/getAnnouncements', 'ResidentController@getAnnouncements');
 
 
-    
- 
 
 
 
-    
+
+
+
 
 
     Route::post('/acceptMaintenance', 'TechnicianController@acceptMaintenance');
     Route::get('/getMaintenanceStatus', 'TechnicianController@getMaintenanceStatus');
-    
+
     Route::post('/addMaintenanceStatus', 'TechnicianController@addMaintenanceStatus');
     Route::get('/technician/getMaintenance', 'TechnicianController@getMaintenance');
     //charts
@@ -183,7 +184,7 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::get('/laundryReport', 'ReportController@laundryReport');
     Route::get('/generateLaundryReport', 'ReportController@generateLaundryReport');
 
-    
+
 });
 Route::post('/googleSigninMobile', 'GoogleSocialiteController@googleSigninMobile');
 
