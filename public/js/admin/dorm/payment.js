@@ -48,17 +48,29 @@ document.addEventListener('DOMContentLoaded', function () {
         tableBody.innerHTML = ''; // Clear existing table rows
 
         payments.forEach(payment => {
+            // Construct the full image URL if img_path is not null
+            const imageUrl = payment.img_path ? `${BASE_URL}${payment.img_path}` : null;
+            // Check if payment.receipt or payment.img_path is null
+            const viewImageButton = payment.img_path
+                ? `<button class="btn btn-primary" onclick="viewImage('${imageUrl}')">View Image</button>`
+                : '-';
+            const receipt = payment.receipt ? payment.receipt : '-';
+
             const row = document.createElement('tr');
             row.innerHTML = `
-                <td class="text-dark">${payment.img_path}</td>
+                <td class="text-dark">${viewImageButton}</td>
                 <td class="text-dark">${payment.user_id}</td>
-                <td class="text-dark">${payment.receipt}</td>
+                <td class="text-dark">${receipt}</td>
                 <td class="text-dark">${payment.totalAmount}</td>
                 <td class="text-dark">${payment.status}</td>
                 <td class="text-dark">${payment.payment_month}</td>
             `;
             tableBody.appendChild(row);
         });
+    }
+
+    function viewImage(imgUrl) {
+        window.open(imgUrl, '_blank');
     }
 
     function displayPayment(monthyear) {
@@ -69,13 +81,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 'Authorization': `Bearer ${token}`,
             },
         })
-        .then(response => response.json())
-        .then(data => {
-            const filteredPayments = data.payments.filter(payment => payment.payment_month === monthyear);
-            // Populate table with filtered payments data
-            populateTable(filteredPayments);
-        })
-        .catch(error => console.error('Error fetching payments:', error));
+            .then(response => response.json())
+            .then(data => {
+                const filteredPayments = data.payments.filter(payment => payment.payment_month === monthyear);
+                // Populate table with filtered payments data
+                populateTable(filteredPayments);
+            })
+            .catch(error => console.error('Error fetching payments:', error));
     }
 
     monthyeardropdown.addEventListener('change', function () {
