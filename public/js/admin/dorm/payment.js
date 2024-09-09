@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         payments.forEach(payment => {
             // Construct the full image URL if img_path is not null
-            const imageUrl = payment.img_path ? `${BASE_URL}${payment.img_path}` : null;
+            const imageUrl = payment.img_path ? `https://dormxtend.online${payment.img_path}` : null;
             // Check if payment.receipt or payment.img_path is null
             const viewImageButton = payment.img_path
                 ? `<button class="btn btn-primary" onclick="viewImage('${imageUrl}')">View Image</button>`
