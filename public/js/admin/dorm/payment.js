@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const imageUrl = payment.img_path ? `https://dormxtend.online${payment.img_path}` : null;
             // Check if payment.receipt or payment.img_path is null
             const viewImageButton = payment.img_path
-                ? `<button class="btn btn-primary" onclick="viewImage('${imageUrl}')">View Image</button>`
+                ? `<a href="${imageUrl}" target="_blank">Receipt</a>`
                 : '-';
             const receipt = payment.receipt ? payment.receipt : '-';
 
