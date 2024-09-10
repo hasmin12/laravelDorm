@@ -29,9 +29,9 @@ return new class extends Migration
             $table->text('age')->nullable();
             $table->text('sex')->nullable();
             $table->text('religion')->nullable();
-            $table->text('civil_status')->nullable();    
-            $table->text('address');                    
-            $table->text('contactNumber');
+            $table->text('civil_status')->nullable();
+            $table->text('address')->nullable();
+            $table->text('contactNumber')->nullable();
             $table->text('Tuptnum')->nullable();
             $table->text('contract')->nullable();
             $table->text('cor')->nullable();
@@ -41,10 +41,10 @@ return new class extends Migration
 
             $table->integer('laptop')->default(0);
             $table->integer('electricfan')->default(0);
-            
+
             $table->date('lastpaidDate')->nullable();
             $table->boolean('is_paid')->default(0);
-            $table->boolean('is_scheduled')->default(0);     
+            $table->boolean('is_scheduled')->default(0);
             $table->text('room')->nullable();
             $table->text('bed')->nullable();
 

@@ -84,17 +84,17 @@ class GuestController extends Controller
                 'price' => $room->price,
                 'status' => $room->status,
                 'rating' => $room->rating,
-                'img_path' => $room->img_path, 
-                'img_paths' => $room->images()->pluck('path')->toArray(), 
+                'img_path' => $room->img_path,
+                'img_paths' => $room->images()->pluck('path')->toArray(),
                 'reservations' => $room->reservations,
-                'wifi' => $room->wifi, 
+                'wifi' => $room->wifi,
                 'air_conditioning' => $room->air_conditioning,
                 'kettle' => $room->kettle,
                 'tv_with_cable' => $room->tv_with_cable,
                 'hot_shower' => $room->hot_shower,
                 'refrigerator' => $room->refrigerator,
                 'kitchen' => $room->kitchen,
-                'hair_dryer' => $room->hair_dryer,     
+                'hair_dryer' => $room->hair_dryer,
             ];
         });
 
@@ -116,7 +116,7 @@ class GuestController extends Controller
             $path = $request->file('img_path')->storeAs('reserve', $fileName, 'public');
             $img_path = '/storage/' . $path;
 
-           
+
             $hostelRoom = Hostelroom::find($request->input('room_id'));
 
             $reservation = Reservation::create([
@@ -154,7 +154,7 @@ class GuestController extends Controller
             //     ->margin(10)
             //     ->build();
 
-            // $qrCodePath = 'qrcodes/' . time() . '_qrcode.png'; 
+            // $qrCodePath = 'qrcodes/' . time() . '_qrcode.png';
             // Storage::put($qrCodePath, $qrCode->getString());
 
             $reservation->update([
@@ -173,7 +173,7 @@ class GuestController extends Controller
 
 
 
-   
+
 
     public function createRegistration(Request $request)
     {
@@ -240,6 +240,33 @@ class GuestController extends Controller
 
         return response()->json(['message' => 'Registration successful', 'user' => $user]);
     }
+
+    public function register(Request $request)
+    {
+        Log::info($request);
+
+        // Handle file upload
+        $fileName1 = time() . $request->file('img_path')->getClientOriginalName();
+        $path1 = $request->file('img_path')->storeAs('residents', $fileName1, 'public');
+        $img_path = '/storage/' . $path1;
+
+        // Create new user
+        $user = User::create([
+            'email' => $request->input('email'),
+            'password' => bcrypt($request->input('password')),
+            'role' => 'Resident',
+            'branch' => 'Dormitory',
+            'type' => $request->input('type'),
+            'img_path' => $img_path,
+            'name' => $request->input('name'),
+            'Tuptnum' => $request->input('Tuptnum'),
+            'status' => 'Applicant',
+        ]);
+
+        return redirect()->route('login')
+                        ->with('success', 'Registration successful. Please wait for confirmation.');
+    }
+
 
     public function addVisitor(Request $request)
     {

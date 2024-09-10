@@ -2,8 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GoogleSocialiteController;
-// use App\Models\Resident; 
-/*  
+use App\Http\Controllers\GuestController;
+
+// use App\Models\Resident;
+/*
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
@@ -35,8 +37,8 @@ use App\Http\Controllers\GoogleSocialiteController;
     Route::get('callback/google', [GoogleSocialiteController::class, 'handleCallback']);
     Route::get('callback/googleMobile', [GoogleSocialiteController::class, 'handleCallbackMobile']);
 
-    
-    
+
+
     Route::get('/', function () {
         return view('welcome');
     })->name('welcome');
@@ -58,7 +60,7 @@ use App\Http\Controllers\GoogleSocialiteController;
         return view('guest.register');
     })->name('register');
 
-   
+
     // Route::post('signin', 'AuthController@signin');
     Route::post('signin', 'AuthController@signin');
 
@@ -90,7 +92,7 @@ Route::middleware(['adminbranch:Dormitory'])->group(function () {
         Route::get('/inactive', function () {
             return view('admin.dorm.inactive');
         });
-        
+
 
         Route::get('/applicants', function () {
             return view('admin.dorm.applicants');
@@ -99,7 +101,7 @@ Route::middleware(['adminbranch:Dormitory'])->group(function () {
         Route::get('/registereduser', function () {
             return view('admin.dorm.registered');
         });
-        
+
         //incomplete
         Route::get('/rooms', function () {
             return view('admin.dorm.rooms');
@@ -123,7 +125,7 @@ Route::middleware(['adminbranch:Dormitory'])->group(function () {
         Route::get('/newresident', function () {
             return view('admin.dorm.newresident');
         });
-        
+
         //incomplete
         Route::get('/laundry', function () {
             return view('admin.dorm.laundry');
@@ -167,7 +169,12 @@ Route::middleware(['adminbranch:Dormitory'])->group(function () {
 
     });
 });
-    
+
+
+
+Route::post('/dormregister', [GuestController::class, 'register']);
+
+
 Route::middleware(['adminbranch:Hostel'])->group(function () {
     Route::prefix('admin/hostel')->group(function () {
 
@@ -179,8 +186,8 @@ Route::middleware(['adminbranch:Hostel'])->group(function () {
             return view('admin.hostel.residents');
         });
 
-       
-        
+
+
         //incomplete
         Route::get('/rooms', function () {
             return view('admin.hostel.rooms');
@@ -254,7 +261,7 @@ Route::middleware(['adminbranch:Hostel'])->group(function () {
             Route::get('/payments', function () {
                 return view('resident.payments');
             });
-            
+
             Route::get('/reservations', function () {
                 return view('resident.reservations');
             });
@@ -264,8 +271,8 @@ Route::middleware(['adminbranch:Hostel'])->group(function () {
 
     Route::group(['middleware' => ['role:Technician']], function () {
         Route::prefix('technician')->group(function () {
-            
-            
+
+
             Route::get('/maintenance', function () {
                 return view('technician.maintenance');
             });
