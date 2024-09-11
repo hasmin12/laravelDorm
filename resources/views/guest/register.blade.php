@@ -218,7 +218,7 @@
 
 
 
-{{-- <script src="{{ asset('js/guest/registration.js') }}"></script> --}}
+{{-- <script src="{{ secure_asset('js/guest/registration.js') }}"></script> --}}
 <br>
 <br>
 <br>

@@ -108,7 +108,7 @@
 
     </div>
     <!-- Content End -->
-    <script src="{{ asset('js/admin/dorm/violation.js') }}"></script>
+    <script src="{{ secure_asset('js/admin/dorm/violation.js') }}"></script>
     <!-- Back to Top -->
     <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
 </div>
