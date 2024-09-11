@@ -20,10 +20,10 @@
             <h3 class="mb-0">Announcement</h3>
         </div>
 
-        <div class="container my-5 py-5">
+        <div class="container my-5 " style="padding-bottom: 3rem;">
             <div class="row d-flex justify-content-center">
                 <div class="col-md-12 col-lg-10 col-xl-8">  
-                    <div id="announcements-container">
+                    <div id="announcements-container" style="border-bottom: 2px solid rgb(0, 0, 0);">
                         <!-- Display existing announcements here using JavaScript -->
                     </div>       
                 </div>
@@ -73,5 +73,5 @@ function getAuthUser() {
 }
 </script>
 
-<script src="{{ secure_asset('js/resident/announcement.js') }}"></script>
+<script src="{{ asset('js/resident/announcement.js') }}"></script>
 @endsection

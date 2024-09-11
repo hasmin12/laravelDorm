@@ -41,4 +41,4 @@
     </div>
 </nav>
 <!-- Navbar End -->
-<script src="{{ secure_asset('js/auth.js') }}"></script>
+<script src="{{ asset('js/auth.js') }}"></script>
