@@ -24,10 +24,10 @@ function fetchLostItems() {
                 cardContainer.classList.add('col-sm-12', 'col-md-4');
 
                 const cardContent = `
-                    <div class="card h-100" style="cursor: pointer;" onclick="showItemDetails('${lostItem.itemName}', '${lostItem.img_path}', '${lostItem.findersName}', '${lostItem.status}', '${lostItem.dateLost}', '${lostItem.locationLost}')">
+                    <div class="card  h-100" style="cursor: pointer;" onclick="showItemDetails('${lostItem.itemName}', '${lostItem.img_path}', '${lostItem.findersName}', '${lostItem.status}', '${lostItem.dateLost}', '${lostItem.locationLost}')">
                         <div class="card-body">
                             <h5 class="card-title">${lostItem.itemName}</h5>
-                            <img src="${lostItem.img_path}" alt="Lost Item Image" class="card-img-top" style="max-height: 150px;">
+                            <img src="${lostItem.img_path}" alt="Lost Item Image" class="card-img-top img-fluid" style="max-height: 250px;">
                             <!-- Add other fields as needed -->
                           
                         </div>
