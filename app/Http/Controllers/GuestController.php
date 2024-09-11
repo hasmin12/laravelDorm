@@ -261,7 +261,7 @@ class GuestController extends Controller
             'name' => $request->input('name'),
             'Tuptnum' => $request->input('Tuptnum'),
             'address' => "Taguig City",
-
+            'contactNumber' => "9042343276",
             'status' => 'Applicant',
         ]);
 
