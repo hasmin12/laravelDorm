@@ -171,6 +171,21 @@
 
             </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            @if (session('success'))
+                Toastify({
+                    text: "{{ session('success') }}",
+                    duration: 3000,
+                    close: true,
+                    gravity: "top", // or "bottom"
+                    position: "right", // or "left"
+                    backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
+                }).showToast();
+            @endif
+        });
+    </script>
     <script src="{{ secure_asset('js/auth.js') }}"></script>
     </section>
 
