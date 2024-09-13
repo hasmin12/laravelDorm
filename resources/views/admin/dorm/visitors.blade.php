@@ -21,6 +21,11 @@
                 
                 {{-- <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createVisitorModal">Create Lost Item</button> --}}
             </div>
+            <style>
+                thead {
+                    background-color: salmon;
+                }
+            </style>
           
             <div class="table-responsive">
                 <table class="table text-start align-middle table-bordered table-hover mb-0">
