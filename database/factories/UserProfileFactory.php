@@ -22,8 +22,25 @@ class UserProfileFactory extends Factory
     {
         static $user_id = 1;
         return [
-            'company_name' => $this->faker->words(2,true),
-            'country' => $this->faker->country,
+            'course' => $this->faker->word,
+            'year' => $this->faker->numberBetween(1, 4),
+            'birthdate' => $this->faker->date,
+            'age' => $this->faker->numberBetween(18, 60),
+            'religion' => $this->faker->word,
+            'civil_status' => $this->faker->word,
+            'address' => $this->faker->address,
+            'contactNumber' => $this->faker->phoneNumber,
+            'Tuptnum' => $this->faker->word,
+            'contract' => $this->faker->word,
+            'cor' => $this->faker->word,
+            'validID' => $this->faker->word,
+            'vaccineCard' => $this->faker->word,
+            'applicationForm' => $this->faker->word,
+            'laptop' => $this->faker->boolean,
+            'electricfan' => $this->faker->boolean,
+            'is_paid' => $this->faker->boolean,
+            'is_scheduled' => $this->faker->boolean,
+
             'user_id' => $user_id++
         ];
     }

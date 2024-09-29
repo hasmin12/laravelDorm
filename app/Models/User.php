@@ -25,10 +25,16 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
         'first_name',
         'last_name',
         'phone_number',
+        'branch',
+        'maintenance',
+        'type',
+        'sex',
+
         'status',
         'banned',
         'email',
         'password',
+        'image_path',
     ];
 
     /**
@@ -59,5 +65,15 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
 
     public function userProfile() {
         return $this->hasOne(UserProfile::class, 'user_id', 'id');
+    }
+
+    public function laundrySchedules()
+    {
+        return $this->hasMany(LaundrySchedule::class);
+    }
+
+    public function sleepLogs()
+    {
+        return $this->hasMany(SleepLog::class);
     }
 }

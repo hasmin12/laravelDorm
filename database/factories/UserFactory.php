@@ -8,37 +8,30 @@ use Illuminate\Support\Str;
 
 class UserFactory extends Factory
 {
-    /**
-     * The name of the factory's corresponding model.
-     *
-     * @var string
-     */
     protected $model = User::class;
 
-    /**
-     * Define the model's default state.
-     *
-     * @return array
-     */
     public function definition()
     {
         $fname = $this->faker->firstName;
         $lname = $this->faker->lastName;
-        $fullname = Str::lower($fname).Str::lower($lname);
-        $status = $this->faker->numberBetween(0,2);
+        $fullname = Str::lower($fname) . Str::lower($lname);
+        $status = $this->faker->numberBetween(0, 2);
+        $branch = $this->faker->randomElement(['Dormitory', 'Hostel']);
+        $sex = $this->faker->randomElement(['Male', 'Female']);
+        $type = $this->faker->randomElement(['Student', 'Faculty Member', 'Staff']);
+
         switch ($status) {
             case 1:
                 $status = 'active';
                 break;
-
             case 2:
                 $status = 'inactive';
                 break;
-
-                default:
+            default:
                 $status = 'pending';
                 break;
         }
+
         return [
             'username' => $fullname,
             'first_name' => $fname,
@@ -46,10 +39,13 @@ class UserFactory extends Factory
             'phone_number' => $this->faker->phoneNumber,
             'email' => $this->faker->unique()->safeEmail,
             'email_verified_at' => now(),
+            'image_path' => $this->faker->imageUrl(),
             'password' => bcrypt('password'),
-            'phone_number' => $this->faker->phoneNumber,
+            'branch' => $branch,
             'user_type' => 'user',
-            'status' => $status
+            'status' => 'pending',
+            'sex' => $sex,
+            'type' => $type
         ];
     }
 }

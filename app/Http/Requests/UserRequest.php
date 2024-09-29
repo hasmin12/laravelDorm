@@ -28,7 +28,7 @@ class UserRequest extends FormRequest
     public function rules()
     {
         $method = strtolower($this->method());
-        $user_id = $this->route()->user;
+        $user_id = $this->route('id');
 
         $rules = [];
         switch ($method) {

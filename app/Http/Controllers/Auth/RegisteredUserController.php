@@ -39,20 +39,25 @@ class RegisteredUserController extends Controller
             'password' => 'required|string|confirmed|min:8',
         ]);
 
-        Auth::login($user = User::create([
-            'username' => strtolower($request->first_name).strtolower($request->last_name),
+        $user = User::create([
+            'username' => strtolower($request->first_name) . strtolower($request->last_name),
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
             'phone_number' => $request->phone_number,
+            'branch' => "Dormitory",
+
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'user_type' => 'user'
-        ]));
-
+            'user_type' => 'user',
+            'status' => 'applicant',
+        ]);
         $user->assignRole('user');
 
-        event(new Registered($user));
+        // Optionally trigger the Registered event
+        // event(new Registered($user));
 
-        return redirect(RouteServiceProvider::HOME);
+        // Redirect back with a status message
+        return redirect()->route('login')->with('status', 'Registration complete! Please wait for confirmation.');
     }
+
 }

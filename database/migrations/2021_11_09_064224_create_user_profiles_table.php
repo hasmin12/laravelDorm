@@ -15,19 +15,29 @@ class CreateUserProfilesTable extends Migration
     {
         Schema::create('user_profiles', function (Blueprint $table) {
             $table->id();
-            $table->string('company_name')->nullable();
-            $table->string('street_addr_1')->nullable();
-            $table->string('street_addr_2')->nullable();
-            $table->string('phone_number')->nullable();
-            $table->string('alt_phone_number')->nullable();
-            $table->string('country')->nullable();
-            $table->string('state')->nullable();
-            $table->string('city')->nullable();
-            $table->bigInteger('pin_code')->nullable();
-            $table->string('facebook_url')->nullable();
-            $table->string('instagram_url')->nullable();
-            $table->string('twitter_url')->nullable();
-            $table->string('linkdin_url')->nullable();
+            $table->string('course')->nullable();
+            $table->string('year')->nullable();
+            $table->date('birthdate')->nullable();
+            $table->string('age')->nullable();
+            $table->string('religion')->nullable();
+            $table->string('civil_status')->nullable();
+            $table->string('address')->nullable();
+            $table->string('contactNumber')->nullable();
+            $table->string('Tuptnum')->nullable();
+            $table->string('contract')->nullable();
+            $table->string('cor')->nullable();
+            $table->string('validID')->nullable();
+            $table->string('vaccineCard')->nullable();
+            $table->string('applicationForm')->nullable();
+            $table->boolean('laptop')->default(0);
+            $table->boolean('electricfan')->default(0);
+            $table->string('guardianName')->nullable();
+            $table->string('guardianAddress')->nullable();
+            $table->string('guardianContactNumber')->nullable();
+            $table->string('guardianRelationship')->nullable();
+            $table->boolean('is_paid')->default(0);
+            $table->boolean('is_scheduled')->default(0);
+
             $table->foreignId('user_id')->cascade('delete');
             $table->timestamps();
         });

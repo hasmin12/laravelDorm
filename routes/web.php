@@ -2,6 +2,23 @@
 
 // Controllers
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\DormitoryRoomController;
+use App\Http\Controllers\HostelRoomController;
+use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\AnnouncementController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\MaintenanceRequestController;
+use App\Http\Controllers\LostAndFoundController;
+use App\Http\Controllers\ViolationController;
+use App\Http\Controllers\VisitorController;
+use App\Http\Controllers\LogController;
+use App\Http\Controllers\ComplaintController;
+use App\Http\Controllers\UserProfileController;
+use App\Http\Controllers\LaundryController;
+use App\Http\Controllers\ChartController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
+
 use App\Http\Controllers\Security\RolePermission;
 use App\Http\Controllers\Security\RoleController;
 use App\Http\Controllers\Security\PermissionController;
@@ -47,7 +64,13 @@ Route::get('startup',[HomeController::class, 'landing_startup'])->name('landing-
 });
 
 //UI Pages Routs
-Route::get('/', [HomeController::class, 'uisheet'])->name('uisheet');
+Route::get('/', [HomeController::class, 'welcome'])->name('welcome');
+Route::group(['prefix' => 'guest'], function() {
+    Route::get('hostel', [HostelRoomController::class, 'ViewHostels'])->name('guest.hostel');
+    Route::post('reserve', [HostelRoomController::class, 'reserve'])->name('guest.reserve');
+
+});
+
 
 Route::group(['middleware' => 'auth'], function () {
     // Permission Module
@@ -57,9 +80,96 @@ Route::group(['middleware' => 'auth'], function () {
 
     // Dashboard Routes
     Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
+    Route::get('/laundry',[LaundryController::class, 'laundry'])->name('laundry');
+    Route::get('/laundry/getLaundrySchedules', [LaundryController::class, 'getLaundrySchedules'])->name('getLaundrySchedules');
+    Route::get('/getNotifications', [AuthenticatedSessionController::class, 'getNotifications'])->name('getNotifications');
 
     // Users Module
-    Route::resource('users', UserController::class);
+    Route::group(['prefix' => 'admin'], function() {
+        Route::get('/dormitorychart', [ChartController::class, 'dormitorychart'])->name('admin.dormitorychart');
+        Route::get('/hostelchart', [ChartController::class, 'hostelchart'])->name('admin.hostelchart');
+
+        Route::resource('users', UserController::class);
+        Route::post('/assignBed', [DormitoryRoomController::class, 'assignBed'])->name('admin.assignBed');
+        Route::get('/notify', [PaymentController::class, 'notifyResidents'])->name('admin.notifyResidents');
+
+        Route::get('/dormitoryresidents', [UserController::class, 'DormitoryResidents'])->name('dormitoryresidents');
+        Route::get('/dormitoryresidents/create', [UserController::class, 'CreateDormitoryResidents'])->name('dormitoryresidents.create');
+        Route::post('/dormitoryresidents', [UserController::class, 'StoreDormitoryResidents'])->name('dormitoryresidents.store');
+        Route::get('/dormitoryresidents/{id}/edit', [UserController::class, 'EditDormitoryResidents'])->name('dormitoryresidents.edit');
+        Route::patch('/dormitoryresidents/{id}', [UserController::class, 'UpdateDormitoryResidents'])->name('dormitoryresidents.update');
+        Route::delete('/dormitoryresidents/{id}', [UserController::class, 'DeleteDormitoryResidents'])->name('dormitoryresidents.destroy');
+        Route::post('/dormitoryresidents/{id}', [UserController::class, 'deactivate'])->name('dormitoryresidents.deactivate');
+
+        Route::get('/user-profile/application-form/{id}', [UserProfileController::class, 'showApplicationForm'])->name('userProfile.applicationForm.show');
+        Route::get('/user-profile/contract/{id}', [UserProfileController::class, 'showContract'])->name('userProfile.contract.show');
+        Route::get('/user-profile/cor/{id}', [UserProfileController::class, 'showCor'])->name('userProfile.cor.show');
+        Route::get('/user-profile/validID/{id}', [UserProfileController::class, 'showValidId'])->name('userProfile.validID.show');
+        Route::get('/user-profile/vaccineCard/{id}', [UserProfileController::class, 'showVaccineCard'])->name('userProfile.vaccineCard.show');
+
+        Route::get('/hostelresidents',[UserController::class, 'HostelResidents'])->name('hostelresidents');
+        Route::get('/hostelresidents/create', [UserController::class, 'StoreHostelResidents'])->name('hostelresidents.create');
+        Route::post('/hostelresidents', [UserController::class, 'StoreDormitoryResidents'])->name('hostelresidents.store');
+        Route::get('/hostelresidents/{id}/edit', [UserController::class, 'EditHostelResidents'])->name('hostelresidents.edit');
+        Route::patch('/hostelresidents/{id}', [UserController::class, 'UpdateHostelResidents'])->name('hostelresidents.update');
+        Route::delete('/hostelresidents/{id}', [UserController::class, 'DeleteHostelResidents'])->name('hostelresidents.destroy');
+
+        Route::get('/dormitoryrooms', [DormitoryRoomController::class, 'DormitoryRooms'])->name('dormitoryrooms');
+        Route::post('/dormitoryrooms', [DormitoryRoomController::class, 'addRoom'])->name('dormitory.addRoom');
+        Route::put('/dormitoryrooms/{id}', [DormitoryRoomController::class, 'updateRoom'])->name('dormitory.updateRoom');
+        Route::get('/dormitoryrooms/{id}', [DormitoryRoomController::class, 'showbed'])->name('dormitory.showbed');
+
+        Route::get('/hostelrooms',[HostelRoomController::class, 'HostelRooms'])->name('hostelrooms');
+        Route::post('/hostelrooms', [HostelRoomController::class, 'addRoom'])->name('hostel.addRoom');
+        Route::put('/hostelrooms/{id}', [HostelRoomController::class, 'updateRoom'])->name('hostel.updateRoom');
+
+        Route::get('/reservations',[ReservationController::class, 'reservations'])->name('reservations');
+        Route::put('/reservations/{id}', [ReservationController::class, 'updateReservation'])->name('admin.updateReservation');
+
+        Route::get('/announcements',[AnnouncementController::class, 'announcements'])->name('announcements');
+        Route::post('/announcements',[AnnouncementController::class, 'store'])->name('announcement.store');
+        Route::put('/announcement/{id}',[AnnouncementController::class, 'update'])->name('announcement.update');
+
+        Route::get('/payments',[PaymentController::class, 'payments'])->name('payments');
+        Route::get('/maintenancerequests',[MaintenanceRequestController::class, 'maintenancerequests'])->name('maintenancerequests');
+        Route::post('/assignUser',[MaintenanceRequestController::class, 'assignUser'])->name('admin.assignUser');
+
+
+        Route::get('/lostandfounds',[LostAndFoundController::class, 'lostandfounds'])->name('lostandfounds');
+        Route::post('/addItem',[LostAndFoundController::class, 'addItem'])->name('admin.addItem');
+        Route::put('/updateItem/{id}',[LostAndFoundController::class, 'updateItem'])->name('admin.updateItem');
+
+        Route::get('/violations',[ViolationController::class, 'violations'])->name('violations');
+        Route::get('/visitors',[VisitorController::class, 'visitors'])->name('visitors');
+        Route::get('/logs',[LogController::class, 'logs'])->name('logs');
+        Route::get('/sleeplogs',[LogController::class, 'sleeplogs'])->name('sleeplogs');
+
+        Route::get('/complaints',[ComplaintController::class, 'complaints'])->name('complaints');
+
+        Route::get('/getTotalRevenue', [DashboardController::class,'getTotalRevenue'])->name('getTotalRevenue');
+        Route::get('/getDashboardData', [DashboardController::class,'getDashboardData'])->name('getDashboardData');
+    });
+
+    Route::group(['prefix' => 'user'], function() {
+        Route::get('/payments',[PaymentController::class, 'myPayments'])->name('user.payments');
+        Route::post('/payments', [PaymentController::class, 'updateUserPayment'])->name('user.payments.update');
+        Route::get('/viewpayment/{id}',[PaymentController::class, 'viewpayment'])->name('user.viewpayment');
+        Route::get('/maintenance',[MaintenanceRequestController::class, 'myRequest'])->name('user.maintenance');
+        Route::get('/lostandfound',[LostAndFoundController::class, 'viewLostItems'])->name('user.lostandfound');
+        Route::get('/logs',[LogController::class, 'mylogs'])->name('user.logs');
+        Route::get('/sleeplogs',[LogController::class, 'mysleeplogs'])->name('user.sleeplogs');
+
+        Route::get('/complaints',[ComplaintController::class, 'mycomplaints'])->name('user.complaints');
+        Route::post('/schedule',[LaundryController::class, 'schedule'])->name('user.schedule');
+
+        Route::post('/addFoundItem',[LostAndFoundController::class, 'addFoundItem'])->name('user.addFoundItem');
+        Route::post('/requestmaintenance',[MaintenanceRequestController::class, 'requestmaintenance'])->name('user.requestmaintenance');
+    });
+
+    Route::group(['prefix' => 'maintenance'], function() {
+        Route::post('/addStatus/{id}',[MaintenanceRequestController::class, 'addStatus'])->name('maintenance.status.store');
+    });
+
 });
 
 //App Details Page => 'Dashboard'], function() {
@@ -105,6 +215,7 @@ Route::group(['prefix' => 'auth'], function() {
     Route::get('recoverpw', [HomeController::class, 'recoverpw'])->name('auth.recoverpw');
     Route::get('userprivacysetting', [HomeController::class, 'userprivacysetting'])->name('auth.userprivacysetting');
 });
+
 
 //Error Page Route
 Route::group(['prefix' => 'errors'], function() {

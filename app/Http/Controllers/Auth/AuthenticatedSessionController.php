@@ -8,6 +8,8 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Role;
+use App\Models\User;
+use App\Models\Notification;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -27,14 +29,32 @@ class AuthenticatedSessionController extends Controller
      * @param  \App\Http\Requests\Auth\LoginRequest  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(LoginRequest $request)
+    public function store(Request $request)
     {
-        $request->authenticate();
+        // dd($request->all());
+        $data = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|string',
+        ]);
+        // dd($data);
 
-        $request->session()->regenerate();
+        $user = User::where('email', $data['email'])->first();
+        if (!$user || $user->status !== 'active') {
+            return back()->with('error', 'Your account is not active. Please contact support.');
+        }
 
-        return redirect(RouteServiceProvider::HOME);
+
+        if (Auth::attempt(['email' => $data['email'], 'password' => $data['password']])) {
+            $request->session()->forget(['email', 'password','otp']);
+            return redirect('/dashboard');
+        }
+        else{
+            return back()->with('error','Wrong email or password');
+
+        }
+
     }
+
 
     /**
      * Destroy an authenticated session.
@@ -44,12 +64,13 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request)
     {
-        Auth::guard('web')->logout();
+        Auth::logout();
+        return redirect('/login');
+    }
 
-        $request->session()->invalidate();
-
-        $request->session()->regenerateToken();
-
-        return redirect('/');
+    public function getNotifications()
+    {
+        $notifications = Notification::where('user_id',Auth::id())->get();
+        return response()->json($notifications);
     }
 }

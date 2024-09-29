@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Auth;
+use App\Models\Announcement;
+use App\Models\MaintenanceRequest;
 
 class HomeController extends Controller
 {
@@ -12,8 +15,22 @@ class HomeController extends Controller
     public function index(Request $request)
     {
         $assets = ['chart', 'animation'];
-        return view('dashboards.dashboard', compact('assets'));
+        $user = Auth::user();
+
+        if ($user->user_type == "admin") {
+            return view('admin.dashboard', compact('assets'));
+        } elseif ($user->user_type == "user") {
+            $announcements = Announcement::where('status', "published")->orderBy('created_at', 'desc')->get();
+            return view('residents.announcement', compact('assets', 'announcements'));
+        } else {
+            $maintenance = MaintenanceRequest::where('maintenance_user_id', $user->id)
+                ->where('status', "in_progress")
+                ->orderBy('created_at', 'desc')
+                ->get();
+            return view('maintenance.dashboard', compact('assets', 'maintenance'));
+        }
     }
+
 
     /*
      * Menu Style Routs
@@ -157,9 +174,9 @@ class HomeController extends Controller
     /*
      * uisheet Page Routs
      */
-    public function uisheet(Request $request)
+    public function welcome(Request $request)
     {
-        return view('uisheet');
+        return view('welcome');
     }
 
     /*

@@ -69,7 +69,7 @@ class UsersDataTable extends DataTable
      */
     public function query()
     {
-        $model = User::query()->with('userProfile');
+        $model = User::query()->with('userProfile')->orderBy('created_at', 'desc');
         return $this->applyScopes($model);
     }
 
